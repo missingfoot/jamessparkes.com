@@ -131,6 +131,11 @@ a[class*="underline"]::after, .underline::after {
     height: 1px;
     background-color: currentColor;
     opacity: 0.3;
+    transition: opacity 0.3s ease;
+}
+
+a[class*="underline"]:hover::after, .underline:hover::after {
+    opacity: 1;
 }
 
 /* Gallery styles */
