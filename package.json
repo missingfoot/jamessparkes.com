@@ -1,0 +1,18 @@
+{
+  "name": "jamessparkes.com",
+  "version": "1.0.0",
+  "description": "James Sparkes Portfolio Website",
+  "scripts": {
+    "start": "npx http-server -o -c-1",
+    "build:css": "tailwindcss -i ./styles/input.css -o ./styles/output.css --watch",
+    "build:css:prod": "tailwindcss -i ./styles/input.css -o ./styles/output.css --minify",
+    "dev": "concurrently \"npm run build:css\" \"npm start\""
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "tailwindcss": "^3.4.0",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "concurrently": "^8.2.2"
+  }
+}

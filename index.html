@@ -1,620 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Welcome Page</title>
-    <!-- Include Tailwind CSS from CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Include compiled Tailwind CSS -->
+    <link rel="stylesheet" href="styles/output.css">
     <!-- Include Inter font from Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <!-- Include custom JavaScript file -->
-    <script src="scripts/scripts.js" defer></script>
-    <script>
-        // Tailwind CSS configuration
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: { light: '#f3f4f6', dark: '#111111' },
-                        surface: { light: '#ffffff', dark: '#1e1e1e' },
-                    },
-                    fontFamily: {
-                        'sans': ['Inter', 'sans-serif'],
-                    },
-                    boxShadow: {
-                        'light-2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.08)',
-                    },
-                    borderRadius: {
-                        'global': 'var(--global-radius)',
-                    },
-                }
-            },
-            surfaces: 1
-        }
-    </script>
-    <style>
-        @font-face {
-            font-family: 'Favorit';
-            src: url('fonts/Favorit-Light.woff2') format('woff2'),
-                 url('fonts/Favorit-Light.woff') format('woff');
-            font-weight: 300;
-            font-style: normal;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: 'Favorit';
-            src: url('fonts/Favorit-Regular.woff2') format('woff2'),
-                 url('fonts/Favorit-Regular.woff') format('woff');
-            font-weight: 400;
-            font-style: normal;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: 'Favorit';
-            src: url('fonts/Favorit-Medium.woff2') format('woff2'),
-                 url('fonts/Favorit-Medium.woff') format('woff');
-            font-weight: 500;
-            font-style: normal;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: 'Favorit';
-            src: url('fonts/Favorit-Bold.woff2') format('woff2'),
-                 url('fonts/Favorit-Bold.woff') format('woff');
-            font-weight: 700;
-            font-style: normal;
-            font-display: swap;
-        }
-        
-        /* Set default font family */
-        body {
-            font-family: 'Favorit', 'Inter', sans-serif;
-            font-weight: 300; /* Light weight */
-            --global-radius: 4px; /* Set your desired default value here */
-            overflow-x: hidden; /* Prevent horizontal scrolling */
-            touch-action: pan-y; /* Allow vertical scrolling, but disable pinch zooming */
-        }
-        /* Styles for sticky footer on mobile */
-        .sticky-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            transform: translateY(300%); /* Start hidden below the viewport */
-            transition: transform 0.6s ease-in-out; /* Add smooth transition */
-        }
-
-        .sticky-footer.visible {
-            transform: translateY(0); /* Slide up to be fully visible */
-        }
-        /* Disable text selection on mobile */
-        @media (max-width: 640px) {
-            * {
-                -webkit-touch-callout: none;
-                -webkit-user-select: none;
-                -khtml-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-            }
-        }
-        /* Avatar and lightbox styles */
-        #avatarContainer {
-            cursor: pointer;
-        }
-
-        #lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 9999; /* Ensure this is higher than the sticky footer */
-        }
-
-        #lightbox.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        #lightboxImage {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 50%;
-            transform: scale(0.8);
-            transition: transform 0.3s ease;
-        }
-
-        #lightbox.active #lightboxImage {
-            transform: scale(1);
-        }
-
-        /* Custom underline style for links */
-        a[class*="underline"], .underline {
-            text-decoration: none;
-            position: relative;
-        }
-
-        a[class*="underline"]::after, .underline::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: -3px; /* Adjust this value to move the line further down */
-            height: 1px; /* 1px high line */
-            background-color: currentColor;
-            opacity: 0.3; /* 50% opacity */
-        }
-    </style>
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <!-- Include custom styles -->
+    <link rel="stylesheet" href="styles/global.css">
 </head>
 <body class="bg-white sm:bg-primary-light dark:bg-primary-dark min-h-screen flex flex-col items-center justify-start p-0 sm:p-8 transition-colors duration-300">
     <div class="max-w-[620px] w-full">
         <!-- Main content card -->
         <div class="p-4 sm:p-10 rounded-none sm:rounded-2xl shadow-none sm:shadow-light-2xl dark:sm:shadow-2xl mb-4 sm:mb-8 relative sm:surface sm:bg-surface-light sm:dark:bg-surface-dark">
-            <!-- Theme toggle button for both mobile and desktop -->
-            <button id="themeToggle" class="p-2 absolute top-4 right-4 sm:top-10 sm:right-10 text-gray-800 dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400 transition-colors duration-300" aria-label="Toggle theme">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
-            </button>
-            <!-- Header section with name, title, and theme toggle -->
-            <div class="flex flex-col items-start">
-                <!-- Avatar for mobile -->
-                <div class="flex justify-between items-center w-full mb-2 sm:hidden">
-                    <div id="avatarContainer" class="relative">
-                        <img id="avatarImage" src="images/avatar.jpeg" alt="James Sparkes" class="w-20 h-20 rounded-full object-cover">
-                    </div>
-                </div>
-                <!-- Lightbox -->
-                <div id="lightbox">
-                    <img id="lightboxImage" src="images/avatar.jpeg" alt="James Sparkes">
-                </div>
-                <!-- Desktop layout -->
-                <div class="hidden sm:flex sm:flex-row sm:justify-between sm:items-center sm:w-full">
-                    <div class="flex items-center">
-                        <img src="images/avatar.jpeg" alt="James Sparkes" class="w-16 h-16 rounded-full mr-4 object-cover">
-                        <div class="text-left">
-                            <h1 class="text-3xl font-normal text-gray-800 dark:text-gray-200">James Sparkes</h1>
-                            <h2 class="text-lg text-gray-600 dark:text-gray-400 mt-1">Product Designer</h2>
-                        </div>
-                    </div>
-                </div>
-                <!-- Name and title for mobile, under the avatar -->
-                <div class="text-left sm:hidden mt-2">
-                    <h1 class="text-3xl font-normal text-gray-800 dark:text-gray-200">James Sparkes</h1>
-                    <!-- <h2 class="text-lg text-gray-600 dark:text-gray-400 mt-1">Product Designer</h2> -->
-                </div>
-            </div>
-            <!-- Bio section -->
-            <p class="mt-4 text-gray-600 dark:text-gray-400">Product designer specialising in UI/UX design for mobile apps, SaaS platforms, web apps, and marketing websites. I focus on creating intuitive, high-quality interfaces and design systems that enhance user experiences.</p>
-            <!-- Social links section -->
-            <div class="mt-6 flex flex-wrap gap-4">
-                <!-- LinkedIn -->
-                <a href="https://uk.linkedin.com/in/jamessparkesdesign" target="_blank" rel="noopener noreferrer" class="text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition duration-300 cursor-pointer">
-                    LinkedIn
-                </a>
-                <!-- GitHub -->
-                <a href="https://github.com/jamessparkes" target="_blank" rel="noopener noreferrer" class="text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition duration-300 cursor-pointer">
-                    GitHub
-                </a>
-                <!-- WhatsApp -->
-                <a href="#" id="whatsappLink" target="_blank" rel="noopener noreferrer" class="text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition duration-300 cursor-pointer">
-                    Contact
-                </a>
-                <!-- View CV -->
-                <a href="#" id="cvLink" class="sm:hidden text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition duration-300 cursor-pointer">
-                    View CV
-                </a>
-                <!-- Download CV -->
-                <a href="https://jamessparkes.s3.eu-west-1.amazonaws.com/James_Sparkes_CV.pdf" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-block text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition duration-300 cursor-pointer">
-                    Download CV
-                </a>
-            </div>
-
-            <!-- CV Modal -->
-            <div id="cvModal" class="fixed inset-0 z-[1001] hidden">
-                <div id="cvModalBackground" class="absolute inset-0 bg-black bg-opacity-20 opacity-0 transition-opacity duration-300"></div>
-                <div id="cvModalContent" class="absolute inset-x-0 bottom-0 bg-primary-light dark:bg-primary-dark rounded-t-xl transform translate-y-full transition-all duration-300 h-[80vh] flex flex-col">
-                    <!-- Puller (only for mobile) -->
-                    <div class="flex justify-center pt-2 pb-4">
-                        <div class="w-10 h-1 bg-gray-400 dark:bg-gray-500 rounded-full"></div>
-                    </div>
-                    <!-- CV content -->
-                    <div id="cvContent" class="flex-grow overflow-y-auto p-4 sm:p-10 text-gray-800 dark:text-gray-200">
-                        <h3 class="text-xl font-bold mb-4">Experience</h3>
-                        
-                        <div class="mb-6 flex">
-                            <div class="w-1/4 pr-4 text-xs pt-1">
-                                <p>02.22&ndash;Present</p>
-                                <p>2 yrs 8 mos</p>
-                            </div>
-                            <div class="w-3/4">
-                                <h4 class="font-bold">FIXR</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Senior UX/UI Designer</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Full-time</p>
-                                <p class="text-sm">Product design of FIXR's ticket buying and management platforms for web, iOS, and Android.</p>
-                            </div>
-                        </div>
-
-                        <div class="mb-6 flex">
-                            <div class="w-1/4 pr-4 text-xs pt-1">
-                                <p>07.21&ndash;02.22</p>
-                                <p>8 mos</p>
-                            </div>
-                            <div class="w-3/4">
-                                <h4 class="font-bold">AMBIO-N (CircularSource)</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Graphic Designer</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Contract</p>
-                                <p class="text-sm">UX / UI designer for B2B ecommerce website and analytics dashboard</p>
-                            </div>
-                        </div>
-
-                        <div class="mb-6 flex">
-                            <div class="w-1/4 pr-4 text-xs pt-1">
-                                <p>01.21&ndash;07.21</p>
-                                <p>7 mos</p>
-                            </div>
-                            <div class="w-3/4">
-                                <h4 class="font-bold">Kuula TV</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Product Designer</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Contract</p>
-                                <p class="text-sm">UI / UX designer for a yoga instructor website, management platform, and client microsites.</p>
-                                <p class="text-sm">Design of a media file backend platform for instructors.</p>
-                            </div>
-                        </div>
-
-                        <div class="mb-6 flex">
-                            <div class="w-1/4 pr-4 text-xs pt-1">
-                                <p>07.17&ndash;06.20</p>
-                                <p>3 yrs</p>
-                            </div>
-                            <div class="w-3/4">
-                                <h4 class="font-bold">The Collective</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Lead UX/UI Designer</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Full-time</p>
-                                <p class="text-sm">Lead UX / UI designer for multiple in-house mobile and web apps including property and finance management systems, social media apps, and CRM platform</p>
-                            </div>
-                        </div>
-
-                        <div class="mb-6 flex">
-                            <div class="w-1/4 pr-4 text-xs pt-1">
-                                <p>05.16&ndash;06.16</p>
-                                <p>2 mos</p>
-                            </div>
-                            <div class="w-3/4">
-                                <h4 class="font-bold">Maxus</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">UX/UI Designer</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Contract</p>
-                                <p class="text-sm">UX and UI Design and QA of data analytics platform for L'Oréal brands</p>
-                                <p class="text-sm">Design of a data analytics platform for BT</p>
-                            </div>
-                        </div>
-
-                        <div class="mb-6 flex">
-                            <div class="w-1/4 pr-4 text-xs pt-1">
-                                <p>02.16&ndash;05.16</p>
-                                <p>4 mos</p>
-                            </div>
-                            <div class="w-3/4">
-                                <h4 class="font-bold">TMW Unlimited</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">UX/UI Designer</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Contract</p>
-                                <p class="text-sm">UX / UI website design and artworking for Sony Mobile</p>
-                                <p class="text-sm">Print design and campaign work for Infinit, Canon, and HSBC</p>
-                            </div>
-                        </div>
-
-                        <div class="mb-6 flex">
-                            <div class="w-1/4 pr-4 text-xs pt-1">
-                                <p>03.15&ndash;02.16</p>
-                                <p>1 yr</p>
-                            </div>
-                            <div class="w-3/4">
-                                <h4 class="font-bold">Breezie</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">UX/UI Designer</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Full-time</p>
-                                <p class="text-sm">UX / UI design for Android-based operating system targeted towards elderly and disabled</p>
-                                <p class="text-sm">UX / UI design for Samsung SmartThings dashboard</p>
-                                <p class="text-sm">Design research and user testing</p>
-                            </div>
-                        </div>
-
-                        <div class="mb-6 flex">
-                            <div class="w-1/4 pr-4 text-xs pt-1">
-                                <p>03.14&ndash;03.15</p>
-                                <p>1 yr 1 mo</p>
-                            </div>
-                            <div class="w-3/4">
-                                <h4 class="font-bold">Fabric Worldwide</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">UX/UI Designer</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Full-time</p>
-                                <p class="text-sm">UX / UI design for a marketing data analytics platform</p>
-                                <p class="text-sm">Client website design, artworking, photo editing for Heineken and KFC</p>
-                            </div>
-                        </div>
-
-                        <div class="mb-6 flex">
-                            <div class="w-1/4 pr-4 text-xs pt-1">
-                                <p>03.09&ndash;02.14</p>
-                                <p>5 yrs</p>
-                            </div>
-                            <div class="w-3/4">
-                                <h4 class="font-bold">QD Design</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Designer & Developer</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Full-time</p>
-                                <p class="text-sm">Design and development of an ecommerce platform, database, and warehouse management software</p>
-                                <p class="text-sm">Digital and print design for rebrand and brand development</p>
-                                <p class="text-sm">Design, layout for advertising, and promotional materials</p>
-                                <p class="text-sm">Product photography, photo retouching of products</p>
-                                <p class="text-sm">3D CAD product design</p>
-                            </div>
-                        </div>
-
-                        <h3 class="text-xl font-bold mb-4 mt-8">Education</h3>
-
-                        <div class="mb-6 flex">
-                            <div class="w-1/4 pr-4 text-xs pt-1">
-                                <p>09.10&ndash;06.13</p>
-                                <p>3 yrs</p>
-                            </div>
-                            <div class="w-3/4">
-                                <h4 class="font-bold">Canterbury Christ Church University</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Bachelor of Arts (B.A.), Graphic Design</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Grade: 1st Class Honours</p>
-                                <p class="text-sm">1st Class B.A. Honours in Graphic Design, focusing on digital design, with projects including:</p>
-                                <p class="text-sm"><span class="font-bold">Major Project:</span> brand development, research, advertising material, promotional material, and packaging</p>
-                                <p class="text-sm"><span class="font-bold">Graphic Design:</span> Worked as part of a team to create an art book</p>
-                                <p class="text-sm"><span class="font-bold">Digital Image Manipulation:</span> Artworking, high-end photo retouching, digital compositing, matte painting</p>
-                                <p class="text-sm"><span class="font-bold">Web design:</span> research, UX, visual design, and development of static websites</p>
-                                <p class="text-sm"><span class="font-bold">3D design:</span> modelling, scene building, animation, rigging, lighting, procedural object building</p>
-                            </div>
-                        </div>
-
-                        <!-- Download CV and Close links -->
-                        <div class="mt-8 pb-8 flex flex-col items-center gap-8">
-                            <a href="https://jamessparkes.s3.eu-west-1.amazonaws.com/James_Sparkes_CV.pdf" target="_blank" rel="noopener noreferrer" class="inline-block text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition duration-300 cursor-pointer">
-                                Download CV
-                            </a>
-                            <a href="#" id="closeModalButton" class="sm:hidden inline-block text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition duration-300 cursor-pointer">
-                                Close
-                            </a>
-                        </div>
-                    </div> <!-- Close of #cvContent -->
-                </div>
-            </div>
+            <div id="header"></div>
+            <div id="bio"></div>
+            <div id="social-links"></div>
+            <div id="cv-modal"></div>
         </div>
-
-        <!-- Instagram-like post module -->
-        <div class="rounded-none sm:rounded-2xl shadow-none sm:shadow-light-2xl dark:sm:shadow-2xl w-full mb-4 sm:mb-8 sm:surface sm:bg-surface-light sm:dark:bg-surface-dark">
-            <!-- Post header -->
-            <div class="p-4 sm:p-6">
-                <div class="flex items-center">
-                    <img src="images/fixr.png" alt="Avatar" class="w-10 h-10 rounded-full mr-3">
-                    <div>
-                        <h2 class="font-normal text-gray-800 dark:text-gray-200">FIXR Platform</h2>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">FIXR, London</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Image gallery -->
-            <div class="relative" data-gallery="1">
-                <div class="overflow-hidden sm:rounded-none rounded-none" data-gallery-container="1">
-                    <div class="flex transition-transform duration-300 ease-in-out" data-gallery-images="1">
-                        <img src="images/fixr-01.jpg" alt="Post image 1" class="w-full flex-shrink-0">
-                        <img src="images/fixr-02.jpg" alt="Post image 2" class="w-full flex-shrink-0">
-                        <img src="images/fixr-03.jpg" alt="Post image 3" class="w-full flex-shrink-0">
-                        <img src="images/fixr-04.jpg" alt="Post image 4" class="w-full flex-shrink-0">
-                        <img src="images/fixr-06.jpg" alt="Post image 5" class="w-full flex-shrink-0">
-                    </div>
-                </div>
-            </div>
-            <!-- Navigation buttons and pagination -->
-            <div class="flex justify-between items-center py-4 px-4 sm:px-6">
-                <div class="text-gray-800 dark:text-gray-200" data-pagination="1"></div>
-                <div class="flex items-center space-x-2">
-                    <button class="bg-black dark:bg-white rounded-global p-2" data-prev="1" title="Previous image">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 text-white dark:text-black">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                        </svg>
-                    </button>
-                    <button class="bg-black dark:bg-white rounded-global p-2" data-next="1" title="Next image">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 text-white dark:text-black">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <!-- Post content -->
-            <div class="p-4 sm:p-6">
-                <p class="text-gray-800 dark:text-gray-200">
-                    <span id="postContent">At FIXR, a leading event ticketing platform, I've played a critical role in evolving the user experience across web, iOS, and Android platforms. As a Senior UX/UI Designer, I led initiatives that enhanced both event organizers' tools and end-user experiences, helping FIXR remain competitive in a rapidly evolving industry.</span>
-                </p>
-                <!-- Read more button -->
-                <button class="text-gray-800 dark:text-gray-200 underline mt-2 read-more">Read more</button>
-                <!-- Post tags -->
-                <div class="mt-6 flex flex-wrap gap-2">
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">UI Design</span>
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">UX Design</span>
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">Interaction Design</span>
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">Prototyping</span>
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">Web design</span>
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">App design</span>
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">Design systems</span>
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">Design discovery</span>
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">Design research</span>
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">User testing</span>
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">Figma</span>
-                </div>
-            </div>
-        </div><!-- End Instagram-like post module -->
-
-        <!-- Instagram-like post module -->
-        <div class="rounded-none sm:rounded-2xl shadow-none sm:shadow-light-2xl dark:sm:shadow-2xl w-full mb-4 sm:mb-8 sm:surface sm:bg-surface-light sm:dark:bg-surface-dark">
-            <!-- Post header -->
-            <div class="p-4 sm:p-6">
-                <div class="flex items-center">
-                    <img src="images/fixr.png" alt="Avatar" class="w-10 h-10 rounded-full mr-3">
-                    <div>
-                        <h2 class="font-normal text-gray-800 dark:text-gray-200">FIXR Platform</h2>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">FIXR, London</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Image gallery -->
-            <div class="relative" data-gallery="2">
-                <div class="overflow-hidden sm:rounded-none rounded-none" data-gallery-container="2">
-                    <div class="flex transition-transform duration-300 ease-in-out" data-gallery-images="2">
-                        <img src="images/fixr-01.jpg" alt="Post image 1" class="w-full flex-shrink-0">
-                        <img src="images/fixr-02.jpg" alt="Post image 2" class="w-full flex-shrink-0">
-                        <img src="images/fixr-03.jpg" alt="Post image 3" class="w-full flex-shrink-0">
-                        <img src="images/fixr-04.jpg" alt="Post image 4" class="w-full flex-shrink-0">
-                        <img src="images/fixr-06.jpg" alt="Post image 5" class="w-full flex-shrink-0">
-                    </div>
-                </div>
-            </div>
-            <!-- Navigation buttons and pagination -->
-            <div class="flex justify-between items-center py-4 px-4 sm:px-6">
-                <div class="text-gray-800 dark:text-gray-200" data-pagination="2"></div>
-                <div class="flex items-center space-x-2">
-                    <button class="bg-black dark:bg-white rounded-global p-2" data-prev="2" title="Previous image">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 text-white dark:text-black">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                        </svg>
-                    </button>
-                    <button class="bg-black dark:bg-white rounded-global p-2" data-next="2" title="Next image">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 text-white dark:text-black">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <!-- Post content -->
-            <div class="p-4 sm:p-6">
-                <p class="text-gray-800 dark:text-gray-200">
-                    <span id="postContent">At FIXR, a leading event ticketing platform, I've played a critical role in evolving the user experience across web, iOS, and Android platforms. As a Senior UX/UI Designer, I led initiatives that enhanced both event organizers' tools and end-user experiences, helping FIXR remain competitive in a rapidly evolving industry.</span>
-                </p>
-                <!-- Read more button -->
-                <button class="text-gray-800 dark:text-gray-200 underline mt-2 read-more">Read more</button>
-                <!-- Post tags -->
-                <div class="mt-6 flex flex-wrap gap-2">
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">UI Design</span>
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">UX Design</span>
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">Interaction Design</span>
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">Prototyping</span>
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">Web design</span>
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">App design</span>
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">Design systems</span>
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">Design discovery</span>
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">Design research</span>
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">User testing</span>
-                    <span class="px-3 py-1 bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-global text-sm">Figma</span>
-                </div>
-            </div>
-        </div><!-- End Instagram-like post module -->
-
-        <!-- Add more post modules as needed -->
-
-
+        <!-- Portfolio section -->
+        <div id="portfolio"></div>
     </div>
+    <div id="sticky-footer"></div>
 
-    <!-- Sticky footer for mobile -->
-    <div id="stickyFooter" class="sticky-footer p-4 w-full sm:hidden surface bg-surface-light dark:bg-surface-dark z-[1000]">
-        <a href="https://jamessparkes.s3.eu-west-1.amazonaws.com/James_Sparkes_CV.pdf" target="_blank" rel="noopener noreferrer" class="block w-full text-center px-4 py-3 bg-black dark:bg-white text-white dark:text-black rounded-global hover:bg-gray-800 dark:hover:bg-gray-200 transition duration-300">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-            </svg>
-            <span class="font-medium hover:font-medium transition-all duration-300">Download CV</span>
-        </a>
-    </div>
+    <!-- Initialize components -->
+    <script type="module">
+        import { Header } from './components/Header.js';
+        import { Bio } from './components/Bio.js';
+        import { SocialLinks } from './components/SocialLinks.js';
+        import { CVModal } from './components/CVModal.js';
+        import { StickyFooter } from './components/StickyFooter.js';
+        import { Portfolio } from './components/Portfolio.js';
+        import { initTheme, toggleTheme } from './js/theme.js';
+        import { initLightbox } from './js/lightbox.js';
+        import { initGallery } from './js/gallery.js';
 
-    <script>
-        // Add this script at the end of the body
-        document.addEventListener('DOMContentLoaded', function() {
-            const stickyFooter = document.getElementById('stickyFooter');
-            let scrollThreshold = 300; // Default threshold in pixels
+        // Initialize theme first
+        initTheme();
 
-            function handleScroll() {
-                if (window.scrollY > scrollThreshold) {
-                    stickyFooter.classList.add('visible');
-                } else {
-                    stickyFooter.classList.remove('visible');
-                }
-            }
+        // Initialize components
+        document.getElementById('header').innerHTML = Header();
+        document.getElementById('bio').innerHTML = Bio();
+        document.getElementById('social-links').innerHTML = SocialLinks();
+        document.getElementById('cv-modal').innerHTML = CVModal();
+        document.getElementById('sticky-footer').innerHTML = StickyFooter();
+        document.getElementById('portfolio').innerHTML = Portfolio();
 
-            window.addEventListener('scroll', handleScroll);
+        // Initialize lightbox
+        initLightbox();
 
-            // Function to set scroll threshold
-            window.setScrollThreshold = function(threshold) {
-                scrollThreshold = threshold;
-            }
+        // Initialize gallery
+        initGallery();
 
-            // Function to set scroll threshold as a percentage of page height
-            window.setScrollThresholdPercentage = function(percentage) {
-                const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
-                scrollThreshold = (percentage / 100) * pageHeight;
+        // Add theme toggle click handler
+        document.addEventListener('click', (e) => {
+            const themeToggle = e.target.closest('[data-theme-toggle]');
+            if (themeToggle) {
+                e.preventDefault();
+                console.log('Theme toggle clicked');
+                toggleTheme();
             }
         });
-    </script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const cvLink = document.getElementById('cvLink');
-            const cvModal = document.getElementById('cvModal');
-            const cvModalBackground = document.getElementById('cvModalBackground');
-            const cvModalContent = document.getElementById('cvModalContent');
-            const closeModalButton = document.getElementById('closeModalButton');
-
-            function openModal() {
-                cvModal.classList.remove('hidden');
-                setTimeout(() => {
-                    cvModalBackground.classList.add('opacity-100');
-                    cvModalContent.classList.remove('translate-y-full');
-                }, 10);
-            }
-
-            function closeModal() {
-                cvModalBackground.classList.remove('opacity-100');
-                cvModalContent.classList.add('translate-y-full');
-                setTimeout(() => {
-                    cvModal.classList.add('hidden');
-                }, 300);
-            }
-
-            cvLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                openModal();
-            });
-
-            closeModalButton.addEventListener('click', closeModal);
-
-            cvModalBackground.addEventListener('click', closeModal);
-
-            // Prevent closing when clicking inside the modal content
-            cvModalContent.addEventListener('click', function(e) {
-                e.stopPropagation();
-            });
-
-            // Close modal on escape key press
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && !cvModal.classList.contains('hidden')) {
-                    closeModal();
-                }
-            });
+        // Initialize other functionality
+        import('./js/main.js').then(module => {
+            console.log('Main module loaded');
+            // Initialize main functionality
+            module.initStickyFooter();
+            module.initCVModal();
+        }).catch(error => {
+            console.error('Error loading main module:', error);
         });
     </script>
 </body>

@@ -1,0 +1,159 @@
+/* Font faces */
+@font-face {
+    font-family: 'Favorit';
+    src: url('../fonts/Favorit-Light.woff2') format('woff2'),
+         url('../fonts/Favorit-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Favorit';
+    src: url('../fonts/Favorit-Regular.woff2') format('woff2'),
+         url('../fonts/Favorit-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Favorit';
+    src: url('../fonts/Favorit-Medium.woff2') format('woff2'),
+         url('../fonts/Favorit-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Favorit';
+    src: url('../fonts/Favorit-Bold.woff2') format('woff2'),
+         url('../fonts/Favorit-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Global styles */
+body {
+    font-family: 'Favorit', 'Inter', sans-serif;
+    font-weight: 300;
+    --global-radius: 4px;
+    overflow-x: hidden;
+    touch-action: pan-y;
+}
+
+/* Sticky footer styles */
+.sticky-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transform: translateY(300%);
+    transition: transform 0.6s ease-in-out;
+}
+
+.sticky-footer.visible {
+    transform: translateY(0);
+}
+
+/* Mobile text selection disable */
+@media (max-width: 640px) {
+    * {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+}
+
+/* Avatar and lightbox styles */
+#avatarContainer {
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+#avatarContainer:hover {
+    opacity: 0.8;
+}
+
+#lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 9999;
+    cursor: pointer;
+}
+
+#lightbox.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+#lightboxImage {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 50%;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+    pointer-events: none;
+}
+
+#lightbox.active #lightboxImage {
+    transform: scale(1);
+}
+
+/* Custom underline style */
+a[class*="underline"], .underline {
+    text-decoration: none;
+    position: relative;
+}
+
+a[class*="underline"]::after, .underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -3px;
+    height: 1px;
+    background-color: currentColor;
+    opacity: 0.3;
+}
+
+/* Gallery styles */
+[data-gallery] {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+[data-gallery-container] {
+    width: 100%;
+    position: relative;
+}
+
+[data-gallery-images] {
+    display: flex;
+    width: 100%;
+    transition: transform 0.3s ease-in-out;
+}
+
+[data-gallery-images] img {
+    width: 100%;
+    height: auto;
+    flex: 0 0 100%;
+    object-fit: contain;
+} 
