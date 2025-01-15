@@ -37,6 +37,7 @@ export function initCVModal() {
     let lastDragTime = 0;
     let lastDragY = 0;
     let dragVelocity = 0;
+    let initialScrollTop = 0;
     const DISMISS_THRESHOLD = 150; // pixels to drag down before dismissing
     const DRAG_RESISTANCE = 1.5; // Higher number = more resistance
     const VELOCITY_THRESHOLD = 0.5; // Velocity needed to trigger momentum dismiss
@@ -47,6 +48,7 @@ export function initCVModal() {
         currentTranslateY = 0;
         isDragging = false;
         dragVelocity = 0;
+        initialScrollTop = 0;
         const cvModalContent = document.getElementById('cvModalContent');
         if (cvModalContent) {
             cvModalContent.style.transform = '';
@@ -136,11 +138,18 @@ export function initCVModal() {
         
         if (cvModal.classList.contains('hidden')) return false;
         
-        // Only initiate drag if we're at the top of the content or touching the puller
+        // Store initial scroll position
+        initialScrollTop = cvContent.scrollTop;
+        
+        // Only initiate drag if:
+        // 1. Touching the puller element, OR
+        // 2. At the top of the content (scrollTop === 0)
         const isTouchingPuller = event.target.closest('.w-10.h-1.bg-gray-400');
         const isAtTop = cvContent.scrollTop <= 0;
         
-        if (!isTouchingPuller && !isAtTop) return false;
+        if (!isTouchingPuller && !isAtTop) {
+            return false;
+        }
 
         startY = clientY;
         lastDragY = clientY;
@@ -158,16 +167,18 @@ export function initCVModal() {
     function handleDragMove(clientY) {
         if (!isDragging) return;
         
-        const currentTime = Date.now();
-        const deltaTime = currentTime - lastDragTime;
-        if (deltaTime > 0) {
-            dragVelocity = (clientY - lastDragY) / deltaTime;
-        }
-        lastDragTime = currentTime;
-        lastDragY = clientY;
-        
         const cvModalContent = document.getElementById('cvModalContent');
+        const cvContent = document.getElementById('cvContent');
         const deltaY = clientY - startY;
+        
+        // If we started dragging from the content (not the puller)
+        // and we're not at the top anymore, cancel the drag
+        const isTouchingPuller = event.target.closest('.w-10.h-1.bg-gray-400');
+        if (!isTouchingPuller && cvContent.scrollTop > 0) {
+            isDragging = false;
+            resetDragState();
+            return;
+        }
         
         // Only allow dragging downwards
         if (deltaY < 0) {
@@ -175,6 +186,17 @@ export function initCVModal() {
             resetDragState();
             return;
         }
+
+        // Prevent default scroll behavior while dragging
+        event.preventDefault();
+        
+        const currentTime = Date.now();
+        const deltaTime = currentTime - lastDragTime;
+        if (deltaTime > 0) {
+            dragVelocity = (clientY - lastDragY) / deltaTime;
+        }
+        lastDragTime = currentTime;
+        lastDragY = clientY;
 
         // Apply resistance to the drag
         currentTranslateY = startTranslateY + (deltaY / DRAG_RESISTANCE);
@@ -230,13 +252,15 @@ export function initCVModal() {
     // Touch event handlers
     document.addEventListener('touchstart', (e) => {
         if (handleDragStart(e.touches[0].clientY)) {
-            e.preventDefault();
+            // Only prevent default if we're actually starting a drag
+            if (event.target.closest('.w-10.h-1.bg-gray-400')) {
+                e.preventDefault();
+            }
         }
     }, { passive: false });
 
     document.addEventListener('touchmove', (e) => {
         if (isDragging) {
-            e.preventDefault();
             handleDragMove(e.touches[0].clientY);
         }
     }, { passive: false });
@@ -248,13 +272,15 @@ export function initCVModal() {
     // Mouse event handlers (for desktop testing)
     document.addEventListener('mousedown', (e) => {
         if (handleDragStart(e.clientY)) {
-            e.preventDefault();
+            // Only prevent default if we're actually starting a drag
+            if (event.target.closest('.w-10.h-1.bg-gray-400')) {
+                e.preventDefault();
+            }
         }
     });
 
     document.addEventListener('mousemove', (e) => {
         if (isDragging) {
-            e.preventDefault();
             handleDragMove(e.clientY);
         }
     });
