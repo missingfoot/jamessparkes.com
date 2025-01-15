@@ -60,18 +60,21 @@ export function initCVModal() {
         const cvModal = document.getElementById('cvModal');
         const content = cvModal.querySelector('#cvModalContent');
         const background = cvModal.querySelector('#cvModalBackground');
+        const isMobile = window.innerWidth < 640; // sm breakpoint
         
         // Reset all transitions and transforms
         content.style.transition = 'transform 0.3s ease-out';
         background.style.transition = 'opacity 0.3s ease-out';
         
-        // Ensure modal starts from bottom
-        content.classList.add('translate-y-full');
+        // Ensure modal starts from correct position based on viewport
+        if (isMobile) {
+            content.style.transform = 'translateY(100%)';
+        } else {
+            content.style.transform = 'translateX(100%)';
+        }
+        
         background.classList.remove('opacity-100');
         background.style.opacity = '0';
-        
-        // Clear any lingering inline styles
-        content.style.transform = '';
     }
 
     // Add click event listener using event delegation
@@ -94,6 +97,14 @@ export function initCVModal() {
     function openModal() {
         resetDragState();
         const cvModal = document.getElementById('cvModal');
+        const cvContent = document.getElementById('cvContent');
+        const isMobile = window.innerWidth < 640;
+        
+        // Force a fresh content state by cloning and replacing
+        if (cvContent) {
+            const freshContent = cvContent.cloneNode(true);
+            cvContent.parentNode.replaceChild(freshContent, cvContent);
+        }
         
         // First make modal visible but in starting position
         cvModal.classList.remove('hidden');
@@ -104,7 +115,8 @@ export function initCVModal() {
             const content = cvModal.querySelector('#cvModalContent');
             const background = cvModal.querySelector('#cvModalBackground');
             
-            content.classList.remove('translate-y-full');
+            // Reset transform to show the modal
+            content.style.transform = 'translate(0, 0)';
             background.classList.add('opacity-100');
             background.style.opacity = '1';
         });
@@ -114,24 +126,30 @@ export function initCVModal() {
         const cvModal = document.getElementById('cvModal');
         const background = cvModal.querySelector('#cvModalBackground');
         const content = cvModal.querySelector('#cvModalContent');
+        const isMobile = window.innerWidth < 640;
         
         // Reset transitions for smooth closing
         content.style.transition = 'transform 0.3s ease-out';
         background.style.transition = 'opacity 0.3s ease-out';
         
         background.classList.remove('opacity-100');
-        content.classList.add('translate-y-full');
+        
+        // Set the appropriate transform based on viewport
+        if (isMobile) {
+            content.style.transform = 'translateY(100%)';
+        } else {
+            content.style.transform = 'translateX(100%)';
+        }
         background.style.opacity = '0';
         
         setTimeout(() => {
             cvModal.classList.add('hidden');
             resetDragState();
-            prepareModalForOpen(); // Prepare for next opening
         }, 300);
     }
 
     // Common function to handle drag start
-    function handleDragStart(clientY) {
+    function handleDragStart(clientY, event) {
         const cvModal = document.getElementById('cvModal');
         const cvModalContent = document.getElementById('cvModalContent');
         const cvContent = document.getElementById('cvContent');
@@ -141,54 +159,52 @@ export function initCVModal() {
         // Store initial scroll position
         initialScrollTop = cvContent.scrollTop;
         
-        // Only initiate drag if:
-        // 1. Touching the puller element, OR
-        // 2. At the top of the content (scrollTop === 0)
-        const isTouchingPuller = event.target.closest('.w-10.h-1.bg-gray-400');
-        const isAtTop = cvContent.scrollTop <= 0;
+        // Check if we're touching the puller or its container
+        const isTouchingPuller = event?.target.closest('.puller') || event?.target.classList.contains('puller');
+        console.log('Drag start:', { 
+            isTouchingPuller, 
+            scrollTop: cvContent.scrollTop,
+            target: event?.target,
+            clientY
+        });
         
-        if (!isTouchingPuller && !isAtTop) {
-            return false;
+        // Always allow dragging if touching the puller, otherwise only when at the top
+        if (isTouchingPuller || cvContent.scrollTop <= 0) {
+            startY = clientY;
+            lastDragY = clientY;
+            lastDragTime = Date.now();
+            isDragging = true;
+            startTranslateY = currentTranslateY;
+            dragVelocity = 0;
+
+            // Remove transition while dragging
+            cvModalContent.style.transition = 'none';
+            console.log('Drag initiated');
+            return true;
         }
-
-        startY = clientY;
-        lastDragY = clientY;
-        lastDragTime = Date.now();
-        isDragging = true;
-        startTranslateY = currentTranslateY;
-        dragVelocity = 0;
-
-        // Remove transition while dragging
-        cvModalContent.style.transition = 'none';
-        return true;
+        
+        return false;
     }
 
     // Common function to handle drag move
-    function handleDragMove(clientY) {
+    function handleDragMove(clientY, event) {
         if (!isDragging) return;
         
         const cvModalContent = document.getElementById('cvModalContent');
-        const cvContent = document.getElementById('cvContent');
         const deltaY = clientY - startY;
         
-        // If we started dragging from the content (not the puller)
-        // and we're not at the top anymore, cancel the drag
-        const isTouchingPuller = event.target.closest('.w-10.h-1.bg-gray-400');
-        if (!isTouchingPuller && cvContent.scrollTop > 0) {
-            isDragging = false;
-            resetDragState();
-            return;
-        }
+        console.log('Drag move:', { deltaY, clientY, startY });
         
         // Only allow dragging downwards
         if (deltaY < 0) {
+            console.log('Canceling upward drag');
             isDragging = false;
             resetDragState();
             return;
         }
 
-        // Prevent default scroll behavior while dragging
-        event.preventDefault();
+        // Always prevent default when dragging
+        event?.preventDefault();
         
         const currentTime = Date.now();
         const deltaTime = currentTime - lastDragTime;
@@ -251,17 +267,37 @@ export function initCVModal() {
 
     // Touch event handlers
     document.addEventListener('touchstart', (e) => {
-        if (handleDragStart(e.touches[0].clientY)) {
+        if (handleDragStart(e.touches[0].clientY, e)) {
             // Only prevent default if we're actually starting a drag
-            if (event.target.closest('.w-10.h-1.bg-gray-400')) {
+            if (e.target.closest('.puller')) {
                 e.preventDefault();
             }
         }
     }, { passive: false });
 
     document.addEventListener('touchmove', (e) => {
+        const cvModal = document.getElementById('cvModal');
+        const cvContent = document.getElementById('cvContent');
+        
+        // If modal is open and we're not dragging
+        if (!cvModal.classList.contains('hidden') && !isDragging) {
+            // Check if we've hit the scroll boundaries
+            const isAtTop = cvContent.scrollTop <= 0;
+            const isAtBottom = cvContent.scrollTop + cvContent.clientHeight >= cvContent.scrollHeight;
+            
+            // If we're at the boundaries and trying to scroll further in that direction
+            if ((isAtTop && e.touches[0].clientY > lastDragY) || 
+                (isAtBottom && e.touches[0].clientY < lastDragY)) {
+                e.preventDefault();
+            }
+            
+            // Update last position for next check
+            lastDragY = e.touches[0].clientY;
+        }
+        
+        // Handle dragging if active
         if (isDragging) {
-            handleDragMove(e.touches[0].clientY);
+            handleDragMove(e.touches[0].clientY, e);
         }
     }, { passive: false });
 
@@ -271,22 +307,27 @@ export function initCVModal() {
 
     // Mouse event handlers (for desktop testing)
     document.addEventListener('mousedown', (e) => {
-        if (handleDragStart(e.clientY)) {
-            // Only prevent default if we're actually starting a drag
-            if (event.target.closest('.w-10.h-1.bg-gray-400')) {
-                e.preventDefault();
-            }
+        const cvModal = document.getElementById('cvModal');
+        if (cvModal.classList.contains('hidden')) return;
+        
+        if (handleDragStart(e.clientY, e)) {
+            // Prevent text selection while dragging
+            e.preventDefault();
         }
     });
 
     document.addEventListener('mousemove', (e) => {
         if (isDragging) {
-            handleDragMove(e.clientY);
+            e.preventDefault();
+            handleDragMove(e.clientY, e);
         }
     });
 
     document.addEventListener('mouseup', () => {
-        handleDragEnd();
+        if (isDragging) {
+            console.log('Drag end');
+            handleDragEnd();
+        }
     });
 
     // Close modal on escape key press
