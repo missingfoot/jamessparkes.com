@@ -109,7 +109,7 @@ export function initCVModal() {
         // Update status bar to match modal background
         const metaStatusBar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
         if (metaStatusBar) {
-            metaStatusBar.setAttribute('content', 'black');
+            metaStatusBar.setAttribute('content', 'black-translucent');
         }
         
         // First make modal visible but in starting position
@@ -212,11 +212,14 @@ export function initCVModal() {
         
         const currentTime = Date.now();
         const deltaTime = currentTime - lastDragTime;
-        if (deltaTime > 0) {
-            dragVelocity = (clientY - lastDragY) / deltaTime;
-        }
+        
+        // Track drag direction
+        const lastDragDirection = clientY > lastDragY ? 'down' : 'up';
+        dragVelocity = deltaTime > 0 ? (clientY - lastDragY) / deltaTime : 0;
+        
         lastDragTime = currentTime;
         lastDragY = clientY;
+        window.lastDragDirection = lastDragDirection; // Store for drag end
 
         // Apply resistance to the drag
         currentTranslateY = startTranslateY + (deltaY / DRAG_RESISTANCE);
@@ -239,41 +242,44 @@ export function initCVModal() {
         const cvModal = document.getElementById('cvModal');
         const background = cvModal.querySelector('#cvModalBackground');
         
-        // Calculate final velocity-based position
-        const shouldDismissVelocity = dragVelocity > VELOCITY_THRESHOLD;
-        const shouldDismissDistance = currentTranslateY > DISMISS_THRESHOLD;
+        // Get the final position and last direction
+        const finalTranslateY = currentTranslateY;
+        const lastDirection = window.lastDragDirection || 'none';
+        const shouldDismissVelocity = dragVelocity > VELOCITY_THRESHOLD && lastDirection === 'down';
+        const shouldDismissDistance = finalTranslateY > DISMISS_THRESHOLD && lastDirection === 'down';
         
-        if (shouldDismissVelocity || shouldDismissDistance) {
-            // Only dismiss if we've dragged a significant amount
-            if (currentTranslateY > 20) {
-                // Momentum-based dismissal
-                const finalTranslateY = window.innerHeight;
-                const duration = shouldDismissVelocity ? 300 : 400; // Faster if flicked
-                
-                cvModalContent.style.transition = `transform ${duration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
-                background.style.transition = `opacity ${duration}ms ease-out`;
-                
-                cvModalContent.style.transform = `translateY(${finalTranslateY}px)`;
-                background.style.opacity = '0';
-                
-                setTimeout(() => {
-                    cvModal.classList.add('hidden');
-                    resetDragState();
-                }, duration);
-            } else {
-                // Snap back if the drag was too small
-                snapBack();
-            }
+        if ((shouldDismissVelocity || shouldDismissDistance) && lastDirection === 'down') {
+            // Momentum-based dismissal
+            const duration = shouldDismissVelocity ? 300 : 400; // Faster if flicked
+            
+            cvModalContent.style.transition = `transform ${duration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+            background.style.transition = `opacity ${duration}ms ease-out`;
+            
+            cvModalContent.style.transform = `translateY(${window.innerHeight}px)`;
+            background.style.opacity = '0';
+            
+            setTimeout(() => {
+                cvModal.classList.add('hidden');
+                resetDragState();
+            }, duration);
         } else {
+            // Snap back if last direction was up or not far enough
             snapBack();
         }
+        
+        // Clear the stored direction
+        window.lastDragDirection = undefined;
     }
 
     function snapBack() {
         const cvModalContent = document.getElementById('cvModalContent');
+        const background = document.getElementById('cvModalBackground');
+        
         cvModalContent.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+        background.style.transition = 'opacity 0.3s ease-out';
         cvModalContent.style.transform = '';
-        document.getElementById('cvModalBackground').style.opacity = 1;
+        background.style.opacity = '1';
+        
         setTimeout(() => {
             resetDragState();
         }, 300);
@@ -303,8 +309,18 @@ export function initCVModal() {
         // Early return if modal is hidden or on desktop
         if (cvModal.classList.contains('hidden') || !isMobile) return;
         
-        // If we're not dragging, let the content scroll normally
+        // If we're not dragging, check if we need to prevent pull-to-refresh
         if (!isDragging) {
+            const isAtTop = cvContent.scrollTop <= 0;
+            const touchDeltaY = e.touches[0].clientY - lastDragY;
+            
+            // Prevent pull-to-refresh when at top and pulling down
+            if (isAtTop && touchDeltaY > 0) {
+                e.preventDefault();
+            }
+            
+            // Update last position for next check
+            lastDragY = e.touches[0].clientY;
             return;
         }
         
