@@ -5,8 +5,8 @@ export function CVModal() {
                 <div id="cvModalBackground" class="absolute inset-0 bg-black bg-opacity-50 opacity-0 transition-opacity duration-300"></div>
                 <div id="cvModalContent" class="absolute inset-x-0 bottom-0 bg-primary-light dark:bg-primary-dark rounded-t-xl transform translate-y-full transition-all duration-300 h-[80vh] flex flex-col">
                     <!-- Puller (only for mobile) -->
-                    <div class="flex justify-center pt-2 pb-4">
-                        <div class="w-10 h-1 bg-gray-400 dark:bg-gray-500 rounded-full"></div>
+                    <div class="flex justify-center pt-4 pb-6 cursor-grab active:cursor-grabbing">
+                        <div class="w-10 h-1 bg-gray-400 dark:bg-gray-500 rounded-full mt-2"></div>
                     </div>
                     <!-- CV content -->
                     <div id="cvContent" class="flex-grow overflow-y-auto p-4 sm:p-10 text-gray-800 dark:text-gray-200">
