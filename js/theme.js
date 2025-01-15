@@ -6,37 +6,36 @@ export function updateStatusBarColor(isDark) {
 }
 
 export function initTheme() {
-    console.log('initTheme called');
     // Check for saved theme preference or use system preference
-    const isDark = localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
     
-    if (isDark) {
-        console.log('Setting dark theme');
-        document.documentElement.classList.add('dark');
-    } else {
-        console.log('Setting light theme');
-        document.documentElement.classList.remove('dark');
-    }
-    
-    // Update status bar color on init
-    updateStatusBarColor(isDark);
+    // Apply the theme
+    applyTheme(theme);
 }
 
 export function toggleTheme() {
-    console.log('toggleTheme called');
-    document.documentElement.classList.toggle('dark');
+    const html = document.documentElement;
+    const currentTheme = html.classList.contains('dark') ? 'dark' : 'light';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     
-    const isDark = document.documentElement.classList.contains('dark');
+    applyTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+}
+
+function applyTheme(theme) {
+    const html = document.documentElement;
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    const metaStatusBar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
     
-    // Save preference
-    if (isDark) {
-        console.log('Saving dark theme preference');
-        localStorage.theme = 'dark';
+    if (theme === 'dark') {
+        html.classList.add('dark');
+        metaThemeColor?.setAttribute('content', '#000000');
+        metaStatusBar?.setAttribute('content', 'black');
     } else {
-        console.log('Saving light theme preference');
-        localStorage.theme = 'light';
+        html.classList.remove('dark');
+        metaThemeColor?.setAttribute('content', '#ffffff');
+        metaStatusBar?.setAttribute('content', 'default');
     }
-    
-    // Update status bar color on toggle
-    updateStatusBarColor(isDark);
 } 
