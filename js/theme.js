@@ -32,7 +32,7 @@ function applyTheme(theme) {
     if (theme === 'dark') {
         html.classList.add('dark');
         metaThemeColor?.setAttribute('content', '#000000');
-        metaStatusBar?.setAttribute('content', 'black');
+        metaStatusBar?.setAttribute('content', 'black-translucent');
     } else {
         html.classList.remove('dark');
         metaThemeColor?.setAttribute('content', '#ffffff');

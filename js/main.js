@@ -106,6 +106,12 @@ export function initCVModal() {
             cvContent.parentNode.replaceChild(freshContent, cvContent);
         }
         
+        // Update status bar to match modal background
+        const metaStatusBar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+        if (metaStatusBar) {
+            metaStatusBar.setAttribute('content', 'black');
+        }
+        
         // First make modal visible but in starting position
         cvModal.classList.remove('hidden');
         prepareModalForOpen();
@@ -142,6 +148,13 @@ export function initCVModal() {
         }
         background.style.opacity = '0';
         
+        // Reset status bar to theme-based style
+        const isDark = document.documentElement.classList.contains('dark');
+        const metaStatusBar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+        if (metaStatusBar) {
+            metaStatusBar.setAttribute('content', isDark ? 'black-translucent' : 'default');
+        }
+        
         setTimeout(() => {
             cvModal.classList.add('hidden');
             resetDragState();
@@ -153,23 +166,18 @@ export function initCVModal() {
         const cvModal = document.getElementById('cvModal');
         const cvModalContent = document.getElementById('cvModalContent');
         const cvContent = document.getElementById('cvContent');
+        const isMobile = window.innerWidth < 640;
         
-        if (cvModal.classList.contains('hidden')) return false;
+        if (cvModal.classList.contains('hidden') || !isMobile) return false;
         
         // Store initial scroll position
         initialScrollTop = cvContent.scrollTop;
         
         // Check if we're touching the puller or its container
         const isTouchingPuller = event?.target.closest('.puller') || event?.target.classList.contains('puller');
-        console.log('Drag start:', { 
-            isTouchingPuller, 
-            scrollTop: cvContent.scrollTop,
-            target: event?.target,
-            clientY
-        });
         
-        // Always allow dragging if touching the puller, otherwise only when at the top
-        if (isTouchingPuller || cvContent.scrollTop <= 0) {
+        // Only allow dragging if touching the puller
+        if (isTouchingPuller) {
             startY = clientY;
             lastDragY = clientY;
             lastDragTime = Date.now();
@@ -179,7 +187,6 @@ export function initCVModal() {
 
             // Remove transition while dragging
             cvModalContent.style.transition = 'none';
-            console.log('Drag initiated');
             return true;
         }
         
@@ -193,13 +200,10 @@ export function initCVModal() {
         const cvModalContent = document.getElementById('cvModalContent');
         const deltaY = clientY - startY;
         
-        console.log('Drag move:', { deltaY, clientY, startY });
-        
-        // Only allow dragging downwards
+        // Only allow dragging downwards and reset if trying to drag upwards
         if (deltaY < 0) {
-            console.log('Canceling upward drag');
-            isDragging = false;
-            resetDragState();
+            currentTranslateY = 0;
+            cvModalContent.style.transform = '';
             return;
         }
 
@@ -240,33 +244,49 @@ export function initCVModal() {
         const shouldDismissDistance = currentTranslateY > DISMISS_THRESHOLD;
         
         if (shouldDismissVelocity || shouldDismissDistance) {
-            // Momentum-based dismissal
-            const finalTranslateY = window.innerHeight;
-            const duration = shouldDismissVelocity ? 300 : 400; // Faster if flicked
-            
-            cvModalContent.style.transition = `transform ${duration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
-            background.style.transition = `opacity ${duration}ms ease-out`;
-            
-            cvModalContent.style.transform = `translateY(${finalTranslateY}px)`;
-            background.style.opacity = '0';
-            
-            setTimeout(() => {
-                cvModal.classList.add('hidden');
-                resetDragState();
-            }, duration);
+            // Only dismiss if we've dragged a significant amount
+            if (currentTranslateY > 20) {
+                // Momentum-based dismissal
+                const finalTranslateY = window.innerHeight;
+                const duration = shouldDismissVelocity ? 300 : 400; // Faster if flicked
+                
+                cvModalContent.style.transition = `transform ${duration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+                background.style.transition = `opacity ${duration}ms ease-out`;
+                
+                cvModalContent.style.transform = `translateY(${finalTranslateY}px)`;
+                background.style.opacity = '0';
+                
+                setTimeout(() => {
+                    cvModal.classList.add('hidden');
+                    resetDragState();
+                }, duration);
+            } else {
+                // Snap back if the drag was too small
+                snapBack();
+            }
         } else {
-            // Snap back
-            cvModalContent.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-            cvModalContent.style.transform = '';
-            document.getElementById('cvModalBackground').style.opacity = 1;
-            setTimeout(() => {
-                resetDragState();
-            }, 300);
+            snapBack();
         }
+    }
+
+    function snapBack() {
+        const cvModalContent = document.getElementById('cvModalContent');
+        cvModalContent.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+        cvModalContent.style.transform = '';
+        document.getElementById('cvModalBackground').style.opacity = 1;
+        setTimeout(() => {
+            resetDragState();
+        }, 300);
     }
 
     // Touch event handlers
     document.addEventListener('touchstart', (e) => {
+        const cvModal = document.getElementById('cvModal');
+        if (cvModal.classList.contains('hidden')) return;
+        
+        // Store the touch position for later comparison
+        lastDragY = e.touches[0].clientY;
+        
         if (handleDragStart(e.touches[0].clientY, e)) {
             // Only prevent default if we're actually starting a drag
             if (e.target.closest('.puller')) {
@@ -278,27 +298,18 @@ export function initCVModal() {
     document.addEventListener('touchmove', (e) => {
         const cvModal = document.getElementById('cvModal');
         const cvContent = document.getElementById('cvContent');
+        const isMobile = window.innerWidth < 640;
         
-        // If modal is open and we're not dragging
-        if (!cvModal.classList.contains('hidden') && !isDragging) {
-            // Check if we've hit the scroll boundaries
-            const isAtTop = cvContent.scrollTop <= 0;
-            const isAtBottom = cvContent.scrollTop + cvContent.clientHeight >= cvContent.scrollHeight;
-            
-            // If we're at the boundaries and trying to scroll further in that direction
-            if ((isAtTop && e.touches[0].clientY > lastDragY) || 
-                (isAtBottom && e.touches[0].clientY < lastDragY)) {
-                e.preventDefault();
-            }
-            
-            // Update last position for next check
-            lastDragY = e.touches[0].clientY;
+        // Early return if modal is hidden or on desktop
+        if (cvModal.classList.contains('hidden') || !isMobile) return;
+        
+        // If we're not dragging, let the content scroll normally
+        if (!isDragging) {
+            return;
         }
         
         // Handle dragging if active
-        if (isDragging) {
-            handleDragMove(e.touches[0].clientY, e);
-        }
+        handleDragMove(e.touches[0].clientY, e);
     }, { passive: false });
 
     document.addEventListener('touchend', () => {
