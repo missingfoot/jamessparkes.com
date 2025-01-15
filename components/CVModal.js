@@ -2,7 +2,7 @@
 export function CVModal() {
     return `
         <div id="cvModal" class="fixed inset-0 z-[1001] hidden">
-                <div id="cvModalBackground" class="absolute inset-0 bg-black bg-opacity-20 opacity-0 transition-opacity duration-300"></div>
+                <div id="cvModalBackground" class="absolute inset-0 bg-black bg-opacity-50 opacity-0 transition-opacity duration-300"></div>
                 <div id="cvModalContent" class="absolute inset-x-0 bottom-0 bg-primary-light dark:bg-primary-dark rounded-t-xl transform translate-y-full transition-all duration-300 h-[80vh] flex flex-col">
                     <!-- Puller (only for mobile) -->
                     <div class="flex justify-center pt-2 pb-4">
