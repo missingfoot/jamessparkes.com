@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
     <!-- Primary Meta Tags -->
@@ -28,8 +29,8 @@
     <meta property="twitter:image" content="https://jamessparkes.com/images/og-image.jpg">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="apple-touch-icon" href="webclip.png">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/webclip.png">
     
     <!-- Include compiled Tailwind CSS -->
     <link rel="stylesheet" href="styles/output.css">
@@ -63,6 +64,7 @@
         import { initTheme, toggleTheme } from './js/theme.js';
         import { initLightbox } from './js/lightbox.js';
         import { initGallery } from './js/gallery.js';
+        import { initEmailContact } from './js/main.js';
 
         // Initialize theme first
         initTheme();
@@ -80,6 +82,9 @@
 
         // Initialize gallery
         initGallery();
+
+        // Initialize email contact
+        initEmailContact();
 
         // Add theme toggle click handler
         document.addEventListener('click', (e) => {

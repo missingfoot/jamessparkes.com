@@ -11,8 +11,8 @@ export function SocialLinks() {
             <a href="https://github.com/jamessparkes" target="_blank" rel="noopener noreferrer" class="text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition duration-300 cursor-pointer">
                 GitHub
             </a>
-            <!-- WhatsApp -->
-            <a href="#" id="whatsappLink" target="_blank" rel="noopener noreferrer" class="text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition duration-300 cursor-pointer">
+            <!-- Contact -->
+            <a href="mailto:" id="contactLink" class="text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition duration-300 cursor-pointer">
                 Contact
             </a>
             <!-- View CV -->

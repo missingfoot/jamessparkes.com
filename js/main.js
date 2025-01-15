@@ -74,4 +74,26 @@ export function initCVModal() {
             closeModal();
         }
     });
+}
+
+// Initialize contact link
+export function initEmailContact() {
+    const originalParts = [
+        'Y29t',
+        'a2VzLg==',
+        'c3Bhcg==',
+        'bWVz',
+        'QGph',
+        'bGlv',
+        'dGZv',
+        'cG9y'
+    ];
+    
+    const contactLink = document.getElementById('contactLink');
+    if (contactLink) {
+        contactLink.addEventListener('click', (e) => {
+            const email = [...originalParts].map(part => atob(part)).reverse().join('');
+            contactLink.href = `mailto:${email}?subject=${encodeURIComponent('Portfolio Enquiry')}`;
+        });
+    }
 } 
