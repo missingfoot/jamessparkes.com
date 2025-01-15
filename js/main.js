@@ -163,6 +163,7 @@ export function initCVModal() {
 
     // Common function to handle drag start
     function handleDragStart(clientY, event) {
+        // Handle drag initialization for CV modal
         const cvModal = document.getElementById('cvModal');
         const cvModalContent = document.getElementById('cvModalContent');
         const cvContent = document.getElementById('cvContent');
