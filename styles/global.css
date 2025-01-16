@@ -44,6 +44,34 @@ body {
     touch-action: pan-y;
 }
 
+/* List styles */
+.prose ul {
+    list-style: none;
+    padding-left: 1.5em;
+}
+
+.prose ul li {
+    position: relative;
+}
+
+.prose ul li::before {
+    content: "—";
+    position: absolute;
+    left: -1.5em;
+    color: inherit;
+}
+
+/* Selection styles */
+::selection {
+    background-color: black;
+    color: white;
+}
+
+.dark ::selection {
+    background-color: white;
+    color: black;
+}
+
 /* Sticky footer styles */
 .sticky-footer {
     position: fixed;

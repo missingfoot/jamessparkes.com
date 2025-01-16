@@ -64,8 +64,13 @@ export function initPortfolioModal() {
     // Function to parse markdown sections
     function parseMarkdown(markdown) {
         const sections = [];
-        let currentSection = null;
+        let currentSection = {
+            title: '',  // Empty title for intro section
+            headerLevel: 0,  // 0 indicates intro section
+            content: ''
+        };
         let inList = false;
+        let hasContent = false;
         
         // Split markdown into lines and clean them
         const lines = markdown.split('\n').map(line => line.trimEnd());
@@ -73,10 +78,11 @@ export function initPortfolioModal() {
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
             const nextLine = lines[i + 1] || '';
+            hasContent = true;
 
             // Check for section headers (##, ###, or ####)
             if (line.match(/^#{2,4}\s/)) {
-                if (currentSection) {
+                if (currentSection.content || currentSection.title) {
                     sections.push(currentSection);
                 }
                 const headerLevel = line.match(/^(#{2,4})\s/)[1].length;
@@ -87,7 +93,7 @@ export function initPortfolioModal() {
                     content: ''
                 };
                 inList = false;
-            } else if (currentSection && line.trim()) {
+            } else if (line.trim()) {
                 // Handle horizontal divider
                 if (line.trim() === '---') {
                     currentSection.content += '<hr class="my-8 border-t border-gray-300 dark:border-gray-700">';
@@ -121,18 +127,32 @@ export function initPortfolioModal() {
                         currentSection.content += formattedLine + ' ';
                     }
                 }
-            } else if (currentSection && !line.trim() && inList) {
+            } else if (!line.trim() && inList) {
                 currentSection.content += '</ul>';
                 inList = false;
             }
         }
         
-        if (currentSection && inList) {
+        if (inList) {
             currentSection.content += '</ul>';
         }
         
-        if (currentSection) {
+        // If we have content but no sections were created, wrap everything in the current section
+        if (hasContent && sections.length === 0 && currentSection.content) {
             sections.push(currentSection);
+        }
+        // If we have a final section with content, add it
+        else if (currentSection.content || currentSection.title) {
+            sections.push(currentSection);
+        }
+        
+        // If we somehow ended up with no sections but had content, create a basic section
+        if (sections.length === 0 && hasContent) {
+            sections.push({
+                title: '',
+                headerLevel: 0,
+                content: formatText(markdown)
+            });
         }
         
         return sections;
@@ -179,9 +199,8 @@ export function initPortfolioModal() {
                 const portfolioData = await portfolioResponse.json();
                 const project = portfolioData.projects.find(p => p.id === parseInt(projectId));
                 
-                if (project) {
-                    const markdownFilename = getMarkdownFilename(project);
-                    const markdownResponse = await fetch(`/case-studies/${markdownFilename}.md`);
+                if (project && project.caseStudyFile) {
+                    const markdownResponse = await fetch(`/case-studies/${project.caseStudyFile}`);
                     if (!markdownResponse.ok) throw new Error('Case study not found');
                     
                     const markdown = await markdownResponse.text();
@@ -194,7 +213,7 @@ export function initPortfolioModal() {
         }
 
         if (closeModalButton || portfolioModalBackground) {
-            e.preventDefault(); // Prevent default link behavior
+            e.preventDefault();
             closePortfolioModal();
         }
     });
@@ -203,7 +222,22 @@ export function initPortfolioModal() {
         resetDragState();
         const portfolioModal = document.getElementById('portfolioDetailModal');
         const portfolioContent = document.getElementById('portfolioContent');
+        const content = portfolioModal.querySelector('#portfolioModalContent');
+        const background = portfolioModal.querySelector('#portfolioModalBackground');
         const isMobile = window.innerWidth < 640;
+        
+        // Remove hidden class but keep modal visually hidden
+        portfolioModal.classList.remove('hidden');
+        
+        // Set initial state
+        content.style.transition = 'none';
+        background.style.transition = 'none';
+        if (isMobile) {
+            content.style.transform = 'translateY(100%)';
+        } else {
+            content.style.transform = 'translateX(100%)';
+        }
+        background.style.opacity = '0';
         
         // Update content
         portfolioContent.innerHTML = `<div class="flex items-center mb-6">
@@ -213,9 +247,17 @@ export function initPortfolioModal() {
                     <p class="text-gray-600 dark:text-gray-400">${project.company}, ${project.location}</p>
                 </div>
             </div>
-            <div class="prose dark:prose-invert max-w-none">${projectDetail.sections.map(section => 
-                `<h${section.headerLevel} class="text-${section.headerLevel === 2 ? 'xl' : section.headerLevel === 3 ? 'lg' : 'base'} font-bold text-gray-800 dark:text-gray-200 mt-6 mb-3">${section.title}</h${section.headerLevel}><div class="text-gray-800 dark:text-gray-200">${section.content}</div>`
-            ).join('')}</div>
+            <div class="prose dark:prose-invert max-w-none">
+                ${projectDetail.sections.map(section => {
+                    if (section.headerLevel === 0) {
+                        // Intro section
+                        return `<div class="text-gray-800 dark:text-gray-200 mb-8">${section.content}</div>`;
+                    } else {
+                        // Regular section with header
+                        return `<h${section.headerLevel} class="text-${section.headerLevel === 2 ? 'xl' : section.headerLevel === 3 ? 'lg' : 'base'} font-bold text-gray-800 dark:text-gray-200 mt-6 mb-3">${section.title}</h${section.headerLevel}><div class="text-gray-800 dark:text-gray-200">${section.content}</div>`;
+                    }
+                }).join('')}
+            </div>
             <div class="flex justify-center mt-8 mb-4">
                 <a href="#" id="closePortfolioModalButton" class="group inline-block text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-300 cursor-pointer">
                     <span class="inline-block transform group-hover:-translate-y-0.5 transition-transform duration-150">Close</span>
@@ -232,19 +274,21 @@ export function initPortfolioModal() {
         if (metaThemeColor) {
             metaThemeColor.setAttribute('content', isDark ? '#1A1A1A' : '#FFFFFF');
         }
-        
-        portfolioModal.classList.remove('hidden');
-        prepareModalForOpen();
-        
+
+        // Wait for next frame to ensure content is rendered
         requestAnimationFrame(() => {
-            const content = portfolioModal.querySelector('#portfolioModalContent');
-            const background = portfolioModal.querySelector('#portfolioModalBackground');
+            // Force a reflow to ensure the initial state is rendered
+            content.offsetHeight;
             
+            // Enable transitions
             content.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
             background.style.transition = 'opacity 0.3s ease-out';
             
-            content.style.transform = 'translate(0, 0)';
-            background.style.opacity = '1';
+            // Trigger the animation
+            requestAnimationFrame(() => {
+                content.style.transform = 'translate(0, 0)';
+                background.style.opacity = '1';
+            });
         });
     }
 
@@ -453,4 +497,19 @@ export function initPortfolioModal() {
             closePortfolioModal();
         }
     });
+
+    async function loadCaseStudy(projectId) {
+        const project = portfolioData.projects.find(p => p.id === projectId);
+        if (!project || !project.caseStudyFile) return;
+
+        try {
+            const response = await fetch(`/case-studies/${project.caseStudyFile}`);
+            if (!response.ok) throw new Error('Failed to load case study');
+            const markdown = await response.text();
+            return marked.parse(markdown);
+        } catch (error) {
+            console.error('Error loading case study:', error);
+            return null;
+        }
+    }
 } 

@@ -50,9 +50,11 @@ function createPortfolioItem(project) {
             <!-- Post content -->
             <div class="p-4 sm:p-6">
                 <p class="text-gray-800 dark:text-gray-200 mb-4">${project.description}</p>
-                <a href="#" class="group inline-block text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-300 cursor-pointer mb-6" data-portfolio-detail="${project.id}">
-                    <span class="inline-block transform group-hover:-translate-y-0.5 transition-transform duration-150">Read Case Study</span>
-                </a>
+                ${project.caseStudyFile ? `
+                    <a href="#" class="group inline-block text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-300 cursor-pointer mb-6" data-portfolio-detail="${project.id}">
+                        <span class="inline-block transform group-hover:-translate-y-0.5 transition-transform duration-150">Read case study</span>
+                    </a>
+                ` : ''}
                 <div class="flex flex-wrap gap-2">
                     ${tagsHtml}
                 </div>
