@@ -53,12 +53,26 @@ export function initPortfolioModal() {
     }
 
     // Helper function to format text with bold and links
-    function formatText(text) {
-        return text
-            // Convert bold text
-            .replace(/\*\*(.*?)\*\*/g, '<span class="font-semibold">$1</span>')
-            // Convert links with consistent styling
-            .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="group inline-block text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-300"><span class="inline-block transform group-hover:-translate-y-0.5 transition-transform duration-150">$1</span></a>');
+    function formatText(text, isHeader = false) {
+        let formatted = text;
+        
+        // Only process bold text if not a header
+        if (!isHeader) {
+            formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<span class="font-semibold">$1</span>');
+        }
+        
+        // Process images - look in case-studies/img directory
+        formatted = formatted.replace(/!\[(.*?)\]\((.*?)\)/g, 
+            '<figure class="my-8">' +
+                '<img src="/case-studies/img/$2" alt="$1" class="rounded-lg w-full">' +
+                '<figcaption class="mt-2 text-sm text-gray-600 dark:text-gray-400 text-center">$1</figcaption>' +
+            '</figure>'
+        );
+        
+        // Always process links
+        formatted = formatted.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="group inline-block text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-300"><span class="inline-block transform group-hover:-translate-y-0.5 transition-transform duration-150">$1</span></a>');
+        
+        return formatted;
     }
 
     // Function to parse markdown sections
@@ -72,6 +86,11 @@ export function initPortfolioModal() {
         let inList = false;
         let hasContent = false;
         
+        // Helper function to strip markdown from headers
+        function stripHeaderMarkdown(text) {
+            return text.replace(/\*\*(.*?)\*\*/g, '$1');
+        }
+        
         // Split markdown into lines and clean them
         const lines = markdown.split('\n').map(line => line.trimEnd());
         
@@ -81,14 +100,14 @@ export function initPortfolioModal() {
             hasContent = true;
 
             // Check for section headers (##, ###, or ####)
-            if (line.match(/^#{2,4}\s/)) {
+            if (line.match(/^#{1,4}\s/)) {
                 if (currentSection.content || currentSection.title) {
                     sections.push(currentSection);
                 }
-                const headerLevel = line.match(/^(#{2,4})\s/)[1].length;
-                const title = line.replace(/^#{2,4}\s/, '').trim();
+                const headerLevel = line.match(/^(#{1,4})\s/)[1].length;
+                const title = line.replace(/^#{1,4}\s/, '').trim();
                 currentSection = {
-                    title: formatText(title),
+                    title: stripHeaderMarkdown(title), // Strip markdown from header
                     headerLevel,
                     content: ''
                 };
@@ -118,7 +137,7 @@ export function initPortfolioModal() {
                     // Handle line breaks and paragraphs
                     if (nextLine.trim() === '') {
                         // End of paragraph
-                        currentSection.content += `<p class="mb-6">${formattedLine}</p>`;
+                        currentSection.content += `<p>${formattedLine}</p>`;
                     } else if (nextLine.trim()) {
                         // Next line has content, add a line break
                         currentSection.content += `${formattedLine}<br>`;
@@ -257,12 +276,12 @@ export function initPortfolioModal() {
         
         // Update only the case study content
         caseStudyContent.innerHTML = `
-            <div class="prose dark:prose-invert max-w-none">
+            <article class="prose prose-slate dark:prose-invert prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl max-w-none">
                 ${projectDetail.sections.map(section => `
-                    ${section.title ? `<h2>${section.title}</h2>` : ''}
+                    ${section.title ? `<h${section.headerLevel}>${section.title}</h${section.headerLevel}>` : ''}
                     ${section.content}
                 `).join('')}
-            </div>
+            </article>
         `;
 
         // If the case study content isn't already in the DOM, append it

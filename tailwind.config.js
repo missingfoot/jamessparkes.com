@@ -21,7 +21,43 @@ module.exports = {
       borderRadius: {
         'global': 'var(--global-radius)',
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: 'none',
+            color: 'inherit',
+            a: {
+              color: 'inherit',
+              textDecoration: 'underline',
+              '&:hover': {
+                color: 'inherit',
+              },
+            },
+            'ul, ol': {
+              marginTop: '0.5em',
+              marginBottom: '1em',
+            },
+            img: {
+              borderRadius: '0.5rem',
+              marginTop: '2rem',
+              marginBottom: '2rem',
+            },
+            figure: {
+              marginTop: '2rem',
+              marginBottom: '2rem',
+            },
+            figcaption: {
+              marginTop: '0.5rem',
+              opacity: '0.8',
+              fontSize: '0.875rem',
+              textAlign: 'center',
+            },
+          },
+        },
+      },
     }
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 } 
