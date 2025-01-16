@@ -17,8 +17,6 @@ export function initGallery() {
         let isSwiping = false;
         let isAnimating = false;
         
-        console.log(`[Gallery ${id}] Initializing with ${images.length} images`);
-        
         // Ensure all images are loaded before initializing
         Promise.all(Array.from(images).map(img => {
             if (img.complete) return Promise.resolve();
@@ -27,7 +25,6 @@ export function initGallery() {
                 img.onerror = resolve;
             });
         })).then(() => {
-            console.log(`[Gallery ${id}] All images loaded`);
             updatePagination();
         });
 
@@ -36,7 +33,6 @@ export function initGallery() {
             if (isAnimating) return;
             isAnimating = true;
             currentIndex = (currentIndex - 1 + images.length) % images.length;
-            console.log(`[Gallery ${id}] Previous clicked, new index: ${currentIndex}/${images.length-1}`);
             snapToIndex(currentIndex);
         });
 
@@ -44,7 +40,6 @@ export function initGallery() {
             if (isAnimating) return;
             isAnimating = true;
             currentIndex = (currentIndex + 1) % images.length;
-            console.log(`[Gallery ${id}] Next clicked, new index: ${currentIndex}/${images.length-1}`);
             snapToIndex(currentIndex);
         });
 
@@ -90,8 +85,6 @@ export function initGallery() {
             
             // Remove transition during drag
             imagesWrapper.style.transition = 'none';
-            
-            console.log(`[Gallery ${id}] Drag start - X: ${startX}`);
         }
 
         function handleMove(e) {
@@ -134,14 +127,11 @@ export function initGallery() {
                 }
                 
                 imagesWrapper.style.transform = `translateX(${finalTranslate}%)`;
-                console.log(`[Gallery ${id}] Drag move - Translate: ${finalTranslate}%, Direction: ${lastDirection}`);
             }
         }
 
         function handleEnd(e) {
             if (!isDragging || !isSwiping || isAnimating) return;
-
-            console.log(`[Gallery ${id}] Drag end - Final direction: ${lastDirection}`);
 
             let newIndex = currentIndex;
             
@@ -157,7 +147,6 @@ export function initGallery() {
             
             if (newIndex !== currentIndex) {
                 currentIndex = newIndex;
-                console.log(`[Gallery ${id}] Snapping to index: ${currentIndex}`);
             }
             
             snapToIndex(currentIndex);

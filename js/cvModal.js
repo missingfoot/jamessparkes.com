@@ -65,6 +65,9 @@ export function initCVModal() {
         cvModal.classList.remove('hidden');
         prepareModalForOpen();
         
+        // Prevent background scrolling
+        document.body.style.overflow = 'hidden';
+        
         // Then trigger the animation after a brief delay
         requestAnimationFrame(() => {
             const content = cvModal.querySelector('#cvModalContent');
@@ -81,7 +84,6 @@ export function initCVModal() {
     }
 
     function closeModal() {
-        console.log('🔴 Closing modal via closeModal()');
         const cvModal = document.getElementById('cvModal');
         const background = cvModal.querySelector('#cvModalBackground');
         const content = cvModal.querySelector('#cvModalContent');
@@ -117,6 +119,9 @@ export function initCVModal() {
         if (metaStatusBar) {
             metaStatusBar.setAttribute('content', isDark ? 'black-translucent' : 'default');
         }
+        
+        // Restore body scrolling
+        document.body.style.overflow = '';
         
         setTimeout(() => {
             cvModal.classList.add('hidden');
@@ -236,13 +241,11 @@ export function initCVModal() {
         const cvModal = document.getElementById('cvModal');
 
         if (cvLink) {
-            console.log('🟢 Opening modal via click');
             e.preventDefault();
             openModal();
         }
 
         if (closeModalButton || cvModalBackground) {
-            console.log('🟢 Closing modal via click:', closeModalButton ? 'button' : 'background');
             closeModal();
         }
     });
@@ -314,7 +317,6 @@ export function initCVModal() {
 
     document.addEventListener('mouseup', () => {
         if (isDragging) {
-            console.log('Drag end');
             handleDragEnd();
         }
     });
@@ -323,7 +325,6 @@ export function initCVModal() {
     document.addEventListener('keydown', function(e) {
         const cvModal = document.getElementById('cvModal');
         if (e.key === 'Escape' && cvModal && !cvModal.classList.contains('hidden')) {
-            console.log('🟢 Closing modal via escape key');
             closeModal();
         }
     });
