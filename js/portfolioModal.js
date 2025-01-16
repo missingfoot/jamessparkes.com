@@ -58,9 +58,7 @@ export function initPortfolioModal() {
             // Convert bold text
             .replace(/\*\*(.*?)\*\*/g, '<span class="font-semibold">$1</span>')
             // Convert links with consistent styling
-            .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="group inline-block text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-300"><span class="inline-block transform group-hover:-translate-y-0.5 transition-transform duration-150">$1</span></a>')
-            // Convert double spaces at end of line to <br>
-            .replace(/  $/gm, '<br>');
+            .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="group inline-block text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-300"><span class="inline-block transform group-hover:-translate-y-0.5 transition-transform duration-150">$1</span></a>');
     }
 
     // Function to parse markdown sections
@@ -69,8 +67,8 @@ export function initPortfolioModal() {
         let currentSection = null;
         let inList = false;
         
-        // Split markdown into lines
-        const lines = markdown.split('\n');
+        // Split markdown into lines and clean them
+        const lines = markdown.split('\n').map(line => line.trimEnd());
         
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
@@ -99,50 +97,40 @@ export function initPortfolioModal() {
                 // Handle bullet points
                 if (line.trim().startsWith('- ')) {
                     if (!inList) {
-                        // Start a new list if we weren't in one
-                        if (currentSection.content) {
-                            currentSection.content += '\n';
-                        }
-                        currentSection.content += '<ul class="list-disc pl-6 my-0">\n';
+                        currentSection.content += '<ul class="list-disc pl-6 space-y-2 mb-4">';
                         inList = true;
                     }
-                    // Format the line content and add as list item
                     const listItemContent = formatText(line.substring(2).trim());
-                    currentSection.content += `  <li class="text-gray-800 dark:text-gray-200 my-0 leading-normal">${listItemContent}</li>\n`;
+                    currentSection.content += `<li class="text-gray-800 dark:text-gray-200">${listItemContent}</li>`;
                 } else {
-                    // If we were in a list and hit a non-list item, close the list
                     if (inList) {
-                        currentSection.content += '</ul>\n';
+                        currentSection.content += '</ul>';
                         inList = false;
                     }
-                    // Format the line content
-                    const formattedLine = formatText(line);
+                    const formattedLine = formatText(line.trim());
                     
                     // Handle line breaks and paragraphs
                     if (nextLine.trim() === '') {
                         // End of paragraph
-                        currentSection.content += `<p class="mb-4">${formattedLine}</p>\n`;
-                    } else if (line.endsWith('  ')) {
-                        // Line break (two spaces at end)
-                        currentSection.content += formattedLine + '\n';
+                        currentSection.content += `<p class="mb-6">${formattedLine}</p>`;
+                    } else if (nextLine.trim()) {
+                        // Next line has content, add a line break
+                        currentSection.content += `${formattedLine}<br>`;
                     } else {
                         // Continue in same paragraph
                         currentSection.content += formattedLine + ' ';
                     }
                 }
             } else if (currentSection && !line.trim() && inList) {
-                // Close list if we hit an empty line
-                currentSection.content += '</ul>\n';
+                currentSection.content += '</ul>';
                 inList = false;
             }
         }
         
-        // Close any open list at the end of the last section
         if (currentSection && inList) {
             currentSection.content += '</ul>';
         }
         
-        // Add the last section
         if (currentSection) {
             sections.push(currentSection);
         }
@@ -193,21 +181,16 @@ export function initPortfolioModal() {
         const isMobile = window.innerWidth < 640;
         
         // Update content
-        portfolioContent.innerHTML = `
-            <div class="flex items-center mb-6">
+        portfolioContent.innerHTML = `<div class="flex items-center mb-6">
                 <img src="${project.logo}" alt="${project.company} Logo" class="w-12 h-12 rounded-full mr-4">
                 <div>
                     <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">${project.title}</h2>
                     <p class="text-gray-600 dark:text-gray-400">${project.company}, ${project.location}</p>
                 </div>
             </div>
-            <div class="prose dark:prose-invert max-w-none">
-                ${projectDetail.sections.map(section => `
-                    <h${section.headerLevel} class="text-${section.headerLevel === 2 ? 'xl' : section.headerLevel === 3 ? 'lg' : 'base'} font-bold text-gray-800 dark:text-gray-200 mt-6 mb-3">${section.title}</h${section.headerLevel}>
-                    <div class="text-gray-800 dark:text-gray-200 whitespace-pre-line">${section.content}</div>
-                `).join('')}
-            </div>
-        `;
+            <div class="prose dark:prose-invert max-w-none">${projectDetail.sections.map(section => 
+                `<h${section.headerLevel} class="text-${section.headerLevel === 2 ? 'xl' : section.headerLevel === 3 ? 'lg' : 'base'} font-bold text-gray-800 dark:text-gray-200 mt-6 mb-3">${section.title}</h${section.headerLevel}><div class="text-gray-800 dark:text-gray-200">${section.content}</div>`
+            ).join('')}</div>`;
         
         // Update status bar
         const metaStatusBar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');

@@ -23,7 +23,7 @@ AMBIO-N is a platform that connects buyers with sellers of sustainable materials
 ---
 
 #### Key features and functionality
-**Marketplace redesign**:  
+**Marketplace redesign**:
 - **Search and filtering**: Designed an intuitive search and filtering system to help users quickly find materials that meet their exact needs. Filters included sustainability metrics, origin, and circularity data.  
 - **Product visibility**: Maximized screen space to display product details, sustainability statistics, and vendor information clearly.  
 - **Wishlists and saved items**: Added features like saving items and creating wishlists to enhance user convenience.  
@@ -79,5 +79,4 @@ The pitch decks were especially challenging as I had to distill the value propos
 
 ---
 
-#### Links and references
-- **Website**: [AMBIO-N (now ProcureCircular)](https://www.procurecircular.com) 
+**Website**: [AMBIO-N (now ProcureCircular)](https://www.procurecircular.com) 
