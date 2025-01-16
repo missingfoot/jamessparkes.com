@@ -3,7 +3,7 @@ export function CVModal() {
     return `
         <div id="cvModal" class="fixed inset-0 z-[1001] hidden">
             <div id="cvModalBackground" class="absolute inset-0 bg-black bg-opacity-50 opacity-0 transition-opacity duration-300"></div>
-            <div id="cvModalContent" class="absolute bottom-0 sm:right-8 sm:bottom-8 sm:top-8 bg-primary-light dark:bg-primary-dark rounded-t-xl sm:rounded-xl transform translate-y-full sm:translate-x-full transition-transform duration-300 h-[80vh] sm:h-[calc(100vh-4rem)] sm:max-w-[560px] w-full flex flex-col">
+            <div id="cvModalContent" class="absolute bottom-0 sm:right-8 sm:bottom-8 sm:top-8 bg-surface-light dark:bg-surface-dark rounded-t-xl sm:rounded-xl transform translate-y-full sm:translate-x-[100%] transition-transform duration-300 h-[90vh] sm:h-[calc(100vh-4rem)] sm:max-w-[560px] w-full flex flex-col">
                 <!-- Close button (desktop only) -->
                 <button class="hidden sm:flex absolute top-4 right-4 p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-300" id="closeModalButton">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

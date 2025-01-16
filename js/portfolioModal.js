@@ -138,6 +138,31 @@ export function initPortfolioModal() {
         return sections;
     }
 
+    // Add scroll event handling for desktop
+    document.addEventListener('wheel', (e) => {
+        const portfolioModal = document.getElementById('portfolioDetailModal');
+        if (portfolioModal.classList.contains('hidden') || window.innerWidth < 640) return;
+
+        const target = e.target;
+        const portfolioContent = document.getElementById('portfolioContent');
+
+        // If we're hovering over the modal content and it's scrollable
+        if (portfolioContent.contains(target)) {
+            const scrollTop = portfolioContent.scrollTop;
+            const scrollHeight = portfolioContent.scrollHeight;
+            const clientHeight = portfolioContent.clientHeight;
+
+            // Allow scrolling only if there's room to scroll in that direction
+            if ((scrollTop === 0 && e.deltaY < 0) || 
+                (scrollTop >= scrollHeight - clientHeight && e.deltaY > 0)) {
+                e.preventDefault();
+            }
+        } else {
+            // If we're not hovering over scrollable content, prevent scrolling
+            e.preventDefault();
+        }
+    }, { passive: false });
+
     // Add click event listener using event delegation
     document.addEventListener('click', async (e) => {
         const portfolioDetailLink = e.target.closest('[data-portfolio-detail]');
@@ -190,12 +215,22 @@ export function initPortfolioModal() {
             </div>
             <div class="prose dark:prose-invert max-w-none">${projectDetail.sections.map(section => 
                 `<h${section.headerLevel} class="text-${section.headerLevel === 2 ? 'xl' : section.headerLevel === 3 ? 'lg' : 'base'} font-bold text-gray-800 dark:text-gray-200 mt-6 mb-3">${section.title}</h${section.headerLevel}><div class="text-gray-800 dark:text-gray-200">${section.content}</div>`
-            ).join('')}</div>`;
+            ).join('')}</div>
+            <div class="flex justify-center mt-8 mb-4">
+                <a href="#" id="closePortfolioModalButton" class="group inline-block text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-300 cursor-pointer">
+                    <span class="inline-block transform group-hover:-translate-y-0.5 transition-transform duration-150">Close</span>
+                </a>
+            </div>`;
         
-        // Update status bar
+        // Update status bar to match surface color
+        const isDark = document.documentElement.classList.contains('dark');
         const metaStatusBar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+        const metaThemeColor = document.querySelector('meta[name="theme-color"]');
         if (metaStatusBar) {
             metaStatusBar.setAttribute('content', 'black-translucent');
+        }
+        if (metaThemeColor) {
+            metaThemeColor.setAttribute('content', isDark ? '#1A1A1A' : '#FFFFFF');
         }
         
         portfolioModal.classList.remove('hidden');
@@ -229,11 +264,15 @@ export function initPortfolioModal() {
         }
         background.style.opacity = '0';
         
-        // Reset status bar
+        // Reset status bar and theme color
         const isDark = document.documentElement.classList.contains('dark');
         const metaStatusBar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+        const metaThemeColor = document.querySelector('meta[name="theme-color"]');
         if (metaStatusBar) {
             metaStatusBar.setAttribute('content', isDark ? 'black-translucent' : 'default');
+        }
+        if (metaThemeColor) {
+            metaThemeColor.setAttribute('content', isDark ? '#000000' : '#FFFFFF');
         }
         
         setTimeout(() => {

@@ -8,26 +8,49 @@ export function initGallery() {
         const nextBtn = gallery.querySelector('[data-next]');
         const pagination = gallery.querySelector('[data-pagination]');
         let currentIndex = 0;
-        let touchStartX = 0;
-        let touchStartY = 0;
+        let startX = 0;
+        let startY = 0;
+        let lastX = 0;
+        let lastDirection = null;
+        let currentTranslate = 0;
+        let isDragging = false;
         let isSwiping = false;
-
-        // Initialize pagination
-        updatePagination();
+        let isAnimating = false;
+        
+        console.log(`[Gallery ${id}] Initializing with ${images.length} images`);
+        
+        // Ensure all images are loaded before initializing
+        Promise.all(Array.from(images).map(img => {
+            if (img.complete) return Promise.resolve();
+            return new Promise(resolve => {
+                img.onload = resolve;
+                img.onerror = resolve;
+            });
+        })).then(() => {
+            console.log(`[Gallery ${id}] All images loaded`);
+            updatePagination();
+        });
 
         // Add event listeners for buttons
         prevBtn?.addEventListener('click', () => {
+            if (isAnimating) return;
+            isAnimating = true;
             currentIndex = (currentIndex - 1 + images.length) % images.length;
-            updateGallery();
+            console.log(`[Gallery ${id}] Previous clicked, new index: ${currentIndex}/${images.length-1}`);
+            snapToIndex(currentIndex);
         });
 
         nextBtn?.addEventListener('click', () => {
+            if (isAnimating) return;
+            isAnimating = true;
             currentIndex = (currentIndex + 1) % images.length;
-            updateGallery();
+            console.log(`[Gallery ${id}] Next clicked, new index: ${currentIndex}/${images.length-1}`);
+            snapToIndex(currentIndex);
         });
 
         // Add keyboard navigation
         document.addEventListener('keydown', (e) => {
+            if (isAnimating) return;
             if (e.key === 'ArrowLeft') {
                 prevBtn?.click();
             } else if (e.key === 'ArrowRight') {
@@ -35,60 +58,129 @@ export function initGallery() {
             }
         });
 
-        // Add touch support
+        // Add touch and mouse support
         if (container) {
-            container.addEventListener('touchstart', handleTouchStart, { passive: false });
-            container.addEventListener('touchmove', handleTouchMove, { passive: false });
-            container.addEventListener('touchend', handleTouchEnd);
+            // Touch events
+            container.addEventListener('touchstart', handleStart, { passive: false });
+            container.addEventListener('touchmove', handleMove, { passive: false });
+            container.addEventListener('touchend', handleEnd);
+            
+            // Mouse events
+            container.addEventListener('mousedown', handleStart);
+            container.addEventListener('mousemove', handleMove);
+            container.addEventListener('mouseup', handleEnd);
+            container.addEventListener('mouseleave', handleEnd);
+            
+            // Prevent image dragging
+            container.addEventListener('dragstart', (e) => e.preventDefault());
         }
 
-        function handleTouchStart(e) {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
+        function handleStart(e) {
+            if (isAnimating) return;
+            
+            // Get coordinates whether mouse or touch
+            const point = e.touches ? e.touches[0] : e;
+            startX = point.clientX;
+            startY = point.clientY;
+            lastX = startX;
+            lastDirection = null;
+            currentTranslate = -currentIndex * 100;
+            isDragging = true;
             isSwiping = false;
+            
+            // Remove transition during drag
+            imagesWrapper.style.transition = 'none';
+            
+            console.log(`[Gallery ${id}] Drag start - X: ${startX}`);
         }
 
-        function handleTouchMove(e) {
-            if (!touchStartX || !touchStartY) return;
+        function handleMove(e) {
+            if (!isDragging || isAnimating) return;
 
-            const touchEndX = e.touches[0].clientX;
-            const touchEndY = e.touches[0].clientY;
-            const deltaX = touchStartX - touchEndX;
-            const deltaY = touchStartY - touchEndY;
+            // Get coordinates whether mouse or touch
+            const point = e.touches ? e.touches[0] : e;
+            const currentX = point.clientX;
+            const currentY = point.clientY;
+            const deltaX = startX - currentX;
+            const deltaY = startY - currentY;
+            
+            // Update direction based on current movement
+            const currentDeltaX = currentX - lastX;
+            if (Math.abs(currentDeltaX) > 1) {
+                lastDirection = currentDeltaX < 0 ? 'left' : 'right';
+            }
+            lastX = currentX;
 
             if (!isSwiping) {
                 if (Math.abs(deltaX) > Math.abs(deltaY)) {
                     isSwiping = true;
-                    e.preventDefault(); // Prevent vertical scrolling
+                    e.preventDefault();
                 }
             } else {
                 e.preventDefault();
+                // Calculate the new position as percentage
+                const percentageMoved = (deltaX / container.offsetWidth) * 100;
+                const newTranslate = currentTranslate - percentageMoved;
+                
+                // Add resistance at the edges
+                const minTranslate = -(images.length - 1) * 100;
+                const maxTranslate = 0;
+                let finalTranslate = newTranslate;
+                
+                if (newTranslate > maxTranslate) {
+                    finalTranslate = maxTranslate + (newTranslate - maxTranslate) * 0.2;
+                } else if (newTranslate < minTranslate) {
+                    finalTranslate = minTranslate + (newTranslate - minTranslate) * 0.2;
+                }
+                
+                imagesWrapper.style.transform = `translateX(${finalTranslate}%)`;
+                console.log(`[Gallery ${id}] Drag move - Translate: ${finalTranslate}%, Direction: ${lastDirection}`);
             }
         }
 
-        function handleTouchEnd(e) {
-            if (!isSwiping) return;
+        function handleEnd(e) {
+            if (!isDragging || !isSwiping || isAnimating) return;
 
-            const touchEndX = e.changedTouches[0].clientX;
-            const deltaX = touchStartX - touchEndX;
+            console.log(`[Gallery ${id}] Drag end - Final direction: ${lastDirection}`);
 
-            if (Math.abs(deltaX) > 50) {
-                if (deltaX > 0) {
-                    nextBtn?.click();
-                } else {
-                    prevBtn?.click();
-                }
+            let newIndex = currentIndex;
+            
+            // Use the last direction of movement to determine next index
+            if (lastDirection === 'left') {
+                newIndex = currentIndex + 1;
+            } else if (lastDirection === 'right') {
+                newIndex = currentIndex - 1;
             }
+            
+            // Ensure index is within bounds
+            newIndex = Math.max(0, Math.min(newIndex, images.length - 1));
+            
+            if (newIndex !== currentIndex) {
+                currentIndex = newIndex;
+                console.log(`[Gallery ${id}] Snapping to index: ${currentIndex}`);
+            }
+            
+            snapToIndex(currentIndex);
 
-            touchStartX = 0;
-            touchStartY = 0;
+            startX = 0;
+            startY = 0;
+            lastDirection = null;
+            isDragging = false;
             isSwiping = false;
         }
 
-        function updateGallery() {
-            const offset = -currentIndex * 100;
+        function snapToIndex(index) {
+            // Add transition for smooth snapping
+            imagesWrapper.style.transition = 'transform 0.3s ease-out';
+            const offset = -index * 100;
             imagesWrapper.style.transform = `translateX(${offset}%)`;
             updatePagination();
+            
+            // Reset animation state after transition
+            setTimeout(() => {
+                imagesWrapper.style.transition = 'none';
+                isAnimating = false;
+            }, 300);
         }
 
         function padNumber(number) {
@@ -100,5 +192,10 @@ export function initGallery() {
                 pagination.textContent = `${padNumber(currentIndex + 1)} / ${padNumber(images.length)}`;
             }
         }
+        
+        // Reset transition when animation ends
+        imagesWrapper.addEventListener('transitionend', () => {
+            imagesWrapper.style.transition = 'none';
+        });
     });
 } 

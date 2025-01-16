@@ -1,4 +1,4 @@
-### AMBIO-N marketplace design and UX overhaul
+## AMBIO-N marketplace design and UX overhaul
 
 #### Project overview
 **Project name**: AMBIO-N Circular Procurement
@@ -30,7 +30,7 @@ AMBIO-N is a platform that connects buyers with sellers of sustainable materials
 
 **Marketing website update**:  
 - **Consistent branding**: Updated the website to align with the new design system, ensuring a cohesive brand identity.  
-- **Improved navigation**: Simplified the user journey to make it easier for visitors to understand ProcureCircular's value proposition and services.  
+- **Improved navigation**: Simplified the user journey to make it easier for visitors to understand AMBIO-N's value proposition and services.  
 
 **Sustainability metrics**:  
 - **Product transparency**: Designed interfaces to display detailed sustainability data, such as carbon footprint, origin, and circularity, helping users make informed decisions.  
@@ -67,13 +67,13 @@ Users needed clear and accessible information about the environmental impact of 
 ---
 
 #### Additional details
-- **Presentation decks**: Designed presentation decks to communicate ProcureCircular's value proposition to stakeholders and clients.  
+- **Presentation decks**: Designed presentation decks to communicate AMBIO-N's value proposition to stakeholders and clients.  
 - **Video marketing**: Created video marketing materials to showcase the platform's features and benefits.  
 
 ---
 
 #### Project reflection
-Working on ProcureCircular was a rewarding but challenging experience, as it allowed me to design with a sustainability focused service design in mind. I enjoyed the challenge of creating a platform that not only looked great with a unique style but also empowered users to make environmentally conscious decisions.
+Working on AMBIO-N was a rewarding but challenging experience, as it allowed me to design with a sustainability focused service design in mind. I enjoyed the challenge of creating a platform that not only looked great with a unique style but also empowered users to make environmentally conscious decisions.
 
 The pitch decks were especially challenging as I had to distill the value proposition into a concise and compelling story and design a presentation deck that could be changed depending on the client, like slipping different slides for certain clients, different currencies for different countries so I had to devise a system to make it easy to change the deck based on all these different variables.
 

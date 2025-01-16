@@ -150,6 +150,14 @@ a[class*="underline"]:hover::after, .underline:hover::after {
     position: relative;
 }
 
+/* Add mobile-specific border radius */
+@media (max-width: 640px) {
+    [data-gallery-container] {
+        border-radius: 24px;
+        overflow: hidden;
+    }
+}
+
 [data-gallery-images] {
     display: flex;
     width: 100%;

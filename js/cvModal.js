@@ -327,4 +327,29 @@ export function initCVModal() {
             closeModal();
         }
     });
+
+    // Add scroll event handling for desktop
+    document.addEventListener('wheel', (e) => {
+        const cvModal = document.getElementById('cvModal');
+        if (cvModal.classList.contains('hidden') || window.innerWidth < 640) return;
+
+        const target = e.target;
+        const cvContent = document.getElementById('cvContent');
+
+        // If we're hovering over the modal content and it's scrollable
+        if (cvContent.contains(target)) {
+            const scrollTop = cvContent.scrollTop;
+            const scrollHeight = cvContent.scrollHeight;
+            const clientHeight = cvContent.clientHeight;
+
+            // Allow scrolling only if there's room to scroll in that direction
+            if ((scrollTop === 0 && e.deltaY < 0) || 
+                (scrollTop >= scrollHeight - clientHeight && e.deltaY > 0)) {
+                e.preventDefault();
+            }
+        } else {
+            // If we're not hovering over scrollable content, prevent scrolling
+            e.preventDefault();
+        }
+    }, { passive: false });
 } 

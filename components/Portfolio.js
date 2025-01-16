@@ -25,7 +25,7 @@ function createPortfolioItem(project) {
             </div>
             <!-- Image gallery -->
             <div data-gallery="${project.id}">
-                <div data-gallery-container="${project.id}">
+                <div data-gallery-container="${project.id}" style="background-color: ${project.backgroundColor}">
                     <div data-gallery-images="${project.id}" class="flex transition-transform duration-300 ease-in-out">
                         ${imagesHtml}
                     </div>
