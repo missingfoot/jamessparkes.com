@@ -65,7 +65,7 @@
         import { initTheme, toggleTheme } from './js/theme.js';
         import { initLightbox } from './js/lightbox.js';
         import { initGallery } from './js/gallery.js';
-        import { initEmailContact } from './js/main.js';
+        import { initEmailContact, initStickyFooter, initCVModal, initPortfolioModal } from './js/main.js';
 
         // Initialize theme first
         initTheme();
@@ -103,6 +103,7 @@
             // Initialize main functionality
             module.initStickyFooter();
             module.initCVModal();
+            module.initPortfolioModal();
         }).catch(error => {
             console.error('Error loading main module:', error);
         });

@@ -31,7 +31,7 @@ function applyTheme(theme) {
     
     if (theme === 'dark') {
         html.classList.add('dark');
-        metaThemeColor?.setAttribute('content', '#000000');
+        metaThemeColor?.setAttribute('content', '#18181b');
         metaStatusBar?.setAttribute('content', 'black-translucent');
     } else {
         html.classList.remove('dark');

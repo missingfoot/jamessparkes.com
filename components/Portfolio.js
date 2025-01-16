@@ -1,4 +1,5 @@
 import { initGallery } from '../js/gallery.js';
+import { PortfolioDetailModal } from './PortfolioDetailModal.js';
 
 function createPortfolioItem(project) {
     const imagesHtml = project.images.map(img => 
@@ -48,8 +49,11 @@ function createPortfolioItem(project) {
             </div>
             <!-- Post content -->
             <div class="p-4 sm:p-6">
-                <p class="text-gray-800 dark:text-gray-200">${project.description}</p>
-                <div class="mt-6 flex flex-wrap gap-2">
+                <p class="text-gray-800 dark:text-gray-200 mb-4">${project.description}</p>
+                <a href="#" class="group inline-block text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-300 cursor-pointer mb-6" data-portfolio-detail="${project.id}">
+                    <span class="inline-block transform group-hover:-translate-y-0.5 transition-transform duration-150">Read Case Study</span>
+                </a>
+                <div class="flex flex-wrap gap-2">
                     ${tagsHtml}
                 </div>
             </div>
@@ -58,7 +62,10 @@ function createPortfolioItem(project) {
 }
 
 export function Portfolio() {
-    return `<div id="portfolio-container"></div>`;
+    return `
+        <div id="portfolio-container"></div>
+        ${PortfolioDetailModal()}
+    `;
 }
 
 // Initialize portfolio after DOM content is loaded
