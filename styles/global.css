@@ -224,12 +224,21 @@ a[class*="underline"]:hover::after, .underline:hover::after {
     transition: transform 0.3s;
     display: flex;
     flex-direction: column;
-    height: calc(100svh - min(20svh, 6rem));
+    /* Default for non-iOS */
     height: calc(100vh - min(20vh, 6rem));
-    margin-top: min(20svh, 6rem);
     margin-top: min(20vh, 6rem);
     max-height: calc(100vh - env(safe-area-inset-top));
     box-shadow: 0 -8px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* Target iOS Safari specifically */
+@supports (-webkit-touch-callout: none) {
+    .portfolio-modal-content {
+        height: calc(100dvh - min(20dvh, 6rem));
+        margin-top: min(20dvh, 6rem);
+        /* Use dynamic viewport units for iOS */
+        max-height: calc(100dvh - env(safe-area-inset-top));
+    }
 }
 
 .portfolio-modal-content-inner {
