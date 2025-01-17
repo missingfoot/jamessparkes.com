@@ -92,20 +92,18 @@
             const themeToggle = e.target.closest('[data-theme-toggle]');
             if (themeToggle) {
                 e.preventDefault();
-                console.log('Theme toggle clicked');
                 toggleTheme();
             }
         });
 
         // Initialize other functionality
         import('./js/main.js').then(module => {
-            console.log('Main module loaded');
             // Initialize main functionality
             module.initStickyFooter();
             module.initCVModal();
             module.initPortfolioModal();
         }).catch(error => {
-            console.error('Error loading main module:', error);
+            // Silently fail - errors should be handled by individual modules
         });
     </script>
 </body>

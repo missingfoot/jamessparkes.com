@@ -1,5 +1,7 @@
 **Platforms**: Web (Marketplace and Marketing Website)  
-**Role**: UX/UI Designer  
+**Role**: UX/UI Designer
+**Role Type**: Contract
+**Duration**: Jul 2021 to Feb 2022 — 8 months
 
 ---
 
@@ -13,6 +15,7 @@
 ---
 
 ### Introduction
+
 AMBIO-N is a platform that connects buyers with sellers of sustainable materials, helping brands and manufacturers improve the traceability and environmental footprint of their products. My role involved redesigning the marketplace and marketing website to improve usability, visual consistency, and functionality. I focused on creating a seamless experience for users to find, filter, and evaluate sustainable materials efficiently.
 
 ---
