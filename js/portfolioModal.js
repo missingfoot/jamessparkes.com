@@ -393,7 +393,7 @@ export function initPortfolioModal() {
         const lastDragDirection = clientY > lastDragY ? 'down' : 'up';
         window.lastDragDirection = lastDragDirection;
         
-        const newTranslateY = Math.max(0, startTranslateY + (deltaY / DRAG_RESISTANCE));
+        const newTranslateY = Math.max(0, startTranslateY + deltaY);
         peakTranslateY = Math.max(peakTranslateY, newTranslateY);
         
         const currentTime = Date.now();
@@ -623,6 +623,28 @@ export function initPortfolioModal() {
             if (!portfolioModal.classList.contains('hidden')) {
                 closePortfolioModal(true); // true = don't update history
             }
+        }
+    });
+
+    // Add touch event handlers for mobile close button
+    document.addEventListener('DOMContentLoaded', () => {
+        const mobileCloseButton = document.getElementById('closePortfolioModalButtonMobile');
+        if (mobileCloseButton) {
+            mobileCloseButton.addEventListener('touchstart', (e) => {
+                e.preventDefault(); // Prevent any default touch behavior
+                e.stopPropagation(); // Stop the event from bubbling up
+            }, { passive: false });
+
+            mobileCloseButton.addEventListener('touchmove', (e) => {
+                e.preventDefault(); // Prevent scrolling when touching the button
+                e.stopPropagation(); // Stop the event from reaching the background
+            }, { passive: false });
+
+            mobileCloseButton.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                closePortfolioModal(); // Close the modal on touch end
+            }, { passive: false });
         }
     });
 } 
