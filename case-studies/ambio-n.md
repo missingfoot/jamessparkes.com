@@ -1,7 +1,6 @@
 **Platforms**: Web (Marketplace and Marketing Website)  
 **Role**: UX/UI Designer
-**Role Type**: Contract
-**Duration**: Jul 2021 to Feb 2022 — 8 months
+**Duration**: Jul 2021 to Feb 2022\
 
 ---
 

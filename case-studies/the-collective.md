@@ -1,5 +1,6 @@
 **Platforms**: Web, Mobile App (iOS/Android), SaaS platforms, data-driven tools  
-**Role**: UX/UI designer and digital product designer  
+**Role**: UX/UI designer and digital product designer
+**Duration**: Jul 2017 to Jun 2020\
 
 ---
 
@@ -38,7 +39,7 @@ I joined The Collective in 2017 during a period of rapid growth and was tasked w
 
 **Data-driven tools**:  
 - **Acquire**: A data-driven land acquisition platform that tracks real estate market activity globally, integrates operational and financial data, and automates workflows.  
-- **Colab**: A property management system designed uniquely for co-living, featuring intelligent room allocation, real-time occupancy reporting, and dynamic room pricing.  
+- **Colab**: A property management system designed uniquely for co-living, featuring intelligent room allocation, real-time occupancy reporting, and dynamic room pricing.
 
 ---
 

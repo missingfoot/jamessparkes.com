@@ -136,14 +136,29 @@ export function initPortfolioModal() {
                     
                     // Handle line breaks and paragraphs
                     if (nextLine.trim() === '') {
-                        // End of paragraph
-                        currentSection.content += `<p>${formattedLine}</p>`;
+                        // End of paragraph, but only if line doesn't end with backslash
+                        if (!line.trim().endsWith('\\')) {
+                            currentSection.content += `<p>${formattedLine}</p>`;
+                        } else {
+                            // Remove the backslash and just add the line
+                            currentSection.content += formattedLine.slice(0, -1);
+                        }
                     } else if (nextLine.trim()) {
                         // Next line has content, add a line break
-                        currentSection.content += `${formattedLine}<br>`;
+                        if (!line.trim().endsWith('\\')) {
+                            currentSection.content += `${formattedLine}<br>`;
+                        } else {
+                            // Remove the backslash and just add the line
+                            currentSection.content += formattedLine.slice(0, -1);
+                        }
                     } else {
                         // Continue in same paragraph
-                        currentSection.content += formattedLine + ' ';
+                        if (!line.trim().endsWith('\\')) {
+                            currentSection.content += formattedLine + ' ';
+                        } else {
+                            // Remove the backslash and just add the line
+                            currentSection.content += formattedLine.slice(0, -1);
+                        }
                     }
                 }
             } else if (!line.trim() && inList) {
