@@ -19,7 +19,7 @@ export function PortfolioDetailModal() {
                 </div>
             </div>
             <!-- Floating close button (mobile only) -->
-            <button class="portfolio-modal-close-mobile sm:hidden" id="closePortfolioModalButtonMobile">
+            <button class="portfolio-modal-close-mobile sm:hidden bg-black dark:bg-white" id="closePortfolioModalButtonMobile">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white dark:text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>

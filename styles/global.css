@@ -272,7 +272,6 @@ a[class*="underline"]:hover::after, .underline:hover::after {
     bottom: 1.5rem;
     left: 50%;
     transform: translateX(-50%) translateY(100%);
-    background-color: rgb(32, 32, 32);
     border-radius: 9999px;
     padding: 0.75rem 1.25rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -293,7 +292,7 @@ a[class*="underline"]:hover::after, .underline:hover::after {
 }
 
 .dark .portfolio-modal-close-mobile {
-    background-color: white;
+    /* Remove background-color declaration */
 }
 
 .portfolio-modal-close-mobile:active {
