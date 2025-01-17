@@ -192,10 +192,10 @@ export function initPortfolioModal() {
         return sections;
     }
 
-    // Add scroll event handling for desktop
+    // Add scroll event handling for desktop and mobile
     document.addEventListener('wheel', (e) => {
         const portfolioModal = document.getElementById('portfolioDetailModal');
-        if (portfolioModal.classList.contains('hidden') || window.innerWidth < 640) return;
+        if (portfolioModal.classList.contains('hidden')) return;
 
         const target = e.target;
         const portfolioContent = document.getElementById('portfolioContent');
