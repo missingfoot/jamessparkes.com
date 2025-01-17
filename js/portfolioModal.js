@@ -242,6 +242,7 @@ export function initPortfolioModal() {
         const portfolioContent = document.getElementById('portfolioContent');
         const content = portfolioModal.querySelector('#portfolioModalContent');
         const background = portfolioModal.querySelector('#portfolioModalBackground');
+        const mobileCloseButton = portfolioModal.querySelector('#closePortfolioModalButtonMobile');
         const isMobile = window.innerWidth < 640;
         
         // Update URL with clean path
@@ -279,6 +280,13 @@ export function initPortfolioModal() {
             background.style.transition = 'opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
             content.style.transform = isMobile ? 'translateY(0)' : 'translate(-50%, 0)';
             background.style.opacity = '1';
+            
+            // Show mobile close button with a slight delay
+            if (isMobile) {
+                setTimeout(() => {
+                    mobileCloseButton.classList.add('active');
+                }, 200);
+            }
         });
         
         document.body.style.overflow = 'hidden';
@@ -309,11 +317,17 @@ export function initPortfolioModal() {
         const portfolioModal = document.getElementById('portfolioDetailModal');
         const background = portfolioModal.querySelector('#portfolioModalBackground');
         const content = portfolioModal.querySelector('#portfolioModalContent');
+        const mobileCloseButton = portfolioModal.querySelector('#closePortfolioModalButtonMobile');
         const isMobile = window.innerWidth < 640;
         
         // Update URL back to root
         if (!skipHistory) {
             history.pushState({}, '', '/');
+        }
+        
+        // Hide mobile close button first
+        if (isMobile) {
+            mobileCloseButton.classList.remove('active');
         }
         
         content.style.transition = 'transform 0.3s ease-out';
