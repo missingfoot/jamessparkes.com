@@ -3,8 +3,8 @@ export function PortfolioDetailModal() {
         <div id="portfolioDetailModal" class="fixed inset-0 z-[1001] hidden">
             <div id="portfolioModalBackground" class="absolute inset-0 bg-black bg-opacity-50 opacity-0 transition-opacity duration-300"></div>
             <div id="portfolioModalContent" class="absolute bottom-0 sm:bottom-8 sm:left-1/2 sm:-translate-x-1/2 bg-surface-light dark:bg-surface-dark rounded-t-xl sm:rounded-xl transform translate-y-full sm:translate-y-full transition-transform duration-300 w-full flex flex-col
-                h-[calc(100dvh-min(20vh,6rem))] mt-[min(20vh,6rem)] sm:h-[calc(100vh-4rem)] sm:mt-0
-                max-h-[calc(100dvh-env(safe-area-inset-top))] sm:max-h-none
+                h-[calc(100vh-min(20vh,6rem))] h-[calc(100dvh-min(20vh,6rem))] mt-[min(20vh,6rem)] sm:h-[calc(100vh-4rem)] sm:mt-0
+                max-h-[calc(100vh-env(safe-area-inset-top))] max-h-[calc(100dvh-env(safe-area-inset-top))] sm:max-h-none
                 sm:max-w-[720px]">
                 <!-- Close button (desktop only) -->
                 <button class="hidden sm:flex absolute top-4 right-4 p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-300" id="closePortfolioModalButton">
