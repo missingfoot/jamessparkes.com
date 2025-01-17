@@ -220,7 +220,7 @@ export function initPortfolioModal() {
     // Add click event listener using event delegation
     document.addEventListener('click', async (e) => {
         const portfolioDetailLink = e.target.closest('[data-portfolio-detail]');
-        const closeModalButton = e.target.closest('#closePortfolioModalButton');
+        const closeModalButton = e.target.closest('#closePortfolioModalButton, #closePortfolioModalButtonMobile');
         const portfolioModalBackground = e.target.closest('#portfolioModalBackground');
         const portfolioModal = document.getElementById('portfolioDetailModal');
 
