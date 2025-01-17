@@ -29,6 +29,7 @@ module.exports = {
             a: {
               color: 'inherit',
               textDecoration: 'underline',
+              fontWeight: '300',
               '&:hover': {
                 color: 'inherit',
               },
