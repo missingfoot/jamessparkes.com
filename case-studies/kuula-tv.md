@@ -17,3 +17,4 @@ The project encompassed branding, website design, and the development of a compr
 - Course and collection management
 - Multi-format content support (video, PDF, audio)
 - Partner microsites 
+- cats and dogs
