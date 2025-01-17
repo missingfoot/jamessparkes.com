@@ -61,10 +61,10 @@ export function initPortfolioModal() {
             formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<span class="font-semibold">$1</span>');
         }
         
-        // Process images - use relative path from root
+        // Process images - use path relative to project root
         formatted = formatted.replace(/!\[(.*?)\]\((.*?)\)/g, 
             '<figure class="my-8">' +
-                '<img src="./case-studies/img/$2" alt="$1" class="rounded-lg w-full">' +
+                '<img src="/case-studies/img/$2" alt="$1" class="rounded-lg w-full">' +
                 '<figcaption class="mt-2 text-sm text-gray-600 dark:text-gray-400 text-center">$1</figcaption>' +
             '</figure>'
         );
