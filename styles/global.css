@@ -272,7 +272,7 @@ a[class*="underline"]:hover::after, .underline:hover::after {
     bottom: 1.5rem;
     left: 50%;
     transform: translateX(-50%) translateY(100%);
-    background-color: white;
+    background-color: rgb(32, 32, 32);
     border-radius: 9999px;
     padding: 0.75rem 1.25rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -281,7 +281,7 @@ a[class*="underline"]:hover::after, .underline:hover::after {
     align-items: center;
     gap: 0.25rem;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    font-weight: 500;
+    font-weight: 400;
     opacity: 0;
     pointer-events: none;
 }
@@ -293,7 +293,7 @@ a[class*="underline"]:hover::after, .underline:hover::after {
 }
 
 .dark .portfolio-modal-close-mobile {
-    background-color: rgb(32, 32, 32);
+    background-color: white;
 }
 
 .portfolio-modal-close-mobile:active {
