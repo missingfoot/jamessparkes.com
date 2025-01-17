@@ -377,6 +377,8 @@ export function initPortfolioModal() {
             startTranslateY = currentTranslateY;
             dragVelocity = 0;
 
+            // Disable content scrolling while dragging
+            portfolioContent.style.overflow = 'hidden';
             portfolioModalContent.style.transition = 'none';
             return true;
         }
@@ -420,6 +422,10 @@ export function initPortfolioModal() {
         
         const shouldDismiss = lastDirection === 'down' && finalTranslateY > 50;
         
+        // Re-enable content scrolling
+        const portfolioContent = document.getElementById('portfolioContent');
+        portfolioContent.style.overflow = 'auto';
+        
         if (shouldDismiss) {
             closePortfolioModal();
         } else {
@@ -453,10 +459,14 @@ export function initPortfolioModal() {
     // Touch event handlers
     document.addEventListener('touchstart', (e) => {
         const portfolioModal = document.getElementById('portfolioDetailModal');
+        const portfolioContent = document.getElementById('portfolioContent');
         if (portfolioModal.classList.contains('hidden')) return;
         
         window.dragDirectionHistory = [];
         lastDragY = e.touches[0].clientY;
+        
+        // Store initial scroll position
+        initialScrollTop = portfolioContent.scrollTop;
         
         if (e.target.closest('.puller')) {
             if (handleDragStart(e.touches[0].clientY, e) && e.cancelable) {
@@ -476,6 +486,7 @@ export function initPortfolioModal() {
         const touchDeltaY = touch.clientY - lastDragY;
         const isAtTop = portfolioContent.scrollTop <= 0;
         
+        // If we're already dragging, handle the drag
         if (isDragging) {
             if (e.cancelable) {
                 e.preventDefault();
@@ -484,15 +495,38 @@ export function initPortfolioModal() {
             return;
         }
         
+        // Only allow starting drag if we're at the top and moving down
         if (isAtTop && touchDeltaY > 0) {
+            // Add a threshold to prevent accidental drags
             if (touchDeltaY > 5 && e.cancelable) {
                 e.preventDefault();
                 handleDragStart(touch.clientY, e);
             }
         }
         
+        // Update last touch position
         lastDragY = touch.clientY;
     }, { passive: false });
+
+    // Handle scroll momentum
+    let isScrolling;
+    document.addEventListener('scroll', (e) => {
+        const portfolioModal = document.getElementById('portfolioDetailModal');
+        const portfolioContent = document.getElementById('portfolioContent');
+        
+        if (!portfolioModal || portfolioModal.classList.contains('hidden')) return;
+        
+        // Clear the existing timeout
+        window.clearTimeout(isScrolling);
+        
+        // Set a timeout to run after scrolling ends
+        isScrolling = setTimeout(() => {
+            // Check if we're at the top after scrolling stops
+            if (portfolioContent.scrollTop <= 0) {
+                portfolioContent.style.overflow = 'auto';
+            }
+        }, 66);
+    }, { passive: true });
 
     document.addEventListener('touchend', () => {
         handleDragEnd();
