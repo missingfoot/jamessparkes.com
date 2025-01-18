@@ -36,12 +36,41 @@
 }
 
 /* Global styles */
+html {
+    -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
+    scrollbar-width: none;     /* Hide scrollbar for Firefox */
+}
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
 body {
     font-family: 'Favorit', 'Inter', sans-serif;
     font-weight: 300;
     --global-radius: 4px;
     overflow-x: hidden;
     touch-action: pan-y;
+    -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
+    scrollbar-width: none;     /* Hide scrollbar for Firefox */
+}
+
+/* Hide scrollbars everywhere */
+* {
+    -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
+    scrollbar-width: none;     /* Hide scrollbar for Firefox */
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+/* Modal scroll lock */
+body.modal-open {
+    overflow-y: scroll !important;
+    position: fixed;
+    width: 100%;
+    top: var(--scroll-position, 0);
 }
 
 /* List styles */
