@@ -13,6 +13,9 @@ export function initPortfolioModal() {
     const VELOCITY_THRESHOLD = 0.5;
     let peakTranslateY = 0;
 
+    // Cache for portfolio data
+    let cachedPortfolioData = null;
+
     function resetDragState() {
         startY = 0;
         startTranslateY = 0;
@@ -245,22 +248,25 @@ export function initPortfolioModal() {
         const mobileCloseButton = portfolioModal.querySelector('#closePortfolioModalButtonMobile');
         const isMobile = window.innerWidth < 640;
         
+        // Lock scrolling without moving the page
+        document.body.style.overflow = 'hidden';
+        document.body.style.paddingRight = 'calc(100vw - 100%)';
+        
         // Update URL with clean path
         const casePath = project.caseStudyFile.replace('.md', '');
         const url = new URL(window.location.origin + '/' + casePath);
         history.pushState({}, '', url);
         
-        // Remove hidden class but keep modal visually hidden
+        // Remove hidden class and prepare modal
         portfolioModal.classList.remove('hidden');
         
-        // Set initial state
+        // Set initial state without transitions
         content.style.transition = 'none';
         background.style.transition = 'none';
-        // For both mobile and desktop, start from bottom center
         content.style.transform = isMobile ? 'translateY(100%)' : 'translate(-50%, 100%)';
         background.style.opacity = '0';
         
-        // Update content with header only
+        // Update content with header immediately
         portfolioContent.innerHTML = `
             <div class="flex items-center mb-6">
                 <img src="${project.logo}" alt="${project.company} Logo" class="w-12 h-12 rounded-full mr-4">
@@ -271,13 +277,13 @@ export function initPortfolioModal() {
             </div>
         `;
         
-        // Force a reflow
+        // Force a reflow to ensure the initial state is rendered
         content.offsetHeight;
         
-        // Start animation
+        // Start animation immediately in the next frame
         requestAnimationFrame(() => {
-            content.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-            background.style.transition = 'opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+            content.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            background.style.transition = 'opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
             content.style.transform = isMobile ? 'translateY(0)' : 'translate(-50%, 0)';
             background.style.opacity = '1';
             
@@ -285,11 +291,9 @@ export function initPortfolioModal() {
             if (isMobile) {
                 setTimeout(() => {
                     mobileCloseButton.classList.add('active');
-                }, 200);
+                }, 150);
             }
         });
-        
-        document.body.style.overflow = 'hidden';
     }
 
     function updateModalContent(project, projectDetail) {
@@ -315,14 +319,24 @@ export function initPortfolioModal() {
 
     function closePortfolioModal(skipHistory = false) {
         const portfolioModal = document.getElementById('portfolioDetailModal');
-        const background = portfolioModal.querySelector('#portfolioModalBackground');
         const content = portfolioModal.querySelector('#portfolioModalContent');
+        const background = portfolioModal.querySelector('#portfolioModalBackground');
         const mobileCloseButton = portfolioModal.querySelector('#closePortfolioModalButtonMobile');
         const isMobile = window.innerWidth < 640;
         
-        // Update URL back to root
+        // Restore scrolling
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+        
+        // Update URL back to root if not handling history externally
         if (!skipHistory) {
             history.pushState({}, '', '/');
+        }
+        
+        if (isMobile) {
+            content.style.transform = 'translateY(100%)';
+        } else {
+            content.style.transform = 'translateX(100%)';
         }
         
         // Hide mobile close button first
@@ -565,52 +579,59 @@ export function initPortfolioModal() {
 
     async function loadCaseStudy(projectId) {
         try {
-            const portfolioData = await fetch('/data/portfolio.json').then(res => res.json());
-            const project = portfolioData.projects.find(p => p.id === parseInt(projectId));
+            // Use cached data if available
+            if (!cachedPortfolioData) {
+                cachedPortfolioData = await fetch('/data/portfolio.json').then(res => res.json());
+            }
+            const project = cachedPortfolioData.projects.find(p => p.id === parseInt(projectId));
             
             if (project) {
-                // Open modal immediately with project info
+                // Open modal synchronously with basic info
                 openPortfolioModal(project);
                 
                 // Then load case study content asynchronously
                 if (project.caseStudyFile) {
-                    const portfolioContent = document.getElementById('portfolioContent');
-                    const caseStudyContent = document.createElement('div');
-                    caseStudyContent.className = 'case-study-content';
-                    
-                    // Add loading state after the header
-                    caseStudyContent.innerHTML = `
-                        <div class="animate-pulse space-y-4 mt-8">
-                            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
-                            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
-                            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
-                        </div>
-                    `;
-                    portfolioContent.appendChild(caseStudyContent);
-
-                    try {
-                        const markdownResponse = await fetch(`/case-studies/${project.caseStudyFile}`);
-                        
-                        if (!markdownResponse.ok) {
-                            throw new Error(`Case study not found. Status: ${markdownResponse.status}`);
-                        }
-                        
-                        const markdown = await markdownResponse.text();
-                        const sections = parseMarkdown(markdown);
-                        
-                        // Update content with case study
-                        updateModalContent(project, { sections });
-                    } catch (error) {
-                        caseStudyContent.innerHTML = `
-                            <div class="text-red-500 dark:text-red-400 mt-8">
-                                Failed to load case study content. Please try again later.
-                            </div>
-                        `;
-                    }
+                    loadCaseStudyContent(project);
                 }
             }
         } catch (error) {
             // Silently fail - error UI is handled in nested try-catch
+        }
+    }
+
+    async function loadCaseStudyContent(project) {
+        const portfolioContent = document.getElementById('portfolioContent');
+        const caseStudyContent = document.createElement('div');
+        caseStudyContent.className = 'case-study-content';
+        
+        // Add loading state after the header
+        caseStudyContent.innerHTML = `
+            <div class="animate-pulse space-y-4 mt-8">
+                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
+            </div>
+        `;
+        portfolioContent.appendChild(caseStudyContent);
+
+        try {
+            const markdownResponse = await fetch(`/case-studies/${project.caseStudyFile}`);
+            
+            if (!markdownResponse.ok) {
+                throw new Error(`Case study not found. Status: ${markdownResponse.status}`);
+            }
+            
+            const markdown = await markdownResponse.text();
+            const sections = parseMarkdown(markdown);
+            
+            // Update content with case study
+            updateModalContent(project, { sections });
+        } catch (error) {
+            caseStudyContent.innerHTML = `
+                <div class="text-red-500 dark:text-red-400 mt-8">
+                    Failed to load case study content. Please try again later.
+                </div>
+            `;
         }
     }
 
