@@ -248,9 +248,9 @@ export function initPortfolioModal() {
         const mobileCloseButton = portfolioModal.querySelector('#closePortfolioModalButtonMobile');
         const isMobile = window.innerWidth < 640;
         
-        // Lock scrolling without moving the page
-        document.body.style.overflow = 'hidden';
-        document.body.style.paddingRight = 'calc(100vw - 100%)';
+        // Store current scroll position and lock scrolling
+        document.documentElement.style.setProperty('--scroll-position', `-${window.scrollY}px`);
+        document.body.classList.add('modal-open');
         
         // Update URL with clean path
         const casePath = project.caseStudyFile.replace('.md', '');
@@ -324,9 +324,12 @@ export function initPortfolioModal() {
         const mobileCloseButton = portfolioModal.querySelector('#closePortfolioModalButtonMobile');
         const isMobile = window.innerWidth < 640;
         
+        // Get the scroll position before removing modal-open class
+        const scrollY = document.documentElement.style.getPropertyValue('--scroll-position');
+        
         // Restore scrolling
-        document.body.style.overflow = '';
-        document.body.style.paddingRight = '';
+        document.body.classList.remove('modal-open');
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
         
         // Update URL back to root if not handling history externally
         if (!skipHistory) {
