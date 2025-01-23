@@ -52,13 +52,13 @@ The existing data management platform was incomplete and difficult to use, hinde
 Residents and staff needed a seamless way to interact and manage co-living spaces.  
 **Solution**: Developed a members' app, conducting regular community town hall meetings and focus groups with residents to gather feedback and test new features. These collaborative sessions helped shape the development of key functionality like messaging, events, and support systems. The direct engagement with our user community ensured we built features that truly served their needs and created a more engaging co-living experience.
 
-![Some sketches of how we can show off the co-living experience](the-collective-sketches-02.webp)
+![Some sketches of how we can show off the co-living experience](tc-sketches-02.webp)
 
 **Ineffective website**  
 The old website was slow, outdated, and unable to support the company's growth and did not reflect the company's vibe.
 **Solution**: Designed a new website and microsites with a focus on UX, performance, and modularity to support diverse business needs as the company was growing fast during this period.
 
-![Some sketches of how we can show off the co-living experience of the building for the new website](the-collective-sketches-01.webp)
+![Some sketches of how we can show off the co-living experience of the building for the new website](tc-sketches-01.webp)
 
 **Data integration and automation**  
 The company needed tools to streamline land acquisition and property management.  
@@ -78,7 +78,7 @@ The company needed tools to streamline land acquisition and property management.
 - **Design specifications**: Provided assets and documentation for developers while working closely with the tech team to ensure the design was implemented correctly.
 - **User flows**: Documented user journeys for key features like app onboarding, event management, and website navigation.  
 
-![Example of an advert we made to showcase the app to our residents in the buildings](the-collective-advert.webp)
+![Example of an advert we made to showcase the app to our residents in the buildings](tc-advert.webp)
 
 ---
 

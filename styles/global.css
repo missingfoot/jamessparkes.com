@@ -360,4 +360,134 @@ a[class*="underline"]:hover::after, .underline:hover::after {
     .portfolio-modal-close-mobile {
         display: none;
     }
+}
+
+/* Case study lightbox styles */
+.case-study-lightbox {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 9999;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.case-study-lightbox.active {
+    background-color: rgba(0, 0, 0, 0.95);
+    opacity: 1;
+    visibility: visible;
+}
+
+.case-study-lightbox.closing {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.case-study-lightbox.closing .case-study-lightbox-container {
+    transform: translateY(20px);
+    opacity: 0;
+}
+
+.case-study-lightbox.closing .case-study-lightbox-image {
+    transform: scale(0.9);
+    opacity: 0;
+}
+
+.case-study-lightbox.closing .case-study-lightbox-close {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+.case-study-lightbox-container {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: zoom-out;
+    will-change: transform;
+    z-index: 1;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.case-study-lightbox.active .case-study-lightbox-container {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.case-study-lightbox-image {
+    max-width: 95vw;
+    max-height: 95vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transform: scale(0.9);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, opacity;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+}
+
+.case-study-lightbox.active .case-study-lightbox-image {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.case-study-lightbox-close {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    padding: 0.75rem;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2;
+    opacity: 0;
+    transform: scale(0.9);
+    will-change: opacity, transform;
+}
+
+.case-study-lightbox.active .case-study-lightbox-close {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.case-study-lightbox-close:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: scale(1.1);
+}
+
+.case-study-lightbox-close:active {
+    transform: scale(0.95);
+}
+
+.case-study-image {
+    transition: opacity 0.2s ease;
+    cursor: zoom-in;
+}
+
+.case-study-image:hover {
+    opacity: 0.9;
 } 

@@ -1,7 +1,7 @@
 {
     "projects": [
       {
-        "id": 1,
+        "id": 12,
         "logo": "images/fixr.png",
         "title": "FIXR Platform",
         "company": "FIXR",
@@ -39,7 +39,45 @@
         ]
       },
       {
-        "id": 2,
+        "id": 11,
+        "logo": "images/portfolio.png",
+        "title": "Personal projects",
+        "company": "James Sparkes",
+        "location": "  ",
+        "backgroundColor": "#1A1A1A",
+        "caseStudyFile": "personal-projects.md", 
+        "description": "Some personal portfolio stuff",
+        "images": [
+          {
+            "src": "images/fixr-01.jpg",
+            "alt": "FIXR Platform Image 1"
+          },
+          {
+            "src": "images/fixr-02.jpg",
+            "alt": "FIXR Platform Image 2"
+          },
+          {
+            "src": "images/fixr-03.jpg",
+            "alt": "FIXR Platform Image 3"
+          },
+          {
+            "src": "images/fixr-04.jpg",
+            "alt": "FIXR Platform Image 4"
+          },
+          {
+            "src": "images/fixr-06.jpg",
+            "alt": "FIXR Platform Image 5"
+          }
+        ],
+        "tags": [
+          "UI Design",
+          "UX Design",
+          "Design System",
+          "Rapid Prototyping"
+        ]
+      },
+      {
+        "id": 10,
         "logo": "images/the-collective.png",
         "title": "Building Management Platform",
         "company": "The Collective",
@@ -69,7 +107,7 @@
         ]
       },
       {
-        "id": 3,
+        "id": 9,
         "logo": "images/the-collective.png",
         "title": "Community App",
         "company": "The Collective",
@@ -100,14 +138,14 @@
         ]
       },
       {
-        "id": 4,
+        "id": 8,
         "logo": "images/the-collective.png",
         "title": "Marketing Website",
         "company": "The Collective",
         "location": "London",
         "backgroundColor": "#B6C7CB",
         "caseStudyFile": "the-collective.md",
-        "description": "The company was fast growing and expanding, it was decided there needed to be a new website created as the old one was slow, outdated and had no way of being changed. UX was carefully crafted to ensure potential customers could easily learn about the company’s unique offering and also see as much as they can to get them funnelled through into the sales flow. In addition to the main website which covered sections for selling rooms, there were also events and workspaces and various microsites which were designed for different purposes and target demographics.",
+        "description": "The company was fast growing and expanding, it was decided there needed to be a new website created as the old one was slow, outdated and had no way of being changed. UX was carefully crafted to ensure potential customers could easily learn about the company's unique offering and also see as much as they can to get them funnelled through into the sales flow. In addition to the main website which covered sections for selling rooms, there were also events and workspaces and various microsites which were designed for different purposes and target demographics.",
         "images": [
           {
             "src": "images/collective-04.jpg",
@@ -135,7 +173,7 @@
         ]
       },
       {
-        "id": 5,
+        "id": 7,
         "logo": "images/kuula.png",
         "title": "Kuula TV",
         "company": "Kuula TV",
@@ -236,7 +274,7 @@
         ]
       },
       {
-        "id": 7,
+        "id": 5,
         "logo": "images/ambio-n.png",
         "title": "AMBIO-N",
         "company": "AMBIO-N",
@@ -276,7 +314,7 @@
         ]
       },
       {
-        "id": 8,
+        "id": 3,
         "logo": "images/fabric.png",
         "title": "Fabric",
         "company": "Fabric",
@@ -312,7 +350,7 @@
         ]
       },
       {
-        "id": 9,
+        "id": 2,
         "logo": "images/maxus.png",
         "title": "Maxus",
         "company": "Maxus",
@@ -339,7 +377,7 @@
         ]
       },
       {
-        "id": 10,
+        "id": 4,
         "logo": "images/qd-design.png",
         "title": "QD Design",
         "company": "QD Design",
@@ -352,19 +390,19 @@
             "alt": "QD Design Platform Image 1"
           },
           {
-            "src": "images/qd-01.jpg",
+            "src": "images/qd-04.jpg",
             "alt": "QD Design Platform Image 2"
           },
           {
-            "src": "images/qd-02.jpg",
+            "src": "images/qd-05.jpg",
             "alt": "QD Design Platform Image 3"
           },
           {
-            "src": "images/qd-04.jpg",
+            "src": "images/qd-01.jpg",
             "alt": "QD Design Platform Image 4"
           },
           {
-            "src": "images/qd-05.jpg",
+            "src": "images/qd-02.jpg",
             "alt": "QD Design Platform Image 5"
           },
           {
@@ -382,7 +420,7 @@
         ]
       },
       {
-        "id": 11,
+        "id": 1,
         "logo": "images/tmw.png",
         "title": "TMW",
         "company": "TMW",
