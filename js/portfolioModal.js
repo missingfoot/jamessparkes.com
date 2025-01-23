@@ -15,6 +15,10 @@ export function initPortfolioModal() {
 
     // Cache for portfolio data
     let cachedPortfolioData = null;
+    
+    // Track last opened case study and scroll position
+    let lastOpenedProjectId = null;
+    let lastScrollPosition = 0;
 
     function resetDragState() {
         startY = 0;
@@ -64,10 +68,20 @@ export function initPortfolioModal() {
             formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<span class="font-semibold">$1</span>');
         }
         
-        // Process images - use path relative to project root
+        // Process videos before images (to prevent image regex from catching video files)
+        formatted = formatted.replace(/!\[(.*?)\]\((.*?\.(mp4|webm|mov))\)/g,
+            '<figure class="my-8">' +
+                '<video src="/case-studies/img/$2" autoplay loop muted playsinline class="rounded-lg w-full">' +
+                    'Your browser does not support the video tag.' +
+                '</video>' +
+                '<figcaption class="mt-2 text-sm text-gray-600 dark:text-gray-400 text-center">$1</figcaption>' +
+            '</figure>'
+        );
+        
+        // Process images - use path relative to project root and add lightbox functionality
         formatted = formatted.replace(/!\[(.*?)\]\((.*?)\)/g, 
             '<figure class="my-8">' +
-                '<img src="/case-studies/img/$2" alt="$1" class="rounded-lg w-full">' +
+                '<img src="/case-studies/img/$2" alt="$1" class="rounded-lg w-full cursor-pointer case-study-image" onclick="event.stopPropagation(); document.querySelector(\'.case-study-lightbox\').classList.add(\'active\'); document.querySelector(\'.case-study-lightbox-image\').src = this.src;">' +
                 '<figcaption class="mt-2 text-sm text-gray-600 dark:text-gray-400 text-center">$1</figcaption>' +
             '</figure>'
         );
@@ -266,6 +280,155 @@ export function initPortfolioModal() {
         content.style.transform = isMobile ? 'translateY(100%)' : 'translate(-50%, 100%)';
         background.style.opacity = '0';
         
+        // Add lightbox to modal if it doesn't exist
+        if (!document.querySelector('.case-study-lightbox')) {
+            const lightbox = document.createElement('div');
+            lightbox.className = 'case-study-lightbox';
+            lightbox.innerHTML = `
+                <button class="case-study-lightbox-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+                <div class="case-study-lightbox-container">
+                    <img class="case-study-lightbox-image" src="" alt="">
+                </div>
+            `;
+            document.body.appendChild(lightbox);
+            
+            let startY = 0;
+            let currentY = 0;
+            
+            function handleLightboxDragStart(e) {
+                const touch = e.touches ? e.touches[0] : e;
+                startY = touch.clientY;
+                isDragging = true;
+                lightbox.querySelector('.case-study-lightbox-container').style.transition = 'none';
+                lightbox.querySelector('.case-study-lightbox-image').style.transition = 'none';
+                lightbox.querySelector('.case-study-lightbox-close').style.opacity = '0';
+            }
+            
+            function handleLightboxDragMove(e) {
+                if (!isDragging) return;
+                const touch = e.touches ? e.touches[0] : e;
+                currentY = touch.clientY;
+                const deltaY = currentY - startY;
+                
+                const container = lightbox.querySelector('.case-study-lightbox-container');
+                const image = lightbox.querySelector('.case-study-lightbox-image');
+                
+                container.style.transform = `translateY(${deltaY}px)`;
+                
+                // Scale and fade based on drag distance
+                const scale = Math.max(0.8, 1 - Math.abs(deltaY) / 1000);
+                const opacity = Math.max(0.5, 1 - Math.abs(deltaY) / DISMISS_THRESHOLD);
+                image.style.transform = `scale(${scale})`;
+                lightbox.style.backgroundColor = `rgba(0, 0, 0, ${opacity * 0.95})`;
+                
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            function handleLightboxDragEnd() {
+                if (!isDragging) return;
+                isDragging = false;
+                
+                const container = lightbox.querySelector('.case-study-lightbox-container');
+                const image = lightbox.querySelector('.case-study-lightbox-image');
+                const closeButton = lightbox.querySelector('.case-study-lightbox-close');
+                const deltaY = currentY - startY;
+                
+                if (Math.abs(deltaY) > DISMISS_THRESHOLD) {
+                    // Use the same fade animation for swipe dismissal
+                    animateAndCloseLightbox(lightbox);
+                } else {
+                    // Snap back
+                    container.style.transition = 'transform 0.3s ease-out';
+                    image.style.transition = 'transform 0.3s ease-out';
+                    lightbox.style.transition = 'background-color 0.3s ease-out';
+                    closeButton.style.transition = 'opacity 0.2s ease-out';
+                    
+                    container.style.transform = '';
+                    image.style.transform = '';
+                    lightbox.style.backgroundColor = '';
+                    closeButton.style.opacity = '1';
+                }
+            }
+            
+            // Add lightbox click handlers
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox || e.target.classList.contains('case-study-lightbox-container')) {
+                    e.stopPropagation();
+                    if (!isDragging) { // Only close if not dragging
+                        animateAndCloseLightbox(lightbox);
+                    }
+                }
+            });
+            
+            lightbox.querySelector('.case-study-lightbox-close').addEventListener('click', (e) => {
+                e.stopPropagation();
+                animateAndCloseLightbox(lightbox);
+            });
+            
+            // Add touch handlers for swipe to dismiss
+            lightbox.addEventListener('touchstart', handleLightboxDragStart, { passive: false });
+            lightbox.addEventListener('touchmove', handleLightboxDragMove, { passive: false });
+            lightbox.addEventListener('touchend', handleLightboxDragEnd, { passive: false });
+            
+            // Add mouse handlers for testing
+            lightbox.addEventListener('mousedown', handleLightboxDragStart);
+            lightbox.addEventListener('mousemove', handleLightboxDragMove);
+            lightbox.addEventListener('mouseup', handleLightboxDragEnd);
+
+            // Add escape key handler for lightbox
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                    e.stopPropagation(); // Prevent event from reaching modal
+                    animateAndCloseLightbox(lightbox);
+                }
+            });
+
+            function animateAndCloseLightbox(lightbox) {
+                const container = lightbox.querySelector('.case-study-lightbox-container');
+                const image = lightbox.querySelector('.case-study-lightbox-image');
+                const closeButton = lightbox.querySelector('.case-study-lightbox-close');
+                
+                // Add closing class to trigger animation
+                lightbox.classList.add('closing');
+                
+                // Animate the image scale down and fade
+                image.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+                image.style.transform = 'scale(0.9)';
+                image.style.opacity = '0';
+                
+                // Fade out the container and background
+                container.style.transition = 'opacity 0.3s ease-out';
+                container.style.opacity = '0';
+                lightbox.style.transition = 'background-color 0.3s ease-out';
+                lightbox.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+                
+                // Hide close button
+                if (closeButton) {
+                    closeButton.style.transition = 'opacity 0.2s ease-out';
+                    closeButton.style.opacity = '0';
+                }
+                
+                // Remove classes and reset styles after animation
+                setTimeout(() => {
+                    lightbox.classList.remove('active', 'closing');
+                    // Reset all transforms and styles
+                    container.style.transform = '';
+                    container.style.opacity = '';
+                    image.style.transform = '';
+                    image.style.opacity = '';
+                    lightbox.style.backgroundColor = '';
+                    if (closeButton) {
+                        closeButton.style.opacity = '';
+                    }
+                }, 300);
+            }
+        }
+        
         // Update content with header immediately
         portfolioContent.innerHTML = `
             <div class="flex items-center mb-6">
@@ -319,10 +482,14 @@ export function initPortfolioModal() {
 
     function closePortfolioModal(skipHistory = false) {
         const portfolioModal = document.getElementById('portfolioDetailModal');
+        const portfolioContent = document.getElementById('portfolioContent');
         const content = portfolioModal.querySelector('#portfolioModalContent');
         const background = portfolioModal.querySelector('#portfolioModalBackground');
         const mobileCloseButton = portfolioModal.querySelector('#closePortfolioModalButtonMobile');
         const isMobile = window.innerWidth < 640;
+        
+        // Store scroll position before closing
+        lastScrollPosition = portfolioContent.scrollTop;
         
         // Get the scroll position before removing modal-open class
         const scrollY = document.documentElement.style.getPropertyValue('--scroll-position');
@@ -381,19 +548,37 @@ export function initPortfolioModal() {
         
         if (portfolioModal.classList.contains('hidden') || !isMobile) return false;
         
-        initialScrollTop = portfolioContent.scrollTop;
+        // Check if we're interacting with the puller
+        const isTouchingPuller = event?.target.closest('.portfolio-modal-puller');
         
-        const isTouchingPuller = event?.target.closest('.puller') || event?.target.classList.contains('puller');
-        const isAtTop = portfolioContent.scrollTop <= 0;
-        
-        if (isTouchingPuller || (isAtTop && event?.type === 'touchmove')) {
+        // If touching the puller, always allow dragging regardless of scroll position
+        if (isTouchingPuller) {
             startY = clientY;
             lastDragY = clientY;
             lastDragTime = Date.now();
             isDragging = true;
             startTranslateY = currentTranslateY;
             dragVelocity = 0;
-
+            
+            // Store initial scroll position
+            initialScrollTop = portfolioContent.scrollTop;
+            
+            // Disable content scrolling while dragging
+            portfolioContent.style.overflow = 'hidden';
+            portfolioModalContent.style.transition = 'none';
+            return true;
+        }
+        
+        // For content area, only allow drag when at top
+        const isAtTop = portfolioContent.scrollTop <= 0;
+        if (isAtTop && event?.type === 'touchmove') {
+            startY = clientY;
+            lastDragY = clientY;
+            lastDragTime = Date.now();
+            isDragging = true;
+            startTranslateY = currentTranslateY;
+            dragVelocity = 0;
+            
             // Disable content scrolling while dragging
             portfolioContent.style.overflow = 'hidden';
             portfolioModalContent.style.transition = 'none';
@@ -485,7 +670,8 @@ export function initPortfolioModal() {
         // Store initial scroll position
         initialScrollTop = portfolioContent.scrollTop;
         
-        if (e.target.closest('.puller')) {
+        // If touching the puller, prevent default to ensure drag works
+        if (e.target.closest('.portfolio-modal-puller')) {
             if (handleDragStart(e.touches[0].clientY, e) && e.cancelable) {
                 e.preventDefault();
             }
@@ -572,16 +758,48 @@ export function initPortfolioModal() {
         }
     });
 
-    // Close modal on escape key press
+    // Update the keydown event handler to support backspace
     document.addEventListener('keydown', function(e) {
         const portfolioModal = document.getElementById('portfolioDetailModal');
+        const lightbox = document.querySelector('.case-study-lightbox');
+        
+        // Handle Escape key
         if (e.key === 'Escape' && portfolioModal && !portfolioModal.classList.contains('hidden')) {
-            closePortfolioModal();
+            // Only close modal if lightbox is not active
+            if (!lightbox || !lightbox.classList.contains('active')) {
+                closePortfolioModal();
+            }
+        }
+        
+        // Handle Backspace key
+        if (e.key === 'Backspace' && !portfolioModal.classList.contains('hidden')) {
+            // Don't trigger if user is typing in an input/textarea
+            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+                e.preventDefault(); // Prevent browser back
+                closePortfolioModal();
+            }
+        } else if (e.key === 'Backspace' && portfolioModal.classList.contains('hidden') && lastOpenedProjectId) {
+            // Don't trigger if user is typing in an input/textarea
+            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+                e.preventDefault(); // Prevent browser back
+                loadCaseStudy(lastOpenedProjectId);
+                
+                // Restore scroll position after content is loaded
+                const portfolioContent = document.getElementById('portfolioContent');
+                if (portfolioContent) {
+                    setTimeout(() => {
+                        portfolioContent.scrollTop = lastScrollPosition;
+                    }, 100); // Small delay to ensure content is rendered
+                }
+            }
         }
     });
 
     async function loadCaseStudy(projectId) {
         try {
+            // Store the project ID before loading
+            lastOpenedProjectId = projectId;
+            
             // Use cached data if available
             if (!cachedPortfolioData) {
                 cachedPortfolioData = await fetch('/data/portfolio.json').then(res => res.json());
@@ -603,38 +821,38 @@ export function initPortfolioModal() {
     }
 
     async function loadCaseStudyContent(project) {
-        const portfolioContent = document.getElementById('portfolioContent');
-        const caseStudyContent = document.createElement('div');
-        caseStudyContent.className = 'case-study-content';
-        
-        // Add loading state after the header
-        caseStudyContent.innerHTML = `
-            <div class="animate-pulse space-y-4 mt-8">
-                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
-                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
-                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
-            </div>
-        `;
-        portfolioContent.appendChild(caseStudyContent);
+                    const portfolioContent = document.getElementById('portfolioContent');
+                    const caseStudyContent = document.createElement('div');
+                    caseStudyContent.className = 'case-study-content';
+                    
+                    // Add loading state after the header
+                    caseStudyContent.innerHTML = `
+                        <div class="animate-pulse space-y-4 mt-8">
+                            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
+                        </div>
+                    `;
+                    portfolioContent.appendChild(caseStudyContent);
 
-        try {
-            const markdownResponse = await fetch(`/case-studies/${project.caseStudyFile}`);
-            
-            if (!markdownResponse.ok) {
-                throw new Error(`Case study not found. Status: ${markdownResponse.status}`);
-            }
-            
-            const markdown = await markdownResponse.text();
-            const sections = parseMarkdown(markdown);
-            
-            // Update content with case study
-            updateModalContent(project, { sections });
-        } catch (error) {
-            caseStudyContent.innerHTML = `
-                <div class="text-red-500 dark:text-red-400 mt-8">
-                    Failed to load case study content. Please try again later.
-                </div>
-            `;
+                    try {
+                        const markdownResponse = await fetch(`/case-studies/${project.caseStudyFile}`);
+                        
+                        if (!markdownResponse.ok) {
+                            throw new Error(`Case study not found. Status: ${markdownResponse.status}`);
+                        }
+                        
+                        const markdown = await markdownResponse.text();
+                        const sections = parseMarkdown(markdown);
+                        
+                        // Update content with case study
+                        updateModalContent(project, { sections });
+                    } catch (error) {
+                        caseStudyContent.innerHTML = `
+                            <div class="text-red-500 dark:text-red-400 mt-8">
+                                Failed to load case study content. Please try again later.
+                            </div>
+                        `;
         }
     }
 

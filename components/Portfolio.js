@@ -78,9 +78,11 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('/data/portfolio.json')
         .then(response => response.json())
         .then(data => {
-            portfolioContainer.innerHTML = data.projects.map(project => createPortfolioItem(project)).join('');
+            // Sort projects by ID in descending order (higher IDs at top)
+            const sortedProjects = data.projects.sort((a, b) => b.id - a.id);
+            portfolioContainer.innerHTML = sortedProjects.map(project => createPortfolioItem(project)).join('');
             // Initialize galleries after content is loaded
-            data.projects.forEach(project => {
+            sortedProjects.forEach(project => {
                 initGallery(project.id);
             });
         })
