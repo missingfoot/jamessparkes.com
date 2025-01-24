@@ -4,7 +4,7 @@ Recently I've been exploring rapid prototyping and development by leveraging IDE
 ---
 
 ## Project management
-Working with AI has taught me the importance of **meticulous documentation** and **clear requirements**. In many ways, it feels like collaborating with a team of developers: each new session with the AI requires getting it back up to speed, so solid **readme files**, **roadmaps**, and **well-structured product requirement documents** are crucial. This approach helps prevent misunderstandings, keeps the AI on track with the project goals, and ensures a smoother development process and a more successful outcome.
+This workflow has expanded my understanding of the project management pipeline and enlightened me to the importance of **meticulous documentation** and **clear requirements**. In many ways, it feels like collaborating with a team of developers: each new session with the AI requires getting it back up to speed, so solid **readme files**, **roadmaps**, and **well-structured product requirement documents** are crucial. This approach helps prevent misunderstandings, keeps the AI on track with the project goals, and ensures a smoother development process and a more successful outcome.
 
 By personally guiding the project from start to finish rather than just focusing on UX design I've gained an appreciation for the roles and responsibilities of the entire team process. This experience has enhanced my communication skills and my ability to integrate with different workflows.
 
@@ -15,28 +15,30 @@ Through these personal projects, I ensure that I continue to grow as a designer 
 ## The process
 Although straightforward on the surface, my workflow involves a blend of product management, UX, and rapid development:
 
-**Identify the problem**: Start with a real-world issue that needs solving.
+**Identify the problem:** Start with a real-world issue that needs solving.
 
-**Draft requirements**: Define features and success criteria, using AI to generate early concepts and prototypes.
+**Draft requirements:** Define features and success criteria, using AI to generate early concepts and prototypes.
 
-**Design & prototype**: Depending on the scale of the project I either hand coded CSS or utilise component libraries like ShadCN and creating final designs for components in Figma to refine visual elements at a later stage for cohesive visuals.
+**Design & prototype:** Depending on the scale of the project I either hand coded CSS or utilise component libraries like ShadCN and creating final designs for components in Figma to refine visual elements at a later stage for cohesive visuals.
 
-**Develop the MVP**: Choose a suitable and scalable technology stack and tools to scaffold the project from scratch so I can focus on building out features and UX gradually rather than relying on boilerplate code.
+**Develop the MVP:** Choose a suitable and scalable technology stack and tools to scaffold the project from scratch so I can focus on building out features and UX gradually rather than relying on boilerplate code.
 
-**Test & iterate**: Conduct user testing with friends and family and gather feedback to refine both functionality and user experience, making incremental improvements over time.
+**Test & iterate:** Conduct user testing with friends and family and gather feedback to refine both functionality and user experience, making incremental improvements over time.
 
-**Document & reflect**: Thorough documentation (readme files, roadmaps, user stories) keeps the process organised and sets the stage for future updates.
+**Document & reflect:** Thorough documentation (readme files, roadmaps, user stories) keeps the process organised and sets the stage for future updates.
 
 ### Key insights
-- **Holistic skill-building**: Managing the entire project (from planning to coding) offers a 360-degree view of product creation.  
-- **Efficient collaboration**: AI excels when given clear instructions and consistent documentation; this is similar to good teamwork practices and has helped me to improve my communication skills.  
-- **Continuous learning**: Each project reveals new design, technical, and communication strategies that I can apply in professional settings.
+- **Holistic skill-building:** Managing the entire project (from planning to coding) offers a 360-degree view of product creation.  
+- **Efficient collaboration:** AI excels when given clear instructions and consistent documentation; this is similar to good teamwork practices and has helped me to improve my communication skills.  
+- **Continuous learning:** Each project reveals new design, technical, and communication strategies that I can apply in professional settings.
 
 ---
 
 ## Projects
 
 ### UI translator
+
+![UI translator in action and it's UI](pp-ui-translator.webm)
 
 **Overview**  
 - **Goal**: Provide on-demand translation for websites without altering the site's original design.  

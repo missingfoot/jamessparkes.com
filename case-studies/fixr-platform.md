@@ -117,4 +117,55 @@ Although there was no official KPI measurement at the time of initial launch, an
 
 This project showcases my end-to-end UX capabilities, from understanding the problem space and researching solutions, through prototyping and delivering a feature set that addresses both user and business goals.
 
+
+
+
+Here’s a polished, results-driven narrative that highlights your financial impact and contributions to client acquisition, retention, and revenue growth:
+
+---
+
+**Revenue growth contributions**  
+As a key contributor at FIXR, where client acquisition and retention directly drove revenue, I spearheaded strategic initiatives to elevate the company's competitive edge, secure high-value clients, and streamline operational efficiency. My work focused on three core areas:  
+
+### 1. **Client acquisition: Winning high-value contracts**  
+- **Customisable solutions for scalable growth:**  
+  Advocated for and designed a **self-serve CMS system** and **robust app/website templates** that became critical selling points in sales pitches. These templates integrated seamlessly with clients' branding (e.g., fully customisable ticket widgets, branded checkout flows) and addressed common client needs identified over years of feedback. Sales teams attributed these features to winning contracts with clients generating **£20k–£120k+ annually**, including large-scale organisers like Comic-con Dubai and Bath & West.  
+  - *Result:* Reduced reliance on custom development, enabling faster onboarding and positioning the platform as a premium, flexible alternative to competitors like Fixr.  
+
+- **Strategic feature development:**  
+  Identified gaps in the market and proposed cost-effective solutions, such as the **self-serve interactive map feature** for venue navigation. By leveraging existing client assets (e.g., venue images) and simplifying integration, this feature became a key differentiator for event organisers with complex venues, directly contributing to closing high-value contracts.  
+
+- **Pitch deck innovation:**  
+  Created dynamic, client-specific mockups (apps, websites, branded ticket flows) and prototypes to demonstrate value during sales meetings. For urgent opportunities, streamlined asset production from **1 day to 1–2 hours**, ensuring rapid response to high-priority RFPs.  
+
+---
+
+### 2. **Client retention: Reducing churn through embedded value**  
+- **Branded, "sticky" solutions:**  
+  Designed deeply integrated client apps and websites that aligned with their branding and operational workflows (e.g., custom checkout flows with upsell capabilities, tax calculation displays). By making the platform indispensable to their operations, clients faced higher switching costs, reducing churn and securing long-term revenue streams.  
+
+- **Checkout flow redesign:**  
+  Led a frictionless checkout redesign balancing user experience and profit optimisation (e.g., adding insurance options, multi-currency support). For enterprise clients, introduced a **fully customisable checkout builder**, enabling upsells and tailored workflows that improved ticket conversion rates.  
+
+---
+
+### 3. **Cost efficiency: Maximising profit margins**  
+- **Operational streamlining:**  
+  Reduced internal costs by **migrating small/medium clients to a scalable WordPress template** (based on my original designs) and outsourcing development. This freed internal teams to focus on high-value custom projects.  
+- **Asset library creation:**  
+  Built a reusable bank of templated visuals (e.g., event-type images, currency-specific widgets) that cut pitch deck preparation time by 80%, empowering sales to act swiftly on opportunities.  
+
+---
+
+**Outcome:**  
+My contributions directly supported the acquisition and retention of clients across all tiers (SMB to enterprise), which accounted for the company's revenue model (a percentage of tickets sold). By enhancing the platform's appeal, reducing onboarding costs, and embedding sticky solutions into client operations, I helped secure recurring annual revenue streams and positioned the company as a leader in customisable, client-centric ticketing solutions.  
+
+---
+
+**Key strengths highlighted:**  
+- Strategic alignment of product design with revenue goals.  
+- Ability to bridge client needs with technical execution.  
+- Proven track record in reducing costs while scaling value.  
+
+
 **Website**: [FIXR](https://fixr.co/)

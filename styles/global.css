@@ -345,12 +345,12 @@ a[class*="underline"]:hover::after, .underline:hover::after {
         border-radius: 0.75rem;
         height: calc(100vh - 4rem);
         margin-top: 0;
-        max-width: 720px;
+        max-width: 820px;
         box-shadow: 0 4px 50px rgba(0, 0, 0, 0.15);
     }
 
     .portfolio-modal-content-inner {
-        padding: 2rem 6rem; /* Reset padding for desktop */
+        padding: 2rem 8rem; /* Reset padding for desktop */
     }
 
     .portfolio-modal-puller {

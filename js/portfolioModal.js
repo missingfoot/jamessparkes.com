@@ -20,6 +20,9 @@ export function initPortfolioModal() {
     let lastOpenedProjectId = null;
     let lastScrollPosition = 0;
 
+    // Add near the top of the file, after the existing state variables
+    let isMaximized = false;
+
     function resetDragState() {
         startY = 0;
         startTranslateY = 0;
@@ -59,19 +62,50 @@ export function initPortfolioModal() {
             .replace(/^-|-$/g, ''); // Remove leading/trailing hyphens
     }
 
+    // Add this function near the top of the file
+    function setupVideoIntersectionObserver() {
+        const options = {
+            root: document.getElementById('portfolioContent'),
+            rootMargin: '50px 0px',  // Start loading slightly before they come into view
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target;
+                if (entry.isIntersecting) {
+                    // Video is visible, start playing
+                    video.play().catch(() => {
+                        // Autoplay failed, not a critical error
+                    });
+                } else {
+                    // Video is off screen, pause it
+                    video.pause();
+                    // Optionally reset the video position
+                    video.currentTime = 0;
+                }
+            });
+        }, options);
+
+        // Observe all videos in the modal
+        const videos = document.querySelectorAll('#portfolioContent video');
+        videos.forEach(video => observer.observe(video));
+
+        return observer;
+    }
+
     // Helper function to format text with bold and links
     function formatText(text, isHeader = false) {
         let formatted = text;
         
-        // Only process bold text if not a header
         if (!isHeader) {
             formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<span class="font-semibold">$1</span>');
         }
         
-        // Process videos before images (to prevent image regex from catching video files)
+        // Process videos with lazy loading
         formatted = formatted.replace(/!\[(.*?)\]\((.*?\.(mp4|webm|mov))\)/g,
             '<figure class="my-8">' +
-                '<video src="/case-studies/img/$2" autoplay loop muted playsinline class="rounded-lg w-full">' +
+                '<video src="/case-studies/img/$2" loading="lazy" playsinline muted class="rounded-lg w-full">' +
                     'Your browser does not support the video tag.' +
                 '</video>' +
                 '<figcaption class="mt-2 text-sm text-gray-600 dark:text-gray-400 text-center">$1</figcaption>' +
@@ -209,21 +243,40 @@ export function initPortfolioModal() {
         return sections;
     }
 
-    // Add scroll event handling for desktop and mobile
+    // Update the wheel event handler
     document.addEventListener('wheel', (e) => {
         const portfolioModal = document.getElementById('portfolioDetailModal');
         if (portfolioModal.classList.contains('hidden')) return;
 
-        const target = e.target;
         const portfolioContent = document.getElementById('portfolioContent');
+        const modalContent = document.getElementById('portfolioModalContent');
 
-        // If we're hovering over the modal content and it's scrollable
+        // If modal is maximized, allow scrolling anywhere within the modal
+        if (isMaximized && portfolioModal.contains(e.target)) {
+            e.preventDefault(); // Prevent default scrolling
+            
+            // Get the scroll values
+            const scrollTop = portfolioContent.scrollTop;
+            const scrollHeight = portfolioContent.scrollHeight;
+            const clientHeight = portfolioContent.clientHeight;
+            
+            // Calculate new scroll position
+            const newScrollTop = scrollTop + e.deltaY;
+            
+            // Check if we can scroll in this direction
+            if (newScrollTop >= 0 && newScrollTop <= (scrollHeight - clientHeight)) {
+                portfolioContent.scrollTop = newScrollTop;
+            }
+            return;
+        }
+
+        // Original behavior for non-maximized state
+        const target = e.target;
         if (portfolioContent.contains(target)) {
             const scrollTop = portfolioContent.scrollTop;
             const scrollHeight = portfolioContent.scrollHeight;
             const clientHeight = portfolioContent.clientHeight;
 
-            // Allow scrolling only if there's room to scroll in that direction
             if ((scrollTop === 0 && e.deltaY < 0) || 
                 (scrollTop >= scrollHeight - clientHeight && e.deltaY > 0)) {
                 e.preventDefault();
@@ -457,6 +510,13 @@ export function initPortfolioModal() {
                 }, 150);
             }
         });
+
+        // Log the dimensions
+        setTimeout(() => {
+            const rect = content.getBoundingClientRect();
+            console.log('Modal width:', rect.width, 'pixels');
+            console.log('Modal height:', rect.height, 'pixels');
+        }, 300); // Wait for any initial animations
     }
 
     function updateModalContent(project, projectDetail) {
@@ -478,6 +538,9 @@ export function initPortfolioModal() {
         if (!portfolioContent.querySelector('.case-study-content')) {
             portfolioContent.appendChild(caseStudyContent);
         }
+
+        // Setup video optimization after content is added
+        setupVideoIntersectionObserver();
     }
 
     function closePortfolioModal(skipHistory = false) {
@@ -502,23 +565,38 @@ export function initPortfolioModal() {
         if (!skipHistory) {
             history.pushState({}, '', '/');
         }
-        
-        if (isMobile) {
-            content.style.transform = 'translateY(100%)';
+
+        // Different closing animation for maximized state
+        if (isMaximized) {
+            content.style.transition = `
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+            `;
+            background.style.transition = 'opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            
+            // Fade out and slightly scale down
+            content.style.transform = 'scale(0.95)';
+            content.style.opacity = '0';
+            background.style.opacity = '0';
+            
+            isMaximized = false;
         } else {
-            content.style.transform = 'translateX(100%)';
+            // Original closing animation for non-maximized state
+            content.style.transition = 'transform 0.3s ease-out';
+            background.style.transition = 'opacity 0.3s ease-out';
+            
+            if (isMobile) {
+                content.style.transform = 'translateY(100%)';
+            } else {
+                content.style.transform = 'translate(-50%, 100%)';
+            }
+            background.style.opacity = '0';
         }
         
         // Hide mobile close button first
         if (isMobile) {
             mobileCloseButton.classList.remove('active');
         }
-        
-        content.style.transition = 'transform 0.3s ease-out';
-        background.style.transition = 'opacity 0.3s ease-out';
-        
-        content.style.transform = isMobile ? 'translateY(100%)' : 'translate(-50%, 100%)';
-        background.style.opacity = '0';
         
         // Reset status bar and theme color
         const isDark = document.documentElement.classList.contains('dark');
@@ -537,6 +615,23 @@ export function initPortfolioModal() {
         setTimeout(() => {
             portfolioModal.classList.add('hidden');
             resetDragState();
+            
+            // Reset all styles after hiding
+            content.style.transform = '';
+            content.style.opacity = '';
+            content.style.width = '';
+            content.style.height = '';
+            content.style.maxWidth = '';
+            content.style.maxHeight = '';
+            content.style.top = '';
+            content.style.left = '';
+            content.style.borderRadius = '';
+            
+            portfolioContent.style.maxWidth = '';
+            portfolioContent.style.margin = '';
+            portfolioContent.style.padding = '';
+            portfolioContent.style.height = '';
+            portfolioContent.style.position = '';
         }, 300);
     }
 
@@ -923,4 +1018,119 @@ export function initPortfolioModal() {
             }, { passive: false });
         }
     });
+
+    // Add this function after the other initialization code
+    function initMaximizeButton() {
+        const maximizeButton = document.getElementById('maximizePortfolioModalButton');
+        const modalContent = document.getElementById('portfolioModalContent');
+        const portfolioContent = document.getElementById('portfolioContent');
+        
+        maximizeButton.addEventListener('click', () => {
+            isMaximized = !isMaximized;
+            
+            // Store current scroll position
+            const currentScrollTop = portfolioContent.scrollTop;
+            
+            // Add smooth transition for all properties
+            modalContent.style.transition = `
+                width 0.3s cubic-bezier(0.2, 0, 0, 1),
+                height 0.3s cubic-bezier(0.2, 0, 0, 1),
+                max-width 0.3s cubic-bezier(0.2, 0, 0, 1),
+                max-height 0.3s cubic-bezier(0.2, 0, 0, 1),
+                top 0.3s cubic-bezier(0.2, 0, 0, 1),
+                left 0.3s cubic-bezier(0.2, 0, 0, 1),
+                transform 0.3s cubic-bezier(0.2, 0, 0, 1),
+                border-radius 0.3s cubic-bezier(0.2, 0, 0, 1)
+            `;
+            
+            portfolioContent.style.transition = 'max-width 0.3s cubic-bezier(0.2, 0, 0, 1)';
+            
+            if (isMaximized) {
+                // Store current position and size before maximizing
+                const rect = modalContent.getBoundingClientRect();
+                modalContent.style.transformOrigin = 'top left';
+                
+                // First set initial position to match current view
+                modalContent.style.top = `${rect.top}px`;
+                modalContent.style.left = `${rect.left}px`;
+                modalContent.style.width = `${rect.width}px`;
+                modalContent.style.height = `${rect.height}px`;
+                
+                // Force a reflow
+                modalContent.offsetHeight;
+                
+                // Temporarily disable scroll to prevent content jump
+                portfolioContent.style.overflow = 'hidden';
+                
+                // Then animate to maximized state
+                modalContent.style.width = '100%';
+                modalContent.style.height = '100vh';
+                modalContent.style.maxWidth = '100%';
+                modalContent.style.maxHeight = '100vh';
+                modalContent.style.top = '0';
+                modalContent.style.left = '0';
+                modalContent.style.transform = 'none';
+                modalContent.style.borderRadius = '0';
+                
+                // Adjust content width for maximized state
+                portfolioContent.style.maxWidth = '940px';
+                portfolioContent.style.margin = '0 auto';
+                portfolioContent.style.padding = '2rem 2rem 6rem 2rem';
+                portfolioContent.style.height = '100%';
+                portfolioContent.style.position = 'relative';
+                
+                // Re-enable scroll and restore position after transform
+                setTimeout(() => {
+                    portfolioContent.style.overflow = 'auto';
+                    portfolioContent.scrollTop = currentScrollTop;
+                }, 50);
+                
+                // Update maximize icon to minimize
+                maximizeButton.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3"/><path d="M21 8h-3a2 2 0 0 1-2-2V3"/><path d="M3 16h3a2 2 0 0 1 2 2v3"/><path d="M16 21v-3a2 2 0 0 1 2-2h3"/></svg>
+                `;
+            } else {
+                // Temporarily disable scroll
+                portfolioContent.style.overflow = 'hidden';
+                
+                // Restore original size with animation
+                modalContent.style.width = '';
+                modalContent.style.height = '';
+                modalContent.style.maxWidth = '';
+                modalContent.style.maxHeight = '';
+                modalContent.style.top = '';
+                modalContent.style.left = '';
+                modalContent.style.transform = 'translate(-50%, 0)';
+                modalContent.style.borderRadius = '';
+                
+                // Reset content width
+                portfolioContent.style.maxWidth = '';
+                portfolioContent.style.margin = '';
+                portfolioContent.style.padding = '';
+                portfolioContent.style.height = '';
+                portfolioContent.style.position = '';
+                
+                // Re-enable scroll and restore position after transform
+                setTimeout(() => {
+                    portfolioContent.style.overflow = 'auto';
+                    portfolioContent.scrollTop = currentScrollTop;
+                }, 50);
+                
+                // Restore maximize icon
+                maximizeButton.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+                `;
+            }
+            
+            // Clear transitions after animation completes
+            setTimeout(() => {
+                modalContent.style.transition = '';
+                modalContent.style.transformOrigin = '';
+                portfolioContent.style.transition = '';
+            }, 300);
+        });
+    }
+
+    // Call initMaximizeButton at the end of initPortfolioModal
+    initMaximizeButton();
 } 
