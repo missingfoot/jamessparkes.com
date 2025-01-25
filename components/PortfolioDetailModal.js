@@ -16,13 +16,27 @@ export function PortfolioDetailModal() {
                         </svg>
                     </button>
                 </div>
+                <!-- Add bookmark list here at same level as desktop controls -->
+                <div class="bookmark-list" id="bookmarkList">
+                    <div class="bookmark-list-inner">
+                        <p class="level-1">Overview</p>
+                        <p class="level-2">Tasks & responsibilities</p>
+                        <p class="level-2">Project: Customer messaging platform</p>
+                        <p class="level-3">The Challenge</p>
+                        <p class="level-3">Our Approach</p>
+                    </div>
+                </div>
                 <!-- Puller (only for mobile) -->
                 <div class="portfolio-modal-puller">
                     <div class="portfolio-modal-puller-line bg-gray-400 dark:bg-gray-500"></div>
                 </div>
                 <!-- Portfolio content -->
                 <div id="portfolioContent" class="portfolio-modal-content-inner text-gray-800 dark:text-gray-200">
-                    <!-- Content will be dynamically inserted here -->
+                    <div class="modal-content-wrapper">
+                        <div class="markdown-content" id="markdownContent">
+                            <!-- Content will be dynamically inserted here -->
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- Floating close button (mobile only) -->

@@ -10,9 +10,7 @@ FIXR is a mobile-first ticketing and event management platform empowering event 
 
 One of my most significant projects involved designing a new **customer messaging platform** to help organisers send notifications, marketing messages, and critical service updates.
 
----
-
-## Tasks & responsibilities
+### Tasks & responsibilities
 Throughout my time at FIXR I...
 - Collaborated with cross-functional teams (product, development, sales, and customer relations) to identify user needs and translate them into design requirements.
 - Conducted user research, competitive analysis, and iterative testing sessions to inform design decisions.
@@ -23,7 +21,7 @@ Throughout my time at FIXR I...
 
 ## Project: Customer messaging platform
 
-### Project brief & context
+### Project context
 To remain competitive and to outperform existing event management competitors, I was tasked with creating a robust messaging platform for FIXR's event organisers. The new platform needed to address three major workflows:
 
 - Sending event notifications
@@ -39,56 +37,40 @@ Prior to this project, organisers could only send basic, single-event notificati
 - **Customisation & branding**: Let organisers use their own copy, tone of voice, and visual branding in messages.  
 - **Service emails & critical updates**: Provide a clear path for sending important service messages (e.g., event changes, cancellations).
 
----
-
-## Constraints & considerations
+### Constraints & considerations
 - **Risk of misuse**: Granting organisers the power to send potentially thousands of emails or messages at once posed a **reputational** and **compliance** risk. We needed to implement checks and safeguards to prevent nefarious or spam-like behaviour.
-- **Technical feasibility**: Creating a scalable messaging system required buy-in from engineering to ensure performance and reliability.
+- **Technical feasibility**: Creating a scalable messaging system required buy-in from engineering to ensure performance and reliability especially with new added complex systems like timed entry.
 - **Timeline & scope**: We had to deliver a **manageable first release** that could be iterated on, based on customer feedback.
 
----
+### Research
+- **Competitor analysis**: I examined popular CRM tools and direct competitors in the event ticketing space. This helped me understand how others approached messaging workflows, audience segmentation, and brand customisation, as well as how they mitigated misuse (e.g., permissions, throttling, and content guidelines).
 
-## Research & findings
+### Stakeholder questioning
+- **Accounts team & customer relations**: Provided insights into common client requests and pain points.  
+- **Terminology familiarity**: Using language and structures familiar to CRM users would reduce the learning curve.  
+- **Audience segmentation**: Offering a way to segment attendee groups (e.g., VIPs, repeat customers) was highly desired.  
+- **Robust safeguards**: Mechanisms to prevent spam and abuse (e.g., admin approvals, daily send limits for new accounts).
 
-### Competitive analysis
-I examined popular CRM tools and direct competitors in the event ticketing space. This helped me understand how others approached messaging workflows, audience segmentation, and brand customisation, as well as how they mitigated misuse (e.g., permissions, throttling, and content guidelines).
 
-### User & stakeholder interviews
-- **Sales team & customer relations**: Provided insights into common client requests and pain points.  
-- **Existing organisers**: Some were testing early prototypes (our "beta testers"), offering invaluable feedback on desired features like segmentation, scheduling, and branding.
+### Ideation & collaboration
+Workshops with stakeholders from various departments revealed what features to potentially include in the MVP:
+- **Accounts team**: Prioritised must-have features based on demand such as multi-event promotions, scheduling.
+- **Customer relations**: Provided insights into common client requests and pain points and prioritised service updates.
+- **Engineering**: Balanced feasibility and timeline constraints by prioritising features that were most likely to be successful in short term and made designs with additional feature sets for future iterations.
+- **Product**: Prioritised technical requirements like working with other systems such as timed entry.
 
-**Key insights**:
-1. **Terminology familiarity**: Using language and structures familiar to CRM users would reduce the learning curve.  
-2. **Audience segmentation**: Offering a way to segment attendee groups (e.g., VIPs, repeat customers) was highly desired.  
-3. **Robust safeguards**: Mechanisms to prevent spam and abuse (e.g., admin approvals, daily send limits for new accounts) would preserve FIXR's reputation.
+From these workshops product management created a feature roadmap with clear priorities for the final product where I prioritised and created a prototype from which to get further feedback from the team and stakeholders for an MVP that could be delivered on time by engineering.
 
----
-
-## Ideation & collaboration
-I conducted workshops with stakeholders from various departments:
-
-- **Sales**: Prioritised must-have features based on demand (e.g., multi-event promotions, scheduling).  
-- **Product & engineering**: Balanced feasibility and timeline constraints.  
-- **Customer support**: Provided insights into common questions or confusions organisers faced with existing notification tools.
-
-From these workshops, we created a **feature roadmap** with clear priorities for an **MVP (Minimum Viable Product)** and subsequent iterations.
-
----
-
-## Prototyping & iteration
-
+### Prototyping & iteration
 **Low-fidelity wireframes**: I started by mapping out user flows for scheduling messages, creating segmented lists, and customising templates.  
 **Interactive prototypes**: Using Figma, I built mid- to high-fidelity prototypes to simulate key interactions (e.g., segment selection, scheduling calendar).  
-**Feedback rounds**: After each iteration, I gathered input from internal stakeholders and beta testers:  
-   - **Ease of use**: Ensured the interface was straightforward, with step-by-step flows for new users.  
-   - **Messaging templates**: Added pre-built templates for recurring communications (e.g., event reminders, "thank you" follow-ups).  
-   - **Safeguards**: Implemented checks before sending large campaigns, including confirmation dialogues and potential send limits for new accounts.
+**Feedback rounds**: After each iteration, I gathered input from internal stakeholders:  
+- Ensured the interface was straightforward, with step-by-step flows for new users.  
+- Added pre-built templates for recurring communications.
+- Implemented sign-posting before sending campaigns, including confirmations and potential send limits for new accounts.
+- Cut certain advanced features (like complex audience segmentation rules) to keep the first release focused and deliverable.
 
-We cut or postponed certain advanced features (like complex audience segmentation rules) to keep the first release focused and deliverable on time.
-
----
-
-## Outcome & impact
+### Outcome & impact
 
 - **Improved workflow efficiency**: Organisers could schedule and send multiple notifications in one go, saving significant time.  
 - **Brand consistency**: Users now had the freedom to include custom branding and maintain their own tone of voice.  
@@ -99,57 +81,53 @@ We cut or postponed certain advanced features (like complex audience segmentatio
 
 Although there was no official KPI measurement at the time of initial launch, anecdotal feedback from organisers indicated they experienced **higher open rates** and **better engagement** when promoting events through the new messaging system.
 
----
+### Reflection & next steps
+- **Further segmentation**: Future iterations could include more sophisticated audience targeting (e.g., dynamic filters event attendance and audience segmentation)
+- **Analytics dashboard**: Designs for real-time stats on open rates, click-through rates, and unsubscribes would offer deeper insights for organisers that was indentified as a must-have feature by the accounts team.
+- **Continuous user feedback**: Ongoing beta tester reviews and usage analytics would help refine the platform and prioritise additional features that I wouuld add.
 
-## Reflection & next steps
-
-- **Further segmentation**: Future iterations could include more sophisticated audience targeting (e.g., dynamic filters based on attendance history).  
-- **Analytics dashboard**: Providing real-time stats on open rates, click-through rates, and unsubscribes would offer deeper insights for organisers.  
-- **Continuous user feedback**: Ongoing user interviews and usage analytics will help refine the platform and prioritise additional features in line with evolving market trends.
-
----
-
-## Key takeaways
-
-- **Holistic UX approach**: Balancing user needs (scheduling, personalisation) with company concerns (risk mitigation, technical constraints) is vital in complex enterprise projects.  
+### Key takeaways
+- **Holistic UX approach**: Balancing user needs (scheduling, personalisation) with company concerns (risk mitigation, technical constraints) is vital in complex projects.  
 - **Cross-functional collaboration**: Involving stakeholders from sales, product, and customer support ensured alignment on features that matter most.  
 - **Iterative development**: Phasing out non-critical features helped us ship a functional MVP quickly, with room to grow in future releases.
 
-This project showcases my end-to-end UX capabilities, from understanding the problem space and researching solutions, through prototyping and delivering a feature set that addresses both user and business goals.
-
-
-
-
-Here’s a polished, results-driven narrative that highlights your financial impact and contributions to client acquisition, retention, and revenue growth:
-
 ---
 
-**Revenue growth contributions**  
+## Revenue growth contributions
 As a key contributor at FIXR, where client acquisition and retention directly drove revenue, I spearheaded strategic initiatives to elevate the company's competitive edge, secure high-value clients, and streamline operational efficiency. My work focused on three core areas:  
 
-### 1. **Client acquisition: Winning high-value contracts**  
-- **Customisable solutions for scalable growth:**  
-  Advocated for and designed a **self-serve CMS system** and **robust app/website templates** that became critical selling points in sales pitches. These templates integrated seamlessly with clients' branding (e.g., fully customisable ticket widgets, branded checkout flows) and addressed common client needs identified over years of feedback. Sales teams attributed these features to winning contracts with clients generating **£20k–£120k+ annually**, including large-scale organisers like Comic-con Dubai and Bath & West.  
-  - *Result:* Reduced reliance on custom development, enabling faster onboarding and positioning the platform as a premium, flexible alternative to competitors like Fixr.  
+### Client acquisition
+FIXR would offer a custom app and website option for clients to integrate into the FIXR platform without existing infrastructure.
+- **My contribution:** Advocated for a robust **self-serve CMS system** and designed **robust app/website templates** that became critical selling points in sales pitches. I ensured these templates integrated seamlessly with clients' branding and addressed common client needs. Sales teams attributed these features helping to win contracts with clients generating **£20k** for smaller clients **£50k** for medium clients and **£100k** for large clients **annually**, including large-scale organisers like [Middle East Film and Comic Con](https://www.mefcc.com/home/), and [The Bath & West Showground](https://www.bathandwest.com/).
 
-- **Strategic feature development:**  
-  Identified gaps in the market and proposed cost-effective solutions, such as the **self-serve interactive map feature** for venue navigation. By leveraging existing client assets (e.g., venue images) and simplifying integration, this feature became a key differentiator for event organisers with complex venues, directly contributing to closing high-value contracts.  
+![Website template example](f-website-template.png)
 
-- **Pitch deck innovation:**  
-  Created dynamic, client-specific mockups (apps, websites, branded ticket flows) and prototypes to demonstrate value during sales meetings. For urgent opportunities, streamlined asset production from **1 day to 1–2 hours**, ensuring rapid response to high-priority RFPs.  
+![App template example](f-website-template.png)
 
----
+- **Strategic feature development:** Identified gaps in the market and proposed cost-effective solutions, such as the **self-serve interactive map feature** for venue navigation. By leveraging existing client assets (e.g., venue images) and simplifying integration, this feature became a key differentiator for event organisers with complex venues, directly contributing to closing high-value contracts.
 
-### 2. **Client retention: Reducing churn through embedded value**  
-- **Branded, "sticky" solutions:**  
-  Designed deeply integrated client apps and websites that aligned with their branding and operational workflows (e.g., custom checkout flows with upsell capabilities, tax calculation displays). By making the platform indispensable to their operations, clients faced higher switching costs, reducing churn and securing long-term revenue streams.  
+![Waypoint map](f-waypointer.png)
 
-- **Checkout flow redesign:**  
-  Led a frictionless checkout redesign balancing user experience and profit optimisation (e.g., adding insurance options, multi-currency support). For enterprise clients, introduced a **fully customisable checkout builder**, enabling upsells and tailored workflows that improved ticket conversion rates.  
+- **Pitch deck innovation:** Created client-specific mockups of apps, websites, branded checkout flows and prototypes to demonstrate value during sales pitches. For urgent opportunities, I streamlined asset production from **down from 1 day to 1–2 hours**, ensuring rapid response to high-priority RFPs and reducing internal costs.
+
+![Pitch deck assets](f-pitch-deck-assets.png)
+
+- **Result:** Reduced reliance on custom development for smaller clients meaning faster turnaround on these. Retained carefully considered custom solutions for larger clients through research into their specific systems and workflows and sales structures which contributed to being chosen over competitors for larger clients.
 
 ---
 
-### 3. **Cost efficiency: Maximising profit margins**  
+### Client retention
+- **Client retention:** Designed and maintained streamlined easy to implement checkout flow with upsell capabilities through insurance and pay in 3 capabiltiees, tax and fee calculations considerations which contributed higher ticket sales for both the clients and FIXR. By making the platform indispensable to operations, clients were likely to stay with us longer for muultiple contract rounds securing longer-term revenue streams.
+
+![Checkout flow](f-checkout-flow.png)
+
+- **Checkout flow redesign:** Designed a frictionless and easy to use self-serve checkout flow builder to balance user experience and profit optimisation. Larger clients were able to upsell add-ons and various ticket types and options which contributed to higher ticket sales by creating their own optimised checkout flows suited to their business.
+
+![Checkout flow builder](f-checkout-flow-builder.png)
+
+---
+
+### Cost efficiency
 - **Operational streamlining:**  
   Reduced internal costs by **migrating small/medium clients to a scalable WordPress template** (based on my original designs) and outsourcing development. This freed internal teams to focus on high-value custom projects.  
 - **Asset library creation:**  
@@ -157,15 +135,10 @@ As a key contributor at FIXR, where client acquisition and retention directly dr
 
 ---
 
-**Outcome:**  
-My contributions directly supported the acquisition and retention of clients across all tiers (SMB to enterprise), which accounted for the company's revenue model (a percentage of tickets sold). By enhancing the platform's appeal, reducing onboarding costs, and embedding sticky solutions into client operations, I helped secure recurring annual revenue streams and positioned the company as a leader in customisable, client-centric ticketing solutions.  
+### Summary
+My contributions directly supported the acquisition and retention of clients across all tiers, which were central to the company's revenue model—a percentage of tickets sold. By enhancing the platform's appeal, reducing design costs, and demonstrating long-term value for client operations and user benefits, I played a key role in driving sustainable growth for the business.
 
----
-
-**Key strengths highlighted:**  
-- Strategic alignment of product design with revenue goals.  
-- Ability to bridge client needs with technical execution.  
-- Proven track record in reducing costs while scaling value.  
+These efforts helped secure recurring annual revenue streams for FIXR. My key strengths included strategically aligning product design with revenue goals, bridging client needs with technical execution, and maintaining a proven track record of reducing costs while scaling operations effectively. 
 
 
 **Website**: [FIXR](https://fixr.co/)

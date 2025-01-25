@@ -62,39 +62,7 @@ export function initPortfolioModal() {
             .replace(/^-|-$/g, ''); // Remove leading/trailing hyphens
     }
 
-    // Add this function near the top of the file
-    function setupVideoIntersectionObserver() {
-        const options = {
-            root: document.getElementById('portfolioContent'),
-            rootMargin: '50px 0px',  // Start loading slightly before they come into view
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const video = entry.target;
-                if (entry.isIntersecting) {
-                    // Video is visible, start playing
-                    video.play().catch(() => {
-                        // Autoplay failed, not a critical error
-                    });
-                } else {
-                    // Video is off screen, pause it
-                    video.pause();
-                    // Optionally reset the video position
-                    video.currentTime = 0;
-                }
-            });
-        }, options);
-
-        // Observe all videos in the modal
-        const videos = document.querySelectorAll('#portfolioContent video');
-        videos.forEach(video => observer.observe(video));
-
-        return observer;
-    }
-
-    // Helper function to format text with bold and links
+    // Update the formatText function's video handling
     function formatText(text, isHeader = false) {
         let formatted = text;
         
@@ -102,10 +70,19 @@ export function initPortfolioModal() {
             formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<span class="font-semibold">$1</span>');
         }
         
-        // Process videos with lazy loading
+        // Enhanced video handling with optimizations
         formatted = formatted.replace(/!\[(.*?)\]\((.*?\.(mp4|webm|mov))\)/g,
             '<figure class="my-8">' +
-                '<video src="/case-studies/img/$2" loading="lazy" playsinline muted class="rounded-lg w-full">' +
+                '<video class="rounded-lg w-full video-optimized" ' +
+                    'src="/case-studies/img/$2" ' +
+                    'loading="lazy" ' +
+                    'playsinline ' +
+                    'muted ' +
+                    'preload="metadata" ' +
+                    'disablePictureInPicture ' +
+                    'disableRemotePlayback ' +
+                    'controlsList="nodownload nofullscreen noremoteplayback" ' +
+                    'style="contain: content; will-change: transform; isolation: isolate; transform: translateZ(0);">' +
                     'Your browser does not support the video tag.' +
                 '</video>' +
                 '<figcaption class="mt-2 text-sm text-gray-600 dark:text-gray-400 text-center">$1</figcaption>' +
@@ -124,6 +101,85 @@ export function initPortfolioModal() {
         formatted = formatted.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="group inline-block text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-300"><span class="inline-block transform group-hover:-translate-y-0.5 transition-transform duration-150">$1</span></a>');
         
         return formatted;
+    }
+
+    // Update video intersection observer with performance optimizations
+    function setupVideoIntersectionObserver() {
+        const options = {
+            root: document.getElementById('portfolioContent'),
+            rootMargin: '50px 0px',
+            threshold: 0.1
+        };
+
+        let animationFrame;
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target;
+                
+                if (entry.isIntersecting) {
+                    // Use requestAnimationFrame for smoother playback
+                    animationFrame = requestAnimationFrame(() => {
+                        // Check if it's a mobile/low-powered device
+                        const isMobileOrLowPower = window.innerWidth < 768 || 
+                            navigator.hardwareConcurrency <= 4;
+
+                        if (isMobileOrLowPower) {
+                            // Reduce quality for mobile/low-power devices
+                            video.setAttribute('height', '360');
+                            video.style.filter = 'contrast(1.1)'; // Slight contrast boost to mask quality reduction
+                        }
+
+                        // Start playback
+                        const playPromise = video.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(() => {
+                                // Autoplay failed, not critical
+                            });
+                        }
+                    });
+                } else {
+                    // Cancel any pending animation frame
+                    if (animationFrame) {
+                        cancelAnimationFrame(animationFrame);
+                    }
+                    // Reset video when out of view
+                    video.pause();
+                    video.currentTime = 0;
+                }
+            });
+        }, options);
+
+        // Add CSS for video optimizations
+        const style = document.createElement('style');
+        style.textContent = `
+            .video-optimized {
+                transform: translateZ(0);
+                backface-visibility: hidden;
+                perspective: 1000px;
+                contain: content;
+                isolation: isolate;
+            }
+            @media (max-width: 768px) {
+                .video-optimized {
+                    max-height: 360px;
+                    object-fit: cover;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Observe all videos in the modal
+        const videos = document.querySelectorAll('#portfolioContent video');
+        videos.forEach(video => {
+            observer.observe(video);
+            
+            // Add error handling
+            video.addEventListener('error', () => {
+                video.style.display = 'none';
+            }, { once: true });
+        });
+
+        return observer;
     }
 
     // Function to parse markdown sections
@@ -241,6 +297,94 @@ export function initPortfolioModal() {
         }
         
         return sections;
+    }
+
+    // Add this function to extract headings from markdown sections
+    function extractHeadings(sections) {
+        const headings = [];
+        sections.forEach(section => {
+            if (section.title && section.headerLevel > 0) {
+                headings.push({
+                    title: section.title,
+                    level: section.headerLevel
+                });
+            }
+        });
+        return headings;
+    }
+
+    // Modify the updateModalContent function to add scroll functionality
+    function updateModalContent(project, { sections }) {
+        const portfolioContent = document.getElementById('portfolioContent');
+        const bookmarkList = document.getElementById('bookmarkList');
+        const bookmarkInner = bookmarkList.querySelector('.bookmark-list-inner');
+        
+        // Clear existing bookmarks and reset scroll position
+        bookmarkInner.innerHTML = '';
+        bookmarkList.scrollTop = 0;
+        
+        // Extract and populate headings
+        const headings = extractHeadings(sections);
+        
+        // Add scroll event handler to prevent main content scroll interference
+        bookmarkList.addEventListener('wheel', (e) => {
+            const isScrollable = bookmarkList.scrollHeight > bookmarkList.clientHeight;
+            if (isScrollable) {
+                e.stopPropagation();
+            }
+        }, { passive: true });
+
+        headings.forEach(heading => {
+            const bookmarkItem = document.createElement('p');
+            bookmarkItem.className = `level-${heading.level}`;
+            bookmarkItem.textContent = heading.title;
+            
+            // Add click handler for smooth scrolling
+            bookmarkItem.addEventListener('click', () => {
+                const sectionId = `section-${heading.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+                const targetSection = document.getElementById(sectionId);
+                
+                if (targetSection) {
+                    // Calculate offset to account for top padding
+                    const offset = 32; // 2rem top padding
+                    const targetPosition = targetSection.offsetTop - offset;
+                    
+                    portfolioContent.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+            
+            bookmarkInner.appendChild(bookmarkItem);
+        });
+
+        // Create content HTML with proper structure
+        let contentHtml = `
+            <div class="flex items-center mb-6">
+                <img src="${project.logo}" alt="${project.company} Logo" class="w-12 h-12 rounded-full mr-4">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">${project.title}</h2>
+                    <p class="text-gray-600 dark:text-gray-400">${project.company}, ${project.location}</p>
+                </div>
+            </div>
+            <article class="prose prose-slate dark:prose-invert prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl max-w-none">
+        `;
+
+        // Add sections with IDs for scrolling
+        sections.forEach(section => {
+            if (section.title) {
+                const sectionId = `section-${section.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+                contentHtml += `<h${section.headerLevel} id="${sectionId}">${section.title}</h${section.headerLevel}>`;
+            }
+            contentHtml += section.content;
+        });
+
+        contentHtml += '</article>';
+        portfolioContent.innerHTML = contentHtml;
+
+        // Setup video optimization after content is added
+        setupVideoIntersectionObserver();
     }
 
     // Update the wheel event handler
@@ -519,30 +663,6 @@ export function initPortfolioModal() {
         }, 300); // Wait for any initial animations
     }
 
-    function updateModalContent(project, projectDetail) {
-        const portfolioContent = document.getElementById('portfolioContent');
-        const caseStudyContent = portfolioContent.querySelector('.case-study-content') || document.createElement('div');
-        caseStudyContent.className = 'case-study-content';
-        
-        // Update only the case study content
-        caseStudyContent.innerHTML = `
-            <article class="prose prose-slate dark:prose-invert prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl max-w-none">
-                ${projectDetail.sections.map(section => `
-                    ${section.title ? `<h${section.headerLevel}>${section.title}</h${section.headerLevel}>` : ''}
-                    ${section.content}
-                `).join('')}
-            </article>
-        `;
-
-        // If the case study content isn't already in the DOM, append it
-        if (!portfolioContent.querySelector('.case-study-content')) {
-            portfolioContent.appendChild(caseStudyContent);
-        }
-
-        // Setup video optimization after content is added
-        setupVideoIntersectionObserver();
-    }
-
     function closePortfolioModal(skipHistory = false) {
         const portfolioModal = document.getElementById('portfolioDetailModal');
         const portfolioContent = document.getElementById('portfolioContent');
@@ -579,7 +699,9 @@ export function initPortfolioModal() {
             content.style.opacity = '0';
             background.style.opacity = '0';
             
+            // Reset maximized state
             isMaximized = false;
+            content.classList.remove('maximized');
         } else {
             // Original closing animation for non-maximized state
             content.style.transition = 'transform 0.3s ease-out';
@@ -1027,6 +1149,9 @@ export function initPortfolioModal() {
         
         maximizeButton.addEventListener('click', () => {
             isMaximized = !isMaximized;
+            
+            // Add this line to toggle the maximized class
+            modalContent.classList.toggle('maximized', isMaximized);
             
             // Store current scroll position
             const currentScrollTop = portfolioContent.scrollTop;

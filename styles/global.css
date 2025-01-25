@@ -490,4 +490,123 @@ a[class*="underline"]:hover::after, .underline:hover::after {
 
 .case-study-image:hover {
     opacity: 0.9;
+}
+
+/* Update these styles */
+.modal-content-wrapper {
+    position: relative;
+    display: flex;
+    width: 100%;
+    min-height: 100%;
+}
+
+/* Update bookmark list styles to match the button positioning */
+.bookmark-list {
+    position: fixed; /* Change to fixed to stay in viewport */
+    left: 4rem; /* Position relative to center: half of (modal width + space to bookmark) */
+    top: 0;
+    width: auto;
+    padding: 4rem 1rem; /* Add padding top to match modal padding */
+    z-index: 10;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease 0.15s;
+    height: 100vh; /* Full viewport height */
+    overflow-y: auto;
+    pointer-events: auto; /* Ensure scrolling works */
+}
+
+.bookmark-list-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-right: 0.5rem;
+    padding-bottom: 4rem; /* Add bottom padding for last items */
+}
+
+/* Style scrollbar for webkit browsers */
+.bookmark-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.bookmark-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.bookmark-list::-webkit-scrollbar-thumb {
+    background-color: rgba(156, 163, 175, 0.5);
+    border-radius: 2px;
+}
+
+/* For Firefox */
+.bookmark-list {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+}
+
+/* Base styles for all bookmark links */
+.bookmark-list-inner p {
+    cursor: pointer;
+    transition: color 0.2s ease;
+    font-size: 0.9rem;
+}
+
+/* Main links (h1 and h2) */
+.bookmark-list-inner p.level-1,
+.bookmark-list-inner p.level-2 {
+    font-weight: 400;
+    color: #333;
+}
+
+/* Sublinks (h3 and h4) */
+.bookmark-list-inner p.level-3,
+.bookmark-list-inner p.level-4 {
+    padding-left: 1rem;
+    color: #666;
+}
+
+/* Hover states */
+.bookmark-list-inner p:hover {
+    color: #000;
+}
+
+/* Dark mode */
+.dark .bookmark-list-inner p.level-1,
+.dark .bookmark-list-inner p.level-2 {
+    color: #fff;
+}
+
+.dark .bookmark-list-inner p.level-3,
+.dark .bookmark-list-inner p.level-4 {
+    color: #999;
+}
+
+.dark .bookmark-list-inner p:hover {
+    color: #fff;
+}
+
+/* Show when maximized */
+@media (min-width: 1536px) {
+    .portfolio-modal-content.maximized .bookmark-list {
+        visibility: visible;
+        opacity: 1;
+        transform: translateX(0);
+        /* Keep the delay for showing */
+        transition: opacity 0.3s ease 0.15s,
+                   visibility 0s linear 0s,
+                   transform 0.3s ease 0.15s;
+    }
+
+    /* Quick hide when not maximized OR when modal is hidden */
+    .portfolio-modal-content:not(.maximized) .bookmark-list,
+    .portfolio-modal.hidden .bookmark-list {
+        visibility: hidden;
+        opacity: 0;
+        transform: translateX(-10px);
+        /* No delay for hiding */
+        transition: opacity 0.1s ease 0s,
+                   visibility 0s linear 0.1s,
+                   transform 0.1s ease 0s;
+    }
 } 

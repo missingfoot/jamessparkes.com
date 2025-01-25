@@ -8,7 +8,7 @@
         "location": "London",
         "backgroundColor": "#F4F4F4",
         "caseStudyFile": "fixr-platform.md",
-        "description": "Product design of FIXR's ticket buying and management platforms for web, iOS, and Android.",
+        "description": "As the UX/UI designer for FIXR, I contributed to the design of web and mobile apps, as well as the development of a scalable design system and marketing assets. My work focused on creating intuitive, user-friendly experiences that enhanced the platform’s functionality and supported the needs of both organizers and attendees, driving efficiency and engagement across the board.",
         "images": [
           {
             "src": "images/fixr-01.jpg",
@@ -40,40 +40,33 @@
       },
       {
         "id": 11,
-        "logo": "images/portfolio.png",
-        "title": "Personal projects",
+        "logo": "images/avatar.jpeg",
+        "title": "Personal Projects",
         "company": "James Sparkes",
-        "location": "  ",
-        "backgroundColor": "#1A1A1A",
+        "location": "Remote",
+        "backgroundColor": "#3C3937",
         "caseStudyFile": "personal-projects.md", 
-        "description": "Some personal portfolio stuff",
+        "description": "Recently I've been exploring rapid prototyping and development by leveraging IDEs like Cursor with integrated AI tools to accelerate the creation of small personal projects, turning everyday problems that I've faced into tangible solutions.",
         "images": [
           {
-            "src": "images/fixr-01.jpg",
-            "alt": "FIXR Platform Image 1"
+            "src": "images/personal-projects-01.webp",
+            "alt": "Personal Projects Image 1"
           },
           {
-            "src": "images/fixr-02.jpg",
-            "alt": "FIXR Platform Image 2"
-          },
-          {
-            "src": "images/fixr-03.jpg",
-            "alt": "FIXR Platform Image 3"
-          },
-          {
-            "src": "images/fixr-04.jpg",
-            "alt": "FIXR Platform Image 4"
-          },
-          {
-            "src": "images/fixr-06.jpg",
-            "alt": "FIXR Platform Image 5"
+            "src": "images/personal-projects-02.webp",
+            "alt": "Personal Projects Image 2"
           }
         ],
         "tags": [
           "UI Design",
           "UX Design",
-          "Design System",
-          "Rapid Prototyping"
+          "Chrome Extensions",
+          "Web Development",
+          "Single Page Application",
+          "Project Management",
+          "CSS",
+          "HTML",
+          "Tailwind"
         ]
       },
       {
@@ -180,7 +173,7 @@
         "location": "London, UK",
         "backgroundColor": "#CFD8E0",
         "caseStudyFile": "kuula-tv.md",
-        "description": "During my time working for Kuula I worked on the initial stages of branding and UI look and feel as well as working on designs for their main marketing website, sub brand microsites for partners along with UX and UI design of a media file system. I worked on the website and management side of the platform, helping to set up and contributing to the design system. I was tasked with making sure viewers could easily tell the difference between different types of content such as courses and video collections, making sure these could be easily sorted as they could often comprise many videos and other file types such as PDFs, images and even audio files. One of the biggest parts of this project was reimagining the system for users uploading their videos. As this was one of the largest aspects of what users would be doing on the site it was important to make uploading, naming, categorising and sorting their content in an easy and streamlined way. There were a lot of challenges especially when taking into account a lot of users uploaded directly from their phones. Some rudimentary video editing features were designed into the interface after upload.",
+        "description": "At Kuula, I led the initial branding and UI design, creating a cohesive look for the main marketing website and partner microsites. I redesigned the media management system, ensuring users could easily differentiate, sort, and organize diverse content like videos, PDFs, and images. A key focus was streamlining the video upload process, especially for mobile users, and integrating basic editing tools to enhance usability post-upload.",
         "images": [
           {
             "src": "images/kuula-01.jpg",
