@@ -19,6 +19,39 @@ Throughout my time at FIXR I...
 
 ---
 
+## Project: Data-driven ticketing insights
+
+### Problem
+Event organizers needed to view and compare multiple datasets (e.g., revenue, ticket sales, demographics) in a way that was intuitive and not overwhelming. The system we designed would need to be able to handle large amounts of data and be reusable for future metrics and chart types.
+
+### Contributions
+- Led the design of **Insights**, a feature aimed at securing new clients by offering superior data insights and benchmarks compared to competitors.  
+- Worked with a data analyst to identify key metrics based on client and stakeholder feedback
+- Designed a system to compare any event with multiple others, as long as they had sufficient sales data.  
+- Researched and designed **scalable, reusable charts** to handle multiple datasets and future metrics.  
+- Ensured **mobile-first design**, making all charts and controls fully functional and intuitive on mobile devices.  
+- Added **clear signposting and explanations** to help users interpret complex data accurately, especially for metrics where trends (e.g., "up" or "down") could have varying implications.  
+
+### Challenges and solutions
+- **Scalable and reusable charts**: Designing charts that could handle multiple datasets and adapt to future needs.
+- **Solution**: Created a flexible, reusable charting system inspired by research into best practices across various platforms.  
+
+- **Mobile-first design**: Many competitors' dashboards were either non-functional or buggy on mobile.
+- **Solution**: Prioritised mobile-first design, ensuring seamless functionality and usability on smaller screens.  
+
+- **Clear data interpretation**: Some metrics (e.g., ticket sales trends) could be ambiguous—what looked positive might not always be good.
+- **Solution**: Added contextual explanations and clear signposting to ensure users could interpret data accurately.  
+
+### Reflections & key takeaways
+- Delivered a powerful tool for event organisers, helping them make data-driven decisions.  
+- Received overwhelmingly positive feedback from users.  
+- Laid the groundwork for Insights to become a **paid subscription** in the future.  
+- One of the most challenging and rewarding projects of my career.  
+- Loved solving complex problems like mobile responsiveness and clear data interpretation.  
+- Proud to have created a feature that set FIXR apart from competitors and helped event organisers grow their businesses.
+
+---
+
 ## Project: Customer messaging platform
 
 ### Project context
@@ -81,12 +114,10 @@ From these workshops product management created a feature roadmap with clear pri
 
 Although there was no official KPI measurement at the time of initial launch, anecdotal feedback from organisers indicated they experienced **higher open rates** and **better engagement** when promoting events through the new messaging system.
 
-### Reflection & next steps
+### Reflections & key takeaways
 - **Further segmentation**: Future iterations could include more sophisticated audience targeting (e.g., dynamic filters event attendance and audience segmentation)
 - **Analytics dashboard**: Designs for real-time stats on open rates, click-through rates, and unsubscribes would offer deeper insights for organisers that was indentified as a must-have feature by the accounts team.
 - **Continuous user feedback**: Ongoing beta tester reviews and usage analytics would help refine the platform and prioritise additional features that I wouuld add.
-
-### Key takeaways
 - **Holistic UX approach**: Balancing user needs (scheduling, personalisation) with company concerns (risk mitigation, technical constraints) is vital in complex projects.  
 - **Cross-functional collaboration**: Involving stakeholders from sales, product, and customer support ensured alignment on features that matter most.  
 - **Iterative development**: Phasing out non-critical features helped us ship a functional MVP quickly, with room to grow in future releases.
@@ -100,17 +131,19 @@ As a key contributor at FIXR, where client acquisition and retention directly dr
 FIXR would offer a custom app and website option for clients to integrate into the FIXR platform without existing infrastructure.
 - **My contribution:** Advocated for a robust **self-serve CMS system** and designed **robust app/website templates** that became critical selling points in sales pitches. I ensured these templates integrated seamlessly with clients' branding and addressed common client needs. Sales teams attributed these features helping to win contracts with clients generating **£20k** for smaller clients **£50k** for medium clients and **£100k** for large clients **annually**, including large-scale organisers like [Middle East Film and Comic Con](https://www.mefcc.com/home/), and [The Bath & West Showground](https://www.bathandwest.com/).
 
-![Website template example](f-website-template.png)
+![Website template example for Ministry of Sound](f-client-website-integration.png)
 
-![App template example](f-website-template.png)
+![App template example for Ministry of Sound](f-client-app-integration.png)
 
 - **Strategic feature development:** Identified gaps in the market and proposed cost-effective solutions, such as the **self-serve interactive map feature** for venue navigation. By leveraging existing client assets (e.g., venue images) and simplifying integration, this feature became a key differentiator for event organisers with complex venues, directly contributing to closing high-value contracts.
 
-![Waypoint map](f-waypointer.png)
+![Venue navigation map maker and app integration](f-map-maker.png)
 
 - **Pitch deck innovation:** Created client-specific mockups of apps, websites, branded checkout flows and prototypes to demonstrate value during sales pitches. For urgent opportunities, I streamlined asset production from **down from 1 day to 1–2 hours**, ensuring rapid response to high-priority RFPs and reducing internal costs.
 
 ![Pitch deck assets](f-pitch-deck-assets.png)
+
+![Pitch deck assets](f-pitch-deck-assets-data.png)
 
 - **Result:** Reduced reliance on custom development for smaller clients meaning faster turnaround on these. Retained carefully considered custom solutions for larger clients through research into their specific systems and workflows and sales structures which contributed to being chosen over competitors for larger clients.
 
@@ -119,19 +152,17 @@ FIXR would offer a custom app and website option for clients to integrate into t
 ### Client retention
 - **Client retention:** Designed and maintained streamlined easy to implement checkout flow with upsell capabilities through insurance and pay in 3 capabiltiees, tax and fee calculations considerations which contributed higher ticket sales for both the clients and FIXR. By making the platform indispensable to operations, clients were likely to stay with us longer for muultiple contract rounds securing longer-term revenue streams.
 
-![Checkout flow](f-checkout-flow.png)
+![Checkout flow](f-timed-entry-checkout-builder.png)
 
 - **Checkout flow redesign:** Designed a frictionless and easy to use self-serve checkout flow builder to balance user experience and profit optimisation. Larger clients were able to upsell add-ons and various ticket types and options which contributed to higher ticket sales by creating their own optimised checkout flows suited to their business.
 
-![Checkout flow builder](f-checkout-flow-builder.png)
+![Checkout flow builder](f-custom-checkout-builder.png)
 
 ---
 
 ### Cost efficiency
-- **Operational streamlining:**  
-  Reduced internal costs by **migrating small/medium clients to a scalable WordPress template** (based on my original designs) and outsourcing development. This freed internal teams to focus on high-value custom projects.  
-- **Asset library creation:**  
-  Built a reusable bank of templated visuals (e.g., event-type images, currency-specific widgets) that cut pitch deck preparation time by 80%, empowering sales to act swiftly on opportunities.  
+- **Operational streamlining:** Reduced internal costs by **migrating small/medium clients to a scalable WordPress template** (based on my original designs) and outsourcing development. This freed internal teams to focus on high-value custom projects.  
+- **Asset library creation:** Built a reusable bank of templated visuals (e.g., event-type images, currency-specific widgets) that cut pitch deck preparation time by 80%, empowering sales to act swiftly on opportunities.  
 
 ---
 
