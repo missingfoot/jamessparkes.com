@@ -30,14 +30,18 @@ Event organizers needed to view and compare multiple datasets (e.g., revenue, ti
 - Designed a system to compare any event with multiple others, as long as they had sufficient sales data.  
 - Researched and designed **scalable, reusable charts** to handle multiple datasets and future metrics.  
 - Ensured **mobile-first design**, making all charts and controls fully functional and intuitive on mobile devices.  
-- Added **clear signposting and explanations** to help users interpret complex data accurately, especially for metrics where trends (e.g., "up" or "down") could have varying implications.  
+- Added **clear signposting and explanations** to help users interpret complex data accurately, especially for metrics where trends (e.g., "up" or "down") could have varying implications. 
+
+![Competitor research for the Insights feature](f-insights-competitor-research.png)
 
 ### Challenges and solutions
 - **Scalable and reusable charts**: Designing charts that could handle multiple datasets and adapt to future needs.
 - **Solution**: Created a flexible, reusable charting system inspired by research into best practices across various platforms.  
 
 - **Mobile-first design**: Many competitors' dashboards were either non-functional or buggy on mobile.
-- **Solution**: Prioritised mobile-first design, ensuring seamless functionality and usability on smaller screens.  
+- **Solution**: Prioritised mobile-first design, ensuring seamless functionality and usability on smaller screens.
+
+![The Insights charts in mobile with their mobile specific controls](f-insights-mobile-analytics.png)
 
 - **Clear data interpretation**: Some metrics (e.g., ticket sales trends) could be ambiguous—what looked positive might not always be good.
 - **Solution**: Added contextual explanations and clear signposting to ensure users could interpret data accurately.  
@@ -102,6 +106,8 @@ From these workshops product management created a feature roadmap with clear pri
 - Added pre-built templates for recurring communications.
 - Implemented sign-posting before sending campaigns, including confirmations and potential send limits for new accounts.
 - Cut certain advanced features (like complex audience segmentation rules) to keep the first release focused and deliverable.
+
+![Early iterative prototype of the message centre](mc-artboard.png)
 
 ### Outcome & impact
 
