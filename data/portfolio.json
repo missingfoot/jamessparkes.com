@@ -3,12 +3,12 @@
       {
         "id": 12,
         "logo": "images/fixr.png",
-        "title": "FIXR Platform",
+        "title": "FIXR",
         "company": "FIXR",
         "location": "London",
         "backgroundColor": "#F4F4F4",
-        "caseStudyFile": "fixr-platform.md",
-        "description": "As the UX/UI designer for FIXR, I contributed to the design of web and mobile apps, as well as the development of a scalable design system and marketing assets. My work focused on creating intuitive, user-friendly experiences that enhanced the platform’s functionality and supported the needs of both organizers and attendees, driving efficiency and engagement across the board.",
+        "caseStudyFile": "fixr.md",
+        "description": "As the UX/UI designer at FIXR, I contributed to the design of web and mobile apps, as well as the development of a scalable design system and marketing assets. My work focused on creating intuitive, user-friendly experiences that enhanced the platform’s functionality and supported the needs of both organizers and attendees, driving efficiency and engagement across the board.",
         "images": [
           {
             "src": "images/fixr-01.jpg",

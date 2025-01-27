@@ -1,4 +1,3 @@
-#### **Project overview**
 **Project name**: Kuula  
 **Tagline/description**: A platform for organising, sharing, and managing multimedia content, including videos, PDFs, images, and audio files.  
 **Platforms**: Web (Marketing Website, Microsites, Media Management System)  
