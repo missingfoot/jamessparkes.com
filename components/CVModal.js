@@ -167,7 +167,7 @@ export function CVModal() {
 
                     <!-- Download CV and Close links -->
                     <div class="mt-8 pb-8 flex flex-col items-center gap-8">
-                        <a href="https://jamessparkes.s3.eu-west-1.amazonaws.com/James_Sparkes_CV.pdf" target="_blank" rel="noopener noreferrer" class="inline-block text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition duration-300 cursor-pointer">
+                        <a href="https://www.jamessparkes.com/James_Sparkes_CV.pdf" target="_blank" rel="noopener noreferrer" class="inline-block text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition duration-300 cursor-pointer">
                             Download CV
                         </a>
                         <a href="#" id="closeModalButton" class="sm:hidden inline-block text-gray-700 dark:text-white underline hover:text-gray-900 dark:hover:text-gray-200 transition duration-300 cursor-pointer">
