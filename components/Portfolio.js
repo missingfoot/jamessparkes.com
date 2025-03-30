@@ -78,8 +78,17 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('/data/portfolio.json')
         .then(response => response.json())
         .then(data => {
-            // Sort projects by ID in descending order (higher IDs at top)
-            const sortedProjects = data.projects.sort((a, b) => b.id - a.id);
+            // Filter out hidden projects and sort remaining ones by order property
+            const sortedProjects = data.projects
+                .filter(project => project.visible !== false) // Show projects that are visible or where visible is not set
+                .sort((a, b) => {
+                    // If both have order property, use it
+                    if (a.order !== undefined && b.order !== undefined) {
+                        return a.order - b.order;
+                    }
+                    // Fallback to reverse ID sorting if order is not set
+                    return b.id - a.id;
+                });
             portfolioContainer.innerHTML = sortedProjects.map(project => createPortfolioItem(project)).join('');
             // Initialize galleries after content is loaded
             sortedProjects.forEach(project => {

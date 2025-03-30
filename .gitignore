@@ -35,3 +35,6 @@ yarn-error.log*
 
 # Obsidian
 case-studies/.obsidian/
+
+# Local development tools
+local-tools/

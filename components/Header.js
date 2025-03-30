@@ -12,17 +12,17 @@ export function Header() {
             <!-- Avatar for mobile -->
             <div class="flex justify-between items-center w-full mb-2 sm:hidden">
                 <div id="avatarContainer" class="relative">
-                    <img id="avatarImage" src="images/avatar.jpeg" alt="James Sparkes" class="w-20 h-20 rounded-full object-cover">
+                    <img id="avatarImage" src="images/avatar.jpg" alt="James Sparkes" class="w-20 h-20 rounded-full object-cover">
                 </div>
             </div>
             <!-- Lightbox -->
             <div id="lightbox">
-                <img id="lightboxImage" src="images/avatar.jpeg" alt="James Sparkes">
+                <img id="lightboxImage" src="images/avatar.jpg" alt="James Sparkes">
             </div>
             <!-- Desktop layout -->
             <div class="hidden sm:flex sm:flex-row sm:justify-between sm:items-center sm:w-full">
                 <div class="flex items-center">
-                    <img src="images/avatar.jpeg" alt="James Sparkes" class="w-16 h-16 rounded-full mr-4 object-cover">
+                    <img src="images/avatar.jpg" alt="James Sparkes" class="w-16 h-16 rounded-full mr-4 object-cover">
                     <div class="text-left">
                         <h1 class="text-3xl font-normal text-gray-800 dark:text-gray-200">James Sparkes</h1>
                         <h2 class="text-lg text-gray-600 dark:text-gray-400 mt-1">Product Designer</h2>

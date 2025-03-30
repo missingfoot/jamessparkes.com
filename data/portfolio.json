@@ -1,442 +1,428 @@
 {
-    "projects": [
-      {
-        "id": 12,
-        "logo": "images/fixr.png",
-        "title": "FIXR",
-        "company": "FIXR",
-        "location": "London",
-        "backgroundColor": "#F4F4F4",
-        "caseStudyFile": "fixr.md",
-        "description": "As the UX/UI designer at FIXR, I contributed to the design of web and mobile apps, as well as the development of a scalable design system and marketing assets. My work focused on creating intuitive, user-friendly experiences that enhanced the platform’s functionality and supported the needs of both organizers and attendees, driving efficiency and engagement across the board.",
-        "images": [
-          {
-            "src": "images/fixr-01.jpg",
-            "alt": "FIXR Platform Image 1"
-          },
-          {
-            "src": "images/fixr-02.jpg",
-            "alt": "FIXR Platform Image 2"
-          },
-          {
-            "src": "images/fixr-03.jpg",
-            "alt": "FIXR Platform Image 3"
-          },
-          {
-            "src": "images/fixr-04.jpg",
-            "alt": "FIXR Platform Image 4"
-          },
-          {
-            "src": "images/fixr-06.jpg",
-            "alt": "FIXR Platform Image 5"
-          }
-        ],
-        "tags": [
-          "UI Design",
-          "UX Design",
-          "Design System",
-          "Rapid Prototyping"
-        ]
-      },
-      {
-        "id": 11,
-        "logo": "images/avatar.jpeg",
-        "title": "Personal Projects",
-        "company": "James Sparkes",
-        "location": "Remote",
-        "backgroundColor": "#3C3937",
-        "caseStudyFile": "personal-projects.md", 
-        "description": "Recently I've been exploring rapid prototyping and development by leveraging IDEs like Cursor with integrated AI tools to accelerate the creation of small personal projects, turning everyday problems that I've faced into tangible solutions.",
-        "images": [
-          {
-            "src": "images/personal-projects-01.webp",
-            "alt": "Personal Projects Image 1"
-          },
-          {
-            "src": "images/personal-projects-02.webp",
-            "alt": "Personal Projects Image 2"
-          }
-        ],
-        "tags": [
-          "UI Design",
-          "UX Design",
-          "Chrome Extensions",
-          "Web Development",
-          "Single Page Application",
-          "Project Management",
-          "CSS",
-          "HTML",
-          "Tailwind"
-        ]
-      },
-      {
-        "id": 10,
-        "logo": "images/the-collective.png",
-        "title": "Building Management Platform",
-        "company": "The Collective",
-        "location": "London",
-        "backgroundColor": "#B6C7CB",
-        "caseStudyFile": "the-collective.md",
-        "description": "Tasked with redesigning a fragmented back-end platform for hotel-like co-living, customer, and finance management into a user-friendly system, collaborating with project managers and developers to ensure it met the needs of the stakeholders whose jobs relied on using it. The successful launch was praised for its ease of use, and over time, I helped to expand features like financial tools, analytics, and booking management, transforming it into a scalable SaaS platform for multiple co-living and hotel buildings.",
-        "images": [
-          {
-            "src": "images/collective-08.jpg",
-            "alt": "The Collective Platform Image 1"
-          },
-          {
-            "src": "images/collective-09.jpg",
-            "alt": "The Collective Platform Image 2"
-          },
-          {
-            "src": "images/collective-10.jpg",
-            "alt": "The Collective Platform Image 3"
-          }
-        ],
-        "tags": [
-          "UI Design",
-          "UX Design",
-          "QA",
-          "Design System"
-        ]
-      },
-      {
-        "id": 9,
-        "logo": "images/the-collective.png",
-        "title": "Community App",
-        "company": "The Collective",
-        "location": "London",
-        "backgroundColor": "#B6C7CB",
-        "caseStudyFile": "the-collective.md",
-        "description": "I partnered with a project manager to research user needs and deliver an MVP within an extremely tight deadline by collaborating with a small development team. The app launched successfully, receiving positive feedback from beta testers and focus groups. Over the next year, we expanded features like onboarding, interest groups, messaging, events, and support, while growing the team and refining the app through redesigns and moving from a react frameworkto native apps. I also designed a lightweight CMS for staff to manage app interactions which needed to match and enhance their workflow.",
-        "images": [
-            {
-              "src": "images/collective-01.jpg",
-              "alt": "The Collective"
-            },
-            {
-              "src": "images/collective-02.jpg",
-              "alt": "The Collective"
-            },
-            {
-              "src": "images/collective-03.jpg",
-              "alt": "The Collective"
-            }
-        ],
-        "tags": [
-          "UI Design",
-          "UX Design",
-          "QA",
-          "Interviews",
-          "Design System"
-        ]
-      },
-      {
-        "id": 8,
-        "logo": "images/the-collective.png",
-        "title": "Marketing Website",
-        "company": "The Collective",
-        "location": "London",
-        "backgroundColor": "#B6C7CB",
-        "caseStudyFile": "the-collective.md",
-        "description": "The company was fast growing and expanding, it was decided there needed to be a new website created as the old one was slow, outdated and had no way of being changed. UX was carefully crafted to ensure potential customers could easily learn about the company's unique offering and also see as much as they can to get them funnelled through into the sales flow. In addition to the main website which covered sections for selling rooms, there were also events and workspaces and various microsites which were designed for different purposes and target demographics.",
-        "images": [
-          {
-            "src": "images/collective-04.jpg",
-            "alt": "The Collective"
-          },
-          {
-            "src": "images/collective-05.jpg",
-            "alt": "The Collective"
-          },
-          {
-            "src": "images/collective-06.jpg",
-            "alt": "The Collective"
-          },
-          {
-            "src": "images/collective-07.jpg",
-            "alt": "The Collective"
-          }
-        ],
-        "tags": [
-          "UI Design",
-          "UX Design",
-          "Branding",
-          "Testing",
-          "Design System"
-        ]
-      },
-      {
-        "id": 7,
-        "logo": "images/kuula.png",
-        "title": "Kuula TV",
-        "company": "Kuula TV",
-        "location": "London, UK",
-        "backgroundColor": "#CFD8E0",
-        "caseStudyFile": "kuula-tv.md",
-        "description": "At Kuula, I led the initial branding and UI design, creating a cohesive look for the main marketing website and partner microsites. I redesigned the media management system, ensuring users could easily differentiate, sort, and organize diverse content like videos, PDFs, and images. A key focus was streamlining the video upload process, especially for mobile users, and integrating basic editing tools to enhance usability post-upload.",
-        "images": [
-          {
-            "src": "images/kuula-01.jpg",
-            "alt": "Kuula Platform Image 1"
-          },
-          {
-            "src": "images/kuula-02.jpg",
-            "alt": "Kuula Platform Image 2"
-          },
-          {
-            "src": "images/kuula-03.jpg",
-            "alt": "Kuula Platform Image 3"
-          },
-          {
-            "src": "images/kuula-04.jpg",
-            "alt": "Kuula Platform Image 4"
-          },
-          {
-            "src": "images/kuula-05.jpg",
-            "alt": "Kuula Platform Image 5"
-          }
-        ],
-        "tags": [
-          "UI Design",
-          "UX Design",
-          "Branding",
-          "Design System",
-          "Presentation Design"
-        ]
-      },
-      {
-        "id": 6,
-        "logo": "images/breezie.png",
-        "title": "Breezie",
-        "company": "Breezie",
-        "location": "Richmond, UK",
-        "backgroundColor": "#6EB8B7",
-        "caseStudyFile": "breezie.md",
-        "description": "I worked on Breezie, an Android-based OS designed for elderly and disabled users, overhauling its UX/UI based on research with existing and non-users of digital devices. I focused on scalability, creating a system that started with limited functionality and added features as users grew more comfortable, managed by family members via an online CMS. Additionally, I designed a Samsung SmartThings dashboard portal for care homes, enabling administrators to intuitively monitor and control devices. I also created the packaging, manuals, and printed materials to ensure a seamless user experience.",
-        "images": [
-          {
-            "src": "images/breezie-01.jpg",
-            "alt": "Breezie Platform Image 1"
-          },
-          {
-            "src": "images/breezie-02.jpg",
-            "alt": "Breezie Platform Image 2"
-          },
-          {
-            "src": "images/breezie-10.jpg",
-            "alt": "Breezie Platform Image 3"
-          },
-          {
-            "src": "images/breezie-04.jpg",
-            "alt": "Breezie Platform Image 4"
-          },
-          {
-            "src": "images/breezie-05.jpg",
-            "alt": "Breezie Platform Image 5"
-          },
-          {
-            "src": "images/breezie-06.jpg",
-            "alt": "Breezie Platform Image 6"
-          },
-          {
-            "src": "images/breezie-07.jpg",
-            "alt": "Breezie Platform Image 7"
-          },
-          {
-            "src": "images/breezie-08.jpg",
-            "alt": "Breezie Platform Image 8"
-          },
-          {
-            "src": "images/breezie-09.jpg",
-            "alt": "Breezie Platform Image 9"
-          },
-          {
-            "src": "images/breezie-03.jpg",
-            "alt": "Breezie Platform Image 10"
-          }
-        ],
-        "tags": [
-          "UI Design",
-          "UX Design",
-          "Branding",
-          "Design System",
-          "Research",
-          "Interviews",
-          "Packaging",
-          "Print"
-        ]
-      },
-      {
-        "id": 5,
-        "logo": "images/ambio-n.png",
-        "title": "AMBIO-N",
-        "company": "AMBIO-N",
-        "location": "Remote",
-        "backgroundColor": "#D0CCC9",
-        "caseStudyFile": "ambio-n.md",
-        "description": "I have worked on design and UX for AMBIO-Ns marketplace website to maximise usability in users finding products in a large complicated marketplace, designing additional pages and updating their old design styles, reworking them into a new more consistent design system. Also worked on creating a more consistent brand across their materials and produced presentation decks and video marketing design.",
-        "images": [
-          {
-            "src": "images/ambio-n-05.jpg",
-            "alt": "Ambio-N Platform Image 1"
-          },
-          {
-            "src": "images/ambio-n-02.jpg",
-            "alt": "Ambio-N Platform Image 2"
-          },
-          {
-            "src": "images/ambio-n-03.jpg",
-            "alt": "Ambio-N Platform Image 3"
-          },
-          {
-            "src": "images/ambio-n-04.jpg",
-            "alt": "Ambio-N Platform Image 4"
-          },
-          {
-            "src": "images/ambio-n-01.jpg",
-            "alt": "Ambio-N Platform Image 5"
-          }
-        ],
-        "tags": [
-          "UI Design",
-          "UX Design",
-          "Branding",
-          "Design System",
-          "Video",
-          "Presentation Design"
-        ]
-      },
-      {
-        "id": 3,
-        "logo": "images/fabric.png",
-        "title": "Fabric",
-        "company": "Fabric",
-        "location": "London, UK",
-        "backgroundColor": "#798F9D",
-        "caseStudyFile": "fabric-platform.md",
-        "description": "Design and UX for FabricOS, a data analytics platform targeted towards brand managers for large companies as a dashboard to manage and create reports from multiple sources like websites and social network pages.",
-        "images": [
-          {
-            "src": "images/fabric-01.jpg",
-            "alt": "Fabric Platform Image 1"
-          },
-          {
-            "src": "images/fabric-02.jpg",
-            "alt": "Fabric Platform Image 2"
-          },
-          {
-            "src": "images/fabric-03.jpg",
-            "alt": "Fabric Platform Image 3"
-          },
-          {
-            "src": "images/fabric-04.jpg",
-            "alt": "Fabric Platform Image 4"
-          }
-        ],
-        "tags": [
-          "UI Design",
-          "UX Design",
-          "Branding",
-          "Design System",
-          "Video",
-          "Presentation Design"
-        ]
-      },
-      {
-        "id": 2,
-        "logo": "images/maxus.png",
-        "title": "Maxus",
-        "company": "Maxus",
-        "location": "London, UK",
-        "backgroundColor": "#BED2D7",
-        "description": "UX and UI Design and QA of data analytics platform for L'Oréal brands and design of a data analytics platform for BT.",
-        "images": [
-          {
-            "src": "images/maxus-01.jpg",
-            "alt": "Maxus Platform Image 1"
-          },
-          {
-            "src": "images/maxus-02.jpg",
-            "alt": "Maxus Platform Image 2"
-          }
-        ],
-        "tags": [
-          "UI Design",
-          "UX Design",
-          "Branding",
-          "Design System",
-          "Video",
-          "Presentation Design"
-        ]
-      },
-      {
-        "id": 4,
-        "logo": "images/qd-design.png",
-        "title": "QD Design",
-        "company": "QD Design",
-        "location": "Maidstone, UK",
-        "backgroundColor": "#E0DADA",
-        "description": "UX, UI design, development and operating of their ecommerce website. Digital and print design for rebrand and brand development. Design, layout for advertising and promotional materials also product photography, photo retouching of products as well as 3D CAD product design for furniture.",
-        "images": [
-          {
-            "src": "images/qd-03.jpg",
-            "alt": "QD Design Platform Image 1"
-          },
-          {
-            "src": "images/qd-04.jpg",
-            "alt": "QD Design Platform Image 2"
-          },
-          {
-            "src": "images/qd-05.jpg",
-            "alt": "QD Design Platform Image 3"
-          },
-          {
-            "src": "images/qd-01.jpg",
-            "alt": "QD Design Platform Image 4"
-          },
-          {
-            "src": "images/qd-02.jpg",
-            "alt": "QD Design Platform Image 5"
-          },
-          {
-            "src": "images/qd-06.jpg", 
-            "alt": "QD Design Platform Image 6"
-          }
-        ],
-        "tags": [
-          "UI Design",
-          "UX Design",
-          "Branding",
-          "Design System",
-          "Video",
-          "Presentation Design"
-        ]
-      },
-      {
-        "id": 1,
-        "logo": "images/tmw.png",
-        "title": "TMW",
-        "company": "TMW",
-        "location": "London, UK",
-        "description": "Artworking, UX and UI design for Sony Mobile, working with their UK website adding to their core page components and constructing new pages to design briefs as well as print design and campaign work for Infinit, Canon and HSBC.",
-        "images": [
-          {
-            "src": "images/tmw-01.jpg",
-            "alt": "TMW Platform Image 1"
-          },
-          {
-            "src": "images/tmw-02.jpg",
-            "alt": "TMW Platform Image 2"
-          }
-        ],
-        "tags": [
-          "UI Design",
-          "UX Design",
-          "Branding",
-          "Design System",
-          "Video",
-          "Presentation Design"
-        ]
-      }
-    ]
-  }
+  "projects": [
+    {
+      "id": 12,
+      "order": 0,
+      "visible": true,
+      "logo": "images/fixr.png",
+      "title": "FIXR",
+      "company": "FIXR",
+      "location": "London",
+      "backgroundColor": "#F4F4F4",
+      "caseStudyFile": "fixr.md",
+      "description": "At FIXR I redesigned and optimised key experiences for an events ticketing platform. Improved organiser onboarding, increased ticket sales, and stronger client retention. Delivered mobile-first, user-centric solutions across analytics, CRM tools, and ticket buyer journeys. Developed scalable design systems and branded integrations to support growth, streamline operations, and win clients ranging between £20k-120k per year revenue each including a £1m client.",
+      "images": [
+        {
+          "src": "images/fixr-01.jpg",
+          "alt": "FIXR Platform Image 1"
+        },
+        {
+          "src": "images/fixr-02.jpg",
+          "alt": "FIXR Platform Image 2"
+        },
+        {
+          "src": "images/fixr-03.jpg",
+          "alt": "FIXR Platform Image 3"
+        },
+        {
+          "src": "images/fixr-04.jpg",
+          "alt": "FIXR Platform Image 4"
+        },
+        {
+          "src": "images/fixr-06.jpg",
+          "alt": "FIXR Platform Image 5"
+        }
+      ],
+      "tags": [
+        "UI Design",
+        "UX Design",
+        "Design System",
+        "Rapid Prototyping"
+      ]
+    },
+    {
+      "id": 10,
+      "order": 1,
+      "visible": true,
+      "logo": "images/the-collective.png",
+      "title": "The Collective",
+      "company": "The Collective",
+      "location": "London",
+      "backgroundColor": "#B6C7CB",
+      "caseStudyFile": "the-collective.md",
+      "description": "During my time at The Collective I was the sole product designer during rapid growth at the company as they expanded. I was responsible for driving digital transformation across internal tools and resident-facing products. Designed an app with strong resident adoption. Designed and migrated teams to a new internal platform that improved operational efficiency by 40%. Delivered web and mobile experiences to streamline onboarding, digitised workflows, and built a unified design system to support rapid scaling with 2x users each year.",
+      "images": [
+        {
+          "src": "images/collective-01.jpg",
+          "alt": "The Collective Platform Image 1"
+        },
+        {
+          "src": "images/collective-02.jpg",
+          "alt": "The Collective Platform Image 2"
+        },
+        {
+          "src": "images/collective-03.jpg",
+          "alt": "The Collective Platform Image 3"
+        },
+        {
+          "src": "images/collective-04.jpg",
+          "alt": ""
+        },
+        {
+          "src": "images/collective-05.jpg",
+          "alt": ""
+        },
+        {
+          "src": "images/collective-06.jpg",
+          "alt": ""
+        },
+        {
+          "src": "images/collective-07.jpg",
+          "alt": ""
+        },
+        {
+          "src": "images/collective-08.jpg",
+          "alt": ""
+        },
+        {
+          "src": "images/collective-09.jpg",
+          "alt": ""
+        },
+        {
+          "src": "images/collective-10.jpg",
+          "alt": ""
+        }
+      ],
+      "tags": [
+        "UI Design",
+        "UX Design",
+        "Branding",
+        "Testing",
+        "Design System",
+        "QA",
+        "Interviews"
+      ]
+    },
+    {
+      "id": 11,
+      "order": 2,
+      "visible": true,
+      "logo": "images/avatar.jpg",
+      "title": "Personal Projects",
+      "company": "James Sparkes",
+      "location": "Remote",
+      "backgroundColor": "#3C3937",
+      "caseStudyFile": "personal-projects.md",
+      "description": "Recently I've been exploring rapid prototyping and development by leveraging IDEs like Cursor with integrated AI tools to accelerate the creation of small personal projects, turning everyday problems that I've faced into tangible solutions.",
+      "images": [
+        {
+          "src": "images/personal-projects-01.webp",
+          "alt": "Personal Projects Image 1"
+        },
+        {
+          "src": "images/personal-projects-02.webp",
+          "alt": "Personal Projects Image 2"
+        }
+      ],
+      "tags": [
+        "UI Design",
+        "UX Design",
+        "Chrome Extensions",
+        "Web Development",
+        "Single Page Application",
+        "Project Management",
+        "CSS",
+        "HTML",
+        "Tailwind"
+      ]
+    },
+    {
+      "id": 7,
+      "order": 3,
+      "visible": true,
+      "logo": "images/kuula.png",
+      "title": "Kuula TV",
+      "company": "Kuula TV",
+      "location": "London, UK",
+      "backgroundColor": "#CFD8E0",
+      "caseStudyFile": "kuula-tv.md",
+      "description": "At Kuula I defined the visual identity and streamlined media management for an online teaching platform, supporting brand growth and content scalability. Delivered marketing designs, a white-label design system, and pitch decks that helped secure client partnerships to drive platform growth 300%.",
+      "images": [
+        {
+          "src": "images/kuula-01.jpg",
+          "alt": "Kuula Platform Image 1"
+        },
+        {
+          "src": "images/kuula-02.jpg",
+          "alt": "Kuula Platform Image 2"
+        },
+        {
+          "src": "images/kuula-03.jpg",
+          "alt": "Kuula Platform Image 3"
+        },
+        {
+          "src": "images/kuula-04.jpg",
+          "alt": "Kuula Platform Image 4"
+        },
+        {
+          "src": "images/kuula-05.jpg",
+          "alt": "Kuula Platform Image 5"
+        }
+      ],
+      "tags": [
+        "UI Design",
+        "UX Design",
+        "Branding",
+        "Design System",
+        "Presentation Design"
+      ]
+    },
+    {
+      "id": 6,
+      "order": 4,
+      "visible": true,
+      "logo": "images/breezie.png",
+      "title": "Breezie",
+      "company": "Breezie",
+      "location": "Richmond, UK",
+      "backgroundColor": "#6EB8B7",
+      "caseStudyFile": "breezie.md",
+      "description": "Redesigned the UX/UI for Breezie, an Android OS tailored to help thousands of elderly and disabled users confidently navigate digital products. Focused on scalable accessibility and simplicity, improving quality of life and digital independence. Designed a SmartThings dashboard for care homes, and created packaging and printed materials that contributed to increased sales and positive media coverage increasing product sales by 4x.",
+      "images": [
+        {
+          "src": "images/breezie-01.jpg",
+          "alt": "Breezie Platform Image 1"
+        },
+        {
+          "src": "images/breezie-02.jpg",
+          "alt": "Breezie Platform Image 2"
+        },
+        {
+          "src": "images/breezie-10.jpg",
+          "alt": "Breezie Platform Image 3"
+        },
+        {
+          "src": "images/breezie-04.jpg",
+          "alt": "Breezie Platform Image 4"
+        },
+        {
+          "src": "images/breezie-05.jpg",
+          "alt": "Breezie Platform Image 5"
+        },
+        {
+          "src": "images/breezie-06.jpg",
+          "alt": "Breezie Platform Image 6"
+        },
+        {
+          "src": "images/breezie-07.jpg",
+          "alt": "Breezie Platform Image 7"
+        },
+        {
+          "src": "images/breezie-08.jpg",
+          "alt": "Breezie Platform Image 8"
+        },
+        {
+          "src": "images/breezie-09.jpg",
+          "alt": "Breezie Platform Image 9"
+        },
+        {
+          "src": "images/breezie-03.jpg",
+          "alt": "Breezie Platform Image 10"
+        }
+      ],
+      "tags": [
+        "UI Design",
+        "UX Design",
+        "Branding",
+        "Design System",
+        "Research",
+        "Interviews",
+        "Packaging",
+        "Print"
+      ]
+    },
+    {
+      "id": 5,
+      "order": 5,
+      "visible": true,
+      "logo": "images/ambio-n.png",
+      "title": "AMBIO-N",
+      "company": "AMBIO-N",
+      "location": "Remote",
+      "backgroundColor": "#D0CCC9",
+      "caseStudyFile": "ambio-n.md",
+      "description": "While working with AMBIO-N I I led UX design for their B2B marketplace, improving usability and consistency across procurement tools. Established a modular design system used across the platform and a new marketing site. Designed an easy to customise investor deck that helped the company secure £1.5M in funding.",
+      "images": [
+        {
+          "src": "images/ambio-n-05.jpg",
+          "alt": "Ambio-N Platform Image 1"
+        },
+        {
+          "src": "images/ambio-n-02.jpg",
+          "alt": "Ambio-N Platform Image 2"
+        },
+        {
+          "src": "images/ambio-n-03.jpg",
+          "alt": "Ambio-N Platform Image 3"
+        },
+        {
+          "src": "images/ambio-n-04.jpg",
+          "alt": "Ambio-N Platform Image 4"
+        },
+        {
+          "src": "images/ambio-n-01.jpg",
+          "alt": "Ambio-N Platform Image 5"
+        }
+      ],
+      "tags": [
+        "UI Design",
+        "UX Design",
+        "Branding",
+        "Design System",
+        "Video",
+        "Presentation Design"
+      ]
+    },
+    {
+      "id": 4,
+      "order": 6,
+      "visible": true,
+      "logo": "images/qd-design.png",
+      "title": "QD Design",
+      "company": "QD Design",
+      "location": "Maidstone, UK",
+      "backgroundColor": "#E0DADA",
+      "caseStudyFile": "",
+      "description": "UX design and front-end development to transition the business from trade-only to a B2B and B2C eCommerce model, significantly increasing sales and customer reach. Designed and built a bespoke inventory and warehouse management system, streamlining operations and improving efficiency across sales and logistics. Delivered rebranding across digital and print, including advertising, product photography, and 3D CAD design to support new product launches and market positioning resulting in 2.3x revenue growth",
+      "images": [
+        {
+          "src": "images/qd-03.jpg",
+          "alt": "QD Design Platform Image 1"
+        },
+        {
+          "src": "images/qd-04.jpg",
+          "alt": "QD Design Platform Image 2"
+        },
+        {
+          "src": "images/qd-05.jpg",
+          "alt": "QD Design Platform Image 3"
+        },
+        {
+          "src": "images/qd-01.jpg",
+          "alt": "QD Design Platform Image 4"
+        },
+        {
+          "src": "images/qd-02.jpg",
+          "alt": "QD Design Platform Image 5"
+        },
+        {
+          "src": "images/qd-06.jpg",
+          "alt": "QD Design Platform Image 6"
+        }
+      ],
+      "tags": [
+        "UI Design",
+        "UX Design",
+        "Branding",
+        "Design System",
+        "Video",
+        "Presentation Design"
+      ]
+    },
+    {
+      "id": 3,
+      "order": 7,
+      "visible": false,
+      "logo": "images/fabric.png",
+      "title": "Fabric",
+      "company": "Fabric",
+      "location": "London, UK",
+      "backgroundColor": "#798F9D",
+      "caseStudyFile": "fabric-platform.md",
+      "description": "Design and UX for FabricOS, a data analytics platform targeted towards brand managers for large companies as a dashboard to manage and create reports from multiple sources like websites and social network pages.",
+      "images": [
+        {
+          "src": "images/fabric-01.jpg",
+          "alt": "Fabric Platform Image 1"
+        },
+        {
+          "src": "images/fabric-02.jpg",
+          "alt": "Fabric Platform Image 2"
+        },
+        {
+          "src": "images/fabric-03.jpg",
+          "alt": "Fabric Platform Image 3"
+        },
+        {
+          "src": "images/fabric-04.jpg",
+          "alt": "Fabric Platform Image 4"
+        }
+      ],
+      "tags": [
+        "UI Design",
+        "UX Design",
+        "Branding",
+        "Design System",
+        "Video",
+        "Presentation Design"
+      ]
+    },
+    {
+      "id": 2,
+      "order": 8,
+      "visible": false,
+      "logo": "images/maxus.png",
+      "title": "Maxus",
+      "company": "Maxus",
+      "location": "London, UK",
+      "backgroundColor": "#BED2D7",
+      "description": "UX and UI Design and QA of data analytics platform for L'Oréal brands and design of a data analytics platform for BT.",
+      "images": [
+        {
+          "src": "images/maxus-01.jpg",
+          "alt": "Maxus Platform Image 1"
+        },
+        {
+          "src": "images/maxus-02.jpg",
+          "alt": "Maxus Platform Image 2"
+        }
+      ],
+      "tags": [
+        "UI Design",
+        "UX Design",
+        "Branding",
+        "Design System",
+        "Video",
+        "Presentation Design"
+      ]
+    },
+    {
+      "id": 1,
+      "order": 9,
+      "visible": false,
+      "logo": "images/tmw.png",
+      "title": "TMW",
+      "company": "TMW",
+      "location": "London, UK",
+      "description": "Artworking, UX and UI design for Sony Mobile, working with their UK website adding to their core page components and constructing new pages to design briefs as well as print design and campaign work for Infinit, Canon and HSBC.",
+      "images": [
+        {
+          "src": "images/tmw-01.jpg",
+          "alt": "TMW Platform Image 1"
+        },
+        {
+          "src": "images/tmw-02.jpg",
+          "alt": "TMW Platform Image 2"
+        }
+      ],
+      "tags": [
+        "UI Design",
+        "UX Design",
+        "Branding",
+        "Design System",
+        "Video",
+        "Presentation Design"
+      ]
+    }
+  ]
+}
