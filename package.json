@@ -4,24 +4,17 @@
   "description": "James Sparkes Portfolio Website",
   "type": "module",
   "scripts": {
-    "start": "serve -s . -l 8080",
+    "start": "set NODE_NO_WARNINGS=1 && serve -s . -l 8080",
     "build:css": "tailwindcss -i ./styles/input.css -o ./styles/output.css --watch",
     "build:css:prod": "tailwindcss -i ./styles/input.css -o ./styles/output.css --minify",
-    "dev": "concurrently \"npm run build:css\" \"npm start\"",
-    "migrate:db": "node scripts/migrate-to-instantdb.js"
+    "dev": "set NODE_NO_WARNINGS=1 && concurrently \"npm run build:css\" \"npm start\""
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",
     "autoprefixer": "^10.4.16",
     "concurrently": "^8.2.2",
-    "http-server": "^14.1.1",
     "postcss": "^8.4.32",
     "serve": "^14.2.1",
     "tailwindcss": "^3.4.0"
-  },
-  "dependencies": {
-    "@instantdb/admin": "^0.17.12",
-    "@instantdb/core": "^0.17.12",
-    "@instantdb/react": "^0.17.12"
   }
 }
