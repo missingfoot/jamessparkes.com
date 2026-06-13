@@ -1,110 +1,51 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#ffffff">
-    
-    <!-- Primary Meta Tags -->
-    <title>James Sparkes - Product Designer</title>
-    <meta name="title" content="James Sparkes - Product Designer">
+
+    <title>James Sparkes — Product Designer</title>
     <meta name="description" content="Product Designer with over 10 years of experience in UX/UI design, front-end development, and building digital products. Based in London.">
     <meta name="author" content="James Sparkes">
-    <meta name="keywords" content="James Sparkes, Product Designer, UX Designer, UI Designer, Front-end Developer, London, Digital Product Design, User Experience, User Interface">
 
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://jamessparkes.com/">
-    <meta property="og:title" content="James Sparkes - Product Designer">
+    <meta property="og:title" content="James Sparkes — Product Designer">
     <meta property="og:description" content="Product Designer with over 10 years of experience in UX/UI design, front-end development, and building digital products. Based in London.">
     <meta property="og:image" content="https://jamessparkes.com/images/og-image.jpg">
 
-    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://jamessparkes.com/">
-    <meta property="twitter:title" content="James Sparkes - Product Designer">
+    <meta property="twitter:title" content="James Sparkes — Product Designer">
     <meta property="twitter:description" content="Product Designer with over 10 years of experience in UX/UI design, front-end development, and building digital products. Based in London.">
     <meta property="twitter:image" content="https://jamessparkes.com/images/og-image.jpg">
 
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="apple-touch-icon" href="images/webclip.png">
-    
-    <!-- Include compiled Tailwind CSS -->
-    <link rel="stylesheet" href="styles/output.css">
-    <!-- Include Inter font from Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <!-- Include custom styles -->
+
+    <link rel="stylesheet" href="styles/tokens.css">
     <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/output.css">
 </head>
-<body class="bg-white sm:bg-primary-light dark:bg-primary-dark min-h-screen flex flex-col items-center justify-start p-0 sm:p-8 transition-colors duration-300">
-    <div class="max-w-[620px] w-full">
-        <!-- Main content card -->
-        <div class="p-4 sm:p-10 rounded-none sm:rounded-2xl shadow-none sm:shadow-light-2xl dark:sm:shadow-2xl mb-4 sm:mb-8 relative sm:surface sm:bg-surface-light sm:dark:bg-surface-dark">
-            <div id="header"></div>
-            <div id="bio"></div>
-            <div id="social-links"></div>
-            <div id="cv-modal"></div>
-        </div>
-        <!-- Portfolio section -->
-        <div id="portfolio"></div>
+<body>
+    <div id="app">
+        <aside id="nav"></aside>
+        <main id="viewer"></main>
     </div>
-    <div id="sticky-footer"></div>
 
-    <!-- Initialize components -->
     <script type="module">
-        import { Header } from './components/Header.js';
-        import { Bio } from './components/Bio.js';
-        import { SocialLinks } from './components/SocialLinks.js';
-        import { CVModal } from './components/CVModal.js';
-        import { StickyFooter } from './components/StickyFooter.js';
-        import { Portfolio } from './components/Portfolio.js';
-        import { initTheme, toggleTheme } from './js/theme.js';
-        import { initLightbox } from './js/lightbox.js';
-        import { initGallery } from './js/gallery.js';
-        import { initEmailContact, initStickyFooter, initCVModal, initPortfolioModal } from './js/main.js';
+        import { initTheme } from './js/theme.js';
+        import { renderNav } from './components/Nav.js';
+        import { renderViewer } from './components/Viewer.js';
+        import { initRouter } from './js/router.js';
 
-        // Initialize theme first
         initTheme();
-
-        // Initialize components
-        document.getElementById('header').innerHTML = Header();
-        document.getElementById('bio').innerHTML = Bio();
-        document.getElementById('social-links').innerHTML = SocialLinks();
-        document.getElementById('cv-modal').innerHTML = CVModal();
-        document.getElementById('sticky-footer').innerHTML = StickyFooter();
-        document.getElementById('portfolio').innerHTML = Portfolio();
-
-        // Initialize lightbox
-        initLightbox();
-
-        // Initialize gallery
-        initGallery();
-
-        // Initialize email contact
-        initEmailContact();
-
-        // Add theme toggle click handler
-        document.addEventListener('click', (e) => {
-            const themeToggle = e.target.closest('[data-theme-toggle]');
-            if (themeToggle) {
-                e.preventDefault();
-                toggleTheme();
-            }
-        });
-
-        // Initialize other functionality
-        import('./js/main.js').then(module => {
-            // Initialize main functionality
-            module.initStickyFooter();
-            module.initCVModal();
-            module.initPortfolioModal();
-        }).catch(error => {
-            // Silently fail - errors should be handled by individual modules
-        });
+        renderNav(document.getElementById('nav'));
+        renderViewer(document.getElementById('viewer'));
+        initRouter();
     </script>
 </body>
 </html>
