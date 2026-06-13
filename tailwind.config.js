@@ -5,60 +5,22 @@ module.exports = {
     "./components/**/*.js",
     "./js/**/*.js"
   ],
-  darkMode: 'class',
+  darkMode: ['selector', '[data-theme="dark"]'],
   theme: {
     extend: {
-      colors: {
-        primary: { light: '#f3f4f6', dark: '#111111' },
-        surface: { light: '#ffffff', dark: '#1e1e1e' },
-      },
       fontFamily: {
-        'sans': ['Inter', 'sans-serif'],
+        mono: ['"Maple Mono"', 'monospace'],
       },
-      boxShadow: {
-        'light-2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.08)',
-      },
-      borderRadius: {
-        'global': 'var(--global-radius)',
-      },
-      typography: {
-        DEFAULT: {
-          css: {
-            maxWidth: 'none',
-            color: 'inherit',
-            a: {
-              color: 'inherit',
-              textDecoration: 'underline',
-              fontWeight: '300',
-              '&:hover': {
-                color: 'inherit',
-              },
-            },
-            'ul, ol': {
-              marginTop: '0.5em',
-              marginBottom: '1em',
-            },
-            img: {
-              borderRadius: '0.5rem',
-              marginTop: '2rem',
-              marginBottom: '2rem',
-            },
-            figure: {
-              marginTop: '2rem',
-              marginBottom: '2rem',
-            },
-            figcaption: {
-              marginTop: '0.5rem',
-              opacity: '0.8',
-              fontSize: '0.875rem',
-              textAlign: 'center',
-            },
-          },
-        },
+      colors: {
+        bg:           'var(--bg)',
+        'bg-nav':     'var(--bg-nav)',
+        border:       'var(--border)',
+        text:         'var(--text)',
+        'text-dim':   'var(--text-dim)',
+        'active-bg':  'var(--active-bg)',
+        'active-text':'var(--active-text)',
       },
     }
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-  ],
-} 
+  plugins: [],
+}
