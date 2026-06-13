@@ -9,7 +9,6 @@
       "company": "FIXR",
       "location": "London",
       "backgroundColor": "#F4F4F4",
-      "caseStudyFile": "fixr.md",
       "description": "At FIXR I redesigned and optimised key experiences for an events ticketing platform. Improved organiser onboarding, increased ticket sales, and stronger client retention. Delivered mobile-first, user-centric solutions across analytics, CRM tools, and ticket buyer journeys. Developed scalable design systems and branded integrations to support growth, streamline operations, and win clients ranging between £20k-120k per year revenue each including a £1m client.",
       "images": [
         {
@@ -38,6 +37,335 @@
         "UX Design",
         "Design System",
         "Rapid Prototyping"
+      ],
+      "caseStudy": [
+        {
+          "type": "h2",
+          "text": "Overview"
+        },
+        {
+          "type": "p",
+          "text": "FIXR is a mobile-first ticketing and event management platform empowering event organisers worldwide to sell tickets, manage attendees, and streamline event operations. As a UX designer at FIXR, I worked on various projects ranging from small feature enhancements to larger, headline functionality. Our customer base includes both small, self-serve organisers and larger-scale clients, whose feedback often guided iterative improvements to the product."
+        },
+        {
+          "type": "p",
+          "text": "One of my most significant projects involved designing a new customer messaging platform to help organisers send notifications, marketing messages, and critical service updates."
+        },
+        {
+          "type": "h3",
+          "text": "Tasks & responsibilities"
+        },
+        {
+          "type": "p",
+          "text": "Throughout my time at FIXR I..."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Collaborated with cross-functional teams (product, development, sales, and customer relations) to identify user needs and translate them into design requirements.",
+            "Conducted user research, competitive analysis, and iterative testing sessions to inform design decisions.",
+            "Led the end-to-end design process for the customer messaging platform, from initial research to developer handoff.",
+            "Balanced user needs, business requirements, and technical constraints to deliver an impactful solution."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Project: Data-driven ticketing insights"
+        },
+        {
+          "type": "h3",
+          "text": "Problem"
+        },
+        {
+          "type": "p",
+          "text": "Event organizers needed to view and compare multiple datasets (e.g., revenue, ticket sales, demographics) in a way that was intuitive and not overwhelming. The system we designed would need to be able to handle large amounts of data and be reusable for future metrics and chart types."
+        },
+        {
+          "type": "h3",
+          "text": "Contributions"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Led the design of Insights, a feature aimed at securing new clients by offering superior data insights and benchmarks compared to competitors.",
+            "Worked with a data analyst to identify key metrics based on client and stakeholder feedback",
+            "Designed a system to compare any event with multiple others, as long as they had sufficient sales data.",
+            "Researched and designed scalable, reusable charts to handle multiple datasets and future metrics.",
+            "Ensured mobile-first design, making all charts and controls fully functional and intuitive on mobile devices.",
+            "Added clear signposting and explanations to help users interpret complex data accurately, especially for metrics where trends (e.g., \"up\" or \"down\") could have varying implications."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Challenges and solutions"
+        },
+        {
+          "type": "p",
+          "text": "Scalable and reusable charts: Designing charts that could handle multiple datasets and adapt to future needs."
+        },
+        {
+          "type": "p",
+          "text": "Solution: Created a flexible, reusable charting system inspired by research into best practices across various platforms."
+        },
+        {
+          "type": "p",
+          "text": "Mobile-first design: Many competitors' dashboards were either non-functional or buggy on mobile."
+        },
+        {
+          "type": "p",
+          "text": "Solution: Prioritised mobile-first design, ensuring seamless functionality and usability on smaller screens."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Clear data interpretation: Some metrics (e.g., ticket sales trends) could be ambiguous—what looked positive might not always be good.",
+            "Solution: Added contextual explanations and clear signposting to ensure users could interpret data accurately."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Reflections & key takeaways"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Delivered a powerful tool for event organisers, helping them make data-driven decisions.",
+            "Received overwhelmingly positive feedback from users.",
+            "Laid the groundwork for Insights to become a paid subscription in the future.",
+            "One of the most challenging and rewarding projects of my career.",
+            "Loved solving complex problems like mobile responsiveness and clear data interpretation.",
+            "Proud to have created a feature that set FIXR apart from competitors and helped event organisers grow their businesses."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Project: Customer messaging platform"
+        },
+        {
+          "type": "h3",
+          "text": "Project context"
+        },
+        {
+          "type": "p",
+          "text": "To remain competitive and to outperform existing event management competitors, I was tasked with creating a robust messaging platform for FIXR's event organisers. The new platform needed to address three major workflows:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Sending event notifications",
+            "Dispatching marketing messages",
+            "Delivering critical service updates"
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Problem"
+        },
+        {
+          "type": "p",
+          "text": "Prior to this project, organisers could only send basic, single-event notifications—one at a time, with no scheduling options and minimal customisation. This limited their ability to communicate effectively with attendees, especially when promoting multiple events or sending segmented marketing campaigns."
+        },
+        {
+          "type": "h3",
+          "text": "Goals"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Scheduling: Enable organisers to schedule messages in advance for better workflow management.",
+            "Multi-event promotion: Allow organisers to promote multiple events simultaneously.",
+            "Customisation & branding: Let organisers use their own copy, tone of voice, and visual branding in messages.",
+            "Service emails & critical updates: Provide a clear path for sending important service messages (e.g., event changes, cancellations)."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Constraints & considerations"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Risk of misuse: Granting organisers the power to send potentially thousands of emails or messages at once posed a reputational and compliance risk. We needed to implement checks and safeguards to prevent nefarious or spam-like behaviour.",
+            "Technical feasibility: Creating a scalable messaging system required buy-in from engineering to ensure performance and reliability especially with new added complex systems like timed entry.",
+            "Timeline & scope: We had to deliver a manageable first release that could be iterated on, based on customer feedback."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Research"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Competitor analysis: I examined popular CRM tools and direct competitors in the event ticketing space. This helped me understand how others approached messaging workflows, audience segmentation, and brand customisation, as well as how they mitigated misuse (e.g., permissions, throttling, and content guidelines)."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Stakeholder questioning"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Accounts team & customer relations: Provided insights into common client requests and pain points.",
+            "Terminology familiarity: Using language and structures familiar to CRM users would reduce the learning curve.",
+            "Audience segmentation: Offering a way to segment attendee groups (e.g., VIPs, repeat customers) was highly desired.",
+            "Robust safeguards: Mechanisms to prevent spam and abuse (e.g., admin approvals, daily send limits for new accounts)."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Ideation & collaboration"
+        },
+        {
+          "type": "p",
+          "text": "Workshops with stakeholders from various departments revealed what features to potentially include in the MVP:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Accounts team: Prioritised must-have features based on demand such as multi-event promotions, scheduling.",
+            "Customer relations: Provided insights into common client requests and pain points and prioritised service updates.",
+            "Engineering: Balanced feasibility and timeline constraints by prioritising features that were most likely to be successful in short term and made designs with additional feature sets for future iterations.",
+            "Product: Prioritised technical requirements like working with other systems such as timed entry."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "From these workshops product management created a feature roadmap with clear priorities for the final product where I prioritised and created a prototype from which to get further feedback from the team and stakeholders for an MVP that could be delivered on time by engineering."
+        },
+        {
+          "type": "h3",
+          "text": "Prototyping & iteration"
+        },
+        {
+          "type": "p",
+          "text": "Low-fidelity wireframes: I started by mapping out user flows for scheduling messages, creating segmented lists, and customising templates. Interactive prototypes: Using Figma, I built mid- to high-fidelity prototypes to simulate key interactions (e.g., segment selection, scheduling calendar). Feedback rounds: After each iteration, I gathered input from internal stakeholders:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Ensured the interface was straightforward, with step-by-step flows for new users.",
+            "Added pre-built templates for recurring communications.",
+            "Implemented sign-posting before sending campaigns, including confirmations and potential send limits for new accounts.",
+            "Cut certain advanced features (like complex audience segmentation rules) to keep the first release focused and deliverable."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Outcome & impact"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Improved workflow efficiency: Organisers could schedule and send multiple notifications in one go, saving significant time.",
+            "Brand consistency: Users now had the freedom to include custom branding and maintain their own tone of voice.",
+            "Risk management: Built-in checks reduced the chance of spam or misuse, preserving FIXR's reputation.",
+            "Positive feedback: Beta testers praised the intuitive interface and welcomed the ability to reach their attendees in a more personalised, scalable way."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Although there was no official KPI measurement at the time of initial launch, anecdotal feedback from organisers indicated they experienced higher open rates and better engagement when promoting events through the new messaging system."
+        },
+        {
+          "type": "h3",
+          "text": "Reflections & key takeaways"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Further segmentation: Future iterations could include more sophisticated audience targeting (e.g., dynamic filters event attendance and audience segmentation)",
+            "Analytics dashboard: Designs for real-time stats on open rates, click-through rates, and unsubscribes would offer deeper insights for organisers that was indentified as a must-have feature by the accounts team.",
+            "Continuous user feedback: Ongoing beta tester reviews and usage analytics would help refine the platform and prioritise additional features that I wouuld add.",
+            "Holistic UX approach: Balancing user needs (scheduling, personalisation) with company concerns (risk mitigation, technical constraints) is vital in complex projects.",
+            "Cross-functional collaboration: Involving stakeholders from sales, product, and customer support ensured alignment on features that matter most.",
+            "Iterative development: Phasing out non-critical features helped us ship a functional MVP quickly, with room to grow in future releases."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Revenue growth contributions"
+        },
+        {
+          "type": "p",
+          "text": "As a key contributor at FIXR, where client acquisition and retention directly drove revenue, I spearheaded strategic initiatives to elevate the company's competitive edge, secure high-value clients, and streamline operational efficiency. My work focused on three core areas:"
+        },
+        {
+          "type": "h3",
+          "text": "Client acquisition"
+        },
+        {
+          "type": "p",
+          "text": "FIXR would offer a custom app and website option for clients to integrate into the FIXR platform without existing infrastructure."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "My contribution: Advocated for a robust self-serve CMS system and designed robust app/website templates that became critical selling points in sales pitches. I ensured these templates integrated seamlessly with clients' branding and addressed common client needs. Sales teams attributed these features helping to win contracts with clients generating £20k for smaller clients £50k for medium clients and £100k for large clients annually, including large-scale organisers like Middle East Film and Comic Con, and The Bath & West Showground."
+          ]
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Strategic feature development: Identified gaps in the market and proposed cost-effective solutions, such as the self-serve interactive map feature for venue navigation. By leveraging existing client assets (e.g., venue images) and simplifying integration, this feature became a key differentiator for event organisers with complex venues, directly contributing to closing high-value contracts."
+          ]
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Pitch deck innovation: Created client-specific mockups of apps, websites, branded checkout flows and prototypes to demonstrate value during sales pitches. For urgent opportunities, I streamlined asset production from down from 1 day to 1–2 hours, ensuring rapid response to high-priority RFPs and reducing internal costs."
+          ]
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Result: Reduced reliance on custom development for smaller clients meaning faster turnaround on these. Retained carefully considered custom solutions for larger clients through research into their specific systems and workflows and sales structures which contributed to being chosen over competitors for larger clients."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Client retention"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Client retention: Designed and maintained streamlined easy to implement checkout flow with upsell capabilities through insurance and pay in 3 capabiltiees, tax and fee calculations considerations which contributed higher ticket sales for both the clients and FIXR. By making the platform indispensable to operations, clients were likely to stay with us longer for muultiple contract rounds securing longer-term revenue streams."
+          ]
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Checkout flow redesign: Designed a frictionless and easy to use self-serve checkout flow builder to balance user experience and profit optimisation. Larger clients were able to upsell add-ons and various ticket types and options which contributed to higher ticket sales by creating their own optimised checkout flows suited to their business."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Cost efficiency"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Operational streamlining: Reduced internal costs by migrating small/medium clients to a scalable WordPress template (based on my original designs) and outsourcing development. This freed internal teams to focus on high-value custom projects.",
+            "Asset library creation: Built a reusable bank of templated visuals (e.g., event-type images, currency-specific widgets) that cut pitch deck preparation time by 80%, empowering sales to act swiftly on opportunities."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Summary"
+        },
+        {
+          "type": "p",
+          "text": "My contributions directly supported the acquisition and retention of clients across all tiers, which were central to the company's revenue model—a percentage of tickets sold. By enhancing the platform's appeal, reducing design costs, and demonstrating long-term value for client operations and user benefits, I played a key role in driving sustainable growth for the business."
+        },
+        {
+          "type": "p",
+          "text": "These efforts helped secure recurring annual revenue streams for FIXR. My key strengths included strategically aligning product design with revenue goals, bridging client needs with technical execution, and maintaining a proven track record of reducing costs while scaling operations effectively."
+        },
+        {
+          "type": "p",
+          "text": "Website: FIXR"
+        }
       ]
     },
     {
@@ -49,7 +377,6 @@
       "company": "The Collective",
       "location": "London",
       "backgroundColor": "#B6C7CB",
-      "caseStudyFile": "the-collective.md",
       "description": "During my time at The Collective I was the sole product designer during rapid growth at the company as they expanded. I was responsible for driving digital transformation across internal tools and resident-facing products. Designed an app with strong resident adoption. Designed and migrated teams to a new internal platform that improved operational efficiency by 40%. Delivered web and mobile experiences to streamline onboarding, digitised workflows, and built a unified design system to support rapid scaling with 2x users each year.",
       "images": [
         {
@@ -101,6 +428,154 @@
         "Design System",
         "QA",
         "Interviews"
+      ],
+      "caseStudy": [
+        {
+          "type": "h3",
+          "text": "Tasks and responsibilities"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Platform design: Redesigned and streamlined back-end data management platforms for operational efficiency.",
+            "App development: Designed and iterated on a members' co-living companion app to enhance resident and staff interactions.",
+            "Website redesign: Led the UX/UI design for a new company website and microsites to improve user engagement and sales funnel efficiency.",
+            "SaaS development: Contributed to the design of scalable SaaS platforms for property management and land acquisition.",
+            "Research and testing: Conducted user research, focus groups, and usability testing to inform design decisions.",
+            "Collaboration: Worked closely with project managers, developers, and stakeholders to deliver high-quality digital products."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Introduction"
+        },
+        {
+          "type": "p",
+          "text": "The Collective is a co-living company that creates shared living and working spaces designed to foster community, collaboration, and innovation."
+        },
+        {
+          "type": "p",
+          "text": "I joined The Collective in 2017 during a period of rapid growth and was tasked with transforming their digital infrastructure. My work spanned designing intuitive back-end systems, a members' app, and a new website, all aimed at enhancing user experience and operational efficiency."
+        },
+        {
+          "type": "h3",
+          "text": "Key features and functionality"
+        },
+        {
+          "type": "p",
+          "text": "Back-end data management platform:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Operational efficiency: Redesigned the platform to streamline hotel-like renting, customer, and finance management.",
+            "User-friendly interface: Simplified complex workflows to reduce training time for staff.",
+            "Scalability: Evolved the platform into a SaaS solution with features like financial management, analytics, and booking systems."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Members' co-living companion app:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Community building: Features like interest groups, messaging, and event platforms to cultivate social connections.",
+            "Smart home integration: Enabled residents to personalize their spaces using smart technologies being developed by the tech team.",
+            "Staff tools: Designed a lightweight CMS for staff to manage app content and user interactions."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Website and microsites:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "User-centric design: Crafted UX to guide potential customers through the sales funnel effectively.",
+            "Modular design: Created adaptable microsites for events, workspaces, and targeted demographics.",
+            "Performance optimization: Replaced the outdated website with a fast, modern, and maintainable solution."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Data-driven tools:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Acquire: A data-driven land acquisition platform that tracks real estate market activity globally, integrates operational and financial data, and automates workflows.",
+            "Colab: A property management system designed uniquely for co-living, featuring intelligent room allocation, real-time occupancy reporting, and dynamic room pricing."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Design challenges and solutions"
+        },
+        {
+          "type": "p",
+          "text": "Outdated back-end systems The existing data management platform was incomplete and difficult to use, hindering operational efficiency. Solution: Redesigned the platform with a focus on usability, scalability, and integration with financial and analytics tools."
+        },
+        {
+          "type": "p",
+          "text": "Resident and staff app expectations Residents and staff needed a seamless way to interact and manage co-living spaces. Solution: Developed a members' app, conducting regular community town hall meetings and focus groups with residents to gather feedback and test new features. These collaborative sessions helped shape the development of key functionality like messaging, events, and support systems. The direct engagement with our user community ensured we built features that truly served their needs and created a more engaging co-living experience."
+        },
+        {
+          "type": "p",
+          "text": "Ineffective website The old website was slow, outdated, and unable to support the company's growth and did not reflect the company's vibe. Solution: Designed a new website and microsites with a focus on UX, performance, and modularity to support diverse business needs as the company was growing fast during this period."
+        },
+        {
+          "type": "p",
+          "text": "Data integration and automation The company needed tools to streamline land acquisition and property management. Solution: Designed and implemented Acquire and added features to Colab, integrating advanced data modeling, real-time reporting, and automation to improve efficiency and decision-making. Worked closely with stakeholders across departments to understand their workflows and pain points, ensuring the solutions we built streamlined their processes and reduced administrative overhead."
+        },
+        {
+          "type": "h3",
+          "text": "Visual design and branding"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Design system: Created a cohesive design system to ensure consistency across platforms.",
+            "Modern aesthetic: Emphasized clean, welcoming and earthy interface design language that reflected The Collective's innovative and community-driven ethos.",
+            "Responsive design: Ensured all platforms were optimized for desktop, tablet, and mobile devices focusing heavily n the mobile experience as this was when Monzo was growing fast and we wanted to be the Monzo of co-living."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Documentation and handoff"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Wireframes and prototypes: Delivered wireframes and detailed interactive prototypes for all platforms to continually confirm and iterate the design with stakeholders.",
+            "Design specifications: Provided assets and documentation for developers while working closely with the tech team to ensure the design was implemented correctly.",
+            "User flows: Documented user journeys for key features like app onboarding, event management, and website navigation."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Summary"
+        },
+        {
+          "type": "p",
+          "text": "Being part of The Collective's tech team and Innovation Labs was an incredible experience. Working closely with a the technology product managers, we explored cutting-edge technologies to bridge the physical and digital aspects of co-living."
+        },
+        {
+          "type": "p",
+          "text": "A key focus was implementing machine learning and computer vision systems to gather real-world data that enhanced our digital products. This included collaborating with Salto, a key card operator, to develop a lightweight key management interface, as well as creating intuitive dashboards for monitoring building capacity and room occupancy patterns."
+        },
+        {
+          "type": "p",
+          "text": "These tools provided valuable insights to our community teams and service design team, helping them better understand usage patterns and optimize the resident experience."
+        },
+        {
+          "type": "p",
+          "text": "The opportunity to work at the intersection of technology and community building, while contributing to products that had meaningful impact on how people live and interact, was truly rewarding and pushed me to grow both technically and creatively."
+        },
+        {
+          "type": "p",
+          "text": "Website: The Collective"
+        }
       ]
     },
     {
@@ -112,7 +587,6 @@
       "company": "James Sparkes",
       "location": "Remote",
       "backgroundColor": "#3C3937",
-      "caseStudyFile": "personal-projects.md",
       "description": "Recently I've been exploring rapid prototyping and development by leveraging IDEs like Cursor with integrated AI tools to accelerate the creation of small personal projects, turning everyday problems that I've faced into tangible solutions.",
       "images": [
         {
@@ -134,6 +608,154 @@
         "CSS",
         "HTML",
         "Tailwind"
+      ],
+      "caseStudy": [
+        {
+          "type": "h2",
+          "text": "Project management"
+        },
+        {
+          "type": "p",
+          "text": "This workflow has expanded my understanding of the project management pipeline and enlightened me to the importance of meticulous documentation and clear requirements. In many ways, it feels like collaborating with a team of developers: each new session with the AI requires getting it back up to speed, so solid readme files, roadmaps, and well-structured product requirement documents are crucial. This approach helps prevent misunderstandings, keeps the AI on track with the project goals, and ensures a smoother development process and a more successful outcome."
+        },
+        {
+          "type": "p",
+          "text": "By personally guiding the project from start to finish rather than just focusing on UX design I've gained an appreciation for the roles and responsibilities of the entire team process. This experience has enhanced my communication skills and my ability to integrate with different workflows."
+        },
+        {
+          "type": "p",
+          "text": "Through these personal projects, I ensure that I continue to grow as a designer who not only values creative exploration but also understands the end-to-end product cycle from defining requirements to launching and iterating on real, user-facing solutions as I plan to release these projects to the public and test them with real users."
+        },
+        {
+          "type": "h2",
+          "text": "The process"
+        },
+        {
+          "type": "p",
+          "text": "Although straightforward on the surface, my workflow involves a blend of product management, UX, and rapid development:"
+        },
+        {
+          "type": "p",
+          "text": "Identify the problem: Start with a real-world issue that needs solving."
+        },
+        {
+          "type": "p",
+          "text": "Draft requirements: Define features and success criteria, using AI to generate early concepts and prototypes."
+        },
+        {
+          "type": "p",
+          "text": "Design & prototype: Depending on the scale of the project I either hand coded CSS or utilise component libraries like ShadCN and creating final designs for components in Figma to refine visual elements at a later stage for cohesive visuals."
+        },
+        {
+          "type": "p",
+          "text": "Develop the MVP: Choose a suitable and scalable technology stack and tools to scaffold the project from scratch so I can focus on building out features and UX gradually rather than relying on boilerplate code."
+        },
+        {
+          "type": "p",
+          "text": "Test & iterate: Conduct user testing with friends and family and gather feedback to refine both functionality and user experience, making incremental improvements over time."
+        },
+        {
+          "type": "p",
+          "text": "Document & reflect: Thorough documentation (readme files, roadmaps, user stories) keeps the process organised and sets the stage for future updates."
+        },
+        {
+          "type": "h3",
+          "text": "Key insights"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Holistic skill-building: Managing the entire project (from planning to coding) offers a 360-degree view of product creation.",
+            "Efficient collaboration: AI excels when given clear instructions and consistent documentation; this is similar to good teamwork practices and has helped me to improve my communication skills.",
+            "Continuous learning: Each project reveals new design, technical, and communication strategies that I can apply in professional settings."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Projects"
+        },
+        {
+          "type": "h3",
+          "text": "UI translator"
+        },
+        {
+          "type": "p",
+          "text": "Overview"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Goal: Provide on-demand translation for websites without altering the site's original design.",
+            "Inspiration: Frustration with full-page translations that break layout and context."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Development highlights"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Hover-based translation: Hover over text to see its translated equivalent instantly.",
+            "Caching & throttling: Prevented runaway API costs by limiting requests and storing frequent translations.",
+            "Subtle UI: A tooltip overlay preserves the native look and feel of the website."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Result & impact"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Language learning: Retain the page's native language while translating only words or phrases on demand when needed so the user can learn new languages from exposure, context and reinforcement via unintrusive translations.",
+            "Future roadmap: Refine translation accuracy, usability, and performance improvements. Better smart language detection and expanded OCR functionality for images, a domain-specific caching system, and collaborative cloud integration for sharing translations so there's less AI requests needed."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Tab tools"
+        },
+        {
+          "type": "p",
+          "text": "Overview"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Goal: Efficiently manage a large number of tabs in Chrome.",
+            "Inspiration: Other browsers offer advanced tab management, but Chrome's default system felt lacking."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Development highlights"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Incremental feature growth: Started with basic functions (downloading a list of open tab URLs and bulk opening of pasted URLs) and expanded to more complex actions like tab grouping, duplicate closures, saving and restoring sessions, import/export capabilities, page URL extraction and batch-opening along with keyboard shortcuts to name some."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Result & impact"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Greater efficiency: My workflow and browser usage is less stressful and more efficient now and multiple people have expressed interest in using it themselves.",
+            "Ongoing evolution: New ideas and incremental updates keep Tab Tools relevant and invaluable to my daily routine."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Conclusion"
+        },
+        {
+          "type": "p",
+          "text": "By harnessing AI for rapid prototyping, embracing meticulous project management, and immersing myself in every stage of development, I've delivered tools like UI translator and Tab tools that meaningfully address some daily challenges. Through these personal ventures, I've not only honed my technical and design skills, but also gained a deeper appreciation for collaboration and clear communication both key in professional environments. I look forward to refining these projects further and continuing to explore new ideas that can make life a bit easier and act as a new way for working in a more efficient way that I can use in professional work as well."
+        }
       ]
     },
     {
@@ -145,7 +767,6 @@
       "company": "Kuula TV",
       "location": "London, UK",
       "backgroundColor": "#CFD8E0",
-      "caseStudyFile": "kuula-tv.md",
       "description": "At Kuula I defined the visual identity and streamlined media management for an online teaching platform, supporting brand growth and content scalability. Delivered marketing designs, a white-label design system, and pitch decks that helped secure client partnerships to drive platform growth 300%.",
       "images": [
         {
@@ -175,6 +796,151 @@
         "Branding",
         "Design System",
         "Presentation Design"
+      ],
+      "caseStudy": [
+        {
+          "type": "h3",
+          "text": "Responsibilities"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Branding and UI design: Defined the initial branding and UI look and feel for Kuula and its sub-brands.",
+            "Marketing website: Designed the main marketing website and partner microsites to ensure a cohesive brand experience.",
+            "Media management system: Redesigned the UX and UI for a robust media file system, focusing on usability and scalability.",
+            "Design system: Contributed to the creation and maintenance of a design system to ensure consistency across platforms.",
+            "User-centric features: Designed intuitive workflows for uploading, organising, and editing multimedia content."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Intro"
+        },
+        {
+          "type": "p",
+          "text": "Kuula is a platform designed to help users organise, share, and manage multimedia content, including videos, PDFs, images, and audio files. During my time at Kuula, I was involved in the initial stages of branding and UI design, as well as the redesign of the media management system. My work focused on creating a seamless experience for users to upload, categorise, and manage their content, while ensuring the platform was visually cohesive and easy to navigate."
+        },
+        {
+          "type": "h3",
+          "text": "Key features and functionality"
+        },
+        {
+          "type": "p",
+          "text": "Branding and UI design:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Defined the visual identity for Kuula, including colour palettes, typography, and iconography.",
+            "Created a consistent look and feel across the main website and partner microsites."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Media management system:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Content differentiation: Designed clear visual distinctions between different types of content, such as courses, video collections, and individual files.",
+            "Sorting and organisation: Implemented intuitive sorting and filtering options to help users manage large libraries of multimedia content.",
+            "Upload workflow: Redesigned the upload process to make it easy and streamlined, especially for mobile users.",
+            "Basic editing tools: Added rudimentary video editing features to allow users to make quick adjustments after upload."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Marketing website and microsites:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Designed a user-friendly marketing website to showcase Kuula's features and value proposition.",
+            "Created microsites for partners, ensuring brand consistency while tailoring the content to specific audiences."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Design challenges and solutions"
+        },
+        {
+          "type": "p",
+          "text": "Challenge 1: Complex content management Users needed to manage a wide variety of file types, often in large quantities, which could easily become overwhelming."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Solution: Designed a clear hierarchy and visual distinctions between content types, along with robust sorting and filtering options."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Challenge 2: Mobile-friendly uploads Many users uploaded content directly from their phones, requiring a simplified and responsive upload workflow."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Solution: Streamlined the upload process with a mobile-first approach, ensuring it was intuitive and efficient even on smaller screens."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Challenge 3: Post-upload editing Users needed basic tools to edit their videos after uploading, without leaving the platform."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Solution: Integrated rudimentary video editing features into the interface, allowing users to make quick adjustments without needing external software."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Visual design and branding"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Design system: Contributed to a scalable design system to ensure consistency across the platform and marketing materials.",
+            "Modern aesthetic: Developed a clean, modern UI that emphasised usability and visual appeal.",
+            "Responsive design: Ensured all interfaces were optimised for desktop and mobile devices."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Documentation and handoff"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Wireframes and prototypes: Created detailed wireframes and interactive prototypes for the media management system and website.",
+            "Design specifications: Provided pixel-perfect assets and documentation for developers.",
+            "User flows: Documented user journeys for key features, such as content upload and organisation."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Additional details"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "User testing: Conducted usability testing to gather feedback and refine the design.",
+            "Iterative improvements: Continuously improved the platform based on user feedback and evolving business needs.",
+            "Collaboration: Worked closely with developers, product managers, and stakeholders to ensure alignment and high-quality output."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Summary"
+        },
+        {
+          "type": "p",
+          "text": "Working on Kuula was a rewarding experience, as it allowed me to tackle complex design challenges while creating a platform that genuinely helped users manage their multimedia content. I particularly enjoyed reimagining the upload workflow, as it was a critical part of the user experience. Seeing the positive feedback from users and the impact of my work on the platform's usability was incredibly fulfilling."
+        },
+        {
+          "type": "p",
+          "text": "Website: Kuula (now dead link, click at own risk)"
+        }
       ]
     },
     {
@@ -186,7 +952,6 @@
       "company": "Breezie",
       "location": "Richmond, UK",
       "backgroundColor": "#6EB8B7",
-      "caseStudyFile": "breezie.md",
       "description": "Redesigned the UX/UI for Breezie, an Android OS tailored to help thousands of elderly and disabled users confidently navigate digital products. Focused on scalable accessibility and simplicity, improving quality of life and digital independence. Designed a SmartThings dashboard for care homes, and created packaging and printed materials that contributed to increased sales and positive media coverage increasing product sales by 4x.",
       "images": [
         {
@@ -239,6 +1004,109 @@
         "Interviews",
         "Packaging",
         "Print"
+      ],
+      "caseStudy": [
+        {
+          "type": "h3",
+          "text": "What I did"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Collaborated with another designer to overhaul the UX and UI design from the ground up.",
+            "Conducted user research with elderly users of the old OS and those who avoided using tablets/computers to identify pain points and opportunities for improvement.",
+            "Designed a scalable interface that started with limited functionality for beginners and gradually introduced more features as users became familiar with the system.",
+            "Created a family-managed CMS for relatives to add or remove features based on the user's needs and preferences.",
+            "Designed a Samsung SmartThings dashboard portal for care homes, enabling administrators to monitor and control devices on a large network.",
+            "Developed intuitive rule-setting tools for administrators to manage devices in care homes or private residences.",
+            "Designed packaging, manuals, and printed materials to ensure a cohesive and user-friendly experience from unboxing to daily use."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Key challenges and solutions"
+        },
+        {
+          "type": "p",
+          "text": "Accessibility for elderly and disabled users: Challenge: Many elderly and disabled users found traditional tablets and computers difficult to use."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Solution: Designed a simplified, intuitive interface with large buttons, clear typography, and step-by-step guidance."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Scalability for beginners: Challenge: Users unfamiliar with digital devices needed a system that could grow with their skills."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Solution: Created a scalable interface that started with basic functionality and allowed features to be added over time."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Family-managed customisation: Challenge: Relatives needed a way to customise the system for users without overwhelming them."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Solution: Designed an online CMS for family members to add or remove features based on the user's needs."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Care home device management: Challenge: Administrators needed an intuitive way to monitor and control devices in care homes."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Solution: Designed a Samsung SmartThings dashboard portal with tools for creating rules and managing devices."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Cohesive brand experience: Users needed a seamless experience from unboxing to daily use."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Solution: Designed packaging, manuals, and printed materials that were easy to understand and aligned with the system's design."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Outcome"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Improved usability: Elderly and disabled users found the new system more intuitive and accessible.",
+            "Scalable interface: Users could start with basic features and gradually unlock more functionality as they became comfortable.",
+            "Family involvement: Relatives could easily customise the system to meet the user's needs, improving adoption and satisfaction.",
+            "Efficient device management: Care home administrators could monitor and control devices more effectively using the SmartThings dashboard.",
+            "Cohesive experience: Packaging and printed materials provided a seamless onboarding experience for users and their families."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Personal reflection"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "This project was incredibly rewarding, as it allowed me to design for a demographic often overlooked in tech.",
+            "I enjoyed the challenge of creating a system that was both simple for beginners and scalable for advanced users.",
+            "Collaborating with another designer and conducting user research helped me better understand the unique needs of elderly and disabled users.",
+            "Seeing the positive impact of our work on users' lives was a powerful reminder of the importance of inclusive design."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Website: Breezie (now VitalTech)"
+        }
       ]
     },
     {
@@ -250,7 +1118,6 @@
       "company": "AMBIO-N",
       "location": "Remote",
       "backgroundColor": "#D0CCC9",
-      "caseStudyFile": "ambio-n.md",
       "description": "While working with AMBIO-N I I led UX design for their B2B marketplace, improving usability and consistency across procurement tools. Established a modular design system used across the platform and a new marketing site. Designed an easy to customise investor deck that helped the company secure £1.5M in funding.",
       "images": [
         {
@@ -281,6 +1148,134 @@
         "Design System",
         "Video",
         "Presentation Design"
+      ],
+      "caseStudy": [
+        {
+          "type": "h3",
+          "text": "Tasks and responsibilities"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "UX/UI design: Redesigned the marketplace interface to maximize usability and streamline the user experience.",
+            "Design system overhaul: Updated outdated design styles and created a consistent, modern design system.",
+            "Feature development: Designed and implemented powerful filtering, saving, and wishlist features to enhance user interaction.",
+            "Marketing materials: Updated the marketing website and created presentation decks and video marketing designs to ensure brand consistency.",
+            "Sustainability integration: Ensured the platform effectively communicated product sustainability metrics (e.g., carbon footprint, origin, circularity)."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Introduction"
+        },
+        {
+          "type": "p",
+          "text": "AMBIO-N is a platform that connects buyers with sellers of sustainable materials, helping brands and manufacturers improve the traceability and environmental footprint of their products. My role involved redesigning the marketplace and marketing website to improve usability, visual consistency, and functionality. I focused on creating a seamless experience for users to find, filter, and evaluate sustainable materials efficiently."
+        },
+        {
+          "type": "h3",
+          "text": "Key features and functionality"
+        },
+        {
+          "type": "p",
+          "text": "Marketplace redesign:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Search and filtering: Designed an intuitive search and filtering system to help users quickly find materials that meet their exact needs. Filters included sustainability metrics, origin, and circularity data.",
+            "Product visibility: Maximized screen space to display product details, sustainability statistics, and vendor information clearly.",
+            "Wishlists and saved items: Added features like saving items and creating wishlists to enhance user convenience."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Marketing website update:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Consistent branding: Updated the website to align with the new design system, ensuring a cohesive brand identity.",
+            "Improved navigation: Simplified the user journey to make it easier for visitors to understand AMBIO-N's value proposition and services."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Sustainability metrics:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Product transparency: Designed interfaces to display detailed sustainability data, such as carbon footprint, origin, and circularity, helping users make informed decisions."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Design challenges and solutions"
+        },
+        {
+          "type": "p",
+          "text": "Complex marketplace navigation The marketplace had a large and complicated inventory, making it difficult for users to find specific materials. Solution: Implemented advanced filtering and search functionality, allowing users to narrow down results based on sustainability metrics, material type, and vendor information."
+        },
+        {
+          "type": "p",
+          "text": "Outdated design system The existing design was inconsistent and did not reflect the brand's modern, sustainable ethos. Solution: Created a new design system with a clean, modern aesthetic and consistent branding across all platforms."
+        },
+        {
+          "type": "p",
+          "text": "Communicating sustainability Users needed clear and accessible information about the environmental impact of materials. Solution: Designed interfaces to prominently display sustainability metrics, such as carbon footprint and circularity data, ensuring users could easily evaluate materials."
+        },
+        {
+          "type": "h3",
+          "text": "Visual design and branding"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Design system: Developed a cohesive design system with a modern, minimalist aesthetic, emphasizing sustainability and transparency.",
+            "Typography and color palette: Updated the typography and color palette to reflect the brand's commitment to sustainability and professionalism.",
+            "Illustrations and icons: Created custom illustrations and icons to enhance the user experience and reinforce the brand's identity."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Documentation and handoff"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Wireframes and prototypes: Delivered detailed wireframes and interactive prototypes to guide development.",
+            "Design specifications: Provided pixel-perfect design specifications and assets for implementation.",
+            "User flows: Documented user flows for key features, such as search, filtering, and wishlist functionality."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Additional details"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Presentation decks: Designed presentation decks to communicate AMBIO-N's value proposition to stakeholders and clients.",
+            "Video marketing: Created video marketing materials to showcase the platform's features and benefits."
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Summary"
+        },
+        {
+          "type": "p",
+          "text": "Working on AMBIO-N was a rewarding but challenging experience, as it allowed me to design with a sustainability focused service design in mind. I enjoyed the challenge of creating a platform that not only looked great with a unique style but also empowered users to make environmentally conscious decisions."
+        },
+        {
+          "type": "p",
+          "text": "The pitch decks were especially challenging as I had to distill the value proposition into a concise and compelling story and design a presentation deck that could be changed depending on the client, like slipping different slides for certain clients, different currencies for different countries so I had to devise a system to make it easy to change the deck based on all these different variables."
+        },
+        {
+          "type": "p",
+          "text": "Website: AMBIO-N (now ProcureCircular)"
+        }
       ]
     },
     {
@@ -292,7 +1287,6 @@
       "company": "QD Design",
       "location": "Maidstone, UK",
       "backgroundColor": "#E0DADA",
-      "caseStudyFile": "",
       "description": "UX design and front-end development to transition the business from trade-only to a B2B and B2C eCommerce model, significantly increasing sales and customer reach. Designed and built a bespoke inventory and warehouse management system, streamlining operations and improving efficiency across sales and logistics. Delivered rebranding across digital and print, including advertising, product photography, and 3D CAD design to support new product launches and market positioning resulting in 2.3x revenue growth",
       "images": [
         {
@@ -338,7 +1332,6 @@
       "company": "Fabric",
       "location": "London, UK",
       "backgroundColor": "#798F9D",
-      "caseStudyFile": "fabric-platform.md",
       "description": "Design and UX for FabricOS, a data analytics platform targeted towards brand managers for large companies as a dashboard to manage and create reports from multiple sources like websites and social network pages.",
       "images": [
         {

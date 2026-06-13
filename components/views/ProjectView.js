@@ -13,20 +13,6 @@ export async function renderProject(container, projectId) {
         return;
     }
 
-    let caseStudyHTML = '';
-    if (project.caseStudyFile) {
-        const htmlFile = project.caseStudyFile.replace(/\.md$/, '.html');
-        try {
-            const res = await fetch(`case-studies/${htmlFile}`);
-            if (res.ok) caseStudyHTML = stripFrontMatter(await res.text());
-        } catch (_) {
-            // no case study file — silently skip
-        }
-    }
-
-    const sel2 = getSelection();
-    if (!sel2 || sel2.type !== 'project' || sel2.id !== projectId) return;
-
     const thumbsHTML = project.images
         .map(img => `
             <div class="project-thumb" data-full="${escapeAttr(img.src)}">
@@ -37,6 +23,8 @@ export async function renderProject(container, projectId) {
     const tagsHTML = project.tags
         .map(t => `<span>${escapeHTML(t)}</span>`)
         .join('');
+
+    const caseStudyHTML = project.caseStudy ? renderBlocks(project.caseStudy) : '';
 
     container.innerHTML = `
         <div class="project-view">
@@ -51,11 +39,15 @@ export async function renderProject(container, projectId) {
     initHoverPreview(container);
 }
 
-function stripFrontMatter(html) {
-    const hrIdx = html.indexOf('<hr');
-    if (hrIdx === -1) return html;
-    const afterHr = html.indexOf('>', hrIdx) + 1;
-    return html.slice(afterHr).trim();
+function renderBlocks(blocks) {
+    return blocks.map(b => {
+        if (b.type === 'h1' || b.type === 'h2') return `<h2>${escapeHTML(b.text)}</h2>`;
+        if (b.type === 'h3' || b.type === 'h4') return `<h3>${escapeHTML(b.text)}</h3>`;
+        if (b.type === 'p') return `<p>${escapeHTML(b.text)}</p>`;
+        if (b.type === 'ul') return `<ul>${b.items.map(i => `<li>${escapeHTML(i)}</li>`).join('')}</ul>`;
+        if (b.type === 'ol') return `<ol>${b.items.map(i => `<li>${escapeHTML(i)}</li>`).join('')}</ol>`;
+        return '';
+    }).join('\n');
 }
 
 function initHoverPreview(container) {
