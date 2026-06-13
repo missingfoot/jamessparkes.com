@@ -10,6 +10,7 @@ export async function renderNav(container) {
 
     container.innerHTML = buildHTML(visible, getTheme());
     bindEvents(container, visible);
+    updateActive(container);
 
     window.addEventListener('selection-change', () => updateActive(container));
     document.addEventListener('theme-change', e => {
@@ -32,7 +33,7 @@ function buildHTML(projects, currentTheme) {
             <div class="nav-group">
                 <div class="nav-group-header">Work</div>
                 ${projects.map(p => `
-                    <button class="nav-item" data-nav-type="project" data-nav-id="${p.id}">${p.title}</button>
+                    <button class="nav-item" data-nav-type="project" data-nav-id="${p.id}">${escapeHTML(p.title)}</button>
                 `).join('')}
             </div>
         </nav>
@@ -55,6 +56,14 @@ function bindEvents(container, projects) {
         navigate(type, id);
         document.body.classList.add('viewer-open');
     });
+}
+
+function escapeHTML(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
 }
 
 function updateActive(container) {

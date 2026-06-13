@@ -18,11 +18,13 @@ export function initRouter() {
         const id = parseInt(hash.slice(8), 10);
         if (!isNaN(id)) {
             navigate('project', id);
+            document.body.classList.add('viewer-open');
             return;
         }
     }
     if (hash === 'cv') {
         navigate('cv');
+        document.body.classList.add('viewer-open');
         return;
     }
     navigate('about');

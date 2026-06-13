@@ -14,6 +14,7 @@ export function renderViewer(container) {
     });
 
     window.addEventListener('selection-change', e => {
+        container.scrollTop = 0;
         const content = container.querySelector('.viewer-content');
         content.innerHTML = '';
         const { type, id } = e.detail;

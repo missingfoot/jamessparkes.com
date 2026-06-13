@@ -1,6 +1,12 @@
 // components/views/ProjectView.js
+import { getSelection } from '../../js/router.js';
+
 export async function renderProject(container, projectId) {
     const { projects } = await fetch('data/portfolio.json').then(r => r.json());
+
+    const sel = getSelection();
+    if (!sel || sel.type !== 'project' || sel.id !== projectId) return;
+
     const project = projects.find(p => p.id === projectId);
     if (!project) {
         container.innerHTML = '<p style="color:var(--text-dim)">Project not found.</p>';
@@ -11,11 +17,15 @@ export async function renderProject(container, projectId) {
     if (project.caseStudyFile) {
         const htmlFile = project.caseStudyFile.replace(/\.md$/, '.html');
         try {
-            caseStudyHTML = await fetch(`case-studies/${htmlFile}`).then(r => r.text());
+            const res = await fetch(`case-studies/${htmlFile}`);
+            if (res.ok) caseStudyHTML = await res.text();
         } catch (_) {
             // no case study file — silently skip
         }
     }
+
+    const sel2 = getSelection();
+    if (!sel2 || sel2.type !== 'project' || sel2.id !== projectId) return;
 
     const imagesHTML = project.images
         .map(img => `<img src="${img.src}" alt="${escapeAttr(img.alt)}" loading="lazy">`)
