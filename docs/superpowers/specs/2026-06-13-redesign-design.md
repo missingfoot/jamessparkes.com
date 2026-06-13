@@ -118,12 +118,7 @@ Keep the existing stack:
 - **Tailwind CSS v3** — but colour values moved to CSS custom properties rather than Tailwind config values, so theming works without a rebuild
 - **Self-hosted Maple Mono** — woff2 files in `/fonts/`, replacing Favorit (which is removed) and Inter (Google Fonts link removed)
 
-Existing data files are unchanged:
-- `data/bio.json`
-- `data/portfolio.json`
-- `case-studies/*.md`
-- `James_Sparkes_CV.pdf`
-- `images/*`
+Existing data files are unchanged. Case study markdown files are pre-converted to plain HTML fragments offline using pandoc (one-time step), stored as `case-studies/*.html`. No runtime markdown parsing library — `ProjectView` fetches the `.html` directly and injects with `innerHTML`.
 
 ---
 
