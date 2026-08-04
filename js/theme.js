@@ -1,25 +1,28 @@
 // js/theme.js
-const STORAGE_KEY = 'theme';
-const DARK = 'dark';
-const LIGHT = 'light';
+// Theme is applied synchronously by the inline snippet in <head> to avoid
+// a flash of the wrong theme. This file only wires up the toggle button.
+(function () {
+    var STORAGE_KEY = 'theme';
 
-export function initTheme() {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    apply(stored ?? (prefersDark ? DARK : LIGHT));
-}
+    function apply(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem(STORAGE_KEY, theme);
+        var label = document.querySelector('.theme-label');
+        if (label) label.textContent = theme === 'dark' ? 'light' : 'dark';
+    }
 
-export function toggleTheme() {
-    const current = document.documentElement.getAttribute('data-theme') ?? LIGHT;
-    apply(current === DARK ? LIGHT : DARK);
-}
+    document.addEventListener('DOMContentLoaded', function () {
+        var label = document.querySelector('.theme-label');
+        if (label) {
+            var current = document.documentElement.getAttribute('data-theme') || 'light';
+            label.textContent = current === 'dark' ? 'light' : 'dark';
+        }
 
-export function getTheme() {
-    return document.documentElement.getAttribute('data-theme') ?? LIGHT;
-}
-
-function apply(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem(STORAGE_KEY, theme);
-    document.dispatchEvent(new CustomEvent('theme-change', { detail: { theme } }));
-}
+        var toggle = document.querySelector('[data-theme-toggle]');
+        if (!toggle) return;
+        toggle.addEventListener('click', function () {
+            var current = document.documentElement.getAttribute('data-theme') || 'light';
+            apply(current === 'dark' ? 'light' : 'dark');
+        });
+    });
+})();

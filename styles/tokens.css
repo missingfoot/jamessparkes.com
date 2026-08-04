@@ -7,6 +7,8 @@
     --text-dim:    #888880;
     --active-bg:   #1A1A18;
     --active-text: #F5F5F0;
+    --accent:      #C85A00;
+    --accent-key:  #6B6B62;
 }
 
 [data-theme="dark"] {
@@ -17,4 +19,6 @@
     --text-dim:    #555550;
     --active-bg:   #E8E8E2;
     --active-text: #0F0F0E;
+    --accent:      #E07530;
+    --accent-key:  #9A9A90;
 }

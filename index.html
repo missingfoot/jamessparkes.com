@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script>(function(){var t=localStorage.getItem("theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -28,24 +29,53 @@
 
     <link rel="stylesheet" href="styles/tokens.css">
     <link rel="stylesheet" href="styles/global.css">
-    <link rel="stylesheet" href="styles/output.css">
 </head>
 <body>
-    <div id="app">
-        <aside id="nav"></aside>
-        <main id="viewer"></main>
+    <div class="layout">
+        <aside class="nav">
+            <div class="nav-name">James Sparkes</div>
+            <div class="nav-role">Product Designer</div>
+            <nav class="nav-groups">
+                <div class="nav-group">
+                    <div class="nav-group-header">Info</div>
+                    <a class="nav-item active" href="index.html">About</a>
+                    <a class="nav-item" href="cv.html">CV</a>
+                </div>
+                <div class="nav-group">
+                    <div class="nav-group-header">Work</div>
+                    <a class="nav-item" href="fixr.html">FIXR</a>
+                    <a class="nav-item" href="the-collective.html">The Collective</a>
+                    <a class="nav-item" href="personal-projects.html">Personal Projects</a>
+                    <a class="nav-item" href="kuula-tv.html">Kuula TV</a>
+                    <a class="nav-item" href="breezie.html">Breezie</a>
+                    <a class="nav-item" href="ambio-n.html">AMBIO-N</a>
+                    <a class="nav-item" href="qd-design.html">QD Design</a>
+                </div>
+            </nav>
+            <button class="nav-theme-toggle" data-theme-toggle>
+                <span class="theme-label">dark</span>
+            </button>
+        </aside>
+        <main class="content">
+            <div class="about-view">
+                <h1 class="project-title">About</h1>
+
+                <div class="project-case-study">
+                    <p>Product designer specialising in UI/UX design for mobile apps, SaaS platforms, web apps, and marketing websites. I focus on creating intuitive, high-quality interfaces and design systems that enhance user experiences.</p>
+
+                    <p>I'm an adaptable problem-solver who loves creating thoughtful user experiences, improving product adoption, and boosting client satisfaction. My work helps businesses attract and retain users, win new clients, and deliver real impact. Strategy, storytelling, and business outcomes are central to how I design.</p>
+
+                    <p>While I focus on digital design, my personal interests in physical product design, service design, architecture, and urban planning give me a broader perspective. I adapt quickly to new tools, collaborate well with teams, and make use of AI, but critical thinking, empathy, and real problem-solving always stay at the core of my work.</p>
+                </div>
+
+                <div class="about-links">
+                    <a href="https://uk.linkedin.com/in/jamessparkesdesign" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    <a href="mailto:hello@jamessparkes.com" id="contact-link">Contact</a>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <script type="module">
-        import { initTheme } from './js/theme.js';
-        import { renderNav } from './components/Nav.js';
-        import { renderViewer } from './components/Viewer.js';
-        import { initRouter } from './js/router.js';
-
-        initTheme();
-        renderNav(document.getElementById('nav'));
-        renderViewer(document.getElementById('viewer'));
-        initRouter();
-    </script>
+    <script src="js/theme.js" defer></script>
 </body>
 </html>
