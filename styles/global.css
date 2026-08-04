@@ -78,7 +78,7 @@ body {
     font-size: 14px;
     font-weight: 500;
     color: var(--text);
-    margin-bottom: 2px;
+    margin-bottom: 0;
 }
 
 .nav-role {
@@ -104,7 +104,8 @@ body {
 
 .nav-item {
     display: block;
-    width: 100%;
+    width: calc(100% + 12px);
+    margin: 0 -6px;
     font-size: 13px;
     color: var(--text);
     padding: 3px 6px;
@@ -142,15 +143,10 @@ body {
     padding: 3rem 0;
 }
 
-.content > .back-link,
 .content > .about-view,
 .content > .cv-view,
 .content > .project-view {
     padding: 0 3rem;
-}
-
-.back-link {
-    display: none;
 }
 
 /* ─── View: About ────────────────────────────────────────── */
@@ -358,7 +354,8 @@ body {
     margin-bottom: 1rem;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    row-gap: 0.1rem;
+    column-gap: 0.75rem;
 }
 
 .project-description {
@@ -415,7 +412,9 @@ body {
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: rgba(0, 0, 0, 0.92);
+    background: color-mix(in srgb, var(--bg) 75%, transparent);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     display: none;
     flex-direction: column;
     align-items: center;
@@ -428,36 +427,43 @@ body {
 }
 
 .lightbox-img {
-    max-width: 90vw;
+    max-width: 100vw;
     max-height: 85vh;
     object-fit: contain;
     display: block;
-    border-radius: 2px;
 }
 
 .lightbox-controls {
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-dim);
     font-size: 13px;
     font-family: inherit;
 }
 
 .lightbox-btn {
-    background: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--active-bg);
     border: none;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 18px;
+    color: var(--active-text);
     cursor: pointer;
-    padding: 0.25rem 0.5rem;
-    font-family: inherit;
-    line-height: 1;
-    transition: color 0.1s;
+    padding: 0.75rem;
+    border-radius: 999px;
+    transition: opacity 0.1s;
+    opacity: 0.9;
 }
 
 .lightbox-btn:hover {
-    color: rgba(255, 255, 255, 0.9);
+    opacity: 1;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
 }
 
 .project-case-study {
@@ -588,44 +594,143 @@ body {
 }
 
 /* ─── Mobile ─────────────────────────────────────────────── */
+.nav-summary {
+    display: block;
+    cursor: default;
+    list-style: none;
+}
+
+.nav-summary::-webkit-details-marker {
+    display: none;
+}
+
+.nav-toggle-label {
+    display: none;
+}
+
+.nav-details {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
 @media (max-width: 767px) {
     .layout {
         flex-direction: column;
+        align-items: stretch;
     }
 
     .nav {
-        position: static;
+        position: sticky;
+        top: 0;
+        z-index: 10;
         width: 100%;
         height: auto;
+        max-height: 100vh;
+        overflow-y: auto;
         border-right: none;
-        border-bottom: 1px solid var(--border);
+        border-bottom: none;
+        background: var(--bg);
+        padding: 1.5rem 1rem 0.75rem;
     }
 
     .content {
-        padding: 2rem 0;
+        width: 100%;
     }
 
-    .content > .back-link,
+    .nav-summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+    }
+
+    .nav-toggle-label {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text);
+    }
+
+    .nav-toggle-label::after {
+        content: "+";
+        font-size: 15px;
+    }
+
+    .nav-details[open] .nav-toggle-label::after {
+        content: "\2212";
+    }
+
+    .nav-role {
+        margin-bottom: 0;
+    }
+
+    .nav-groups {
+        margin-top: 1rem;
+    }
+
+    .nav-details:not([open]) > .nav-groups,
+    .nav-details:not([open]) > .nav-theme-toggle {
+        display: none;
+    }
+
+    .content {
+        padding: 1.25rem 0 2rem;
+    }
+
     .content > .about-view,
     .content > .cv-view,
     .content > .project-view {
-        padding: 0 1.25rem;
+        padding: 0 1rem;
+    }
+
+    .project-title {
+        font-size: 26px;
     }
 
     .project-thumb {
         height: 240px;
     }
 
-    .back-link {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 13px;
-        color: var(--text-dim);
-        margin-bottom: 1.5rem;
+    .cv-columns {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
 
-    .back-link:hover {
-        color: var(--text);
+    .cv-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .project-case-study .kv-row {
+        grid-template-columns: 1fr;
+        row-gap: 0.25rem;
+    }
+
+    .lightbox-controls {
+        width: 100%;
+        justify-content: space-between;
+        padding: 0 1rem;
+    }
+
+    .lightbox-btn {
+        padding: 1rem;
+    }
+
+    .lightbox-btn svg {
+        width: 32px;
+        height: 32px;
+    }
+
+    .lightbox-close {
+        position: fixed;
+        top: auto;
+        right: auto;
+        bottom: 1.5rem;
+        left: 50%;
+        transform: translateX(-50%);
     }
 }

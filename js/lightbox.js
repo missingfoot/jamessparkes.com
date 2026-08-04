@@ -44,15 +44,20 @@ document.addEventListener('DOMContentLoaded', function () {
         return { src: img.src, alt: img.alt };
     });
 
+    var iconLeft = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left-icon lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>';
+    var iconRight = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+    var iconClose = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
+
     var overlay = document.createElement('div');
     overlay.className = 'lightbox';
     overlay.innerHTML =
         '<img class="lightbox-img" src="" alt="">' +
         '<div class="lightbox-controls">' +
-        '<button class="lightbox-btn" data-lb-prev>←</button>' +
+        '<button class="lightbox-btn" data-lb-prev>' + iconLeft + '</button>' +
         '<span class="lightbox-counter"></span>' +
-        '<button class="lightbox-btn" data-lb-next>→</button>' +
-        '</div>';
+        '<button class="lightbox-btn" data-lb-next>' + iconRight + '</button>' +
+        '</div>' +
+        '<button class="lightbox-btn lightbox-close" data-lb-close>' + iconClose + '</button>';
     document.body.appendChild(overlay);
 
     var img = overlay.querySelector('.lightbox-img');
@@ -89,6 +94,11 @@ document.addEventListener('DOMContentLoaded', function () {
     overlay.querySelector('[data-lb-next]').addEventListener('click', function (e) {
         e.stopPropagation();
         show(current + 1);
+    });
+
+    overlay.querySelector('[data-lb-close]').addEventListener('click', function (e) {
+        e.stopPropagation();
+        close();
     });
 
     overlay.addEventListener('click', function (e) {

@@ -33,31 +33,47 @@
 <body>
     <div class="layout">
         <aside class="nav">
-            <div class="nav-name">James Sparkes</div>
-            <div class="nav-role">Product Designer</div>
-            <nav class="nav-groups">
-                <div class="nav-group">
-                    <div class="nav-group-header">Info</div>
-                    <a class="nav-item" href="index.html">About</a>
-                    <a class="nav-item" href="cv.html">CV</a>
-                </div>
-                <div class="nav-group">
-                    <div class="nav-group-header">Work</div>
-                    <a class="nav-item" href="fixr.html">FIXR</a>
-                    <a class="nav-item" href="the-collective.html">The Collective</a>
-                    <a class="nav-item" href="personal-projects.html">Personal Projects</a>
-                    <a class="nav-item active" href="kuula-tv.html">Kuula TV</a>
-                    <a class="nav-item" href="breezie.html">Breezie</a>
-                    <a class="nav-item" href="ambio-n.html">AMBIO-N</a>
-                    <a class="nav-item" href="qd-design.html">QD Design</a>
-                </div>
-            </nav>
-            <button class="nav-theme-toggle" data-theme-toggle>
-                <span class="theme-label">dark</span>
-            </button>
+            <details class="nav-details" open>
+                <summary class="nav-summary">
+                    <div class="nav-identity">
+                        <div class="nav-name">James Sparkes</div>
+                        <div class="nav-role">Product Designer</div>
+                    </div>
+                    <span class="nav-toggle-label">Menu</span>
+                </summary>
+                <nav class="nav-groups">
+                    <div class="nav-group">
+                        <div class="nav-group-header">Info</div>
+                        <a class="nav-item" href="index.html">About</a>
+                        <a class="nav-item" href="cv.html">CV</a>
+                    </div>
+                    <div class="nav-group">
+                        <div class="nav-group-header">Work</div>
+                        <a class="nav-item" href="fixr.html">FIXR</a>
+                        <a class="nav-item" href="the-collective.html">The Collective</a>
+                        <a class="nav-item" href="personal-projects.html">Personal Projects</a>
+                        <a class="nav-item active" href="kuula-tv.html">Kuula TV</a>
+                        <a class="nav-item" href="breezie.html">Breezie</a>
+                        <a class="nav-item" href="ambio-n.html">AMBIO-N</a>
+                        <a class="nav-item" href="qd-design.html">QD Design</a>
+                    </div>
+                </nav>
+                <button class="nav-theme-toggle" data-theme-toggle>
+                    <span class="theme-label">dark</span>
+                </button>
+            </details>
+            <script>(function(){
+                var details = document.querySelector(".nav-details");
+                var mq = window.matchMedia("(max-width: 767px)");
+                function sync(e){
+                    if (e.matches) details.removeAttribute("open");
+                    else details.setAttribute("open", "");
+                }
+                sync(mq);
+                mq.addEventListener("change", sync);
+            })();</script>
         </aside>
         <main class="content">
-            <a class="back-link" href="index.html">← back</a>
             <div class="project-view">
                 <h1 class="project-title">Kuula TV</h1>
                 <div class="project-tags"><span>UI Design</span><span>UX Design</span><span>Branding</span><span>Design System</span><span>Presentation Design</span></div>
