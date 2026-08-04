@@ -46,7 +46,6 @@ a {
 /* ─── App shell ──────────────────────────────────────────── */
 html {
     touch-action: pan-x pan-y;
-    overscroll-behavior: none;
 }
 
 body {
@@ -55,7 +54,6 @@ body {
     line-height: 1.8;
     color: var(--text);
     background: var(--bg);
-    overscroll-behavior: none;
 }
 
 .layout {
@@ -76,6 +74,7 @@ body {
     background: var(--bg-nav);
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     padding: 1.5rem 1rem 1rem;
     gap: 0;
 }
@@ -94,7 +93,6 @@ body {
 }
 
 .nav-groups {
-    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
@@ -128,9 +126,24 @@ body {
     color: var(--active-text);
 }
 
+.nav-download {
+    display: block;
+    text-align: center;
+    margin-top: 0.75rem;
+    background: var(--active-bg);
+    color: var(--active-text);
+    padding: 0.65rem 1rem;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.nav-download:hover {
+    opacity: 1;
+}
+
 .nav-theme-toggle {
-    margin-top: auto;
-    padding-top: 1rem;
     font-size: 12px;
     color: var(--text-dim);
     text-transform: lowercase;
@@ -320,24 +333,9 @@ body {
     color: var(--text-dim);
 }
 
-.cv-print-row {
-    margin-top: 2.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border);
-}
-
-.cv-print-btn {
-    font-size: 12px;
-    color: var(--text-dim);
-    cursor: pointer;
-}
-
-.cv-print-btn:hover { color: var(--text); }
-
 @media print {
     .nav { display: none !important; }
     .content { padding: 10mm 16mm !important; }
-    .cv-print-row { display: none; }
     @page { size: A4; margin: 0; }
 }
 
@@ -593,6 +591,11 @@ body {
     color: var(--accent-key);
 }
 
+/* ─── Mobile floating download button ───────────────────── */
+.mobile-download-cv {
+    display: none;
+}
+
 /* ─── Selection highlight ────────────────────────────────── */
 ::selection {
     background: var(--active-bg);
@@ -617,7 +620,11 @@ body {
 .nav-details {
     display: flex;
     flex-direction: column;
-    flex: 1;
+}
+
+.nav-actions {
+    display: flex;
+    flex-direction: column;
 }
 
 @media (max-width: 767px) {
@@ -693,8 +700,11 @@ body {
         padding-bottom: 1rem;
     }
 
-    .nav-details:not([open]) > .nav-groups,
-    .nav-details:not([open]) > .nav-theme-toggle {
+    .nav-details:not([open]) > .nav-groups {
+        display: none;
+    }
+
+    .nav-details:not([open]) ~ .nav-actions .nav-theme-toggle {
         display: none;
     }
 
@@ -703,8 +713,30 @@ body {
         font-size: 15px;
     }
 
+    .nav-download {
+        display: none;
+    }
+
+    .mobile-download-cv {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        bottom: 1.25rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 15;
+        background: var(--active-bg);
+        color: var(--active-text);
+        padding: 0.85rem 1.75rem;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 500;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    }
+
     .content {
-        padding: calc(5rem + 1.25rem) 0 2rem;
+        padding: calc(5rem + 1.25rem) 0 6rem;
     }
 
     .content > .about-view,
