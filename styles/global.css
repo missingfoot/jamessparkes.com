@@ -44,12 +44,18 @@ a {
 }
 
 /* ─── App shell ──────────────────────────────────────────── */
+html {
+    touch-action: pan-x pan-y;
+    overscroll-behavior: none;
+}
+
 body {
     font-family: 'JetBrains Mono', monospace;
     font-size: 15px;
     line-height: 1.8;
     color: var(--text);
     background: var(--bg);
+    overscroll-behavior: none;
 }
 
 .layout {
@@ -621,28 +627,37 @@ body {
     }
 
     .nav {
-        position: sticky;
-        top: 0;
-        z-index: 10;
+        position: static;
         width: 100%;
         height: auto;
-        max-height: 100vh;
-        overflow-y: auto;
+        overflow-y: visible;
         border-right: none;
         border-bottom: none;
         background: var(--bg);
-        padding: 1.5rem 1rem 0.75rem;
+        padding: 0;
     }
 
     .content {
         width: 100%;
     }
 
+    .nav-details[open] {
+        padding-top: 5rem;
+    }
+
     .nav-summary {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        height: 5rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
         cursor: pointer;
+        background: var(--bg);
+        padding: 0 1rem;
     }
 
     .nav-toggle-label {
@@ -669,6 +684,13 @@ body {
 
     .nav-groups {
         margin-top: 1rem;
+        padding: 0 1rem 1rem;
+    }
+
+    .nav-theme-toggle {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-bottom: 1rem;
     }
 
     .nav-details:not([open]) > .nav-groups,
@@ -676,8 +698,13 @@ body {
         display: none;
     }
 
+    .nav-item {
+        padding: 12px 6px;
+        font-size: 15px;
+    }
+
     .content {
-        padding: 1.25rem 0 2rem;
+        padding: calc(5rem + 1.25rem) 0 2rem;
     }
 
     .content > .about-view,
