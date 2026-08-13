@@ -62,8 +62,12 @@ body {
     min-height: 100vh;
 }
 
-/* ─── Nav column ─────────────────────────────────────────── */
-.nav {
+/* ─── Nav: desktop sidebar (≥768px), always visible, no toggle ─ */
+.nav-mobile {
+    display: none;
+}
+
+.nav-desktop {
     width: 240px;
     flex-shrink: 0;
     position: sticky;
@@ -336,7 +340,7 @@ body {
 }
 
 @media print {
-    .nav { display: none !important; }
+    .nav-desktop, .nav-mobile { display: none !important; }
     .content { padding: 10mm 16mm !important; }
     @page { size: A4; margin: 0; }
 }
@@ -601,32 +605,21 @@ body {
     color: var(--active-text);
 }
 
-/* ─── Mobile ─────────────────────────────────────────────── */
-.nav-summary {
-    display: block;
-    cursor: default;
-    list-style: none;
-}
-
-.nav-summary::-webkit-details-marker {
-    display: none;
-}
-
-.nav-toggle-label {
-    display: none;
-}
-
-.nav-details {
-    display: flex;
-    flex-direction: column;
-}
-
+/* ─── Mobile: fixed top bar + full-viewport overlay panel ───── */
 .nav-actions {
     display: flex;
     flex-direction: column;
 }
 
 @media (max-width: 767px) {
+    .nav-desktop {
+        display: none;
+    }
+
+    .nav-mobile {
+        display: block;
+    }
+
     .layout {
         flex-direction: column;
         align-items: stretch;
@@ -636,26 +629,11 @@ body {
         border-radius: 0;
     }
 
-    .nav {
-        position: static;
-        width: 100%;
-        height: auto;
-        overflow-y: visible;
-        border-right: none;
-        border-bottom: none;
-        background: var(--bg);
-        padding: 0;
-    }
-
     .content {
         width: 100%;
     }
 
-    .nav-details[open] {
-        padding-top: 5rem;
-    }
-
-    .nav-summary {
+    .nav-mobile-bar {
         position: fixed;
         top: 0;
         left: 0;
@@ -665,12 +643,15 @@ body {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        cursor: pointer;
         background: var(--bg);
         padding: 0 1rem;
     }
 
-    .nav-toggle-label {
+    .nav-mobile-bar .nav-role {
+        margin-bottom: 0;
+    }
+
+    .nav-mobile-toggle {
         display: flex;
         align-items: center;
         gap: 6px;
@@ -680,39 +661,43 @@ body {
         background: var(--active-bg);
         padding: 0.5rem 0.85rem 0.5rem 1.4rem;
         border-radius: 999px;
+        cursor: pointer;
     }
 
-    .nav-toggle-icon {
+    .nav-mobile-toggle-icon {
         width: 22px;
         height: 22px;
         transition: transform 0.2s ease;
     }
 
-    .nav-details[open] .nav-toggle-icon {
+    .nav-mobile.open .nav-mobile-toggle-icon {
         transform: rotate(45deg);
     }
 
-    .nav-role {
-        margin-bottom: 0;
+    .nav-mobile-panel {
+        display: none;
     }
 
-    .nav-groups {
-        margin-top: 1rem;
+    .nav-mobile.open .nav-mobile-panel {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 5rem;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9;
+        background: var(--bg);
+        overflow-y: auto;
         padding: 0 1rem 1rem;
     }
 
-    .nav-theme-toggle {
-        padding-left: 1rem;
-        padding-right: 1rem;
-        padding-bottom: 1rem;
+    .nav-mobile-panel .nav-groups {
+        margin-top: 1rem;
     }
 
-    .nav-details:not([open]) > .nav-groups {
-        display: none;
-    }
-
-    .nav-details:not([open]) ~ .nav-actions .nav-theme-toggle {
-        display: none;
+    .nav-mobile-panel .nav-theme-toggle {
+        padding-top: 1rem;
     }
 
     .nav-item {

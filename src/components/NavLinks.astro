@@ -1,0 +1,29 @@
+---
+// src/components/NavLinks.astro
+import { getCollection } from 'astro:content';
+
+export interface Props {
+  currentPath: string;
+}
+const { currentPath } = Astro.props;
+
+const projects = (await getCollection('projects', ({ data }) => data.visible)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const isActive = (href: string) => (currentPath === href ? ' active' : '');
+---
+<nav class="nav-groups">
+  <div class="nav-group">
+    <div class="nav-group-header">Info</div>
+    <a class={`nav-item${isActive('/')}`} href="/">About</a>
+    <a class={`nav-item${isActive('/cv')}`} href="/cv">CV</a>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-header">Work</div>
+    {projects.map((project) => (
+      <a class={`nav-item${isActive(`/work/${project.id}`)}`} href={`/work/${project.id}`}>
+        {project.data.title}
+      </a>
+    ))}
+  </div>
+</nav>
