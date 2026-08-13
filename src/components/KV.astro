@@ -1,0 +1,9 @@
+---
+// src/components/KV.astro
+export interface Props {
+  term: string;
+  desc: string;
+}
+const { term, desc } = Astro.props;
+---
+<p class="kv-row"><span class="syntax-key">{term}</span><span class="syntax-desc">{desc}</span></p>
