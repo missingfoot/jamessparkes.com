@@ -2,6 +2,7 @@
 // src/layouts/BaseLayout.astro
 import '../styles/tokens.css';
 import '../styles/global.css';
+import Nav from '../components/Nav.astro';
 
 export interface Props {
   title: string;
@@ -43,7 +44,7 @@ const canonicalURL = new URL(path, Astro.site);
 </head>
 <body>
     <div class="layout">
-        <aside class="nav">TODO Nav</aside>
+        <Nav />
         <main class="content">
             <slot />
         </main>
