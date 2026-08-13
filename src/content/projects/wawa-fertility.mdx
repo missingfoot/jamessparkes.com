@@ -11,16 +11,16 @@ At Wawa Fertility I work across the full product lifecycle (research, design, an
 
 ## Overview
 
-Wawa Fertility builds clinical software for fertility clinics, spanning patient intake, clinical workflows, scheduling, and the regulatory reporting clinics are legally required to submit. As a senior product designer who also ships frontend code, I've worked on projects ranging from ground-up platform builds to targeted redesigns of clinical paperwork, each shaped by close collaboration with clinic partners and a small, fast-moving internal team.
+Wawa Fertility builds clinical software for fertility clinics, spanning patient intake, clinical workflows, scheduling, cryo storage and donor management, and the regulatory reporting clinics are legally required to submit. As a senior product designer who also ships frontend code, I've worked on projects ranging from ground-up platform builds to targeted redesigns of clinical paperwork, each shaped by close collaboration with clinic partners and a small, fast-moving internal team.
 
 ## Tasks & responsibilities
 
 Across my time at Wawa I have...
 
 - Owned design end-to-end (research, UX, UI, and React/Next.js implementation) rather than handing off to a separate engineering team.
-- Ran discovery directly with clinic partners, including London Women's Clinic and Harley Street Fertility Clinic, to ground product decisions in real clinical workflows.
+- Ran discovery directly with clinic partners across the UK and Australia to ground product decisions in real clinical workflows, not assumptions.
 - Worked across a multi-jurisdiction product, designing for the regulatory and clinical differences between UK, US, and Australian fertility clinics.
-- Collaborated closely with colleagues such as Cecilie on clinical flow redesigns, and worked with product/engineering in a flat-hierarchy team where designers carry projects further than a typical handoff model.
+- Worked in a flat-hierarchy team where designers carry projects further than a typical handoff model, from research through to shipped frontend code.
 
 ## Project: Two-sided clinic onboarding platform
 
@@ -28,44 +28,68 @@ Across my time at Wawa I have...
 
 ### Overview
 
-Designed and built a two-sided onboarding platform to bring new fertility clinics onto Wawa's software. [Add: what problem this solved, e.g. how clinics were onboarded before, what was manual/slow about it]
+Designed and built a two-sided onboarding platform to bring new fertility clinics onto Wawa's software. Onboarding a clinic means walking them through configuring dozens of interdependent settings (products, medical codes, tax rates, price lists) before the platform is usable, and the process had grown ad hoc as the product grew, with no dedicated flow guiding a new clinic through it in the right order.
+
+### Problem
+
+Watching a real onboarding walkthrough surfaced the actual failure mode: creating something as simple as a product required a medical code and a tax rate to already exist. If they didn't, the person configuring the clinic had to abandon the form, go create the missing dependency elsewhere, and start again, losing their work each time. Bulk import existed as a faster path for clinics with large catalogues, but it was admin-only and undocumented, with no template or guidance on the expected file structure, so clinics who needed it most often didn't know it existed and configured everything by hand instead. Settings navigation compounded this: related concepts (medications and products, tax rates and price lists) lived in disconnected parts of the settings area, and larger clinics were still relying on multi-day, in-person training to get set up at all, which doesn't scale past a handful of rollouts a year.
 
 ### Contributions
 
-- Designed the end-to-end onboarding experience for both sides of the platform [clarify: which two sides, e.g. clinic admin vs. Wawa internal team?]
-- Built the frontend in Next.js 15 with InstantDB as the data layer
-- Set up the local development environment for the project
+- Designed an inline "create new" pattern for dependency fields (medical codes, tax rates) directly inside the form that needs them, so configuring a clinic no longer means losing your place and starting over.
+- Designed contextual nudges toward bulk import for clinics adding items one at a time, plus a downloadable CSV template and a column-mapping step, so bulk import stopped being an admin-only, undocumented feature.
+- Restructured the settings information architecture so related concepts (price lists, medications, tax rates) sit together instead of being split across unrelated tabs.
+- Designed a guided setup flow: a self-serve questionnaire at a dedicated URL, answerable before a clinic even logs in, that adapts based on the clinic's jurisdiction and the integrations they need, replacing a static document-based intake process.
+- Built the frontend in Next.js 15 with InstantDB as the data layer, including setting up the local development environment for the project from scratch.
 
-[Add: outcome/impact, e.g. reduction in onboarding time, number of clinics onboarded, feedback from clinics]
+### Outcome & impact
+
+The onboarding demo of the guided setup work got a strong internal response and was chosen to be shown at the company all-hands as a template for how implementation should work going forward: standardised and repeatable rather than a bespoke, largely-manual process per clinic. It's an active initiative rather than a finished, measured result, but it reframed onboarding from "something Wawa does to a clinic over days of training" toward something a clinic can largely configure themselves, with Wawa doing more of the heavy lifting up front.
 
 ## Project: Clinical flow redesigns
 
-**Focus areas:** Donor flow · Lab sheets · Stim sheets
+**Focus areas:** Donor flow · Lab sheets · Stim sheets · Clinical task management
 
 ### Overview
 
-Redesigned several core clinical workflows used daily by clinic staff, working closely with colleague Cecilie.
+Redesigned several core clinical workflows used daily by clinic staff: stimulation medication tracking during a treatment cycle, donor and cryo storage management, and the paper lab sheets embryology teams still relied on day to day.
+
+### Stim sheets and clinical tasks
+
+A clinician walkthrough of the medication tracking sheet surfaced a workflow that was technically possible but painfully slow: extending a single medication took seven or more clicks (open edit, scroll, change the date, save, wait for the page to refresh and re-scroll to where you were), and a patient on five medications meant repeating that five times, several times a day, across many patients at once. A competitor product the clinician also used solved the same problem with a double-click on the target date, which was a useful benchmark, not a template to copy outright. I redesigned the interaction around direct manipulation instead of a multi-step edit flow, and separately reworked a related clinical task list (the day-to-day task inbox staff use to sign off consents and complete clinical steps) around an email-inbox-style model: auto-advance to the next item, keyboard shortcuts, and default filters like "overdue" and "today", since this was a workflow clinicians touched dozens of times a day, not a once-a-month feature.
+
+### Donor flow
+
+The donor management flow had accumulated as a series of individual fixes to specific client-reported issues rather than being designed as one coherent workflow, and it showed: a donor reservation system that felt bolted on, and inventory visibility that existed but was buried in the wrong part of the product entirely. I redesigned it as a proper "Donors" section inside cryo storage, with a filterable table for matching donors against criteria clinics actually search on, and a donor dashboard that surfaces family limits, storage, and any holds or restrictions in one place rather than scattered across separate screens.
+
+### Lab sheets
+
+Embryology labs run on printed lab sheets, physically carried between the bench, the incubator, and storage. The first framing of this project was straightforward: auto-generate a pre-filled PDF from a patient's active cycle so staff could print it, fill it in by hand, and scan it back in. Pushing on that plan surfaced a problem with it: filling in a printed sheet by hand and then re-entering that same data digitally is exactly the kind of duplicate data entry clinics are already drowning in. The design shifted to treat the lab sheet as a live view of data that already exists in Wawa rather than a form to fill out, with a QR code as the bridge back to the physical world: scan the code on a sample or tray, and the corresponding digital sheet opens directly, already populated.
 
 ### Contributions
 
-- Redesigned the **donor flow**, working with Cecilie on the end-to-end experience [add: what was wrong with the previous flow, what changed]
-- Led **digitisation of lab sheets**, moving clinics from [paper/legacy system, confirm] to a digital workflow
-- Redesigned **stim sheets** (stimulation medication tracking sheets used during fertility treatment cycles) [add: specific UX problems solved, e.g. legibility, error reduction, speed of data entry during clinical procedures]
-
-[Add: outcome/impact, e.g. clinician feedback, error reduction, time saved per patient cycle]
+- Redesigned the medication extension interaction on stim sheets from a multi-step edit flow to direct manipulation, and audited and fixed a set of related chart-rendering and task-list bugs raised directly by clinicians.
+- Reworked a clinical task list into an inbox-style model with auto-advance, keyboard shortcuts, and smart default filters, aimed at reducing the sheer number of clicks in a workflow clinicians repeat constantly throughout the day.
+- Redesigned the donor and cryo storage flow around a dedicated, filterable donor section with a consolidated status dashboard, replacing a workflow that had grown as a series of disconnected patches.
+- Reframed lab sheet digitisation from a print-and-scan pattern to a live, QR-code-linked digital view, avoiding a new source of duplicate data entry for embryology staff.
 
 ## Project: Referrals & patient intake CRM
 
 ### Overview
 
-Designed a CRM for managing patient referrals and intake, with AI-assisted OCR to automatically ingest referral documents rather than requiring manual data entry.
+Designed a CRM for managing how patients enter a clinic's care, from formal referral documents through to online booking links and marketing sign-ups, with AI-assisted extraction to auto-populate patient records from uploaded referral documents rather than requiring manual transcription.
+
+### Problem
+
+"Referrals" as a concept was too narrow for what the product actually needed to handle: patients arrive via referral letters, but also web booking forms, direct sign-ups, and marketing channels, and all of them needed the same intake workflow. Patients created from these different sources were mixed into the main patient table with no way to tell them apart, there was no way to catch a duplicate patient being entered twice, and referrals with a natural expiry window had no dedicated view surfacing which ones were about to lapse, so staff had to know to go looking for them.
 
 ### Contributions
 
-- Designed the referrals and intake workflow for clinic staff
-- Designed the interface and review flow around AI-assisted OCR auto-ingestion, including [add: how staff verify/correct AI-extracted data, what documents get ingested]
-
-[Add: outcome/impact, e.g. time saved per referral, reduction in manual data entry, accuracy rates]
+- Reframed "Referrals" as a broader intake workflow view spanning every source a patient can enter through, rather than a separate store just for referral documents.
+- Defined an explicit patient lifecycle (from unprocessed through to booked and in treatment) so intake stays a working queue instead of quietly accumulating stale records.
+- Designed a duplicate-patient detection flow that surfaces a match by name or email at the point of entry, before a second record gets created.
+- Designed the review flow around AI-assisted document extraction: staff upload a referral document, the system extracts patient details automatically, and staff verify and correct the extracted fields rather than transcribing them from scratch.
+- Designed a dedicated expiring-referrals view so time-sensitive referrals surface proactively instead of requiring staff to filter for them manually.
 
 ## Project: Multi-jurisdiction regulatory reporting framework
 
@@ -73,28 +97,43 @@ Designed a CRM for managing patient referrals and intake, with AI-assisted OCR t
 
 ### Problem
 
-Fertility clinics are legally required to report clinical data to different regulatory bodies depending on jurisdiction (HFEA/PRISM in the UK, ANZARD in Australia/NZ, SART in the US, and BORN), each with different data requirements and formats. [Add: how clinics handled this before Wawa, e.g. manual re-entry across systems, separate exports?]
+Fertility clinics are legally required to report clinical data to different regulatory bodies depending on jurisdiction (HFEA/PRISM in the UK, ANZARD in Australia/NZ, SART in the US, and BORN), each with its own data requirements, formats, and submission mechanism. Before this project, reporting was a fully disconnected task bolted onto the end of clinical work: staff re-entered data that often already existed elsewhere in the clinic's systems, had no way to see which patients still had outstanding submissions short of running a manual report and checking each record by hand, and had no reminders for approaching deadlines despite real regulatory consequences for missing them. Clinics estimated meaningful error rates under this manual process, and that lines up with public regulatory data: the UK's HFEA board has reported that clinics submitting through third-party integrations average a 6 to 8 percent error rate, against under 1 percent for clinics submitting directly.
+
+### Approach
+
+The founding insight, reached with the product lead early on, was to explicitly reject the obvious approach: building dedicated "reporting forms" for staff to fill in. That just relocates the same manual data entry problem into a new screen. Instead, the framing became "it's not the regulator's form, it's verification": Wawa already captures the underlying clinical data (registrations, cycles, procedures, outcomes) as a byproduct of normal clinical workflow, so the reporting feature became a dashboard over that existing data showing what's ready, what's missing, and what's invalid, with submission reduced to a single action once a record is complete. Underneath that, each data field is stored once in a canonical form and mapped to whatever format a given regulator expects only at submission time, so the same underlying record can satisfy multiple regulators' differing field formats without duplicating data entry per jurisdiction.
 
 ### Contributions
 
-- Designed a single framework capable of generating compliant reports across four distinct regulatory bodies from one underlying data model
-- Balanced the differing data requirements, formats, and terminology of UK, US, and Australian regulators within one coherent design system
+- Designed the reporting dashboard: a single view of every patient's reporting status (ready, needs attention, overdue, submitted) replacing a fully manual, per-patient checking process.
+- Designed the canonical-data-plus-per-jurisdiction-mapping model underpinning the framework, so one underlying record can generate a compliant submission for multiple regulatory bodies instead of maintaining separate data entry per jurisdiction.
+- Designed a flow for importing a patient's pre-existing registration from a prior clinic (regulators generally allow only one registration per patient), surfacing that history read-only rather than blocking or duplicating it.
+- The UK's HFEA/PRISM integration was the first full implementation of this framework, built and validated directly with clinic partners; ANZARD, SART, and BORN share the same underlying data model, submitting via CSV export rather than a live API.
 
-[Add: outcome/impact, e.g. clinician time saved, reduction in compliance errors, how many clinics/jurisdictions now use it]
+### Outcome & impact
+
+In review with clinic partners, the shift from "fill in a form" to "confirm what's already correct" was the single most positively received change: clinics specifically called out not having to log into the regulator's own portal at all as a meaningful win on its own, before any of the deeper validation or bulk-submission tooling even shipped.
 
 ## Project: Scheduler v2
 
 ### Overview
 
-Led discovery for a second-generation scheduling system, working directly with clinic partners London Women's Clinic and Harley Street Fertility Clinic to understand real-world scheduling needs.
+Led discovery for a second-generation scheduling system, working directly with clinic partners to understand where the existing scheduler fell short of real clinical booking needs.
+
+### Problem
+
+Two gaps stood out in discovery. First, the scheduler had no way to express recurring unavailability (lunch breaks, non-bookable hours) or restrict which appointment types could be booked in which windows, which for at least one clinic was serious enough to threaten their go-live timeline. Second, and more structurally, clinical appointments aren't always single, standalone bookings: a clinic walked through an example of a single "treatment scan" appointment type that actually needs to book two different resources with a staggered offset, fifteen minutes on a sonographer's diary followed automatically by fifteen minutes on the phlebotomy list right after, booked as one unit from the person making the appointment's point of view. The existing scheduler had no concept of a single appointment type driving multiple linked, offset resource bookings.
 
 ### Contributions
 
-- Ran discovery sessions with clinic partners to surface scheduling pain points and requirements [add: key findings from discovery]
-- [Add: what Scheduler v2 changed vs. v1, e.g. conflict handling, resource/room booking, multi-clinic support, etc.]
+- Ran discovery sessions with clinic partners to surface real scheduling constraints rather than assumed ones, including the recurring-unavailability gap and the multi-resource linked-appointment requirement.
+- Scoped an initial "Schedule Templates" concept covering recurring blocked time and per-appointment-type booking windows as the fastest path to closing the most urgent gap.
+- Documented the multi-resource, staggered-offset appointment requirement as a core input to the v2 scheduling model, since it wasn't something the existing single-resource booking model could represent at all.
 
-[Add: outcome/impact, e.g. current status (in progress/shipped), clinic feedback]
+This project is still in the discovery and early design phase rather than shipped.
 
 ## Reflections & key takeaways
 
-[This section is worth writing in your own voice: a few honest lines on what this body of work taught you, e.g. designing across regulatory jurisdictions, working in a flat-hierarchy startup where you own delivery end-to-end, the shift from pure UI/UX toward designing and building workflows.]
+The regulatory reporting project taught me the most about designing in a legally constrained space: the temptation is always to build the thing the regulator's form literally asks for, but the better answer was almost always to ask what data already exists in the product and design the smallest possible layer on top of it. That instinct, treat a new requirement as a lens over existing data rather than a reason to ask users for more input, showed up again in the lab sheets project, where the obvious first answer (print a form) would have quietly made the underlying duplicate-data-entry problem worse rather than better.
+
+Working in a flat-hierarchy startup also changed how I think about ownership. There's no separate handoff to engineering here: a feature I design, I frequently also build, which means design decisions have to hold up against real implementation constraints from day one, not get revisited after the fact. And discovery across UK, US, and Australian clinics made clear how much "the same feature" can differ once you take local regulation, terminology, and clinical convention seriously, rather than designing for one market and treating the rest as a localisation afterthought.
