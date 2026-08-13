@@ -1,0 +1,98 @@
+---
+title: "QD Design"
+description: "UX design and front-end development to transition the business from trade-only to a B2B and B2C eCommerce model, significantly increasing sales and customer reach. Designed and built a bespoke inventory and warehouse management system, streamlining operations and improving efficiency across sales and logistics. Delivered rebranding across digital and print, including advertising, product photography, and 3D CAD design to support new product launches and market positioning resulting in 2.3x revenue growth"
+tags: ["Web Design", "WordPress Development", "UX Design", "Ecommerce Migration"]
+order: 7
+visible: true
+images:
+  - src: "../../assets/images/qd-03.jpg"
+    alt: "QD Design Platform Image 1"
+  - src: "../../assets/images/qd-04.jpg"
+    alt: "QD Design Platform Image 2"
+  - src: "../../assets/images/qd-05.jpg"
+    alt: "QD Design Platform Image 3"
+  - src: "../../assets/images/qd-01.jpg"
+    alt: "QD Design Platform Image 4"
+  - src: "../../assets/images/qd-02.jpg"
+    alt: "QD Design Platform Image 5"
+  - src: "../../assets/images/qd-06.jpg"
+    alt: "QD Design Platform Image 6"
+---
+
+import KV from '../../components/KV.astro';
+import KVGroup from '../../components/KVGroup.astro';
+import KVHeading from '../../components/KVHeading.astro';
+
+## Overview
+
+QD Design manufactured and sold Chinese antique-inspired revival furniture and imported antique Chinese homeware, decorations, and furniture through a site built years earlier as a classic ASP (VBScript) catalogue with a custom-coded admin tool bolted on the side. It could display products and take enquiries, but it could not sell anything. There was no cart, checkout, or basket anywhere in the site. I wanted to design and build its replacement and went with a WordPress site with WooCommerce stack (popular and easy to work with at the time) capable of running the retail operation the old one couldn't.
+
+### Tasks & responsibilities
+
+<KVGroup>
+  <KV term="Full-site rebuild" desc="Owned the project end to end: information architecture, theme design and build, plugin selection, product migration, and launch." />
+  <KV term="Ecommerce introduction" desc="Specified and built the first online purchasing flow the business had ever had, carrying over the trade pricing behaviour its wholesale customers relied on." />
+  <KV term="CMS handover" desc="Replaced the bespoke ASP admin panel with a WordPress and WooCommerce back end the client's own staff could use without touching code." />
+  <KV term="Theme development" desc="Designed and coded a custom WordPress theme, built on Twenty Twelve, with dedicated WooCommerce template overrides to match the brand." />
+</KVGroup>
+
+## Project: migrating a bespoke catalogue into WooCommerce
+
+### Problem
+
+The existing site was a working catalogue but a dead end for growth. It ran entirely in classic ASP, with every product edit going through pages like product_add.asp, product_edit.asp and product_delete.asp, a hand-built CMS with none of the plugin ecosystem, payment integrations, or security patching a modern platform gets for free. Customers could browse products, request a brochure, or apply for a trade account, but every purchase still happened off-site, by phone or through a trade relationship. That capped how much revenue the site itself could generate, and how easily the client could add or change products without calling a developer.
+
+### Goals
+
+<KVGroup>
+  <KV term="Real ecommerce" desc="Give customers the ability to actually buy on the site (cart, checkout, and payment) for the first time." />
+  <KV term="Self-service content" desc="Move product and page management off a bespoke admin tool and onto a CMS the client's team could run themselves." />
+  <KV term="Preserve what worked" desc="Carry over the trade and wholesale pricing model that mattered to the business, without rebuilding it as another one-off system." />
+  <KV term="Don't over-build" desc="Solve the same business problems with a proven, extensible open-source stack rather than a second bespoke platform." />
+</KVGroup>
+
+### Constraints & considerations
+
+<KVGroup>
+  <KV term="Legacy data" desc="Years of product, category, and page content existed only inside the old ASP/SQL structure and had to be carried across, not re-entered from scratch." />
+  <KV term="Small business budget" desc="No scope for another custom-built checkout or admin system; the solution had to lean on off-the-shelf tooling to stay affordable and maintainable long-term." />
+  <KV term="Non-technical maintenance" desc="Whatever replaced the ASP admin panel needed to be usable by the client directly, with no developer in the loop for day-to-day updates." />
+</KVGroup>
+
+### Approach & decisions
+
+<KVGroup>
+  <KV term="Platform choice" desc="Chose WordPress with WooCommerce over a custom build specifically because it came with a real ecosystem: page building, SEO, security, product import tooling, payment gateways, none of which existed in the original bespoke admin." />
+  <KV term="Bulk product migration" desc="Rather than re-entering the catalogue by hand, used CSV and XML import tooling to bring the existing product data across from the old system in bulk, keeping the migration accurate and fast." />
+  <KV term="Custom theme, not an off-the-shelf template" desc="Built a bespoke child theme on Twenty Twelve rather than a generic WooCommerce theme, with custom template overrides for product and archive pages, so the storefront kept its own identity instead of looking like every other small WooCommerce store." />
+  <KV term="Search & discovery" desc="Added relevance-based product search, something the original site's search page never really delivered against a growing catalogue." />
+  <KV term="Operational tooling over bespoke code" desc="Filled out the rest of the stack with focused, well-supported plugins rather than custom development: security hardening for a site now handling payments, automated backups, analytics, and dynamic pricing for the trade side of the business." />
+</KVGroup>
+
+### The stack
+
+This is the plugin stack I settled on to cover the gaps left by the old bespoke admin panel, without building anything custom:
+
+- WooCommerce
+- WP All Import
+- Relevanssi
+- Dynamic Pricing
+- Better WP Security
+- BackupBuddy
+
+### Outcome & impact
+
+<KVGroup>
+  <KV term="First real online sales channel" desc="The client went from a site that could only display products and take enquiries to one that could take a payment end to end: cart, checkout, and order management, all inside WooCommerce." />
+  <KV term="Independent content management" desc="Product and page updates moved from a bespoke admin panel only a developer could safely extend, to a dashboard the client's own staff could manage day to day." />
+  <KV term="Retained trade pricing model" desc="The wholesale pricing behaviour that mattered to the business carried through into the new platform, instead of being lost in the migration." />
+  <KV term="Reduced technical risk" desc="Moving off unsupported classic ASP and a single-purpose admin tool onto a platform with an active plugin ecosystem meant the client was no longer solely dependent on one developer to keep the site running or safe." />
+  <KV term="Direct-to-consumer growth" desc="The number of customers buying directly from the site went up dramatically, with revenue increasing more than 3x. The company no longer had to rely on wholesalers, stockists, and flash-sale reseller sites, and could make more profit per item sold." />
+  <KV term="Marketing investment" desc="The business made enough money to hire a dedicated marketing person, who kicked off B2C sales with advertising that grew regular customer numbers by 10x." />
+</KVGroup>
+
+### Reflections & key takeaways
+
+The hardest part wasn't moving the products across technically; it was deciding what from the old bespoke system was actually worth preserving, like trade pricing and category structure, versus what was only there because it had to be hand-built from scratch, like the entire admin panel.
+
+For a small retail client, the win wasn't building something more custom than the original ASP site; it was replacing bespoke, single-developer infrastructure with an open, well-supported platform that could do more, more safely, for less ongoing cost. Introducing a cart and checkout wasn't just a technical feature addition; it was the first time the client's website could generate revenue directly, rather than existing purely as a digital brochure. And by moving to WooCommerce, the client picked up a platform that could keep growing through plugins and themes, rather than needing another full rebuild the next time the business's needs changed.
