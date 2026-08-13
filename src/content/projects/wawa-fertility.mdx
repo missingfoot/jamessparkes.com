@@ -1,25 +1,25 @@
 ---
-title: "Wawa Fertility"
-description: "At Wawa Fertility I work across the full product lifecycle (research, design, and frontend implementation in React/Next.js) for clinical software used by fertility clinics across the UK, US, and Australia."
+title: "wawa"
+description: "At wawa I work across the full product lifecycle (research, design, and frontend implementation in React/Next.js) for clinical software used by fertility clinics across the UK, US, Canada, and Australia."
 tags: ["UI Design", "UX Design", "Frontend Development", "Product Strategy", "Design Systems"]
 order: 0
 visible: true
 images: []
 ---
 
-At Wawa Fertility I work across the full product lifecycle (research, design, and frontend implementation in React/Next.js) for clinical software used by fertility clinics across the UK, US, and Australia. In a flat-hierarchy startup team, my role has spanned everything from patient-facing clinical flows to internal regulatory infrastructure, often taking a feature from first sketch through to shipped code.
+At wawa I work across the full product lifecycle (research, design, and frontend implementation in React/Next.js) for clinical software used by fertility clinics across the UK, US, Canada, and Australia. In a flat-hierarchy startup team, my role has spanned everything from patient-facing clinical flows to internal regulatory infrastructure, often taking a feature from first sketch through to shipped code.
 
 ## Overview
 
-Wawa Fertility builds clinical software for fertility clinics, spanning patient intake, clinical workflows, scheduling, cryo storage and donor management, and the regulatory reporting clinics are legally required to submit. As a senior product designer who also ships frontend code, I've worked on projects ranging from ground-up platform builds to targeted redesigns of clinical paperwork, each shaped by close collaboration with clinic partners and a small, fast-moving internal team.
+wawa builds clinical software for fertility clinics, spanning patient intake, clinical workflows, scheduling, cryo storage and donor management, and the regulatory reporting clinics are legally required to submit. As a senior product designer who also ships frontend code, I've worked on projects ranging from ground-up platform builds to targeted redesigns of clinical paperwork, each shaped by close collaboration with clinic partners and a small, fast-moving internal team.
 
 ## Tasks & responsibilities
 
-Across my time at Wawa I have...
+Across my time at wawa I have...
 
 - Owned design end-to-end (research, UX, UI, and React/Next.js implementation) rather than handing off to a separate engineering team.
-- Ran discovery directly with clinic partners across the UK and Australia to ground product decisions in real clinical workflows, not assumptions.
-- Worked across a multi-jurisdiction product, designing for the regulatory and clinical differences between UK, US, and Australian fertility clinics.
+- Ran discovery directly with clinic partners across the UK, Australia, the US, and Canada to ground product decisions in real clinical workflows, not assumptions.
+- Worked across a multi-jurisdiction product, designing for the regulatory and clinical differences between UK, US, Canadian, and Australian fertility clinics.
 - Worked in a flat-hierarchy team where designers carry projects further than a typical handoff model, from research through to shipped frontend code.
 
 ## Project: Two-sided clinic onboarding platform
@@ -28,7 +28,7 @@ Across my time at Wawa I have...
 
 ### Overview
 
-Designed and built a two-sided onboarding platform to bring new fertility clinics onto Wawa's software. Onboarding a clinic means walking them through configuring dozens of interdependent settings (products, medical codes, tax rates, price lists) before the platform is usable, and the process had grown ad hoc as the product grew, with no dedicated flow guiding a new clinic through it in the right order.
+Designed and built a two-sided onboarding platform to bring new fertility clinics onto wawa's software. Onboarding a clinic means walking them through configuring dozens of interdependent settings (products, medical codes, tax rates, price lists) before the platform is usable, and the process had grown ad hoc as the product grew, with no dedicated flow guiding a new clinic through it in the right order.
 
 ### Problem
 
@@ -44,7 +44,7 @@ Watching a real onboarding walkthrough surfaced the actual failure mode: creatin
 
 ### Outcome & impact
 
-The onboarding demo of the guided setup work got a strong internal response and was chosen to be shown at the company all-hands as a template for how implementation should work going forward: standardised and repeatable rather than a bespoke, largely-manual process per clinic. It's an active initiative rather than a finished, measured result, but it reframed onboarding from "something Wawa does to a clinic over days of training" toward something a clinic can largely configure themselves, with Wawa doing more of the heavy lifting up front.
+The onboarding demo of the guided setup work got a strong internal response and was chosen to be shown at the company all-hands as a template for how implementation should work going forward: standardised and repeatable rather than a bespoke, largely-manual process per clinic. It's an active initiative rather than a finished, measured result, but it reframed onboarding from "something wawa does to a clinic over days of training" toward something a clinic can largely configure themselves, with wawa doing more of the heavy lifting up front.
 
 ## Project: Clinical flow redesigns
 
@@ -64,7 +64,7 @@ The donor management flow had accumulated as a series of individual fixes to spe
 
 ### Lab sheets
 
-Embryology labs run on printed lab sheets, physically carried between the bench, the incubator, and storage. The first framing of this project was straightforward: auto-generate a pre-filled PDF from a patient's active cycle so staff could print it, fill it in by hand, and scan it back in. Pushing on that plan surfaced a problem with it: filling in a printed sheet by hand and then re-entering that same data digitally is exactly the kind of duplicate data entry clinics are already drowning in. The design shifted to treat the lab sheet as a live view of data that already exists in Wawa rather than a form to fill out, with a QR code as the bridge back to the physical world: scan the code on a sample or tray, and the corresponding digital sheet opens directly, already populated.
+Embryology labs run on printed lab sheets, physically carried between the bench, the incubator, and storage. The first framing of this project was straightforward: auto-generate a pre-filled PDF from a patient's active cycle so staff could print it, fill it in by hand, and scan it back in. Pushing on that plan surfaced a problem with it: filling in a printed sheet by hand and then re-entering that same data digitally is exactly the kind of duplicate data entry clinics are already drowning in. The design shifted to treat the lab sheet as a live view of data that already exists in wawa rather than a form to fill out, with a QR code as the bridge back to the physical world: scan the code on a sample or tray, and the corresponding digital sheet opens directly, already populated.
 
 ### Contributions
 
@@ -101,7 +101,7 @@ Fertility clinics are legally required to report clinical data to different regu
 
 ### Approach
 
-The founding insight, reached with the product lead early on, was to explicitly reject the obvious approach: building dedicated "reporting forms" for staff to fill in. That just relocates the same manual data entry problem into a new screen. Instead, the framing became "it's not the regulator's form, it's verification": Wawa already captures the underlying clinical data (registrations, cycles, procedures, outcomes) as a byproduct of normal clinical workflow, so the reporting feature became a dashboard over that existing data showing what's ready, what's missing, and what's invalid, with submission reduced to a single action once a record is complete. Underneath that, each data field is stored once in a canonical form and mapped to whatever format a given regulator expects only at submission time, so the same underlying record can satisfy multiple regulators' differing field formats without duplicating data entry per jurisdiction.
+The founding insight, reached with the product lead early on, was to explicitly reject the obvious approach: building dedicated "reporting forms" for staff to fill in. That just relocates the same manual data entry problem into a new screen. Instead, the framing became "it's not the regulator's form, it's verification": wawa already captures the underlying clinical data (registrations, cycles, procedures, outcomes) as a byproduct of normal clinical workflow, so the reporting feature became a dashboard over that existing data showing what's ready, what's missing, and what's invalid, with submission reduced to a single action once a record is complete. Underneath that, each data field is stored once in a canonical form and mapped to whatever format a given regulator expects only at submission time, so the same underlying record can satisfy multiple regulators' differing field formats without duplicating data entry per jurisdiction.
 
 ### Contributions
 
@@ -136,4 +136,4 @@ This project is still in the discovery and early design phase rather than shippe
 
 The regulatory reporting project taught me the most about designing in a legally constrained space: the temptation is always to build the thing the regulator's form literally asks for, but the better answer was almost always to ask what data already exists in the product and design the smallest possible layer on top of it. That instinct, treat a new requirement as a lens over existing data rather than a reason to ask users for more input, showed up again in the lab sheets project, where the obvious first answer (print a form) would have quietly made the underlying duplicate-data-entry problem worse rather than better.
 
-Working in a flat-hierarchy startup also changed how I think about ownership. There's no separate handoff to engineering here: a feature I design, I frequently also build, which means design decisions have to hold up against real implementation constraints from day one, not get revisited after the fact. And discovery across UK, US, and Australian clinics made clear how much "the same feature" can differ once you take local regulation, terminology, and clinical convention seriously, rather than designing for one market and treating the rest as a localisation afterthought.
+Working in a flat-hierarchy startup also changed how I think about ownership. There's no separate handoff to engineering here: a feature I design, I frequently also build, which means design decisions have to hold up against real implementation constraints from day one, not get revisited after the fact. And discovery across UK, US, Canadian, and Australian clinics made clear how much "the same feature" can differ once you take local regulation, terminology, and clinical convention seriously, rather than designing for one market and treating the rest as a localisation afterthought.
