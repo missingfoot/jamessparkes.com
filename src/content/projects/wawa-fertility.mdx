@@ -7,6 +7,9 @@ visible: true
 images: []
 ---
 
+import KV from '../../components/KV.astro';
+import KVGroup from '../../components/KVGroup.astro';
+
 At wawa I work across the full product lifecycle (research, design, and frontend implementation in React/Next.js) for clinical software used by fertility clinics across the UK, US, Canada, and Australia. In a flat-hierarchy startup team, my role has spanned everything from patient-facing clinical flows to internal regulatory infrastructure, often taking a feature from first sketch through to shipped code.
 
 ## Overview
@@ -97,17 +100,31 @@ A large undertaking to fix where the product's health data actually came from an
 
 ### Consolidating clinic surveys into one platform-wide intake
 
-Every clinic on the platform had accumulated its own intake survey over time, each asking a different mix of largely the same underlying clinical questions in different wording. I audited surveys across the clinic base, extracted every unique question being asked anywhere, and consolidated them into one master survey covering the full superset, then made it customisable per clinic so each one only shows the questions relevant to their own workflow instead of every clinic separately reinventing, or losing, questions. Throughout, every field had to be structured and quantifiable (dropdowns, checkboxes, discrete inputs), never free text: free text can't be validated, searched, or fed into anything else, and this data needed to move well beyond just sitting in one patient's file.
+<KVGroup>
+  <KV term="The problem" desc="Every clinic on the platform had accumulated its own intake survey over time, each asking a different mix of largely the same underlying clinical questions in different wording, with no shared source of truth." />
+  <KV term="Audit and consolidate" desc="Went through every clinic's existing survey, extracted every unique question being asked anywhere, and merged them into one master survey covering the full superset." />
+  <KV term="Customisable per clinic" desc="Each clinic only shows the questions relevant to its own workflow, instead of every clinic separately reinventing, or losing, questions over time." />
+  <KV term="Structured and quantifiable only" desc="Every field is a dropdown, checkbox, or discrete input, never free text, so answers can be validated, searched, and fed into the rest of the platform rather than just sitting in one patient's file." />
+</KVGroup>
 
 ### Shifting who captures the data
 
-Before this, health history was largely gathered by a clinician or doctor asking questions during an appointment and writing down the answers, spending consultation time on data entry rather than care. I redesigned the flow so the patient's own answers, submitted through the app before or between appointments, become the primary source of that data, with the clinician's role shifting from collecting it to reviewing what the patient already provided and accepting it. That shift only works if the survey itself is something a patient will actually complete unsupervised, which is why the questionnaire was redesigned as a guided, mobile-first experience broken into seven themed sections (cycle history, contraception history, partner history, medical background, lifestyle, family history, and goals), with a visible progress indicator, conditional questions that only appear when relevant, and softer section framing ("Your Cycle Story" rather than "Menstrual History") without losing any of the clinical precision the data needs. On the clinician side, the same answers render into a categorised, scannable table using clinical labels ("Pain during sex") rather than the original patient-facing question wording, so reviewing a completed intake means reading a chart, not a transcript.
+<KVGroup>
+  <KV term="The problem" desc="Health history was largely gathered by a clinician or doctor asking questions during an appointment and writing down the answers, spending consultation time on data entry rather than care." />
+  <KV term="Patient becomes the primary source" desc="Redesigned the flow so the patient's own answers, submitted through the app before or between appointments, become the primary source of that data." />
+  <KV term="Clinician role shifts to review" desc="The clinician's job moves from collecting the data to reviewing what the patient already provided and accepting it." />
+  <KV term="Making that shift possible" desc="Redesigned the questionnaire itself into a guided, mobile-first experience broken into seven themed sections (cycle history, contraception history, partner history, medical background, lifestyle, family history, and goals), with a visible progress indicator, conditional questions, and softer section framing (&quot;Your Cycle Story&quot; rather than &quot;Menstrual History&quot;), without losing any of the clinical precision the data needs." />
+  <KV term="Clinician-facing review view" desc="The same answers render into a categorised, scannable table using clinical labels (&quot;Pain during sex&quot;) rather than the original patient-facing question wording, so reviewing a completed intake means reading a chart, not a transcript." />
+</KVGroup>
 
 ### Flow sheet view and shared data
 
-Because every answer was captured as structured data rather than free text, a single data point (a survey answer, a lab value, a vital) is shared platform-wide rather than staying trapped in the form it was originally collected on, so the same answer a patient gives once can be reused anywhere else in the product that needs it. On top of that shared data, I designed a flow sheet view so clinicians can see how any individual data point has changed across visits rather than only its current value, with the ability to attach a note to any specific data point in that history.
-
-A related, more specialised piece of the same structured-capture problem: obstetric history. The UK and US use genuinely different shorthand systems for it, UK practice typically records Gravida and Para as two numbers, while US practice (per ACOG) uses the fuller GTPAL notation, separating term, preterm, and abortion counts alongside living children. I designed a single recording interface that toggles between the two standards, auto-calculates the derived values, validates against clinically impossible entries (more living children than recorded deliveries, for example), and always shows a plain-language summary alongside the shorthand so the notation itself is never the only record of what happened.
+<KVGroup>
+  <KV term="Data shared platform-wide" desc="Because every answer is captured as structured data rather than free text, a single data point (a survey answer, a lab value, a vital) is shared platform-wide instead of staying trapped in the form it was originally collected on." />
+  <KV term="Flow sheet view" desc="Clinicians can see how any individual data point has changed across visits rather than only its current value." />
+  <KV term="Notes on any data point" desc="Any specific data point in that history can have a note attached to it directly." />
+  <KV term="Obstetric history, UK vs US" desc="A related, more specialised structured-capture problem: the UK typically records Gravida and Para as two numbers, while US practice (per ACOG) uses the fuller GTPAL notation. Built a single recording interface that toggles between the two, auto-calculates derived values, and validates against clinically impossible entries (more living children than recorded deliveries, for example), always showing a plain-language summary alongside the shorthand." />
+</KVGroup>
 
 ### Outcome & impact
 
@@ -121,13 +138,6 @@ This work also closed a concrete gap elsewhere in the product: several patient-r
 - Designed a flow sheet view showing how any shared data point changes across visits, with the ability to attach notes to individual data points.
 - Designed a dual-standard obstetric history recorder supporting both UK (Gravida/Para) and US (GTPAL) conventions, with auto-calculation and validation against clinically impossible entries.
 - Closed gaps in commonly-missing HFEA regulatory fields by capturing them at the point of patient intake instead of after the fact.
-
-### Contributions
-
-- Redesigned the patient intake questionnaire as a guided, mobile-first, sectioned experience instead of a single long clinical form.
-- Designed a clinician-facing results view that translates patient-facing question wording into clean, categorised clinical labels for fast scanning.
-- Designed a dual-standard obstetric history recording interface supporting both UK (Gravida/Para) and US (GTPAL) conventions, with auto-calculation and built-in validation against clinically impossible entries.
-- Designed a pinned-header historical trend view for routine health metrics, and rebuilt its charts in CSS/SVG instead of a JS charting library.
 
 ## Project: Multi-jurisdiction regulatory reporting framework
 
