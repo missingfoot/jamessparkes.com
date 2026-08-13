@@ -78,9 +78,12 @@ body {
     background: var(--bg-nav);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     padding: 1.5rem 1rem 1rem;
     gap: 0;
+}
+
+.nav-desktop .nav-actions {
+    margin-top: auto;
 }
 
 .nav-name {
