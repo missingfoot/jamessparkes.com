@@ -1,0 +1,57 @@
+---
+// src/layouts/BaseLayout.astro
+import '../styles/tokens.css';
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description: string;
+  path: string;
+}
+const { title, description, path } = Astro.props;
+const canonicalURL = new URL(path, Astro.site);
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script is:inline>(function(){var t=localStorage.getItem("theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);})();</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <title>{title}</title>
+    <meta name="description" content={description}>
+    <meta name="author" content="James Sparkes">
+
+    <link rel="canonical" href={canonicalURL} />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content={canonicalURL}>
+    <meta property="og:title" content={title}>
+    <meta property="og:description" content={description}>
+    <meta property="og:image" content="https://jamessparkes.com/images/og-image.jpg">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content={canonicalURL}>
+    <meta property="twitter:title" content={title}>
+    <meta property="twitter:description" content={description}>
+    <meta property="twitter:image" content="https://jamessparkes.com/images/og-image.jpg">
+
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+    <link rel="apple-touch-icon" href="/images/webclip.png">
+</head>
+<body>
+    <div class="layout">
+        <aside class="nav">TODO Nav</aside>
+        <main class="content">
+            <slot />
+        </main>
+    </div>
+
+    <a class="mobile-download-cv" href="/james-sparkes-cv.pdf" target="_blank" rel="noopener">Download CV <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></a>
+
+    <script src="/js/theme.js" defer></script>
+    <slot name="scripts" />
+</body>
+</html>
