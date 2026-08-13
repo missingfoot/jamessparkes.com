@@ -33,7 +33,12 @@ Designed and built a two-sided onboarding platform to bring new fertility clinic
 
 ### Problem
 
-Watching a real onboarding walkthrough surfaced the actual failure mode: creating something as simple as a product required a medical code and a tax rate to already exist. If they didn't, the person configuring the clinic had to abandon the form, go create the missing dependency elsewhere, and start again, losing their work each time. Bulk import existed as a faster path for clinics with large catalogues, but it was admin-only and undocumented, with no template or guidance on the expected file structure, so clinics who needed it most often didn't know it existed and configured everything by hand instead. Settings navigation compounded this: related concepts (medications and products, tax rates and price lists) lived in disconnected parts of the settings area, and larger clinics were still relying on multi-day, in-person training to get set up at all, which doesn't scale past a handful of rollouts a year.
+<KVGroup>
+  <KV term="Losing work on missing dependencies" desc="Creating something as simple as a product required a medical code and a tax rate to already exist. If they didn't, the person configuring the clinic had to abandon the form, go create the missing dependency elsewhere, and start again, losing their work each time." />
+  <KV term="Bulk import was hidden" desc="A faster path existed for clinics with large catalogues, but it was admin-only and undocumented, with no template or guidance on the expected file structure, so the clinics who needed it most often didn't know it existed." />
+  <KV term="Settings were disconnected" desc="Related concepts (medications and products, tax rates and price lists) lived in separate, unrelated parts of the settings area." />
+  <KV term="Training didn't scale" desc="Larger clinics were still relying on multi-day, in-person training to get set up at all, which doesn't scale past a handful of rollouts a year." />
+</KVGroup>
 
 ### Contributions
 
@@ -45,7 +50,7 @@ Watching a real onboarding walkthrough surfaced the actual failure mode: creatin
 
 ### Outcome & impact
 
-The onboarding demo of the guided setup work got a strong internal response and was chosen to be shown at the company all-hands as a template for how implementation should work going forward: standardised and repeatable rather than a bespoke, largely-manual process per clinic. It's an active initiative rather than a finished, measured result, but it reframed onboarding from "something wawa does to a clinic over days of training" toward something a clinic can largely configure themselves, with wawa doing more of the heavy lifting up front.
+The onboarding demo of the guided setup work got a strong internal response and was chosen to be shown at the company all-hands as a template for how implementation should work going forward, standardised and repeatable rather than a bespoke, largely manual process per clinic. It's an active initiative rather than a finished, measured result, but it reframed onboarding from something wawa does to a clinic over days of training, toward something a clinic can largely configure themselves.
 
 ## Project: Clinical flow redesigns
 
@@ -57,15 +62,29 @@ Redesigned several core clinical workflows used daily by clinic staff: stimulati
 
 ### Stim sheets and clinical tasks
 
-A clinician walkthrough of the medication tracking sheet surfaced a workflow that was technically possible but painfully slow: extending a single medication took seven or more clicks (open edit, scroll, change the date, save, wait for the page to refresh and re-scroll to where you were), and a patient on five medications meant repeating that five times, several times a day, across many patients at once. A competitor product the clinician also used solved the same problem with a double-click on the target date, which was a useful benchmark, not a template to copy outright. I redesigned the interaction around direct manipulation instead of a multi-step edit flow, and separately reworked a related clinical task list (the day-to-day task inbox staff use to sign off consents and complete clinical steps) around an email-inbox-style model: auto-advance to the next item, keyboard shortcuts, and default filters like "overdue" and "today", since this was a workflow clinicians touched dozens of times a day, not a once-a-month feature.
+<KVGroup>
+  <KV term="The problem" desc="Extending a single medication on the tracking sheet took seven or more clicks (open edit, scroll, change the date, save, wait for the page to refresh and re-scroll to where you were). A patient on five medications meant repeating that five times, several times a day, across many patients at once." />
+  <KV term="A useful benchmark" desc="A clinician showed a competitor product that solved the same problem with a double-click on the target date, useful as a benchmark, not a template to copy outright." />
+  <KV term="Redesigned interaction" desc="Reworked medication extension around direct manipulation instead of a multi-step edit flow." />
+  <KV term="Related task list rework" desc="Separately reworked the day-to-day clinical task list (used to sign off consents and complete clinical steps) around an email-inbox-style model: auto-advance to the next item, keyboard shortcuts, and default filters like &quot;overdue&quot; and &quot;today&quot;, since this was a workflow clinicians touched dozens of times a day, not a once-a-month feature." />
+</KVGroup>
 
 ### Donor flow
 
-The donor management flow had accumulated as a series of individual fixes to specific client-reported issues rather than being designed as one coherent workflow, and it showed: a donor reservation system that felt bolted on, and inventory visibility that existed but was buried in the wrong part of the product entirely. I redesigned it as a proper "Donors" section inside cryo storage, with a filterable table for matching donors against criteria clinics actually search on, and a donor dashboard that surfaces family limits, storage, and any holds or restrictions in one place rather than scattered across separate screens.
+<KVGroup>
+  <KV term="The problem" desc="The donor management flow had accumulated as a series of individual fixes to specific client-reported issues rather than being designed as one coherent workflow. It showed: a donor reservation system that felt bolted on, and inventory visibility that existed but was buried in the wrong part of the product entirely." />
+  <KV term="Redesigned as one section" desc="Built a proper &quot;Donors&quot; section inside cryo storage, with a filterable table for matching donors against criteria clinics actually search on." />
+  <KV term="Consolidated dashboard" desc="A donor dashboard surfaces family limits, storage, and any holds or restrictions in one place rather than scattered across separate screens." />
+</KVGroup>
 
 ### Lab sheets
 
-Embryology labs run on printed lab sheets, physically carried between the bench, the incubator, and storage. The first framing of this project was straightforward: auto-generate a pre-filled PDF from a patient's active cycle so staff could print it, fill it in by hand, and scan it back in. Pushing on that plan surfaced a problem with it: filling in a printed sheet by hand and then re-entering that same data digitally is exactly the kind of duplicate data entry clinics are already drowning in. The design shifted to treat the lab sheet as a live view of data that already exists in wawa rather than a form to fill out, with a QR code as the bridge back to the physical world: scan the code on a sample or tray, and the corresponding digital sheet opens directly, already populated.
+<KVGroup>
+  <KV term="The context" desc="Embryology labs run on printed lab sheets, physically carried between the bench, the incubator, and storage." />
+  <KV term="First framing" desc="Auto-generate a pre-filled PDF from a patient's active cycle so staff could print it, fill it in by hand, and scan it back in." />
+  <KV term="The problem with that plan" desc="Filling in a printed sheet by hand and then re-entering that same data digitally is exactly the kind of duplicate data entry clinics are already drowning in." />
+  <KV term="The pivot" desc="Shifted the design to treat the lab sheet as a live view of data that already exists in wawa rather than a form to fill out, with a QR code as the bridge back to the physical world: scan the code on a sample or tray, and the corresponding digital sheet opens directly, already populated." />
+</KVGroup>
 
 ### Contributions
 
@@ -82,7 +101,12 @@ Designed a CRM for managing how patients enter a clinic's care, from formal refe
 
 ### Problem
 
-"Referrals" as a concept was too narrow for what the product actually needed to handle: patients arrive via referral letters, but also web booking forms, direct sign-ups, and marketing channels, and all of them needed the same intake workflow. Patients created from these different sources were mixed into the main patient table with no way to tell them apart, there was no way to catch a duplicate patient being entered twice, and referrals with a natural expiry window had no dedicated view surfacing which ones were about to lapse, so staff had to know to go looking for them.
+<KVGroup>
+  <KV term="&quot;Referrals&quot; was too narrow" desc="Patients arrive via referral letters, but also web booking forms, direct sign-ups, and marketing channels, and all of them needed the same intake workflow." />
+  <KV term="Leads mixed into patients" desc="Patients created from these different sources were mixed into the main patient table with no way to tell them apart." />
+  <KV term="No duplicate detection" desc="There was no way to catch a duplicate patient being entered twice." />
+  <KV term="No expiry visibility" desc="Referrals with a natural expiry window had no dedicated view surfacing which ones were about to lapse, so staff had to know to go looking for them." />
+</KVGroup>
 
 ### Contributions
 
@@ -143,11 +167,20 @@ This work also closed a concrete gap elsewhere in the product: several patient-r
 
 ### Problem
 
-Fertility clinics are legally required to report clinical data to different regulatory bodies depending on jurisdiction (HFEA/PRISM in the UK, ANZARD in Australia/NZ, SART in the US, and BORN), each with its own data requirements, formats, and submission mechanism. Before this project, reporting was a fully disconnected task bolted onto the end of clinical work: staff re-entered data that often already existed elsewhere in the clinic's systems, had no way to see which patients still had outstanding submissions short of running a manual report and checking each record by hand, and had no reminders for approaching deadlines despite real regulatory consequences for missing them. Clinics estimated meaningful error rates under this manual process, and that lines up with public regulatory data: the UK's HFEA board has reported that clinics submitting through third-party integrations average a 6 to 8 percent error rate, against under 1 percent for clinics submitting directly.
+<KVGroup>
+  <KV term="Four regulators, four formats" desc="Fertility clinics must report clinical data to different regulatory bodies depending on jurisdiction (HFEA/PRISM in the UK, ANZARD in Australia/NZ, SART in the US, and BORN), each with its own data requirements, formats, and submission mechanism." />
+  <KV term="Fully disconnected task" desc="Reporting was bolted onto the end of clinical work: staff re-entered data that often already existed elsewhere in the clinic's systems." />
+  <KV term="No outstanding-submission visibility" desc="No way to see which patients still had outstanding submissions short of running a manual report and checking each record by hand, and no reminders for approaching deadlines despite real regulatory consequences for missing them." />
+  <KV term="Real error rates" desc="Clinics estimated meaningful error rates under this manual process, which lines up with public regulatory data: the UK's HFEA board has reported clinics submitting through third-party integrations average a 6 to 8 percent error rate, against under 1 percent for clinics submitting directly." />
+</KVGroup>
 
 ### Approach
 
-The founding insight, reached with the product lead early on, was to explicitly reject the obvious approach: building dedicated "reporting forms" for staff to fill in. That just relocates the same manual data entry problem into a new screen. Instead, the framing became "it's not the regulator's form, it's verification": wawa already captures the underlying clinical data (registrations, cycles, procedures, outcomes) as a byproduct of normal clinical workflow, so the reporting feature became a dashboard over that existing data showing what's ready, what's missing, and what's invalid, with submission reduced to a single action once a record is complete. Underneath that, each data field is stored once in a canonical form and mapped to whatever format a given regulator expects only at submission time, so the same underlying record can satisfy multiple regulators' differing field formats without duplicating data entry per jurisdiction.
+<KVGroup>
+  <KV term="Rejected the obvious approach" desc="Reached with the product lead early on: don't build dedicated &quot;reporting forms&quot; for staff to fill in, since that just relocates the same manual data entry problem into a new screen." />
+  <KV term="Verification, not forms" desc="wawa already captures the underlying clinical data (registrations, cycles, procedures, outcomes) as a byproduct of normal clinical workflow, so the reporting feature became a dashboard over that existing data showing what's ready, what's missing, and what's invalid, with submission reduced to a single action once a record is complete." />
+  <KV term="Canonical data, per-jurisdiction mapping" desc="Each data field is stored once in a canonical form and mapped to whatever format a given regulator expects only at submission time, so the same underlying record can satisfy multiple regulators' differing field formats without duplicating data entry per jurisdiction." />
+</KVGroup>
 
 ### Contributions
 
@@ -168,7 +201,10 @@ Led discovery for a second-generation scheduling system, working directly with c
 
 ### Problem
 
-Two gaps stood out in discovery. First, the scheduler had no way to express recurring unavailability (lunch breaks, non-bookable hours) or restrict which appointment types could be booked in which windows, which for at least one clinic was serious enough to threaten their go-live timeline. Second, and more structurally, clinical appointments aren't always single, standalone bookings: a clinic walked through an example of a single "treatment scan" appointment type that actually needs to book two different resources with a staggered offset, fifteen minutes on a sonographer's diary followed automatically by fifteen minutes on the phlebotomy list right after, booked as one unit from the person making the appointment's point of view. The existing scheduler had no concept of a single appointment type driving multiple linked, offset resource bookings.
+<KVGroup>
+  <KV term="No recurring unavailability" desc="The scheduler had no way to express recurring unavailability (lunch breaks, non-bookable hours) or restrict which appointment types could be booked in which windows, which for at least one clinic was serious enough to threaten their go-live timeline." />
+  <KV term="No linked, multi-resource bookings" desc="A clinic walked through a &quot;treatment scan&quot; appointment type that needs to book two different resources with a staggered offset: fifteen minutes on a sonographer's diary, followed automatically by fifteen minutes on the phlebotomy list right after, booked as one unit. The existing scheduler had no concept of a single appointment type driving multiple linked, offset resource bookings." />
+</KVGroup>
 
 ### Contributions
 
@@ -180,6 +216,7 @@ This project is still in the discovery and early design phase rather than shippe
 
 ## Reflections & key takeaways
 
-The regulatory reporting project taught me the most about designing in a legally constrained space: the temptation is always to build the thing the regulator's form literally asks for, but the better answer was almost always to ask what data already exists in the product and design the smallest possible layer on top of it. That instinct, treat a new requirement as a lens over existing data rather than a reason to ask users for more input, showed up again in the lab sheets project, where the obvious first answer (print a form) would have quietly made the underlying duplicate-data-entry problem worse rather than better.
-
-Working in a flat-hierarchy startup also changed how I think about ownership. There's no separate handoff to engineering here: a feature I design, I frequently also build, which means design decisions have to hold up against real implementation constraints from day one, not get revisited after the fact. And discovery across UK, US, Canadian, and Australian clinics made clear how much "the same feature" can differ once you take local regulation, terminology, and clinical convention seriously, rather than designing for one market and treating the rest as a localisation afterthought.
+- The regulatory reporting project taught me the most about designing in a legally constrained space: the temptation is always to build the thing the regulator's form literally asks for, but the better answer was almost always to ask what data already exists in the product and design the smallest possible layer on top of it.
+- That instinct, treat a new requirement as a lens over existing data rather than a reason to ask users for more input, showed up again in the lab sheets project, where the obvious first answer (print a form) would have quietly made the underlying duplicate-data-entry problem worse rather than better.
+- Working in a flat-hierarchy startup changed how I think about ownership. There's no separate handoff to engineering here: a feature I design, I frequently also build, which means design decisions have to hold up against real implementation constraints from day one, not get revisited after the fact.
+- Discovery across UK, US, Canadian, and Australian clinics made clear how much "the same feature" can differ once you take local regulation, terminology, and clinical convention seriously, rather than designing for one market and treating the rest as a localisation afterthought.
