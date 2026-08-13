@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 const projects = (await getCollection('projects', ({ data }) => data.visible)).sort(
   (a, b) => a.data.order - b.data.order
 );
-const currentPath = Astro.url.pathname;
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isActive = (href: string) => (currentPath === href ? ' active' : '');
 ---
 <aside class="nav">

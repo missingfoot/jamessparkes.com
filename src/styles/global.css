@@ -543,10 +543,6 @@ body {
     border-bottom: none;
 }
 
-.project-case-study li.kv-row::before {
-    content: none;
-}
-
 .project-case-study .kv-group {
     margin-bottom: 1.5rem;
 }
