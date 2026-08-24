@@ -545,18 +545,6 @@ body {
     background: var(--bg);
 }
 
-.project-issue-grid figure:nth-child(odd) {
-    padding-left: 0;
-}
-
-.project-issue-grid figure:nth-child(even) {
-    padding-right: 0;
-}
-
-.project-issue-grid figure:nth-child(-n+2) {
-    padding-top: 0;
-}
-
 .project-issue-grid img {
     display: block;
     width: 100%;
@@ -571,10 +559,7 @@ body {
     color: var(--text-dim);
 }
 
-.project-issue-grid figure:nth-child(-n+2) figcaption {
-    padding-bottom: 1rem;
-}
-
+/* Mobile: single column, so every image needs the same padding/gutter treatment. */
 @media (max-width: 640px) {
     .project-issue-grid {
         grid-template-columns: 1fr;
@@ -590,11 +575,30 @@ body {
         padding-top: 0;
     }
 
-    .project-issue-grid figure figcaption {
+    .project-issue-grid figcaption {
         padding-bottom: 0;
     }
 
     .project-issue-grid figure:not(:last-child) figcaption {
+        padding-bottom: 1rem;
+    }
+}
+
+/* Desktop: 2-column grid, so left/right/top padding depends on row/column position. */
+@media (min-width: 641px) {
+    .project-issue-grid figure:nth-child(odd) {
+        padding-left: 0;
+    }
+
+    .project-issue-grid figure:nth-child(even) {
+        padding-right: 0;
+    }
+
+    .project-issue-grid figure:nth-child(-n+2) {
+        padding-top: 0;
+    }
+
+    .project-issue-grid figure:nth-child(-n+2) figcaption {
         padding-bottom: 1rem;
     }
 }
