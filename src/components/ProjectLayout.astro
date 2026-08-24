@@ -19,13 +19,15 @@ const { title, description, tags, images, path } = Astro.props;
     <p class="project-description">{description}</p>
   </div>
 
-  <div class="project-images">
-    {images.map((img, i) => (
-      <div class="project-thumb" data-index={i}>
-        <Image src={img.src} alt={img.alt} loading="lazy" />
-      </div>
-    ))}
-  </div>
+  {images.length > 0 && (
+    <div class="project-images">
+      {images.map((img, i) => (
+        <div class="project-thumb" data-index={i}>
+          <Image src={img.src} alt={img.alt} loading="lazy" />
+        </div>
+      ))}
+    </div>
+  )}
 
   <div class="project-view">
     <div class="project-case-study">

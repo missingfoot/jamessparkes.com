@@ -511,6 +511,94 @@ body {
     margin-bottom: 1rem;
 }
 
+.project-case-study p a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--text);
+}
+
+.project-case-study p a:hover {
+    border-bottom-color: var(--accent, var(--text));
+    opacity: 0.7;
+}
+
+.project-inline-video {
+    margin: 2rem 0;
+    background: var(--border);
+}
+
+.project-inline-video video {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.project-issue-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 2rem 0;
+}
+
+.project-issue-grid figure {
+    margin: 0;
+    padding: 0.75rem 0.75rem 0;
+    background: var(--bg);
+}
+
+.project-issue-grid figure:nth-child(odd) {
+    padding-left: 0;
+}
+
+.project-issue-grid figure:nth-child(even) {
+    padding-right: 0;
+}
+
+.project-issue-grid figure:nth-child(-n+2) {
+    padding-top: 0;
+}
+
+.project-issue-grid img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: center bottom;
+}
+
+.project-issue-grid figcaption {
+    padding: 0.5rem 0 0;
+    font-size: 12px;
+    color: var(--text-dim);
+}
+
+.project-issue-grid figure:nth-child(-n+2) figcaption {
+    padding-bottom: 1rem;
+}
+
+@media (max-width: 640px) {
+    .project-issue-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .project-issue-grid figure {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        padding-top: 0.75rem;
+    }
+
+    .project-issue-grid figure:first-child {
+        padding-top: 0;
+    }
+
+    .project-issue-grid figure figcaption {
+        padding-bottom: 0;
+    }
+
+    .project-issue-grid figure:not(:last-child) figcaption {
+        padding-bottom: 1rem;
+    }
+}
+
 .project-case-study p + ul,
 .project-case-study p + .kv-group {
     margin-top: 1rem;

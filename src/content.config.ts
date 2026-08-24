@@ -9,6 +9,7 @@ const projects = defineCollection({
       title: z.string(),
       description: z.string(),
       tags: z.array(z.string()),
+      category: z.enum(['work', 'personal']).default('work'),
       order: z.number(),
       visible: z.boolean().default(true),
       images: z.array(z.object({ src: image(), alt: z.string() })),

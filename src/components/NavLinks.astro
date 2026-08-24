@@ -10,6 +10,8 @@ const { currentPath } = Astro.props;
 const projects = (await getCollection('projects', ({ data }) => data.visible)).sort(
   (a, b) => a.data.order - b.data.order
 );
+const workProjects = projects.filter((project) => project.data.category === 'work');
+const personalProjects = projects.filter((project) => project.data.category === 'personal');
 const isActive = (href: string) => (currentPath === href ? ' active' : '');
 ---
 <nav class="nav-groups">
@@ -20,8 +22,16 @@ const isActive = (href: string) => (currentPath === href ? ' active' : '');
   </div>
   <div class="nav-group">
     <div class="nav-group-header">Work</div>
-    {projects.map((project) => (
+    {workProjects.map((project) => (
       <a class={`nav-item${isActive(`/work/${project.id}`)}`} href={`/work/${project.id}`}>
+        {project.data.title}
+      </a>
+    ))}
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-header">Personal</div>
+    {personalProjects.map((project) => (
+      <a class={`nav-item${isActive(`/personal/${project.id}`)}`} href={`/personal/${project.id}`}>
         {project.data.title}
       </a>
     ))}

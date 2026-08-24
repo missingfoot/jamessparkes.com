@@ -1,0 +1,54 @@
+---
+title: "BeamTrainer"
+description: "A GTA5-style trainer menu for BeamNG.drive: a full keyboard/mouse-driven in-game window that mirrors the game's gameplay radial menu, adds a curated set of sandbox tools, and layers on a vehicle spawner, teleport slots, and favorites."
+tags: ["Lua", "Game Modding", "Tooling", "UI Design", "Reverse Engineering"]
+category: "personal"
+order: 3
+visible: true
+images: []
+---
+
+import KV from '../../components/KV.astro';
+import KVGroup from '../../components/KVGroup.astro';
+import KVHeading from '../../components/KVHeading.astro';
+
+BeamNG.drive's built-in gameplay radial menu is genuinely controversial in the community: a stick-driven wheel you pull up and drill into layer by layer, one entry at a time, to reach vehicle actions, world options, and sandbox tools. A lot of players find the UX slow and awkward for anything they reach for often, and it's a recurring complaint on the forums.
+
+I wanted something closer to the GTA5-style trainers PC modders build for other games, one window, a flat navigable list, everything reachable in a couple of keystrokes, and I figured it would solve most of that friction upfront.
+
+### Two VMs, one menu
+
+The interesting constraint on this project wasn't the UI, it was BeamNG's modding architecture. Game logic is split across two separate Lua VMs.
+
+A "GE" (game engine) side owns the world, the UI, and vehicle spawning. A "vehicle" side runs once per car and is the only place physics state actually lives.
+
+<KVGroup>
+  <KV term="GE side" desc="Owns the entire imgui window: navigation, rendering, vehicle spawning/swapping, teleport slots, and a live mirror of the game's own quickAccess radial tree." />
+  <KV term="Vehicle side" desc="A clean-room set of physics sandbox tools (power, grip, god mode, infinite fuel/N2O, mass, brakes, freeze thermals, burst-proof tires) that can only run inside the vehicle VM." />
+</KVGroup>
+
+The two sides talk over a small JSON protocol: the GE side sends `{cmd = "set", key = "power", value = 2.5}`-style commands into the vehicle VM via `queueLuaCommand`, and the vehicle pushes its full state back out on every change (and on load or reset) so the UI never drifts from what's actually active.
+
+Vehicle swaps and resets re-apply the desired state automatically, so active tools survive a crash or a respawn instead of silently dropping.
+
+### Mirroring the gameplay radial menu
+
+The single hardest part turned out to be the Game Menu tab: a live, browsable copy of BeamNG's entire gameplay radial tree, generated from the same `core_quickAccess` data the built-in menu uses.
+
+Recreating that as a flat, keyboard-navigable list meant walking a tree that was designed to be drawn as icons and dials, handling checkbox/color entries with real ON/OFF state, and proxying vehicle-scoped submenus through the current vehicle exactly like the radial itself does.
+
+Getting there took a real chain of small, specific bugs: a VFS-index race where tabs could load before the game's file index was ready, translation keys leaking into menu titles instead of resolved text, a request loop that could crash mid-render on the vehicle item list, and a search-box quirk where `im.ArrayChar` buffers turned out not to be index-assignable and needed `ffi.copy` instead.
+
+Each one got fixed, tested in-game, and folded back in before moving on to the next tab.
+
+### What's there now
+
+<KVGroup>
+  <KV term="Vehicle" desc="Searchable spawner and swapper across every model and config, repair, ignite/extinguish, paint, and license plate text." />
+  <KV term="Sandbox tools" desc="Toggles and left/right-adjustable steppers for the vehicle-side tool set, plus a one-shot reset for all of them." />
+  <KV term="Teleport" desc="Named, per-map position slots you can save and recall instantly, plus teleport-to-camera, flip-upright, and recover-to-road." />
+  <KV term="Game Menu" desc="The full gameplay radial menu, mirrored and made keyboard-browsable." />
+  <KV term="Favorites" desc="Pin any item or menu to the top of the root list via a keybind, tucked into their own submenu so they don't clutter it." />
+</KVGroup>
+
+It's a small project by scope, but a good one for exercising the same muscles as the day job: reading an unfamiliar system's real constraints (two isolated VMs, an undocumented radial-menu data shape) rather than the ones you'd assume from the outside, and building the interface around what the platform will actually let you do.

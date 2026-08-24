@@ -3,7 +3,7 @@ import { getCollection, render } from 'astro:content';
 import ProjectLayout from '../../components/ProjectLayout.astro';
 
 export async function getStaticPaths() {
-  const projects = await getCollection('projects', ({ data }) => data.visible && data.category === 'work');
+  const projects = await getCollection('projects', ({ data }) => data.visible && data.category === 'personal');
   return projects.map((project) => ({
     params: { slug: project.id },
     props: { project },
@@ -18,7 +18,7 @@ const { Content } = await render(project);
   description={project.data.description}
   tags={project.data.tags}
   images={project.data.images}
-  path={`/work/${project.id}`}
+  path={`/personal/${project.id}`}
 >
   <Content />
 </ProjectLayout>

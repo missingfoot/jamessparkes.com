@@ -1,0 +1,17 @@
+---
+// src/components/InlineVideo.astro
+import { Image } from 'astro:assets';
+
+export interface Props {
+  src: string;
+  poster: ImageMetadata;
+  alt: string;
+}
+const { src, poster, alt } = Astro.props;
+const posterSrc = poster.src;
+---
+<div class="project-inline-video">
+  <video autoplay loop muted playsinline preload="auto" poster={posterSrc} aria-label={alt}>
+    <source src={src} type="video/mp4" />
+  </video>
+</div>

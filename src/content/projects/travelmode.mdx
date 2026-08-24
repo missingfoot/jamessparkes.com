@@ -1,0 +1,52 @@
+---
+title: "Travel Mode"
+description: "A Linux-first, open-source alternative to TripMode: a root daemon, CLI, and GTK4/libadwaita desktop app that show which applications are using the network and let you block any of them, live, down to the packet."
+tags: ["Rust", "Linux", "Networking", "GTK4", "Systems Programming", "CLI", "Open Source"]
+category: "personal"
+order: 4
+visible: true
+images: []
+---
+
+import KV from '../../components/KV.astro';
+import KVGroup from '../../components/KVGroup.astro';
+import KVHeading from '../../components/KVHeading.astro';
+
+## Overview
+
+<KVGroup>
+  <KV term="Goal" desc="Per-application network control on Linux: see who's using the connection, how much data they're moving, and block any of them with a single command." />
+  <KV term="Inspiration" desc="TripMode, a macOS/Windows-only app that does exactly this. Nothing equivalent existed for Linux, so I built one." />
+</KVGroup>
+
+Metered tethering and data caps are the everyday trigger: knowing that Steam or a backup client is quietly saturating a hotspot, and being able to shut it off without killing the app or firewalling the whole machine.
+
+## Architecture
+
+Travel Mode is a Rust workspace split into a root daemon, a CLI, and a desktop GUI, deliberately kept as three thin clients around one source of truth.
+
+<KVGroup>
+  <KV term="travelmoded (root)" desc="Owns everything: interface/route detection, a conntrack poller for live flow byte counts, a procfs process scanner, socket-to-process attribution, the rule store, and the firewall." />
+  <KV term="travelmode (CLI)" desc="Talks to the daemon over a Unix socket with length-prefixed JSON. status, ps, connections, top, block, allow, watch, --json for scripting." />
+  <KV term="travelmode-gui" desc="A stateless GTK4/libadwaita client (relm4) with a tray icon. Subscribes to the daemon's event stream and renders it; carries no networking logic of its own." />
+</KVGroup>
+
+Enforcement runs through the daemon's own `inet travelmode` nftables table: new outbound connections get queued to userspace via NFQUEUE, the daemon attributes the packet to a process, and drops it if that executable has an active Block rule. Everything is designed to fail open: if filtering can't be set up (no root, missing kernel support), traffic just flows and the daemon reports `filtering_active = false` rather than breaking the network.
+
+## Development highlights
+
+<KVGroup>
+  <KV term="Kill-on-block" desc="Blocking an app doesn't just stop new connections, it kills what's already open: TCP sockets are torn down with `ss -K`, and matching conntrack entries are deleted so any in-flight packets re-enter as NEW and hit the block instead of coasting through on an old connection." />
+  <KV term="Best-effort attribution" desc="Flows get mapped to a process by matching the socket inode against every process's open file descriptors in /proc. Anything that can't be attributed shows as unknown and stays fail-open rather than risk blocking the wrong thing." />
+  <KV term="Optimistic GUI state" desc="Toggling a switch in the GUI records the request locally and doesn't let the daemon's 1-second status tick overwrite it until the confirming event actually arrives, otherwise a slow round-trip visibly yanks the switch back mid-click." />
+  <KV term="Chasing a rendering bug" desc="Stray fragments of other pages' text were showing up at repaint edges. Traced it back to a damage-tracking bug in GTK's GPU renderer on this hardware/compositor combination, not application code, and worked around it by forcing full-redraw." />
+</KVGroup>
+
+## Result & impact
+
+<KVGroup>
+  <KV term="In daily use" desc="Phase 2 (daemon, CLI, and GUI end to end) is complete and is what I actually run day to day on tethered and metered connections." />
+  <KV term="What's next" desc="Usage history and per-app data limits, then automatic profile switching so home Wi-Fi and a phone hotspot can carry different rule sets without touching anything by hand." />
+</KVGroup>
+
+The bigger draw was the systems side rather than the UI: designing something that sits directly on nftables and NFQUEUE, has to reason correctly about kernel state (conntrack entries, socket lifetimes, fail-open behaviour under every failure mode), and still stays boring and predictable enough to trust running as root on a machine I use every day.
