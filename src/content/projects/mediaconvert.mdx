@@ -50,3 +50,5 @@ Conversion used to block the GUI thread, so the window would visibly freeze, and
 </KVGroup>
 
 Most of the interesting work here wasn't the conversion itself, ffmpeg and ImageMagick do the real work, it was the UI decisions around it: how to fail soft on a mixed batch instead of rejecting it outright, and how to keep a genuinely long-running operation from making the app feel broken while it runs.
+
+Source's on [GitHub](https://github.com/missingfoot/mediaconvert).
