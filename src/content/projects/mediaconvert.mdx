@@ -1,0 +1,52 @@
+---
+title: "MediaConvert"
+description: "An ImageOptim-style drag-and-drop desktop app for Linux that batch-converts images, video, and audio: drop a mixed folder of files, get them auto-sorted into per-type groups, and convert everything with one click."
+tags: ["Python", "PySide6", "Qt", "Desktop Apps", "Linux", "FFmpeg", "ImageMagick", "UI Design", "Tooling"]
+category: "personal"
+order: 5
+visible: true
+images: []
+---
+
+import KV from '../../components/KV.astro';
+import KVGroup from '../../components/KVGroup.astro';
+import KVHeading from '../../components/KVHeading.astro';
+
+<KVGroup>
+  <KV term="Goal" desc="A batch image/video/audio converter for Linux that's as effortless as dragging files onto ImageOptim." />
+  <KV term="Inspiration" desc="ImageOptim's drag-and-drop simplicity, applied to the wider job of format conversion instead of just compression." />
+</KVGroup>
+
+I kept reaching for the same handful of `ffmpeg` and `magick` invocations to convert a batch of photos or clips into a different format, and got tired of retyping them. MediaConvert wraps that in a PySide6 window: drop files (or a whole folder) on it, pick a target format, hit convert.
+
+## From one rejected batch to three groups
+
+The first version treated a drop as a single all-or-nothing batch: mix an image in with a video, or include one file with an unrecognized extension, and the whole thing got rejected with an error. That's the kind of friction that makes a "just drop it in" tool stop feeling effortless.
+
+The redesign splits a mixed drop into up to three independent sections, one each for video, image, and audio, every section with its own file table and target-format dropdown. Files with unsupported extensions are quietly dropped from the batch and reported as "N other files ignored" instead of blocking everything else.
+
+<KVGroup>
+  <KV term="categorize.py" desc="Classifies each file by extension and buckets a mixed batch into per-category groups, instead of the old scheme that raised on anything not uniformly one type." />
+  <KV term="converter.py" desc="A small dispatch layer: resolves the output path (numbered suffix on any collision, even same-format self-conversion), calls the right backend, and preserves the source's mtime on success." />
+  <KV term="image_convert.py / media_convert.py" desc="ImageMagick for general image formats with a libwebp bridge for WebP output (cwebp/gif2webp), and ffmpeg for everything video/audio, including animated GIF/WebP export and audio-only extraction from a video source." />
+</KVGroup>
+
+## Keeping the UI honest while it converts
+
+Conversion used to block the GUI thread, so the window would visibly freeze, and there was no sense of progress beyond a single row's status flickering. Both got fixed by moving conversion onto a `QThread` worker that only ever talks back to the main thread through Qt signals, since widgets themselves aren't safe to touch off-thread. The main window just wires those signals up to update a row's status and a running "Converting 2 / 5 audio files, 45 remaining"-style message, so the tables stay scrollable and responsive the whole time.
+
+<KVGroup>
+  <KV term="Convert All vs. one file" desc="Right-click any file (or a multi-selection) to convert just that, alongside a global Convert All and per-section Convert/Clear buttons that only appear once more than one file type is present." />
+  <KV term="Skip what's already done" desc="Convert All skips files already marked Done, so converting a section individually first and then running the whole batch doesn't redo work." />
+  <KV term="Format change = new job" desc="Switching a section's target format resets its rows back to Ready, since a different output format is effectively starting over." />
+  <KV term="Folder drops" desc="Dropping (or picking) a folder expands it into its files; if it contains subfolders, a single prompt for the whole batch asks whether to include them or stay top-level only." />
+</KVGroup>
+
+## Result & impact
+
+<KVGroup>
+  <KV term="In daily use" desc="It's what I actually reach for now instead of retyping ffmpeg/magick commands, including for the day-to-day case of just cleaning up a phone-camera export folder." />
+  <KV term="Packaged properly" desc="Ships as a PKGBUILD with a desktop entry, app icon, and MIME associations, so it shows up in the app launcher and as a right-click Open With target for the formats it handles." />
+</KVGroup>
+
+Most of the interesting work here wasn't the conversion itself, ffmpeg and ImageMagick do the real work, it was the UI decisions around it: how to fail soft on a mixed batch instead of rejecting it outright, and how to keep a genuinely long-running operation from making the app feel broken while it runs.
