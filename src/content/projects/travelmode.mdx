@@ -8,9 +8,15 @@ visible: true
 images: []
 ---
 
+import { Image } from 'astro:assets';
 import KV from '../../components/KV.astro';
 import KVGroup from '../../components/KVGroup.astro';
 import KVHeading from '../../components/KVHeading.astro';
+import travelModeCover from '../../assets/images/travel-mode.png';
+
+Metered tethering and data caps are the everyday trigger: knowing that Steam or a backup client is quietly saturating a hotspot, and being able to shut it off without killing the app or firewalling the whole machine.
+
+<Image src={travelModeCover} alt="Travel Mode's dashboard, showing network info, live traffic, and active/blocked app counts" loading="lazy" class="h-capped" />
 
 ## Overview
 
@@ -18,8 +24,6 @@ import KVHeading from '../../components/KVHeading.astro';
   <KV term="Goal" desc="Per-application network control on Linux: see who's using the connection, how much data they're moving, and block any of them with a single command." />
   <KV term="Inspiration" desc="TripMode, a macOS/Windows-only app that does exactly this. Nothing equivalent existed for Linux, so I built one." />
 </KVGroup>
-
-Metered tethering and data caps are the everyday trigger: knowing that Steam or a backup client is quietly saturating a hotspot, and being able to shut it off without killing the app or firewalling the whole machine.
 
 ## Architecture
 
