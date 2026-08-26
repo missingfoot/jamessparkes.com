@@ -14,7 +14,7 @@ import KVHeading from '../../components/KVHeading.astro';
 
 Most of the clips I need to make are small: trim the dead air off a screen recording, crop a downloaded video down to the bit that matters, pull just the audio out of something. None of that needs a timeline-based editor, it just needs to be fast, so I built ClipCut: drop a video on the window, mark the cuts, drag a crop box if you need one, and export.
 
-It's a single Python script running on PySide6 for the UI, with FFmpeg doing the actual encoding underneath.
+It's a Python app running on PySide6 for the UI, with FFmpeg doing the actual encoding underneath.
 
 ### Cutting without losing quality you don't have to lose
 
@@ -28,7 +28,7 @@ The default trim mode snaps to the source's keyframes and stream-copies the resu
 
 ### Crop and export, staying out of the way
 
-The crop tool is drag-and-drop guides with corner handles, an aspect-ratio lock with presets (or the source's own native ratio), and a toggle between one shared crop for every cut versus an independent crop per cut. Zooming into the preview is cursor-anchored, so scrolling in on a specific detail keeps that point under your mouse instead of recentering the view on you.
+The crop tool is drag-and-drop guides with corner handles, an aspect-ratio lock with presets (or the source's own native ratio), and a toggle between one shared crop for every cut versus an independent crop per cut. There's also a Zoom mode alongside Crop: instead of just cutting the frame down, it crops into a region and scales that back up to the source's size, with guardrails so it can't be silently combined with lossless Keyframe trimming. Zooming into the preview itself is cursor-anchored, so scrolling in on a specific detail keeps that point under your mouse instead of recentering the view on you.
 
 Export leans on the same instinct as the trimming: don't re-encode unless the export choice actually requires it. Picking a specific format (or a specific audio codec) always re-encodes, since that's a deliberate conversion, but the default paths stream-copy wherever the container and codec already line up, including audio-only exports, which pick a container to match the source's audio codec instead of assuming everything is AAC.
 
@@ -41,5 +41,7 @@ Export leans on the same instinct as the trimming: don't re-encode unless the ex
 ### Where it's at
 
 It's my daily tool for anything that would otherwise mean opening a full editor for a thirty-second job. Still actively growing in small increments, mostly driven by hitting a rough edge myself and fixing it the same day, rather than any fixed roadmap.
+
+It outgrew being a single script a while back, but I kept bolting features onto it anyway. Adding Zoom mode was the tipping point: it needed to interact with crop, scale, and the lossless-trim guardrails all at once, and doing that cleanly in one file wasn't realistic anymore. That pushed a proper split into a `clipcutlib` package (mixins, ffmpeg helpers, widgets, app bootstrap), which made the Zoom mode work possible in the first place.
 
 Source's on [GitHub](https://github.com/missingfoot/clipcut).
