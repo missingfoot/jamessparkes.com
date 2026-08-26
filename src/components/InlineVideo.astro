@@ -6,11 +6,12 @@ export interface Props {
   src: string;
   poster: ImageMetadata;
   alt: string;
+  class?: string;
 }
-const { src, poster, alt } = Astro.props;
+const { src, poster, alt, class: className = 'project-inline-video' } = Astro.props;
 const posterSrc = poster.src;
 ---
-<div class="project-inline-video">
+<div class={className}>
   <video autoplay loop muted playsinline preload="auto" poster={posterSrc} aria-label={alt}>
     <source src={src} type="video/mp4" />
   </video>

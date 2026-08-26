@@ -8,16 +8,21 @@ visible: true
 images: []
 ---
 
+import { Image } from 'astro:assets';
+import InlineVideo from '../../components/InlineVideo.astro';
 import KV from '../../components/KV.astro';
 import KVGroup from '../../components/KVGroup.astro';
 import KVHeading from '../../components/KVHeading.astro';
+import mediaConvertPoster from '../../assets/images/media-convert-poster.jpg';
+
+<InlineVideo src="/videos/media-convert.mp4" poster={mediaConvertPoster} alt="Dropping a mixed batch of files into MediaConvert and converting them" class="ui-window" />
+
+I kept reaching for the same handful of `ffmpeg` and `magick` invocations to convert a batch of photos or clips into a different format, and got tired of retyping them. MediaConvert wraps that in a PySide6 window: drop files (or a whole folder) on it, pick a target format, hit convert.
 
 <KVGroup>
   <KV term="Goal" desc="A batch image/video/audio converter for Linux that's as effortless as dragging files onto ImageOptim." />
   <KV term="Inspiration" desc="ImageOptim's drag-and-drop simplicity, applied to the wider job of format conversion instead of just compression." />
 </KVGroup>
-
-I kept reaching for the same handful of `ffmpeg` and `magick` invocations to convert a batch of photos or clips into a different format, and got tired of retyping them. MediaConvert wraps that in a PySide6 window: drop files (or a whole folder) on it, pick a target format, hit convert.
 
 ## From one rejected batch to three groups
 

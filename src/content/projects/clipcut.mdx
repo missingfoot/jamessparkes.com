@@ -8,9 +8,13 @@ visible: true
 images: []
 ---
 
+import { Image } from 'astro:assets';
 import KV from '../../components/KV.astro';
 import KVGroup from '../../components/KVGroup.astro';
 import KVHeading from '../../components/KVHeading.astro';
+import clipcutCover from '../../assets/images/clipcut-cover.png';
+
+<Image src={clipcutCover} alt="ClipCut's cut screen, with a video loaded and two cuts marked on the timeline" loading="lazy" />
 
 Most of the clips I need to make are small: trim the dead air off a screen recording, crop a downloaded video down to the bit that matters, pull just the audio out of something. None of that needs a timeline-based editor, it just needs to be fast, so I built ClipCut: drop a video on the window, mark the cuts, drag a crop box if you need one, and export.
 

@@ -533,6 +533,29 @@ body {
     height: auto;
 }
 
+.ui-window {
+    margin: 2rem 0;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    outline: 0.5px solid rgba(0, 0, 0, 0.65);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18);
+}
+
+.project-case-study .ui-window video,
+.project-case-study .ui-window img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    border-radius: 0;
+}
+
+[data-theme="dark"] .ui-window {
+    outline-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55);
+}
+
 .project-issue-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
