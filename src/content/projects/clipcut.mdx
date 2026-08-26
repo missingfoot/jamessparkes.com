@@ -1,0 +1,45 @@
+---
+title: "ClipCut"
+description: "A drag-and-drop desktop tool for trimming, cropping, and exporting video clips fast, built to skip the overhead of a full NLE for quick one-off clips."
+tags: ["Python", "PySide6", "Qt", "FFmpeg", "Desktop App", "Tooling"]
+category: "personal"
+order: 5
+visible: true
+images: []
+---
+
+import KV from '../../components/KV.astro';
+import KVGroup from '../../components/KVGroup.astro';
+import KVHeading from '../../components/KVHeading.astro';
+
+Most of the clips I need to make are small: trim the dead air off a screen recording, crop a downloaded video down to the bit that matters, pull just the audio out of something. None of that needs a timeline-based editor, it just needs to be fast, so I built ClipCut: drop a video on the window, mark the cuts, drag a crop box if you need one, and export.
+
+It's a single Python script running on PySide6 for the UI, with FFmpeg doing the actual encoding underneath.
+
+### Cutting without losing quality you don't have to lose
+
+The default trim mode snaps to the source's keyframes and stream-copies the result, no re-encoding, no quality loss, and it's instant regardless of the clip's length. A frame-accurate mode is there too for when you need an exact cut point badly enough to pay for the re-encode.
+
+<KVGroup>
+  <KV term="Multi-cut" desc="Multiple cuts from one source, managed as a list: select, delete, keep-only-selected, or merge a contiguous run into one." />
+  <KV term="Scene detection" desc="Runs a threshold-based scan and replaces the whole cut list with one cut per detected scene change." />
+  <KV term="Export modes" desc="Each cut as its own file, or every cut concatenated into one combined output via a fast stream-copy join." />
+</KVGroup>
+
+### Crop and export, staying out of the way
+
+The crop tool is drag-and-drop guides with corner handles, an aspect-ratio lock with presets (or the source's own native ratio), and a toggle between one shared crop for every cut versus an independent crop per cut. Zooming into the preview is cursor-anchored, so scrolling in on a specific detail keeps that point under your mouse instead of recentering the view on you.
+
+Export leans on the same instinct as the trimming: don't re-encode unless the export choice actually requires it. Picking a specific format (or a specific audio codec) always re-encodes, since that's a deliberate conversion, but the default paths stream-copy wherever the container and codec already line up, including audio-only exports, which pick a container to match the source's audio codec instead of assuming everything is AAC.
+
+<KVGroup>
+  <KV term="Video" desc="Original (stream-copies where possible), MP4 (H.264/H.265), WebM (VP9), MKV, or AV1." />
+  <KV term="Animated" desc="GIF or WebP export with frame rate, palette, dithering, and gifsicle optimization controls." />
+  <KV term="Audio-only" desc="Original (matches the source codec's own container losslessly), M4A, MP3, Opus, FLAC, or WAV." />
+</KVGroup>
+
+### Where it's at
+
+It's my daily tool for anything that would otherwise mean opening a full editor for a thirty-second job. Still actively growing in small increments, mostly driven by hitting a rough edge myself and fixing it the same day, rather than any fixed roadmap.
+
+Source's on [GitHub](https://github.com/missingfoot/clipcut).
