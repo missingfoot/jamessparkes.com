@@ -49,5 +49,3 @@ It's my daily tool for anything that would otherwise mean opening a full editor 
 It outgrew being a single script a while back, but I kept bolting features onto it anyway. Adding Zoom mode was the tipping point: it needed to interact with crop, scale, and the lossless-trim guardrails all at once, and doing that cleanly in one file wasn't realistic anymore. That pushed a proper split into a `clipcutlib` package (mixins, ffmpeg helpers, widgets, app bootstrap), which made the Zoom mode work possible in the first place.
 
 The UI needed the same rethink. Lossless Keyframe trim used to just be a checkbox sitting next to everything else, which meant it was on you to remember it couldn't coexist with crop, zoom, or scale. It's now a proper guardrailed mode instead: pick it and the UI locks out the operations that would break it, rather than letting you find out the hard way on export. Small as that sounds, it's a sign of what ClipCut's actually become: less a quick trim script, more a real (if focused) editing app.
-
-Source's on [GitHub](https://github.com/missingfoot/clipcut).
