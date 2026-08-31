@@ -3,14 +3,18 @@ title: "Tab Tools"
 description: "A Chrome extension for efficiently managing large numbers of open tabs, built to fill the gap left by Chrome's default tab management with grouping, session saving, batch actions, and keyboard shortcuts."
 tags: ["UI Design", "UX Design", "Chrome Extensions", "Web Development", "Project Management", "CSS", "HTML", "Tailwind"]
 category: "personal"
-order: 1
+order: 4
 visible: true
 images: []
 ---
 
+import InlineVideo from '../../components/InlineVideo.astro';
 import KV from '../../components/KV.astro';
 import KVGroup from '../../components/KVGroup.astro';
 import KVHeading from '../../components/KVHeading.astro';
+import tabToolsPoster from '../../assets/images/tab-tools-poster.jpg';
+
+<InlineVideo src="/videos/tab-tools.mp4" poster={tabToolsPoster} alt="Tab Tools' popup in Chrome: grouping tabs, closing duplicates, saving a session, and batch actions" class="ui-window" />
 
 ## Overview
 
@@ -21,7 +25,7 @@ import KVHeading from '../../components/KVHeading.astro';
 
 ## The process
 
-This project (along with [UI Translator](/personal/ui-translator)) is one of a series of personal projects where I lean on AI-assisted IDEs like Cursor to accelerate development, while personally driving the project from problem definition through to release rather than just focusing on UX design:
+This project is one of a series of personal projects where I lean on AI-assisted IDEs like Cursor to accelerate development, while personally driving the project from problem definition through to release rather than just focusing on UX design:
 
 <KVGroup>
   <KV term="Identify the problem" desc="Started with a real-world issue: Chrome's default tab management couldn't keep up with dozens of open tabs." />

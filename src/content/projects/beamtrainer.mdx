@@ -3,14 +3,18 @@ title: "BeamTrainer"
 description: "A GTA5-style trainer menu for BeamNG.drive: a full keyboard/mouse-driven in-game window that mirrors the game's gameplay radial menu, adds a curated set of sandbox tools, and layers on a vehicle spawner, teleport slots, and favorites."
 tags: ["Lua", "Game Modding", "Tooling", "UI Design", "Reverse Engineering"]
 category: "personal"
-order: 3
+order: 2
 visible: true
 images: []
 ---
 
+import InlineVideo from '../../components/InlineVideo.astro';
 import KV from '../../components/KV.astro';
 import KVGroup from '../../components/KVGroup.astro';
 import KVHeading from '../../components/KVHeading.astro';
+import beamtrainerPoster from '../../assets/images/beamtrainer-poster.jpg';
+
+<InlineVideo src="/videos/beamtrainer.mp4" poster={beamtrainerPoster} alt="Navigating BeamTrainer's menu in-game: teleport slots, vehicle spawner, and the mirrored gameplay radial menu" />
 
 BeamNG.drive's built-in gameplay radial menu is genuinely controversial in the community: a stick-driven wheel you pull up and drill into layer by layer, one entry at a time, to reach vehicle actions, world options, and sandbox tools. A lot of players find the UX slow and awkward for anything they reach for often, and it's a recurring complaint on the forums.
 
