@@ -1,0 +1,22 @@
+Sound effects for the avatar brick-breaker easter egg.
+
+Source: Kenney (www.kenney.nl) — "Impact Sounds", "Interface Sounds", and
+"Sci-fi Sounds" packs. Licensed CC0 (Creative Commons Zero / public domain),
+free for personal, educational, and commercial use. Attribution not required,
+but credit is appreciated: https://kenney.nl
+
+paddle-hit-1.mp3, thunder-1.mp3, brick-break-1.mp3, explosion-1.mp3,
+laser-fire-1/2/3.mp3, powerup-pickup-1.mp3, powerup-pickup-bad-1.mp3, and
+ball-lost-1.mp3 — from "The Essential Retro Video Game Sound Effects
+Collection [512 sounds]" by Juhani Junkala, CC0. (These replaced Kenney clips
+with ones from the same Junkala pack.)
+
+game-over-1.mp3 is Kenney's Interface Sounds "error_001.ogg" — unchanged
+from the original set, restored here after a brief mix-up.
+
+fire-ignite-1.mp3 — the first second of "sfx_sound_mechanicalnoise1.wav" from
+"The Essential Retro Video Game Sound Effects Collection [512 sounds]" by
+Juhani Junkala, CC0, trimmed and faded at both ends for a seamless loop.
+
+Files were trimmed to MP3 from the original source audio; no other editing
+was applied.

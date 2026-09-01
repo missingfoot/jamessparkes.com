@@ -23,6 +23,384 @@
     }
     function isMobile() { return window.innerWidth <= 640; }
 
+    // ---------------------------------------------------------------- sound
+    // Real sampled SFX (CC0 clips from kenney.nl — see public/sounds/CREDITS.txt)
+    // played through Web Audio, plus a small procedural synth-rave background
+    // loop and a handful of bell-tone stingers for the purely musical reward
+    // moments (win / extra life / next level) where no single stock clip fits.
+    // Everything lazily inits on the player's first click (autoplay policy).
+    var sfx = (function () {
+        var ctx = null, master = null, sfxBus = null, musicBus = null;
+        var muted = loadMuted();
+        var musicOn = false, musicTimer = null, nextNoteTime = 0, step16 = 0;
+        var SCHED_AHEAD = 0.12, SCHED_INTERVAL = 40; // seconds / ms
+        var BPM = 136, STEP = 60 / BPM / 4; // 16th-note length, seconds
+
+        function loadMuted() { try { return localStorage.getItem('avatarGameMuted') === '1'; } catch (e) { return false; } }
+        function saveMuted(v) { try { localStorage.setItem('avatarGameMuted', v ? '1' : '0'); } catch (e) {} }
+
+        // ---- cleanup bookkeeping ----
+        // One-shot sources (samples, thunder, bell tones) can't be cancelled
+        // once started, and the chained stingers (win / game over / extra life)
+        // schedule their later notes via setTimeout — both would otherwise keep
+        // playing after the player has already quit. Track both so exit() can
+        // hard-stop everything immediately.
+        var activeSources = [], pendingTimers = [];
+        function track(node) {
+            activeSources.push(node);
+            node.onended = function () {
+                var i = activeSources.indexOf(node);
+                if (i >= 0) activeSources.splice(i, 1);
+            };
+            return node;
+        }
+        function after(fn, delay) {
+            var id = setTimeout(function () {
+                var i = pendingTimers.indexOf(id);
+                if (i >= 0) pendingTimers.splice(i, 1);
+                fn();
+            }, delay);
+            pendingTimers.push(id);
+        }
+        function stopAll() {
+            pendingTimers.forEach(function (id) { clearTimeout(id); });
+            pendingTimers = [];
+            activeSources.forEach(function (node) { try { node.stop(); } catch (e) {} });
+            activeSources = [];
+            // setTargetAtTime's fade curve has no fixed end time, so once it's
+            // running, cancelScheduledValues() won't reliably stop it (its start
+            // time is already in the past). Disconnecting the node is unambiguous.
+            hardSilence(fireLoop);
+            hardSilence(magnetHum);
+            fireLoopActive = false;
+            // Belt and suspenders: suspending the whole context halts ALL audio
+            // processing immediately, engine-wide — a hard guarantee against any
+            // node/automation state the checks above might miss. resume() at the
+            // next game start un-suspends it.
+            if (ctx && ctx.state === 'running') ctx.suspend().catch(function () {});
+        }
+        function hardSilence(loopObj) {
+            if (!loopObj || !loopObj.connected) return;
+            try { loopObj.gain.disconnect(); } catch (e) {}
+            loopObj.connected = false;
+        }
+
+        // ---- sample bank ----
+        // Several numbered variants per event, picked at random with a touch
+        // of pitch jitter, so repeated hits (a fast rally, a brick chain)
+        // don't sound like the exact same clip on a loop.
+        var SOUND_FILES = {
+            wallBounce: ['wall-bounce-1', 'wall-bounce-2', 'wall-bounce-3'],
+            paddleHit: ['paddle-hit-1'], // one fixed clip, see paddleHit()
+            punchHit: ['punch-hit-1', 'punch-hit-2', 'punch-hit-3'],
+            magnetCatch: ['magnet-catch-1', 'magnet-catch-2', 'magnet-catch-3'],
+            brickHit: ['brick-hit-1', 'brick-hit-2', 'brick-hit-3'],
+            brickBreak: ['brick-break-1'], // one fixed clip
+            laserFire: ['laser-fire-1', 'laser-fire-2', 'laser-fire-3'], // indexed by laser power level, not random
+            explosion: ['explosion-1'],
+            thunder: ['thunder-1'],
+            fireAmbience: ['fire-ignite-1'],
+            powerupDrop: ['powerup-drop-1', 'powerup-drop-2', 'powerup-drop-3'],
+            powerupPickup: ['powerup-pickup-1'],
+            powerupPickupBad: ['powerup-pickup-bad-1'],
+            ballLost: ['ball-lost-1'],
+            gameOver: ['game-over-1']
+        };
+        var buffers = {}, loading = {};
+        function loadBuffer(name) {
+            if (buffers[name] || loading[name] || !ctx) return;
+            loading[name] = true;
+            fetch('/sounds/' + name + '.mp3')
+                .then(function (r) { return r.arrayBuffer(); })
+                .then(function (ab) { return ctx.decodeAudioData(ab); })
+                .then(function (buf) { buffers[name] = buf; })
+                .catch(function () {});
+        }
+        function preloadAll() {
+            Object.keys(SOUND_FILES).forEach(function (key) {
+                SOUND_FILES[key].forEach(loadBuffer);
+            });
+        }
+        function playSample(key, opts) {
+            if (!ctx) return;
+            var files = SOUND_FILES[key];
+            if (!files) return;
+            opts = opts || {};
+            var name = opts.index != null
+                ? files[clamp(opts.index, 0, files.length - 1)]
+                : files[(Math.random() * files.length) | 0];
+            var buf = buffers[name];
+            if (!buf) return; // still loading — skip rather than pop/click
+            var src = ctx.createBufferSource();
+            src.buffer = buf;
+            var jitter = opts.jitter != null ? opts.jitter : 0.08;
+            src.playbackRate.value = (opts.rate || 1) + (Math.random() - 0.5) * jitter;
+            var g = ctx.createGain();
+            g.gain.value = opts.vol != null ? opts.vol : 1;
+            src.connect(g); g.connect(sfxBus);
+            src.start(ctx.currentTime);
+            track(src);
+        }
+
+        function ctxReady() {
+            if (ctx) return ctx;
+            var AC = window.AudioContext || window.webkitAudioContext;
+            if (!AC) return null;
+            ctx = new AC();
+            master = ctx.createGain(); master.gain.value = muted ? 0 : 1; master.connect(ctx.destination);
+            sfxBus = ctx.createGain(); sfxBus.gain.value = 0.8; sfxBus.connect(master);
+            musicBus = ctx.createGain(); musicBus.gain.value = 0.32; musicBus.connect(master);
+            preloadAll();
+            return ctx;
+        }
+        function resume() {
+            var c = ctxReady();
+            if (c && c.state === 'suspended') c.resume().catch(function () {});
+        }
+        function isMuted() { return muted; }
+        function setMuted(v) {
+            muted = v; saveMuted(v);
+            if (master && ctx) master.gain.setTargetAtTime(v ? 0 : 1, ctx.currentTime, 0.015);
+        }
+        function toggleMuted() { setMuted(!muted); return muted; }
+
+        // ---- SFX events (sampled) ----
+        function wallBounce() { playSample('wallBounce', { vol: 0.5, jitter: 0.1 }); }
+        function paddleHit() { playSample('paddleHit', { vol: 0.6, jitter: 0.03, index: 0 }); }
+        function punchHit() { playSample('punchHit', { vol: 0.85, jitter: 0.06 }); }
+        function magnetCatch() { playSample('magnetCatch', { vol: 0.5, jitter: 0.04 }); }
+        function brickHit() { playSample('brickHit', { vol: 0.45, jitter: 0.12 }); }
+        function brickBreak() { playSample('brickBreak', { vol: 0.6, jitter: 0.1 }); }
+        // One consistent sample per shot — no random variant, so rapid-fire
+        // doesn't sound like different guns. The 3 variants are instead tied
+        // to the laser's power level (1/2/3) as it's upgraded.
+        function laserFire(level) {
+            playSample('laserFire', { vol: 0.35, jitter: 0.03, index: (level || 1) - 1 });
+        }
+        // Zap Bricks reads as a lightning strike — a real thunder-crack sample.
+        function zap() { playSample('thunder', { vol: 0.9, jitter: 0.03, index: 0 }); }
+
+        // ---- continuous loops (fire crackle, grab-paddle hum) ----
+        // Built once per game session and left running; only their gain is
+        // touched afterwards, so start/stop is just a fade with no re-triggering
+        // or loop-seam clicks. Synthesized rather than sampled so the loop is
+        // guaranteed seamless.
+        var fireLoop = null, magnetHum = null;
+        // A real decaying sample always betrays its loop point — the ear catches
+        // the envelope shape repeating. Random noise doesn't have that problem
+        // (there's no distinct shape to notice repeat), so the sustained rumble
+        // is synthesized; the real fire-ignite-1 sample plays once as a one-shot
+        // "whoosh" flourish right as the loop kicks in, then the noise carries on.
+        function buildFireLoop() {
+            var dur = 2, n = Math.floor(ctx.sampleRate * dur);
+            var buf = ctx.createBuffer(1, n, ctx.sampleRate);
+            var d = buf.getChannelData(0);
+            for (var i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
+            var src = ctx.createBufferSource();
+            src.buffer = buf; src.loop = true;
+            var filt = ctx.createBiquadFilter();
+            filt.type = 'lowpass'; filt.frequency.value = 220; filt.Q.value = 0.5;
+            var lfo = ctx.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = 2.6;
+            var lfoGain = ctx.createGain(); lfoGain.gain.value = 70; // gentle rumble movement
+            lfo.connect(lfoGain); lfoGain.connect(filt.frequency);
+            var sub = ctx.createOscillator(); sub.type = 'sine'; sub.frequency.value = 55; // rumble body
+            var subGain = ctx.createGain(); subGain.gain.value = 0.4;
+            var g = ctx.createGain(); g.gain.value = 0;
+            src.connect(filt); filt.connect(g);
+            sub.connect(subGain); subGain.connect(g);
+            g.connect(sfxBus);
+            src.start(); lfo.start(); sub.start();
+            return { gain: g, connected: true };
+        }
+        var fireLoopActive = false;
+        function setFireLoop(level) {
+            if (!ctx) return;
+            if (level > 0) {
+                if (!fireLoop) fireLoop = buildFireLoop();
+                if (!fireLoop.connected) {
+                    fireLoop.gain.connect(sfxBus);
+                    fireLoop.connected = true;
+                    fireLoop.gain.gain.setValueAtTime(0, ctx.currentTime); // reconnecting after a hard stop — fade in fresh
+                }
+                if (!fireLoopActive) { playSample('fireAmbience', { vol: 0.5, jitter: 0.04 }); fireLoopActive = true; }
+                var vol = 0.16 + (level - 1) * 0.05;
+                fireLoop.gain.gain.setTargetAtTime(vol, ctx.currentTime, 0.15);
+            } else if (fireLoop) {
+                fireLoopActive = false;
+                fireLoop.gain.gain.setTargetAtTime(0, ctx.currentTime, 0.2);
+            }
+        }
+        function buildMagnetHum() {
+            var o1 = ctx.createOscillator(), o2 = ctx.createOscillator();
+            o1.type = 'sine'; o1.frequency.value = 110;
+            o2.type = 'sine'; o2.frequency.value = 165; // fifth above — shield "shimmer"
+            var trem = ctx.createOscillator(); trem.type = 'sine'; trem.frequency.value = 5.5;
+            // tremolo depth was being added directly on top of the base gain and
+            // dominating it (0.15 swing against a ~0.06 base) — keep it a small
+            // fraction of typical level so it colors the hum instead of overpowering it
+            var tremGain = ctx.createGain(); tremGain.gain.value = 0.012;
+            var g = ctx.createGain(); g.gain.value = 0;
+            trem.connect(tremGain); tremGain.connect(g.gain);
+            o1.connect(g); o2.connect(g); g.connect(sfxBus);
+            o1.start(); o2.start(); trem.start();
+            return { gain: g, connected: true };
+        }
+        function setMagnetHum(level) {
+            if (!ctx) return;
+            if (level > 0) {
+                if (!magnetHum) magnetHum = buildMagnetHum();
+                if (!magnetHum.connected) {
+                    magnetHum.gain.connect(sfxBus);
+                    magnetHum.connected = true;
+                    magnetHum.gain.gain.setValueAtTime(0, ctx.currentTime); // reconnecting after a hard stop — fade in fresh
+                }
+                var vol = 0.03 + (level - 1) * 0.015;
+                magnetHum.gain.gain.setTargetAtTime(vol, ctx.currentTime, 0.15);
+            } else if (magnetHum) {
+                magnetHum.gain.gain.setTargetAtTime(0, ctx.currentTime, 0.2);
+            }
+        }
+        function explosion() { playSample('explosion', { vol: 0.8, jitter: 0.05 }); }
+        function powerupDrop() { playSample('powerupDrop', { vol: 0.3, jitter: 0.1 }); }
+        function powerupPickup() { playSample('powerupPickup', { vol: 0.55, jitter: 0.15 }); }
+        function powerupPickupBad() { playSample('powerupPickupBad', { vol: 0.6, jitter: 0.06 }); }
+        function ballLost() { playSample('ballLost', { vol: 0.9, jitter: 0.06 }); }
+        function gameOver() { playSample('gameOver', { vol: 0.9, jitter: 0.04 }); }
+
+        // ---- SFX events (procedural — purely musical reward stingers) ----
+        // Additive bell/pluck tone: a few inharmonic partials each decaying at
+        // their own rate. No stock CC0 clip nails a chord run, so these stay
+        // synthesized — but as a bell timbre, not a flat chiptune square wave.
+        function bellTone(freq, opts) {
+            if (!ctx) return;
+            opts = opts || {};
+            var dur = opts.dur || 0.4, vol = opts.vol != null ? opts.vol : 0.3;
+            var t0 = ctx.currentTime;
+            var partials = opts.partials || [1, 2.01, 3.0, 4.2];
+            var amps = opts.amps || [1, 0.5, 0.25, 0.12];
+            partials.forEach(function (mult, i) {
+                var o = ctx.createOscillator(), g = ctx.createGain();
+                o.type = 'sine';
+                o.frequency.setValueAtTime(freq * mult, t0);
+                var a = vol * (amps[i] != null ? amps[i] : 0.2);
+                g.gain.setValueAtTime(0, t0);
+                g.gain.linearRampToValueAtTime(a, t0 + 0.005);
+                g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur / (i * 0.4 + 1));
+                o.connect(g); g.connect(sfxBus);
+                o.start(t0); o.stop(t0 + dur + 0.02);
+                track(o);
+            });
+        }
+        function extraLife() {
+            [660, 880, 1100].forEach(function (f, i) {
+                after(function () { bellTone(f, { dur: 0.3, vol: 0.32 }); }, i * 70);
+            });
+        }
+        function multiSplit() {
+            bellTone(600, { dur: 0.25, vol: 0.3 });
+            after(function () { bellTone(900, { dur: 0.3, vol: 0.3 }); }, 60);
+        }
+        function win() {
+            [523, 659, 784, 1047].forEach(function (f, i) {
+                after(function () { bellTone(f, { dur: 0.6, vol: 0.34 }); }, i * 100);
+            });
+        }
+        function nextLevel() {
+            [392, 523, 659].forEach(function (f, i) {
+                after(function () { bellTone(f, { dur: 0.25, vol: 0.28 }); }, i * 55);
+            });
+        }
+
+        // ---- procedural background music (lookahead step sequencer) ----
+        // 136bpm loop: a pulsing sawtooth bassline, a square arpeggio riff, and
+        // a simple kick/hat pattern — all synthesized, nothing recorded.
+        var BASS = [55, 55, 82.5, 55, 55, 55, 73.5, 65.5]; // 2 bars, quarter-notes
+        var ARP = [220, 330, 440, 330, 262, 330, 440, 523];
+        var KICK_STEPS = { 0: 1, 4: 1, 8: 1, 10: 1, 12: 1 };
+        var HAT_STEPS = { 2: 1, 6: 1, 10: 1, 14: 1 };
+
+        function scheduleKick(t) {
+            var o = ctx.createOscillator(), g = ctx.createGain();
+            o.type = 'sine';
+            o.frequency.setValueAtTime(150, t);
+            o.frequency.exponentialRampToValueAtTime(40, t + 0.12);
+            g.gain.setValueAtTime(0.9, t);
+            g.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+            o.connect(g); g.connect(musicBus);
+            o.start(t); o.stop(t + 0.16);
+            track(o);
+        }
+        function scheduleHat(t) {
+            var n = Math.floor(ctx.sampleRate * 0.05);
+            var buf = ctx.createBuffer(1, n, ctx.sampleRate);
+            var d = buf.getChannelData(0);
+            for (var i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
+            var src = ctx.createBufferSource(); src.buffer = buf;
+            var filt = ctx.createBiquadFilter(); filt.type = 'highpass'; filt.frequency.value = 7000;
+            var g = ctx.createGain(); g.gain.setValueAtTime(0.25, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+            src.connect(filt); filt.connect(g); g.connect(musicBus);
+            src.start(t); src.stop(t + 0.05);
+            track(src);
+        }
+        function scheduleBass(t, freq) {
+            var o = ctx.createOscillator(), g = ctx.createGain(), f = ctx.createBiquadFilter();
+            o.type = 'sawtooth'; o.frequency.setValueAtTime(freq, t);
+            f.type = 'lowpass'; f.frequency.setValueAtTime(900, t); f.Q.value = 4;
+            g.gain.setValueAtTime(0.001, t);
+            g.gain.linearRampToValueAtTime(0.35, t + 0.01);
+            g.gain.exponentialRampToValueAtTime(0.001, t + STEP * 3.8);
+            o.connect(f); f.connect(g); g.connect(musicBus);
+            o.start(t); o.stop(t + STEP * 4);
+            track(o);
+        }
+        function scheduleArp(t, freq) {
+            var o = ctx.createOscillator(), g = ctx.createGain();
+            o.type = 'square'; o.frequency.setValueAtTime(freq, t);
+            g.gain.setValueAtTime(0.001, t);
+            g.gain.linearRampToValueAtTime(0.14, t + 0.005);
+            g.gain.exponentialRampToValueAtTime(0.001, t + STEP * 0.9);
+            o.connect(g); g.connect(musicBus);
+            o.start(t); o.stop(t + STEP);
+            track(o);
+        }
+        function scheduler() {
+            while (nextNoteTime < ctx.currentTime + SCHED_AHEAD) {
+                var bar16 = step16 % 16;
+                if (KICK_STEPS[bar16]) scheduleKick(nextNoteTime);
+                if (HAT_STEPS[bar16]) scheduleHat(nextNoteTime);
+                if (bar16 % 4 === 0) scheduleBass(nextNoteTime, BASS[(step16 / 4 | 0) % BASS.length]);
+                scheduleArp(nextNoteTime, ARP[step16 % ARP.length]);
+                nextNoteTime += STEP;
+                step16++;
+            }
+        }
+        function startMusic() {
+            var c = ctxReady();
+            if (!c || musicOn) return;
+            musicOn = true;
+            resume();
+            nextNoteTime = c.currentTime + 0.05;
+            step16 = 0;
+            musicTimer = setInterval(scheduler, SCHED_INTERVAL);
+        }
+        function stopMusic() {
+            musicOn = false;
+            if (musicTimer) clearInterval(musicTimer);
+            musicTimer = null;
+        }
+
+        return {
+            resume: resume, isMuted: isMuted, toggleMuted: toggleMuted,
+            startMusic: startMusic, stopMusic: stopMusic,
+            wallBounce: wallBounce, paddleHit: paddleHit, punchHit: punchHit, magnetCatch: magnetCatch,
+            brickHit: brickHit, brickBreak: brickBreak, laserFire: laserFire, zap: zap, explosion: explosion,
+            powerupDrop: powerupDrop, powerupPickup: powerupPickup, powerupPickupBad: powerupPickupBad,
+            extraLife: extraLife, multiSplit: multiSplit,
+            ballLost: ballLost, gameOver: gameOver, win: win, nextLevel: nextLevel,
+            setFireLoop: setFireLoop, setMagnetHum: setMagnetHum, stopAll: stopAll
+        };
+    })();
+
     // Placeholder keeps the layout from collapsing while the avatar is loose.
     function detachAvatar() {
         var r = avatar.getBoundingClientRect();
@@ -333,6 +711,7 @@
         var savedTheme = null;
         function start() {
             simple = isMobile();
+            sfx.resume(); // called directly from the click handler — satisfies autoplay policy
             // the game reads --bg / --text; force dark for the run (without touching
             // the saved preference) since it doesn't read well in light mode
             savedTheme = document.documentElement.getAttribute('data-theme');
@@ -372,6 +751,7 @@
             on(document, 'pointerlockchange', onLock);
 
             loop();
+            sfx.startMusic();
         }
 
         function levelSpeed() {
@@ -399,6 +779,7 @@
             makeBricks();
             serve();
             state = 'entering';
+            sfx.nextLevel();
         }
 
         function exit() {
@@ -406,6 +787,8 @@
             if (raf) cancelAnimationFrame(raf);
             raf = null;
             offAll();
+            sfx.stopMusic();
+            sfx.stopAll();
             try { if (document.pointerLockElement) document.exitPointerLock(); } catch (e) {}
             locked = false;
             if (canvas && canvas.parentNode) canvas.parentNode.removeChild(canvas);
@@ -452,9 +835,16 @@
             var p = e.changedTouches && e.changedTouches[0] ? e.changedTouches[0] : e;
             return p.clientX > W - 160 && p.clientY < 32;
         }
+        function muteButton() { return { x: W - 46, y: H - 46, w: 30, h: 30 }; }
+        function hitMute(e) {
+            var p = e.changedTouches && e.changedTouches[0] ? e.changedTouches[0] : e;
+            var b = muteButton();
+            return p.clientX >= b.x && p.clientX <= b.x + b.w && p.clientY >= b.y && p.clientY <= b.y + b.h;
+        }
         function onDown(e) {
             if (e.cancelable && e.pointerType === 'touch') e.preventDefault();
             if (e.clientX != null) { pointerX = e.clientX; pointerY = e.clientY; }
+            if (hitMute(e)) { sfx.toggleMuted(); return; }
             if (hitClose(e)) { exit(); return; }
             if (state === 'won') {
                 var b = winButton();
@@ -484,6 +874,7 @@
         function onKeyUp(e) { if (e.key === ' ' || e.code === 'Space') spaceHeld = false; }
         function onKey(e) {
             if (e.key === 'Escape' || e.key === 'q' || e.key === 'Q') { exit(); return; }
+            if (e.key === 'm' || e.key === 'M') { sfx.toggleMuted(); return; }
             if (e.key === '`') { debug = !debug; return; }
             if (debug) {
                 var di = DEBUG_KEYS.indexOf(e.key);
@@ -507,6 +898,7 @@
             var cd = timers.laser >= 3 ? 75 : (timers.laser >= 2 ? 120 : 230);
             if (now - lastFire < cd) return;
             lastFire = now;
+            sfx.laserFire(timers.laser);
             bullets.push({ x: paddle.x - paddle.w / 2 + 7, y: paddle.y + paddle.yOff });
             bullets.push({ x: paddle.x + paddle.w / 2 - 7, y: paddle.y + paddle.yOff });
         }
@@ -542,6 +934,7 @@
         }
         function maybeDrop(x, y) {
             if (simple || Math.random() > 0.16) return;
+            sfx.powerupDrop();
             powerups.push({ x: x, y: y, w: 26, h: 26, vy: 2.1, type: pickPowerup() });
         }
         // timers.wide / timers.shrink hold the current multiplier — each pickup
@@ -560,6 +953,7 @@
             if (maxTy < 0) return;
             zapFlash = performance.now();
             zapY = maxTy + brickBH / 2;
+            sfx.zap();
             bricks.forEach(function (b) {
                 if (b.alive && Math.abs(b.ty - maxTy) < 2) {
                     b.alive = false; score += 30;
@@ -581,6 +975,7 @@
             var rx = brickW * 1.5, ry = brickStep * 1.6;
             var queue = seed ? [seed] : [];
             var killed = 0;
+            sfx.explosion();
             var hitOne = function (fx, fy) {
                 bricks.forEach(function (o) {
                     if (!o.alive) return;
@@ -617,13 +1012,14 @@
                 if (Math.abs(o.x + o.w / 2 - cx) > rx || Math.abs(o.y + o.h / 2 - cy) > ry) return;
                 var ox = o.x + o.w / 2, oy = o.y + o.h / 2;
                 if (o.boom && !o.boomed) { o.boomed = true; o.alive = false; blast(ox, oy, o); }
-                else { o.alive = false; score += 30; burst(ox, oy, o.color); }
+                else { o.alive = false; score += 30; burst(ox, oy, o.color); sfx.brickBreak(); }
             });
         }
         // Effects stay on until you lose the ball (loseBall clears `timers`).
         function applyPowerup(t) {
             if (!PU_BAD[t]) score += 100;
             if (t === 'multi') {
+                sfx.multiSplit();
                 var add = [];
                 balls.forEach(function (b) {
                     if (balls.length + add.length >= 9) return;
@@ -657,6 +1053,7 @@
                 timers.fast = 1; timers.slow = 0; applyBallSpeed();
             } else if (t === 'life') {
                 lives = Math.min(5, lives + 1);
+                sfx.extraLife();
             } else if (t === 'laser') {
                 // lvl 1 tap-fire · lvl 2 rapid · lvl 3 hold for machine-gun
                 timers.laser = Math.min((timers.laser || 0) + 1, 3);
@@ -711,18 +1108,25 @@
             k.hp--; score += 10;
             if (k.hp <= 0) {
                 k.alive = false; score += 40; burst(x, y, k.color); maybeDrop(x, y);
+                sfx.brickBreak();
                 if (k.boom && !k.boomed) { k.boomed = true; blast(x, y, k); }
                 else if (bombArmed) { bombArmed = false; blast(x, y); }
+            } else {
+                sfx.brickHit();
             }
         }
 
         function loseBall() {
+            // sfx.ballLost() already played per-ball at the drop site (below),
+            // including for every ball lost while multi-ball was active
             lives--;
             if (lives <= 0) {
                 state = 'lost';
                 if (score > best) best = score;
                 saveBest(best);
                 freeCursor();
+                sfx.gameOver();
+                timers = {}; bombArmed = false; // stop any active fire/magnet loop
             } else {
                 // pop any powerups still in the air — they don't carry to the next ball
                 powerups.forEach(function (pu) { burst(pu.x, pu.y, PU_COLOR[pu.type] || '#888'); });
@@ -738,6 +1142,8 @@
             if (!locked && pointerX != null) paddle.x += (pointerX - paddle.x) * (simple ? 0.35 : 0.5);
             paddle.x = clamp(paddle.x, paddle.w / 2, W - paddle.w / 2);
             paddle.yOff += (0 - paddle.yOff) * 0.25; // jab springs back to rest
+            sfx.setFireLoop(timers.fire || 0);
+            sfx.setMagnetHum(timers.magnet || 0);
 
             if (state === 'entering') {
                 tEnter++;
@@ -810,6 +1216,7 @@
                     if (b.x - b.r < 0) { b.x = b.r; b.vx = Math.abs(b.vx); wall = true; spin(b, -b.vy); }
                     else if (b.x + b.r > W) { b.x = W - b.r; b.vx = -Math.abs(b.vx); wall = true; spin(b, b.vy); }
                     if (b.y - b.r < 0) { b.y = b.r; b.vy = Math.abs(b.vy); wall = true; spin(b, -b.vx); }
+                    if (wall) sfx.wallBounce();
                     if (wall && simple) {
                         speed = Math.min(speed * 1.06, baseSpeed * 4);
                         scaleBalls();
@@ -828,6 +1235,7 @@
                             b.av = 0;
                             b.heldDx = clamp(b.x - paddle.x, -paddle.w / 2 + b.r + 2, paddle.w / 2 - b.r - 2);
                             b.vx = 0; b.vy = 0;
+                            sfx.magnetCatch();
                             continue;
                         }
 
@@ -841,10 +1249,13 @@
                             paddle.punchUntil = 0;
                             paddle.yOff = -22;
                             score += simple ? 0 : 25;
+                            sfx.punchHit();
                             for (var pk = 0; pk < 10; pk++) {
                                 var pa = -Math.PI / 2 + (Math.random() - 0.5) * 1.6;
                                 particles.push({ x: b.x, y: py, vx: Math.cos(pa) * 3, vy: Math.sin(pa) * 3, life: 16 + Math.random() * 10, color: '#ffffff' });
                             }
+                        } else {
+                            sfx.paddleHit();
                         }
                         b.vx = Math.cos(ang) * sp;
                         b.vy = Math.sin(ang) * sp;
@@ -891,6 +1302,7 @@
                     // gone once it's clearly past the paddle (stops balls loitering
                     // in the gap below it, especially with the magnet pull active)
                     if (b.y - b.r > paddle.y + paddle.h + 6) {
+                        sfx.ballLost();
                         for (var pp = 0; pp < 14; pp++) {
                             var pa2 = Math.random() * Math.PI * 2, ps = 1.5 + Math.random() * 3.5;
                             particles.push({
@@ -915,6 +1327,7 @@
                     pu.y += pu.vy;
                     if (pu.y + pu.h / 2 >= paddle.y && pu.y - pu.h / 2 <= paddle.y + paddle.h &&
                         pu.x + pu.w / 2 >= paddle.x - paddle.w / 2 && pu.x - pu.w / 2 <= paddle.x + paddle.w / 2) {
+                        if (PU_BAD[pu.type]) sfx.powerupPickupBad(); else sfx.powerupPickup();
                         applyPowerup(pu.type); powerups.splice(p, 1);
                     } else if (pu.y - pu.h > H) {
                         powerups.splice(p, 1);
@@ -963,6 +1376,8 @@
                         saveBest(best);
                         state = 'won';
                         freeCursor();
+                        sfx.win();
+                        timers = {}; bombArmed = false; // stop any active fire/magnet loop
                         balls = []; powerups = []; bullets = [];
                     }
                 }
@@ -1433,9 +1848,41 @@
                 center(fg, (simple ? 'TAP' : 'CLICK') + ' TO PLAY AGAIN' + (simple ? '' : '  ·  Q TO LEAVE'), H / 2 + 20, 12);
             }
 
+            drawMuteButton(fg, bg);
+
             if (debug) drawDebug(fg);
 
             if (canvas && canvas.style.cursor !== wantCursor) canvas.style.cursor = wantCursor;
+        }
+
+        // small speaker toggle, bottom-right — always available, even on the win/lose screens
+        function drawMuteButton(fg, bg) {
+            var b = muteButton();
+            ctx.globalAlpha = 0.55;
+            ctx.fillStyle = bg;
+            rrect(b.x, b.y, b.w, b.h, 8); ctx.fill();
+            ctx.globalAlpha = 1;
+            ctx.strokeStyle = 'rgba(127,127,127,0.35)'; ctx.lineWidth = 1;
+            rrect(b.x, b.y, b.w, b.h, 8); ctx.stroke();
+
+            var cx = b.x + b.w / 2, cy = b.y + b.h / 2;
+            ctx.fillStyle = fg;
+            ctx.beginPath();
+            ctx.moveTo(cx - 9, cy - 3); ctx.lineTo(cx - 4, cy - 3); ctx.lineTo(cx + 2, cy - 8);
+            ctx.lineTo(cx + 2, cy + 8); ctx.lineTo(cx - 4, cy + 3); ctx.lineTo(cx - 9, cy + 3);
+            ctx.closePath(); ctx.fill();
+
+            ctx.lineCap = 'round';
+            if (sfx.isMuted()) {
+                ctx.strokeStyle = fg; ctx.lineWidth = 1.6;
+                ctx.beginPath(); ctx.moveTo(cx - 10, cy - 9); ctx.lineTo(cx + 11, cy + 9); ctx.stroke();
+            } else {
+                ctx.strokeStyle = fg; ctx.lineWidth = 1.4;
+                ctx.beginPath(); ctx.arc(cx + 5, cy, 6, -0.7, 0.7); ctx.stroke();
+                ctx.globalAlpha = 0.6;
+                ctx.beginPath(); ctx.arc(cx + 5, cy, 10, -0.6, 0.6); ctx.stroke();
+                ctx.globalAlpha = 1;
+            }
         }
 
         function drawDebug(fg) {
