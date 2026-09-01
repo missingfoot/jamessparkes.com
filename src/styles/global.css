@@ -190,6 +190,43 @@ body {
     margin: 0 auto;
 }
 
+.about-avatar {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 1.5rem;
+}
+
+[data-theme="dark"] .about-avatar {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+/* About avatar easter egg (see /js/avatar-game.js) */
+.breaker-fade {
+    opacity: 0.5;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+}
+
+.breaker-canvas {
+    display: block;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
 .about-links {
     margin-top: 1.5rem;
     display: flex;

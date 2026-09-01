@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import portrait from '../assets/images/james-sparkes.jpg';
 ---
 <BaseLayout
   title="James Sparkes — Product Designer"
@@ -7,14 +9,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   path="/"
 >
   <div class="about-view">
-    <h1 class="project-title">About</h1>
+    <Image src={portrait} alt="James Sparkes" class="about-avatar" width={320} height={320} />
+    <h1 class="visually-hidden">About</h1>
 
     <div class="project-case-study">
-      <p>Product designer specialising in UI/UX design for mobile apps, SaaS platforms, web apps, and marketing websites. I focus on creating intuitive, high-quality interfaces and design systems that enhance user experiences.</p>
+      <p>I'm a product designer specialising in UI/UX for mobile apps, SaaS platforms, web apps, and websites. I own design end-to-end, from research through to production frontend implementation, usually in React, Figma, or whatever medium best communicates an idea, which means I understand both sides of the handoff between design and engineering rather than handing off and stepping away.</p>
 
-      <p>I'm an adaptable problem-solver who loves creating thoughtful user experiences, improving product adoption, and boosting client satisfaction. My work helps businesses attract and retain users, win new clients, and deliver real impact. Strategy, storytelling, and business outcomes are central to how I design.</p>
+      <p>A big part of how I work is talking directly to users and getting into their actual workflows before designing solutions, digging into the details that get overlooked but that make the difference between a mediocre product and a great one. What's always mattered most to me isn't UX for its own sake, it's designing workflows that get people from A to B in the best way possible, so a digital system fades naturally into their everyday work.</p>
 
-      <p>While I focus on digital design, my personal interests in physical product design, service design, architecture, and urban planning give me a broader perspective. I adapt quickly to new tools, collaborate well with teams, and make use of AI, but critical thinking, empathy, and real problem-solving always stay at the core of my work.</p>
+      <p>I'm an adaptable problem-solver who cares about product adoption and client satisfaction as much as a beautiful interface. Strategy, storytelling, and business outcomes are central to how I design, and I've spent years designing for accessibility and for users with very different comfort levels with technology. I also think interaction design is one of the most important parts of the craft, and it's what people subconsciously read as good design even when it isn't pretty. That combination is what makes products people actually want to use.</p>
+
+      <p>Outside of client work, I'm into open source and building CLI and GUI programs for Linux, and I enjoy the games industry, learning how games get made, and even building some small games myself as a way to understand systems from first principles, from a game loop to physics to rendering built up from scratch. That same instinct, wanting to see and control every part of a system rather than trust a black box, is what I bring to product design too. I adapt quickly to new tools and make use of AI, but critical thinking, empathy, and real problem-solving stay at the core of the work.</p>
     </div>
 
     <div class="about-links">
@@ -22,4 +27,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <a href="mailto:hello@jamessparkes.com" id="contact-link">Contact</a>
     </div>
   </div>
+
+  <script slot="scripts" src="/js/avatar-game.js" defer></script>
 </BaseLayout>
