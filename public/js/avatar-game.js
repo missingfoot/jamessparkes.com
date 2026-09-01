@@ -770,18 +770,18 @@
                     if (timers.magnet >= 2 && !b.stuck && b.vy > 0 && b.y > H * 0.45 && b.y < pTop) {
                         var dx = paddle.x - b.x, dy = (pTop - b.r) - b.y;
                         var dist = Math.hypot(dx, dy) || 1;
-                        var range = timers.magnet >= 3 ? 520 : 300;
+                        var range = timers.magnet >= 3 ? 600 : 300;
                         var reach = 1 - dist / range;
                         if (reach > 0) {
                             var mag = Math.hypot(b.vx, b.vy) || speed;
-                            var g = (timers.magnet >= 3 ? 26 : 9) * reach / (dist + 40);
+                            var g = (timers.magnet >= 3 ? 52 : 9) * reach / (dist + 40);
                             b.vx += dx / dist * g;
                             b.vy += dy / dist * g;
                             var m2 = Math.hypot(b.vx, b.vy) || 1;
                             b.vx = b.vx / m2 * mag;
                             b.vy = b.vy / m2 * mag;
                             // always keep some downward progress — no stalling on the diagonal
-                            var minVy = mag * 0.16;
+                            var minVy = mag * (timers.magnet >= 3 ? 0.1 : 0.16);
                             if (b.vy < minVy) {
                                 b.vy = minVy;
                                 var sx = Math.sqrt(Math.max(0, mag * mag - minVy * minVy));
