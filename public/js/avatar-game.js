@@ -31,10 +31,11 @@
     // Everything lazily inits on the player's first click (autoplay policy).
     var sfx = (function () {
         var ctx = null, master = null, sfxBus = null, musicBus = null;
-        var muted = loadMuted();
+        var muted = loadMuted(), paused = false;
         var musicOn = false, musicTimer = null, nextNoteTime = 0, step16 = 0;
         var SCHED_AHEAD = 0.12, SCHED_INTERVAL = 40; // seconds / ms
         var BPM = 136, STEP = 60 / BPM / 4; // 16th-note length, seconds
+        var MUSIC_VOL = 0.32;
 
         function loadMuted() { try { return localStorage.getItem('avatarGameMuted') === '1'; } catch (e) { return false; } }
         function saveMuted(v) { try { localStorage.setItem('avatarGameMuted', v ? '1' : '0'); } catch (e) {} }
@@ -73,6 +74,7 @@
             hardSilence(fireLoop);
             hardSilence(magnetHum);
             fireLoopActive = false;
+            paused = false; // in case Q quit straight out of the pause menu
             // Belt and suspenders: suspending the whole context halts ALL audio
             // processing immediately, engine-wide — a hard guarantee against any
             // node/automation state the checks above might miss. resume() at the
@@ -83,6 +85,36 @@
             if (!loopObj || !loopObj.connected) return;
             try { loopObj.gain.disconnect(); } catch (e) {}
             loopObj.connected = false;
+        }
+        // Level/life boundaries (win, game over, ball lost, next board) clear
+        // timers.fire/timers.magnet, but the loops were only ever fading out
+        // over ~0.2s via setTargetAtTime — audible as "still playing" for a
+        // beat. Cut them instantly here instead, same disconnect used for a
+        // full quit, but without touching music or suspending the context.
+        function silenceLoops() {
+            hardSilence(fireLoop);
+            hardSilence(magnetHum);
+        }
+        // Pause menu: fade the music + any active ambient loops out/in. One-shot
+        // SFX (mute toggle, resume click) stay on sfxBus and keep working.
+        function pauseAll() {
+            if (!ctx || paused) return;
+            paused = true;
+            if (musicTimer) { clearInterval(musicTimer); musicTimer = null; }
+            musicBus.gain.setTargetAtTime(0, ctx.currentTime, 0.08);
+            if (fireLoop && fireLoop.connected) fireLoop.gain.gain.setTargetAtTime(0, ctx.currentTime, 0.08);
+            if (magnetHum && magnetHum.connected) magnetHum.gain.gain.setTargetAtTime(0, ctx.currentTime, 0.08);
+        }
+        function resumeAll() {
+            if (!ctx || !paused) return;
+            paused = false;
+            musicBus.gain.setTargetAtTime(MUSIC_VOL, ctx.currentTime, 0.08);
+            if (musicOn && !musicTimer) {
+                nextNoteTime = ctx.currentTime + 0.05;
+                musicTimer = setInterval(scheduler, SCHED_INTERVAL);
+            }
+            // fireLoop/magnetHum gain is restored by the next setFireLoop/setMagnetHum
+            // call from update()'s per-frame sync once gameplay resumes
         }
 
         // ---- sample bank ----
@@ -149,7 +181,7 @@
             ctx = new AC();
             master = ctx.createGain(); master.gain.value = muted ? 0 : 1; master.connect(ctx.destination);
             sfxBus = ctx.createGain(); sfxBus.gain.value = 0.8; sfxBus.connect(master);
-            musicBus = ctx.createGain(); musicBus.gain.value = 0.32; musicBus.connect(master);
+            musicBus = ctx.createGain(); musicBus.gain.value = MUSIC_VOL; musicBus.connect(master);
             preloadAll();
             return ctx;
         }
@@ -397,7 +429,8 @@
             powerupDrop: powerupDrop, powerupPickup: powerupPickup, powerupPickupBad: powerupPickupBad,
             extraLife: extraLife, multiSplit: multiSplit,
             ballLost: ballLost, gameOver: gameOver, win: win, nextLevel: nextLevel,
-            setFireLoop: setFireLoop, setMagnetHum: setMagnetHum, stopAll: stopAll
+            setFireLoop: setFireLoop, setMagnetHum: setMagnetHum, stopAll: stopAll,
+            pauseAll: pauseAll, resumeAll: resumeAll, silenceLoops: silenceLoops
         };
     })();
 
@@ -453,7 +486,7 @@
     // ---------------------------------------------------------------- the game
     var game = (function () {
         var canvas, ctx, raf, startTimer, W, H, dpr;
-        var state;          // 'entering' | 'serving' | 'playing' | 'won' | 'lost'
+        var state;          // 'entering' | 'serving' | 'playing' | 'paused' | 'won' | 'lost'
         var simple = false; // mobile rally mode
         var bricks, balls, paddle, powerups, bullets, particles;
         var score, best, lives, level, speed, baseSpeed, tEnter, lastFire, lastBoost, bombArmed;
@@ -651,8 +684,13 @@
         var SPIN_GAIN = 0.016, SPIN_MAX = 0.34, SPIN_DAMP = 0.985;
 
         function newBall(x, y, vx, vy) {
+            // simple/mobile mode has no bricks to eyeball the ball against, and
+            // it's viewed at touchscreen distance, so give it a bigger floor/scale
+            var r = simple
+                ? Math.max(16, Math.round(Math.min(W, H) * 0.028))
+                : Math.max(9, Math.round(Math.min(W, H) * 0.016));
             return {
-                x: x, y: y, r: Math.max(9, Math.round(Math.min(W, H) * 0.016)),
+                x: x, y: y, r: r,
                 vx: vx, vy: vy, stuck: false, rot: Math.random() * Math.PI * 2, av: 0
             };
         }
@@ -758,6 +796,8 @@
             return Math.max(4.6, Math.min(W, H) * 0.0072) * (1 + (level - 1) * 0.05);
         }
         function reset() {
+            sfx.silenceLoops();
+            sfx.startMusic(); // no-op if already playing — restarts it if game-over stopped it
             powerups = []; bullets = []; particles = []; timers = {};
             level = 1;
             score = 0; lives = simple ? 1 : 3; baseSpeed = levelSpeed(); speed = baseSpeed;
@@ -771,6 +811,7 @@
         // board. Power-up effects don't carry over.
         function nextBoard() {
             level++;
+            sfx.silenceLoops();
             timers = {}; bombArmed = false;
             baseSpeed = levelSpeed();
             applyPaddleW(); applyBallSpeed();
@@ -787,6 +828,7 @@
             if (raf) cancelAnimationFrame(raf);
             raf = null;
             offAll();
+            stopRelock();
             sfx.stopMusic();
             sfx.stopAll();
             try { if (document.pointerLockElement) document.exitPointerLock(); } catch (e) {}
@@ -804,12 +846,69 @@
         }
 
         // ---- input
+        var autoPausedAt = 0;
         function onLock() {
+            var wasLocked = locked;
             locked = document.pointerLockElement === canvas;
+            // The browser intercepts the first Escape press while locked to
+            // exit pointer lock natively — the page's keydown handler doesn't
+            // reliably see that press. Trigger the pause off this guaranteed
+            // lock-exit event instead of depending on the keydown firing.
+            if (wasLocked && !locked && (state === 'entering' || state === 'serving' || state === 'playing')) {
+                pauseGame();
+                autoPausedAt = performance.now();
+            }
+            if (locked) stopRelock();
         }
         function freeCursor() {
             try { if (document.pointerLockElement) document.exitPointerLock(); } catch (e) {}
             locked = false;
+        }
+
+        // Re-request pointer lock in the background after a resume, retrying
+        // every ~150ms. Chromium rejects lock requests for ~1.2s right after an
+        // Escape-driven exit (anti "lock jail" abuse protection) — a single
+        // immediate request just gets silently dropped, so this keeps trying
+        // until it lands (or the player leaves gameplay / pauses again).
+        var relockTimer = null, relockAttempts = 0;
+        function stopRelock() {
+            if (relockTimer) { clearTimeout(relockTimer); relockTimer = null; }
+            relockAttempts = 0;
+        }
+        function attemptRelock() {
+            relockTimer = null;
+            if (simple || locked) { stopRelock(); return; }
+            if (state !== 'entering' && state !== 'serving' && state !== 'playing') { stopRelock(); return; }
+            if (relockAttempts >= 12) { stopRelock(); return; } // ~1.8s of retries, then give up — next click still recaptures it
+            relockAttempts++;
+            try {
+                var pl = canvas.requestPointerLock && canvas.requestPointerLock();
+                if (pl && pl.catch) pl.catch(function () {});
+            } catch (err) {}
+            relockTimer = setTimeout(attemptRelock, 150);
+        }
+
+        // ---- pause
+        var prePauseState = null;
+        function pauseButton(y) {
+            var w = Math.min(260, W - 80), h = 52;
+            return { x: W / 2 - w / 2, y: y != null ? y : H / 2 + 20, w: w, h: h };
+        }
+        function pauseGame() {
+            if (state !== 'entering' && state !== 'serving' && state !== 'playing') return;
+            prePauseState = state;
+            state = 'paused';
+            freeCursor();
+            stopRelock();
+            pointerHeld = false; spaceHeld = false;
+            sfx.pauseAll();
+        }
+        function resumeGame() {
+            if (state !== 'paused') return;
+            state = prePauseState || 'playing';
+            prePauseState = null;
+            sfx.resumeAll();
+            if (!simple) { relockAttempts = 0; attemptRelock(); }
         }
         function onMove(e) {
             if (locked && typeof e.movementX === 'number') {
@@ -846,6 +945,20 @@
             if (e.clientX != null) { pointerX = e.clientX; pointerY = e.clientY; }
             if (hitMute(e)) { sfx.toggleMuted(); return; }
             if (hitClose(e)) { exit(); return; }
+            if (state === 'paused') {
+                resumeGame();
+                // request the lock synchronously, right inside this real click —
+                // that's a genuine user gesture, so it reliably succeeds (unlike
+                // the retry loop in resumeGame(), which fires from a timer with
+                // no attached gesture and is only a fallback for keyboard resume)
+                if (!simple) {
+                    try {
+                        var pl2 = canvas.requestPointerLock && canvas.requestPointerLock();
+                        if (pl2 && pl2.catch) pl2.catch(function () {});
+                    } catch (err2) {}
+                }
+                return;
+            }
             if (state === 'won') {
                 var b = winButton();
                 if (pointerX >= b.x && pointerX <= b.x + b.w && pointerY >= b.y && pointerY <= b.y + b.h) {
@@ -873,7 +986,16 @@
         function onUp() { pointerHeld = false; }
         function onKeyUp(e) { if (e.key === ' ' || e.code === 'Space') spaceHeld = false; }
         function onKey(e) {
-            if (e.key === 'Escape' || e.key === 'q' || e.key === 'Q') { exit(); return; }
+            if (e.key === 'q' || e.key === 'Q') { exit(); return; }
+            if (e.key === 'Escape') {
+                // if onLock() just auto-paused from this same Escape press (see
+                // above), ignore the keydown so it doesn't immediately act again
+                if (performance.now() - autoPausedAt < 400) return;
+                // Esc and Q both quit — from the pause menu, Esc doesn't resume;
+                // use the RESUME button (or click) for that
+                if (state === 'paused') exit(); else pauseGame();
+                return;
+            }
             if (e.key === 'm' || e.key === 'M') { sfx.toggleMuted(); return; }
             if (e.key === '`') { debug = !debug; return; }
             if (debug) {
@@ -1126,11 +1248,14 @@
                 saveBest(best);
                 freeCursor();
                 sfx.gameOver();
-                timers = {}; bombArmed = false; // stop any active fire/magnet loop
+                sfx.silenceLoops();
+                sfx.stopMusic(); // reset()/exit() start it back up as appropriate
+                timers = {}; bombArmed = false;
             } else {
                 // pop any powerups still in the air — they don't carry to the next ball
                 powerups.forEach(function (pu) { burst(pu.x, pu.y, PU_COLOR[pu.type] || '#888'); });
                 powerups = [];
+                sfx.silenceLoops();
                 timers = {}; bombArmed = false;
                 applyPaddleW(); applyBallSpeed();
                 serve();
@@ -1139,6 +1264,7 @@
 
         // ---- update
         function update() {
+            if (state === 'paused') return; // frozen — draw() still renders the last frame + pause overlay
             if (!locked && pointerX != null) paddle.x += (pointerX - paddle.x) * (simple ? 0.35 : 0.5);
             paddle.x = clamp(paddle.x, paddle.w / 2, W - paddle.w / 2);
             paddle.yOff += (0 - paddle.yOff) * 0.25; // jab springs back to rest
@@ -1377,7 +1503,8 @@
                         state = 'won';
                         freeCursor();
                         sfx.win();
-                        timers = {}; bombArmed = false; // stop any active fire/magnet loop
+                        sfx.silenceLoops();
+                        timers = {}; bombArmed = false;
                         balls = []; powerups = []; bullets = [];
                     }
                 }
@@ -1742,7 +1869,7 @@
             ctx.textAlign = 'right';
             ctx.font = '600 11px "JetBrains Mono", ui-monospace, monospace';
             ctx.globalAlpha = 0.7;
-            ctx.fillText(simple ? 'TAP TO QUIT' : 'ESC TO RELEASE MOUSE  ·  Q TO QUIT', W - 16, 17);
+            ctx.fillText(simple ? 'TAP TO QUIT' : 'ESC TO PAUSE  ·  Q TO QUIT', W - 16, 17);
             ctx.globalAlpha = 1;
             ctx.font = '600 13px "JetBrains Mono", ui-monospace, monospace';
 
@@ -1756,7 +1883,7 @@
                 drawLegend(fg, bg);
                 if (state === 'serving') {
                     // floats just above the paddle/ball and tracks it so it can't be missed
-                    var lines = ['Q TO QUIT', 'ESC TO RELEASE MOUSE', 'CLICK TO SERVE'];
+                    var lines = ['Q TO QUIT', 'ESC TO PAUSE', 'CLICK TO SERVE'];
                     ctx.font = '600 14px "JetBrains Mono", ui-monospace, monospace';
                     var maxw = 0;
                     lines.forEach(function (t) { maxw = Math.max(maxw, ctx.measureText(t).width); });
@@ -1786,6 +1913,33 @@
                 ctx.globalAlpha = 0.78; ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H); ctx.globalAlpha = 1;
                 center(fg, state === 'won' ? 'YOU WIN' : 'GAME OVER', H / 2 - 60, 32);
                 center(fg, 'SCORE ' + score + '    BEST ' + Math.max(best, score), H / 2 - 22, 14);
+            } else if (state === 'paused') {
+                wantCursor = 'default';
+                ctx.globalAlpha = 0.78; ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H); ctx.globalAlpha = 1;
+
+                // same power-up key shown before serving — stack the rest of the
+                // pause UI below it (instead of a fixed H/2 position) so they
+                // never overlap, whatever the legend's height ends up being
+                var pauseTop = H / 2 - 60;
+                if (!simple) pauseTop = Math.max(pauseTop, drawLegend(fg, bg) + 40);
+
+                center(fg, 'PAUSED', pauseTop, 32);
+                center(fg, 'SCORE ' + score + '    BEST ' + Math.max(best, score), pauseTop + 38, 14);
+
+                var pb = pauseButton(pauseTop + 66);
+                var pbHover = pointerX != null && pointerX >= pb.x && pointerX <= pb.x + pb.w &&
+                    pointerY >= pb.y && pointerY <= pb.y + pb.h;
+                wantCursor = pbHover ? 'pointer' : 'default';
+                ctx.globalAlpha = pbHover ? 1 : 0.9;
+                ctx.fillStyle = fg;
+                rrect(pb.x, pb.y, pb.w, pb.h, 10); ctx.fill();
+                ctx.globalAlpha = 1;
+                ctx.fillStyle = bg;
+                ctx.font = '700 15px "JetBrains Mono", ui-monospace, monospace';
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText('RESUME', pb.x + pb.w / 2, pb.y + pb.h / 2 + 1);
+
+                center(fg, (simple ? 'TAP TO RESUME' : 'ESC OR Q TO QUIT'), pb.y + pb.h + 24, 12);
             }
 
             if (state === 'won' && !simple) {
