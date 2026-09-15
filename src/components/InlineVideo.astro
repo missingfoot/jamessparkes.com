@@ -8,7 +8,8 @@ export interface Props {
   alt: string;
   class?: string;
 }
-const { src, poster, alt, class: className = 'project-inline-video' } = Astro.props;
+const { src, poster, alt, class: extraClass } = Astro.props;
+const className = extraClass ? `project-inline-video ${extraClass}` : 'project-inline-video';
 const posterSrc = poster.src;
 ---
 <div class={className}>

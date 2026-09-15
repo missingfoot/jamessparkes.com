@@ -9,6 +9,13 @@ images: []
 
 import KV from '../../components/KV.astro';
 import KVGroup from '../../components/KVGroup.astro';
+import InlineVideo from '../../components/InlineVideo.astro';
+import calLinkedPoster from '../../assets/images/wawa-cal-linked-poster.jpg';
+import calPanningPoster from '../../assets/images/wawa-cal-panning-poster.jpg';
+import calSideBarPoster from '../../assets/images/wawa-cal-side-bar-poster.jpg';
+import reportingPoster from '../../assets/images/wawa-reporting-poster.jpg';
+import wawaAiPoster from '../../assets/images/wawa-ai-poster.jpg';
+import onboardingPoster from '../../assets/images/wawa-onboarding-poster.jpg';
 
 At wawa I work across the full product lifecycle (research, design, and frontend implementation in React/Next.js) for clinical software used by fertility clinics across the UK, US, Canada, and Australia. In a flat-hierarchy startup team, my role has spanned everything from patient-facing clinical flows to internal regulatory infrastructure, often taking a feature from first sketch through to shipped code.
 
@@ -39,6 +46,8 @@ Designed and built a two-sided onboarding platform to bring new fertility clinic
   <KV term="Settings were disconnected" desc="Related concepts (medications and products, tax rates and price lists) lived in separate, unrelated parts of the settings area." />
   <KV term="Training didn't scale" desc="Larger clinics were still relying on multi-day, in-person training to get set up at all, which doesn't scale past a handful of rollouts a year." />
 </KVGroup>
+
+<InlineVideo src="/videos/wawa-onboarding.mp4" poster={onboardingPoster} alt="Walking through the guided clinic onboarding flow" />
 
 ### Contributions
 
@@ -116,6 +125,18 @@ Designed a CRM for managing how patients enter a clinic's care, from formal refe
 - Designed the review flow around AI-assisted document extraction: staff upload a referral document, the system extracts patient details automatically, and staff verify and correct the extracted fields rather than transcribing them from scratch.
 - Designed a dedicated expiring-referrals view so time-sensitive referrals surface proactively instead of requiring staff to filter for them manually.
 
+## Project: Conversational AI booking and scheduling
+
+### Overview
+
+For wawa's clinic platform, I designed an AI feature that moves beyond static documentation into task execution. Rather than just answering questions, it lets clinic staff book appointments and build schedules using natural language, understanding intent even from loosely phrased or misspelled input.
+
+For appointment booking, staff can type a request like booking a patient for an extended consultation, and the AI parses the details, cross-references the patient record, and surfaces a confirmation step (such as verifying date of birth) to catch mishears or near-matches on names. It then walks through location, available days, time slots, and appointment type, before logging the booking directly to the calendar.
+
+For scheduling, a known pain point for clinic staff, I applied the same approach: users can describe a new schedule in plain language (staff member, room, start date, frequency, pauses) and the AI interprets it and creates the schedule entry directly, removing the need to manually configure it through a traditional form-based interface.
+
+<InlineVideo src="/videos/wawa-ai.mp4" poster={wawaAiPoster} alt="Booking an appointment and building a staff schedule using natural language with wawa's AI assistant" class="video-capped" />
+
 ## Project: Patient health information capture
 
 ### Overview
@@ -182,6 +203,8 @@ This work also closed a concrete gap elsewhere in the product: several patient-r
   <KV term="Canonical data, per-jurisdiction mapping" desc="Each data field is stored once in a canonical form and mapped to whatever format a given regulator expects only at submission time, so the same underlying record can satisfy multiple regulators' differing field formats without duplicating data entry per jurisdiction." />
 </KVGroup>
 
+<InlineVideo src="/videos/wawa-reporting.mp4" poster={reportingPoster} alt="The regulatory reporting dashboard showing patient submission status across ready, needs attention, overdue, and submitted states" />
+
 ### Contributions
 
 - Designed the reporting dashboard: a single view of every patient's reporting status (ready, needs attention, overdue, submitted) replacing a fully manual, per-patient checking process.
@@ -205,6 +228,12 @@ Led discovery for a second-generation scheduling system, working directly with c
   <KV term="No recurring unavailability" desc="The scheduler had no way to express recurring unavailability (lunch breaks, non-bookable hours) or restrict which appointment types could be booked in which windows, which for at least one clinic was serious enough to threaten their go-live timeline." />
   <KV term="No linked, multi-resource bookings" desc="A clinic walked through a &quot;treatment scan&quot; appointment type that needs to book two different resources with a staggered offset: fifteen minutes on a sonographer's diary, followed automatically by fifteen minutes on the phlebotomy list right after, booked as one unit. The existing scheduler had no concept of a single appointment type driving multiple linked, offset resource bookings." />
 </KVGroup>
+
+<InlineVideo src="/videos/wawa-cal-linked.mp4" poster={calLinkedPoster} alt="Booking a treatment scan appointment that links two staggered, offset resource bookings into one unit" />
+
+<InlineVideo src="/videos/wawa-cal-side-bar.mp4" poster={calSideBarPoster} alt="Navigating the scheduler's sidebar" />
+
+<InlineVideo src="/videos/wawa-cal-panning.mp4" poster={calPanningPoster} alt="Panning across the scheduler calendar" />
 
 ### Contributions
 
