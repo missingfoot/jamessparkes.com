@@ -14,7 +14,6 @@ const portraitLightImg = await getImage({ src: portraitLight, width: 320, height
 >
   <div class="about-view">
     <img
-      src={portraitDarkImg.src}
       data-light-src={portraitLightImg.src}
       data-dark-src={portraitDarkImg.src}
       alt="James Sparkes"
@@ -27,7 +26,8 @@ const portraitLightImg = await getImage({ src: portraitLight, width: 320, height
         var img = document.currentScript.previousElementSibling;
         function sync() {
           var theme = document.documentElement.getAttribute('data-theme');
-          img.src = theme === 'light' ? img.dataset.lightSrc : img.dataset.darkSrc;
+          var next = theme === 'light' ? img.dataset.lightSrc : img.dataset.darkSrc;
+          if (img.src !== next) img.src = next;
         }
         sync();
         new MutationObserver(sync).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
