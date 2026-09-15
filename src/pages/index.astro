@@ -1,7 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { Image } from 'astro:assets';
-import portrait from '../assets/images/james-sparkes.jpg';
+import { getImage } from 'astro:assets';
+import portraitDark from '../assets/images/james-sparkes-dark.jpg';
+import portraitLight from '../assets/images/james-sparkes-light.jpg';
+
+const portraitDarkImg = await getImage({ src: portraitDark, width: 320, height: 320 });
+const portraitLightImg = await getImage({ src: portraitLight, width: 320, height: 320 });
 ---
 <BaseLayout
   title="James Sparkes — Product Designer"
@@ -9,7 +13,26 @@ import portrait from '../assets/images/james-sparkes.jpg';
   path="/"
 >
   <div class="about-view">
-    <Image src={portrait} alt="James Sparkes" class="about-avatar" width={320} height={320} />
+    <img
+      src={portraitDarkImg.src}
+      data-light-src={portraitLightImg.src}
+      data-dark-src={portraitDarkImg.src}
+      alt="James Sparkes"
+      class="about-avatar"
+      width="320"
+      height="320"
+    />
+    <script is:inline>
+      (function () {
+        var img = document.currentScript.previousElementSibling;
+        function sync() {
+          var theme = document.documentElement.getAttribute('data-theme');
+          img.src = theme === 'light' ? img.dataset.lightSrc : img.dataset.darkSrc;
+        }
+        sync();
+        new MutationObserver(sync).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+      })();
+    </script>
     <h1 class="visually-hidden">About</h1>
 
     <div class="project-case-study">
