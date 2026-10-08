@@ -30,6 +30,10 @@ images:
 import KV from '../../components/KV.astro';
 import KVGroup from '../../components/KVGroup.astro';
 import KVHeading from '../../components/KVHeading.astro';
+import { Image } from 'astro:assets';
+import revisitedMoveIn from '../../assets/images/collective-revisited-01.jpg';
+import revisitedDocuments from '../../assets/images/collective-revisited-02.jpg';
+import revisitedRoom from '../../assets/images/collective-revisited-03.jpg';
 
 ### Tasks and responsibilities
 
@@ -102,6 +106,39 @@ I joined The Collective in 2017 during a period of rapid growth and was tasked w
   <KV term="Data integration and automation" desc="The company needed tools to streamline land acquisition and property management." />
   <KV term="Solution" desc="Designed and implemented Acquire and added features to Colab, integrating advanced data modeling, real-time reporting, and automation to improve efficiency and decision-making. Worked closely with stakeholders across departments to understand their workflows and pain points, ensuring the solutions we built streamlined their processes and reduced administrative overhead." />
 </KVGroup>
+
+### Revisited: the self-service residents actually asked for
+
+In town halls, focus groups and day-to-day conversations with the front desk, the same requests kept coming up, and they were rarely the social features on the roadmap. Residents wanted to sort out the admin of living somewhere without queuing at reception. The front desk team spent hours every week writing proof of address letters, re-sending receipts, chasing guarantors and answering "when do I get my deposit back?". The company's priorities at the time were social posting, dating and networking features, so most of this never got built.
+
+Years later I rebuilt The Collective's member account to show what that self-service layer could have been: built around the community features rather than instead of them, with every page replacing a task someone used to do by hand.
+
+<Image src={revisitedMoveIn} alt="Rebuilt member account screens: getting ready to move in, booking an arrival time, and uploading documents to renew" loading="lazy" />
+
+<KVHeading>For residents</KVHeading>
+
+<KVGroup>
+  <KV term="Moving in" desc="A countdown, booking an arrival slot, a checklist (Direct Debit, the app, updating your address), Wi-Fi details ahead of arrival, and what to bring." />
+  <KV term="Renewal" desc="Choose a new term and see the payment schedule, upload ID and visa documents, then sign the new agreement online once they're checked." />
+  <KV term="Letters and statements" desc="Proof of address letters, rent statements for any period and monthly receipts, generated on demand and ready to print or save as a PDF." />
+  <KV term="Deposit" desc="How much is held and each step to getting it back after moving out, so nobody has to ask." />
+  <KV term="Condition report" desc="Photos and notes of the room at check-in, with a week to report anything missed so it never comes off the deposit." />
+  <KV term="Support" desc="Raise and follow maintenance, housekeeping and general requests as conversations with the team, alongside a public help centre." />
+</KVGroup>
+
+<Image src={revisitedDocuments} alt="Rebuilt member account screens: signed agreements, letters and receipts, a proof of address letter, and deposit tracking" loading="lazy" />
+
+<KVHeading>Taking work off the front desk</KVHeading>
+
+<KVGroup>
+  <KV term="Guarantors" desc="Residents add or swap a guarantor themselves, and the referencing partner invites and verifies them." />
+  <KV term="Room changes" desc="Requests come in with everything lettings needs (what they want, room type, timing) instead of a chat at reception." />
+  <KV term="Agreements" desc="Every signed agreement in one place, so the team stops digging out and emailing copies." />
+  <KV term="Your data" desc="GDPR data downloads and deletion requests handled in the account, explaining clearly what deleting gives up." />
+  <KV term="Good to know" desc="Postal address, Wi-Fi and house info (guests, quiet hours, repairs, parking) in one place, answering the questions the front desk got every day." />
+</KVGroup>
+
+<Image src={revisitedRoom} alt="Rebuilt member account screens: the move-in condition report, guarantor and data controls, and Good to know" loading="lazy" />
 
 ### Visual design and branding
 
