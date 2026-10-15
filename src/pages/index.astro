@@ -1,11 +1,23 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getImage } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import { getImage, Image } from 'astro:assets';
 import portraitDark from '../assets/images/james-sparkes-dark.jpg';
 import portraitLight from '../assets/images/james-sparkes-light.jpg';
 
 const portraitDarkImg = await getImage({ src: portraitDark, width: 320, height: 320 });
 const portraitLightImg = await getImage({ src: portraitLight, width: 320, height: 320 });
+
+const projects = (await getCollection('projects', ({ data }) => data.visible)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const timelineGroups = [
+  { label: 'Work', category: 'work' },
+  { label: 'Personal', category: 'personal' },
+].map((group) => ({
+  ...group,
+  projects: projects.filter((project) => project.data.category === group.category),
+}));
 ---
 <BaseLayout
   title="James Sparkes — Product Designer"
@@ -35,20 +47,49 @@ const portraitLightImg = await getImage({ src: portraitLight, width: 320, height
     </script>
     <h1 class="visually-hidden">About</h1>
 
-    <div class="project-case-study">
-      <p>I'm a product designer specialising in UI/UX for mobile apps, SaaS platforms, web apps, and websites. I own design end-to-end, from research through to production frontend implementation, usually in React, Figma, or whatever medium best communicates an idea, which means I understand both sides of the handoff between design and engineering rather than handing off and stepping away.</p>
+    <div class="about-bio">
+      <p class="about-intro">I'm a product designer who owns the whole journey, from talking to users through to shipping production React, designing workflows that get people from A to B so the software fades into their day.</p>
 
-      <p>A big part of how I work is talking directly to users and getting into their actual workflows before designing solutions, digging into the details that get overlooked but that make the difference between a mediocre product and a great one. What's always mattered most to me isn't UX for its own sake, it's designing workflows that get people from A to B in the best way possible, so a digital system fades naturally into their everyday work.</p>
+      <details class="about-more">
+        <summary><span class="about-more-open">Read more</span><span class="about-more-close">Read less</span></summary>
+        <p>I'm a product designer specialising in UI/UX for mobile apps, SaaS platforms, web apps, and websites. I own design end-to-end, from research through to production frontend implementation, usually in React, Figma, or whatever medium best communicates an idea, which means I understand both sides of the handoff between design and engineering rather than handing off and stepping away.</p>
 
-      <p>I'm an adaptable problem-solver who cares about product adoption and client satisfaction as much as a beautiful interface. Strategy, storytelling, and business outcomes are central to how I design, and I've spent years designing for accessibility and for users with very different comfort levels with technology. I also think interaction design is one of the most important parts of the craft, and it's what people subconsciously read as good design even when it isn't pretty. That combination is what makes products people actually want to use.</p>
+        <p>A big part of how I work is talking directly to users and getting into their actual workflows before designing solutions, digging into the details that get overlooked but that make the difference between a mediocre product and a great one. What's always mattered most to me isn't UX for its own sake, it's designing workflows that get people from A to B in the best way possible, so a digital system fades naturally into their everyday work.</p>
 
-      <p>Outside of client work, I'm into open source and building CLI and GUI programs for Linux, and I enjoy the games industry, learning how games get made, and even building some small games myself as a way to understand systems from first principles, from a game loop to physics to rendering built up from scratch. That same instinct, wanting to see and control every part of a system rather than trust a black box, is what I bring to product design too. I adapt quickly to new tools and make use of AI, but critical thinking, empathy, and real problem-solving stay at the core of the work.</p>
+        <p>I'm an adaptable problem-solver who cares about product adoption and client satisfaction as much as a beautiful interface. Strategy, storytelling, and business outcomes are central to how I design, and I've spent years designing for accessibility and for users with very different comfort levels with technology. I also think interaction design is one of the most important parts of the craft, and it's what people subconsciously read as good design even when it isn't pretty. That combination is what makes products people actually want to use.</p>
+
+        <p>Outside of client work, I'm into open source and building CLI and GUI programs for Linux, and I enjoy the games industry, learning how games get made, and even building some small games myself as a way to understand systems from first principles, from a game loop to physics to rendering built up from scratch. That same instinct, wanting to see and control every part of a system rather than trust a black box, is what I bring to product design too. I adapt quickly to new tools and make use of AI, but critical thinking, empathy, and real problem-solving stay at the core of the work.</p>
+      </details>
     </div>
 
     <div class="about-links">
       <a href="https://uk.linkedin.com/in/jamessparkesdesign" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       <a href="mailto:hello@jamessparkes.com" id="contact-link">Contact</a>
     </div>
+
+    {timelineGroups.map((group) => (
+      <section class="timeline-group">
+        <h2 class="timeline-header">{group.label}</h2>
+        <ol class="timeline">
+          {group.projects.map((project) => {
+            const cover = project.data.cover ?? project.data.images[0]?.src;
+            return (
+              <li class="timeline-item">
+                <a class="timeline-link" href={`/${project.data.category}/${project.id}`}>
+                  <div class="timeline-thumb">
+                    {cover && <Image src={cover} alt="" width={400} height={400} widths={[400, 800, 1200]} sizes="(max-width: 640px) 100vw, 200px" fit="cover" loading="lazy" />}
+                  </div>
+                  <div class="timeline-text">
+                    <h3 class="timeline-title">{project.data.title}</h3>
+                    <div class="timeline-tags">{project.data.tags.slice(0, 3).join(' · ')}</div>
+                  </div>
+                </a>
+              </li>
+            );
+          })}
+        </ol>
+      </section>
+    ))}
   </div>
 
   <script slot="scripts" src="/js/avatar-game.js" defer></script>

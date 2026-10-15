@@ -243,6 +243,174 @@ body {
     border-bottom-color: var(--text);
 }
 
+.about-bio {
+    margin-top: 3rem;
+    font-size: 14px;
+}
+
+.about-bio p {
+    margin-bottom: 1rem;
+}
+
+.about-intro {
+    font-size: 17px;
+    line-height: 1.55;
+}
+
+/* The full bio restates the intro, so swap rather than stack them. */
+.about-bio:has(.about-more[open]) .about-intro {
+    display: none;
+}
+
+.about-more summary {
+    display: inline-block;
+    cursor: pointer;
+    list-style: none;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
+}
+
+.about-more summary::-webkit-details-marker {
+    display: none;
+}
+
+.about-more summary:hover {
+    color: var(--text);
+    border-bottom-color: var(--text);
+}
+
+.about-more[open] summary {
+    order: 1;
+    margin-top: 0.25rem;
+}
+
+.about-more[open] {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.about-more-close,
+.about-more[open] .about-more-open {
+    display: none;
+}
+
+.about-more[open] .about-more-close {
+    display: inline;
+}
+
+/* About: project timeline */
+.timeline-group {
+    margin-top: 4rem;
+}
+
+.timeline-header {
+    font-size: 11px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.25rem;
+}
+
+.timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 1.5rem;
+    border-left: 1px solid var(--border);
+}
+
+.timeline-item {
+    position: relative;
+}
+
+.timeline-item + .timeline-item {
+    margin-top: 1.5rem;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: calc(-1.5rem - 4px);
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    margin-top: -4px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--text-dim);
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.timeline-item:hover::before {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.timeline-link {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.timeline-thumb {
+    flex: 0 0 auto;
+    width: 200px;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 6px;
+    background: var(--border);
+}
+
+.timeline-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.1s, transform 0.3s ease;
+}
+
+.timeline-link:hover .timeline-thumb img {
+    opacity: 0.85;
+    transform: scale(1.03);
+}
+
+.timeline-title {
+    font-size: 18px;
+    font-weight: normal;
+    margin: 0 0 0.25rem;
+}
+
+.timeline-tags {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+}
+
+@media (max-width: 640px) {
+    .timeline-link {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .timeline-thumb {
+        width: 100%;
+    }
+
+    .timeline-item + .timeline-item {
+        margin-top: 2.5rem;
+    }
+
+    .timeline-item::before {
+        top: 1rem;
+        margin-top: 0;
+    }
+}
+
 /* ─── View: CV ───────────────────────────────────────────── */
 .cv-view {
     max-width: 860px;

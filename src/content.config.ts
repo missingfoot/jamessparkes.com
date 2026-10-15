@@ -13,6 +13,8 @@ const projects = defineCollection({
       order: z.number(),
       visible: z.boolean().default(true),
       images: z.array(z.object({ src: image(), alt: z.string() })),
+      // Homepage timeline thumbnail; falls back to the first gallery image.
+      cover: image().optional(),
     }),
 });
 
