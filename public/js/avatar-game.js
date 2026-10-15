@@ -3,8 +3,8 @@
 // Click it again while it's loose -> the page text fades out, the avatar
 //   shrinks into a ball, and it becomes a game:
 //     desktop -> a DX-Ball style brick breaker with powerups, lives, score
-//     mobile  -> a simple keep-it-up rally: no bricks, the ball speeds up on
-//                every wall hit, and the score counts paddle hits
+//     mobile  -> a simple keep-it-up rally: no bricks, the ball speeds up a
+//                little on every paddle hit, and the score counts paddle hits
 // Esc or the on-screen  x  leaves the game and drops the avatar back home.
 // Best score is remembered for the browser session.
 
@@ -683,6 +683,11 @@
         // ball spin (radians): friction on each contact kicks it, then it bleeds off
         var SPIN_GAIN = 0.016, SPIN_MAX = 0.34, SPIN_DAMP = 0.985;
 
+        // mobile rally speed, as a multiple of baseSpeed: starts at 1.2x and every
+        // paddle hit adds the same step (1.4x by 5 hits, 1.65x by 10, 2.15x by 20), no cap
+        var RALLY_START = 1.2, RALLY_STEP = 0.05;
+        function rallySpeed(hits) { return baseSpeed * (RALLY_START + RALLY_STEP * (hits - 1)); }
+
         function newBall(x, y, vx, vy) {
             // simple/mobile mode has no bricks to eyeball the ball against, and
             // it's viewed at touchscreen distance, so give it a bigger floor/scale
@@ -800,7 +805,7 @@
             sfx.startMusic(); // no-op if already playing — restarts it if game-over stopped it
             powerups = []; bullets = []; particles = []; timers = {};
             level = 1;
-            score = 0; lives = simple ? 1 : 3; baseSpeed = levelSpeed(); speed = baseSpeed;
+            score = 0; lives = simple ? 1 : 3; baseSpeed = levelSpeed(); speed = simple ? rallySpeed(1) : baseSpeed;
             tEnter = 0; lastFire = 0; lastBoost = 0; bombArmed = false; zapFlash = 0;
             paddle.w = paddle.baseW;
             makeBricks();
@@ -1343,10 +1348,6 @@
                     else if (b.x + b.r > W) { b.x = W - b.r; b.vx = -Math.abs(b.vx); wall = true; spin(b, b.vy); }
                     if (b.y - b.r < 0) { b.y = b.r; b.vy = Math.abs(b.vy); wall = true; spin(b, -b.vx); }
                     if (wall) sfx.wallBounce();
-                    if (wall && simple) {
-                        speed = Math.min(speed * 1.06, baseSpeed * 4);
-                        scaleBalls();
-                    }
 
                     // paddle
                     var py = paddle.y + paddle.yOff;
@@ -1367,7 +1368,10 @@
 
                         var off = clamp((b.x - paddle.x) / (paddle.w / 2), -1, 1);
                         var ang = -Math.PI / 2 + off * (Math.PI / 3);
-                        var sp = Math.hypot(b.vx, b.vy) || speed;
+                        // rally ramps up per return, not per wall hit (a narrow phone
+                        // screen bounces off the sides several times per return)
+                        if (simple) speed = rallySpeed(score + 1);
+                        var sp = simple ? speed : (Math.hypot(b.vx, b.vy) || speed);
                         // timed punch: click as the ball meets the paddle for extra pace
                         if (performance.now() < paddle.punchUntil) {
                             sp = Math.min(sp * 1.4, baseSpeed * 3.4);
@@ -1904,7 +1908,7 @@
                 }
             } else if (state === 'serving') {
                 center(fg, 'TAP TO SERVE', H / 2 + 70, 14);
-                center(fg, 'KEEP IT UP — IT SPEEDS UP EACH BOUNCE', H / 2 + 94, 14);
+                center(fg, 'KEEP IT UP — IT SPEEDS UP EACH HIT', H / 2 + 94, 14);
             }
 
             var wantCursor = 'none';
