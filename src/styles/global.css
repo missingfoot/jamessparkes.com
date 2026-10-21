@@ -361,13 +361,14 @@ body {
     aspect-ratio: 1;
     overflow: hidden;
     border-radius: 6px;
-    background: var(--border);
+    background: var(--bg-nav);
 }
 
+/* Covers come in mixed aspect ratios; show each whole inside the square box */
 .timeline-thumb img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
     transition: opacity 0.1s, transform 0.3s ease;
 }
