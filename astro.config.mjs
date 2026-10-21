@@ -8,7 +8,7 @@ import mdx from '@astrojs/mdx';
 const cssTargets = { chrome: 87 << 16, firefox: 78 << 16, safari: 14 << 16 };
 
 export default defineConfig({
-  site: 'https://jamessparkes.com',
+  site: 'https://www.jamessparkes.com',
   integrations: [mdx()],
   vite: {
     css: {

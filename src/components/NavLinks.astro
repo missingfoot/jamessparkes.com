@@ -12,18 +12,19 @@ const projects = (await getCollection('projects', ({ data }) => data.visible)).s
 );
 const workProjects = projects.filter((project) => project.data.category === 'work');
 const personalProjects = projects.filter((project) => project.data.category === 'personal');
-const isActive = (href: string) => (currentPath === href ? ' active' : '');
+// hrefs carry a trailing slash (what Netlify serves); currentPath has it stripped
+const isActive = (href: string) => (currentPath === (href.replace(/\/$/, '') || '/') ? ' active' : '');
 ---
 <nav class="nav-groups">
   <div class="nav-group">
     <div class="nav-group-header">Info</div>
     <a class={`nav-item${isActive('/')}`} href="/">About</a>
-    <a class={`nav-item${isActive('/cv')}`} href="/cv">CV</a>
+    <a class={`nav-item${isActive('/cv/')}`} href="/cv/">CV</a>
   </div>
   <div class="nav-group">
     <div class="nav-group-header">Work</div>
     {workProjects.map((project) => (
-      <a class={`nav-item${isActive(`/work/${project.id}`)}`} href={`/work/${project.id}`}>
+      <a class={`nav-item${isActive(`/work/${project.id}/`)}`} href={`/work/${project.id}/`}>
         {project.data.title}
       </a>
     ))}
@@ -31,7 +32,7 @@ const isActive = (href: string) => (currentPath === href ? ' active' : '');
   <div class="nav-group">
     <div class="nav-group-header">Personal</div>
     {personalProjects.map((project) => (
-      <a class={`nav-item${isActive(`/personal/${project.id}`)}`} href={`/personal/${project.id}`}>
+      <a class={`nav-item${isActive(`/personal/${project.id}/`)}`} href={`/personal/${project.id}/`}>
         {project.data.title}
       </a>
     ))}

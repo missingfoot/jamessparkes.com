@@ -63,7 +63,7 @@ const timelineGroups = [
     </div>
 
     <div class="about-links">
-      <a href="/cv">CV</a>
+      <a href="/cv/">CV</a>
       <a href="https://uk.linkedin.com/in/jamessparkesdesign" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       <a href="mailto:hello@jamessparkes.com" id="contact-link">Contact</a>
     </div>
@@ -76,7 +76,7 @@ const timelineGroups = [
             const cover = project.data.cover ?? project.data.images[0]?.src;
             return (
               <li class="timeline-item">
-                <a class="timeline-link" href={`/${project.data.category}/${project.id}`}>
+                <a class="timeline-link" href={`/${project.data.category}/${project.id}/`}>
                   <div class="timeline-thumb">
                     {cover && <Image src={cover} alt="" width={400} height={400} widths={[400, 800, 1200]} sizes="(max-width: 640px) 100vw, 200px" fit="cover" loading="lazy" />}
                   </div>

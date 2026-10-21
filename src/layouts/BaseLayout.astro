@@ -10,7 +10,9 @@ export interface Props {
   path: string;
 }
 const { title, description, path } = Astro.props;
-const canonicalURL = new URL(path, Astro.site);
+// Netlify serves pages at www with a trailing slash; match that so the canonical isn't a redirect
+const canonicalURL = new URL(path.endsWith('/') ? path : `${path}/`, Astro.site);
+const ogImageURL = new URL('/images/og-image.jpg', Astro.site);
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -33,13 +35,13 @@ const canonicalURL = new URL(path, Astro.site);
     <meta property="og:url" content={canonicalURL}>
     <meta property="og:title" content={title}>
     <meta property="og:description" content={description}>
-    <meta property="og:image" content="https://jamessparkes.com/images/og-image.jpg">
+    <meta property="og:image" content={ogImageURL}>
 
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content={canonicalURL}>
     <meta property="twitter:title" content={title}>
     <meta property="twitter:description" content={description}>
-    <meta property="twitter:image" content="https://jamessparkes.com/images/og-image.jpg">
+    <meta property="twitter:image" content={ogImageURL}>
 
     <link rel="icon" type="image/png" href="/images/favicon.png">
     <link rel="apple-touch-icon" href="/images/webclip.png">
