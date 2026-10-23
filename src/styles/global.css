@@ -506,6 +506,8 @@ body {
     line-height: 1.7;
 }
 
+.cv-points li strong { font-weight: 600; }
+
 .cv-points li::before {
     content: "—";
     position: absolute;
