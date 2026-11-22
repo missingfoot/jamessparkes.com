@@ -68,8 +68,16 @@ const timelineGroups = [
       <a href="mailto:hello@jamessparkes.com" id="contact-link">Contact</a>
     </div>
 
+    <div class="timeline-tabs" role="tablist" aria-label="Projects" hidden>
+      {timelineGroups.map((group, i) => (
+        <button type="button" class="timeline-tab" role="tab" id={`tab-${group.category}`} aria-controls={`panel-${group.category}`} aria-selected={i === 0 ? 'true' : 'false'} data-tab={group.category}>
+          {group.label} <span class="timeline-tab-count">{group.projects.length}</span>
+        </button>
+      ))}
+    </div>
+
     {timelineGroups.map((group) => (
-      <section class="timeline-group">
+      <section class="timeline-group" id={`panel-${group.category}`} role="tabpanel" aria-labelledby={`tab-${group.category}`} data-panel={group.category}>
         <h2 class="timeline-header">{group.label}</h2>
         <ol class="timeline">
           {group.projects.map((project) => {
@@ -96,3 +104,29 @@ const timelineGroups = [
 
   <script slot="scripts" src="/js/avatar-game.js" defer></script>
 </BaseLayout>
+
+<script>
+  // Work / Personal tabs. Without JS both lists simply show one after the other.
+  const tabs = document.querySelector<HTMLElement>('.timeline-tabs');
+  if (tabs) {
+    const buttons = [...tabs.querySelectorAll<HTMLButtonElement>('.timeline-tab')];
+    const panels = [...document.querySelectorAll<HTMLElement>('.timeline-group[data-panel]')];
+    const show = (name: string, remember = true) => {
+      buttons.forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === name)));
+      panels.forEach((p) => (p.hidden = p.dataset.panel !== name));
+      if (remember) { try { sessionStorage.setItem('home-tab', name); } catch {} }
+    };
+    tabs.hidden = false;
+    document.documentElement.classList.add('has-tabs');
+    let start = location.hash === '#personal' ? 'personal' : 'work';
+    if (!location.hash) { try { start = sessionStorage.getItem('home-tab') || start; } catch {} }
+    show(start, false);
+    buttons.forEach((b) => b.addEventListener('click', () => show(b.dataset.tab!)));
+    tabs.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      const i = buttons.findIndex((b) => b.getAttribute('aria-selected') === 'true');
+      const next = buttons[(i + (e.key === 'ArrowRight' ? 1 : buttons.length - 1)) % buttons.length];
+      next.focus(); show(next.dataset.tab!);
+    });
+  }
+</script>
