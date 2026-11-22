@@ -3,7 +3,7 @@ title: "Game Development"
 description: "Three game prototypes exploring game dev from first principles: a 3D Godot escape room built around a magnet, a 2D LÖVE/Box2D dig-and-defend game with destructible per-pixel terrain, and a Temple Run clone written in raw C and X11 with no engine at all."
 tags: ["Game Design", "UX Design", "3D", "2D", "Godot", "LÖVE", "Lua", "Box2D", "C", "X11", "Physics", "Interaction Design"]
 category: "personal"
-order: 3
+order: 14
 visible: true
 images: []
 cover: "../../assets/images/game-play-poster.jpg"
@@ -34,11 +34,17 @@ This was just a test, but it turned out to be a good combination for exploring a
 
 The player gets a magnet to manipulate metal objects around the space, and figuring out ways to use that to obstruct the player on their way out ended up being genuinely fun. There's a lot of room here: I can already see a bunch of interesting puzzle ideas and directions to expand the concept further.
 
+The magnet wasn't the first idea. I started with a Half-Life-style gravity gun that picked things up and turned them to face you, like carrying something in front of you. Testing it on a long plank leaning against a wall, the plank seemed to ignore the grab entirely, because the gun was busy fighting the wall to rotate it.
+
+Rather than patch that, I changed the tool. A magnet only pulls or pushes, with a strength you can adjust and a polarity you can flip, so it never needs to turn anything. That fixed the plank, and it gave the puzzles more to work with than a plain pick-up ever would.
+
 <InlineVideo src="/videos/texturing.mp4" poster={texturingPoster} alt="Texturing objects in the Godot editor" />
 
 For now, it was mostly about learning game dev in general, and about the less glamorous side of it too: making sure gameplay bugs got squashed and that the physics engine couldn't be abused by the player to cheat their way past a puzzle.
 
-That last part turned into its own rabbit hole: getting the character controller to stand, walk, and slide against walls correctly on a young physics engine surfaced a real chain of bugs (a crash, then a fall-through, then a freeze) before landing on a fix that actually held up.
+That last part turned into its own rabbit hole: getting the player to stand, walk, and slide along walls correctly on a young physics engine surfaced a real chain of bugs. First it crashed, then the fix let you fall through the floor, then the next fix froze you in place. What finally held up was treating the floor under your feet differently from walls and props, so you slide along a wall instead of sticking to it.
+
+Playtesting also turned up ways to cheat. Objects pushed into the door could shove it sideways, so I locked it to only move the way it's meant to. I also reworked the controls from click-to-toggle to hold to grab and let go to drop, with a one-shot push on the other button. The hand-held magnet is still a stand-in model for now.
 
 <div class="project-issue-grid">
   <figure>
@@ -61,9 +67,11 @@ That last part turned into its own rabbit hole: getting the character controller
 
 Positioning that magnet correctly in the player's hand is what actually forced the next tool. Godot's viewport UI is fine for placing static level geometry, but nudging a hand-held item into an exact spot relative to a moving camera, by dragging axis handles with a mouse, was slow and imprecise in a way that kept missing the mark.
 
-So I built a small runtime debug tool instead: a script that attaches to any `Node3D` and lets a connected gamepad fly it around in 3D space, then dump the exact coordinates. Left stick strafes on the horizontal plane, right stick handles height and yaw, analog triggers move it forward and backward along the direction it's already facing, and the shoulder buttons cover the same motion digitally as a backup. Holding one face button switches to a slow precision mode for the final nudge into place, holding another speeds it up to cover distance quickly.
+So I built a small debug tool instead: attach it to any object in the scene, and a gamepad lets you fly that object around in 3D while the game is running, then grab its exact position.
 
-Pressing A prints the current position and copies it straight to the clipboard as a ready-to-paste `Vector3(x, y, z)`; pressing B appends it to a waypoints log instead, for capturing several positions in one session. Start toggles the whole thing on and off, so once an object's in the right spot I can stop it from drifting instead of it quietly eating input for the rest of the session. It only runs at runtime, since gamepad input in the editor viewport isn't reliable, so the workflow was: play the actual scene, fly the object with an Xbox controller, and paste the result straight into the game code.
+The sticks and triggers move it through space, one button slows it right down for the final nudge, and another speeds it up to cover distance. A single press copies the position to the clipboard, ready to paste into the game code, and another logs it so I can capture several spots in one go.
+
+It only runs while the game is playing, because gamepad input in the editor isn't reliable. That turned out to be a benefit: I was placing things in the real scene, from the player's own view, which is where they need to look right.
 
 The same control feel turned out to work just as well for textures. I reused it to nudge and scale UVs on props in real time instead of typing offset and scale values in and re-running to check them, so getting a texture to actually line up and read at the right size in-game became the same feel-it-out process as placing the magnet.
 
@@ -99,13 +107,13 @@ I wanted to learn, with AI as a collaborator, what that era of game development 
 
 C and raw X11 felt like the right level to start at. Close enough to the metal to force real decisions about performance, but not so far down as full assembly for a first attempt.
 
-tinyrunner is a small Temple Run style endless runner, and the whole thing is one file. No SDL, no helper library, just libX11 and libm.
+tinyrunner is a small Temple Run style endless runner, and the whole thing is one file. No game library, no helpers, just the operating system's own windowing calls and a maths library.
 
-Opening a window, allocating colours by hand, drawing into a pixmap, and blitting that pixmap to screen every tick, all done directly through Xlib calls.
+Opening a window, picking colours by hand, drawing each frame off-screen and copying it to the window every tick, all done directly.
 
-Everything above that is built from scratch too: a manual game loop with its own fixed timestep and frame pacing through nanosleep, procedural level generation, jump and duck physics, a chasing boulder that closes the gap if you get hit too often.
+Everything above that is built from scratch too: a game loop that keeps its own steady timing, procedural level generation, jump and duck physics, and a chasing boulder that closes the gap if you get hit too often.
 
-There's no framework handling collision or rendering. Every rectangle on screen is an XFillRectangle call I placed myself, every obstacle is an axis-aligned box check I designed deliberately, every frame's timing is something I have to account for myself instead of trusting an engine's fixed update loop.
+There's no framework handling collision or rendering. Every rectangle on screen is one I placed myself, every obstacle is a simple box check I designed deliberately, and every frame's timing is something I have to account for instead of trusting an engine to do it.
 
 That's what made it worth doing. Before trusting an engine like Godot to handle physics, input, and rendering for me, I wanted to actually see and control every part of the loop myself, the way developers had to when there was no engine to reach for.
 

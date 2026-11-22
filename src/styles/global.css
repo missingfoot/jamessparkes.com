@@ -786,6 +786,19 @@ body {
     border-radius: 6px;
 }
 
+/* A video meant to be heard: native controls, no autoplay (browsers block autoplay with sound) */
+.project-sound-video {
+    margin: 2rem 0;
+}
+
+.project-sound-video video {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    background: var(--border);
+}
+
 .ui-window {
     margin: 2rem 0;
     background: var(--border);

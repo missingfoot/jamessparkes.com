@@ -3,7 +3,7 @@ title: "ClipCut"
 description: "A drag-and-drop desktop tool for trimming, cropping, and exporting video clips fast, built to skip the overhead of a full NLE for quick one-off clips."
 tags: ["Python", "PySide6", "Qt", "FFmpeg", "Desktop App", "Tooling"]
 category: "personal"
-order: 1
+order: 13
 visible: true
 images: []
 cover: "../../assets/images/clipcut-cover.png"
@@ -17,29 +17,41 @@ import clipcutCover from '../../assets/images/clipcut-cover.png';
 
 <Image src={clipcutCover} alt="ClipCut's cut screen, with a video loaded and two cuts marked on the timeline" loading="lazy" />
 
-Most of the clips I need to make are small: trim the dead air off a screen recording, crop a downloaded video down to the bit that matters, pull just the audio out of something. None of that needs a timeline-based editor, it just needs to be fast, so I built ClipCut: drop a video on the window, mark the cuts, drag a crop box if you need one, and export.
+Most of the clips I need to make are small: trim the dead air off a screen recording, crop a downloaded video down to the bit that matters, pull just the audio out of something.
 
-It's a Python app running on PySide6 for the UI, with FFmpeg doing the actual encoding underneath.
+None of that needs a timeline-based editor, it just needs to be fast, so I built ClipCut: drop a video on the window, mark the cuts, drag a crop box if you need one, and export.
+
+It's a Python desktop app, with FFmpeg doing the actual encoding underneath.
+
+The very first version was just a form: type how many seconds to chop off each end, type crop values, press a button. It worked, but I was guessing at numbers and re-exporting to check them. Within the first day it had a video preview with guides you drag straight onto the frame, because seeing the cut is much faster than calculating it.
 
 ### Cutting without losing quality you don't have to lose
 
-The default trim mode snaps to the source's keyframes and stream-copies the result, no re-encoding, no quality loss, and it's instant regardless of the clip's length. A frame-accurate mode is there too for when you need an exact cut point badly enough to pay for the re-encode.
+The default trim mode snaps to the source's keyframes and copies the video as-is: no re-encoding, no quality loss, and it's instant regardless of the clip's length. A frame-accurate mode is there too for when you need an exact cut point badly enough to pay for the re-encode.
+
+Making lossless the default was the key decision. When you're trimming dead air off a recording, a fraction of a second either way rarely matters, so the fast, lossless path should be the one you get without thinking.
 
 <KVGroup>
   <KV term="Multi-cut" desc="Multiple cuts from one source, managed as a list: select, delete, keep-only-selected, or merge a contiguous run into one." />
-  <KV term="Scene detection" desc="Runs a threshold-based scan and replaces the whole cut list with one cut per detected scene change." />
-  <KV term="Export modes" desc="Each cut as its own file, or every cut concatenated into one combined output via a fast stream-copy join." />
+  <KV term="Scene detection" desc="Scans the video and replaces the cut list with one cut per scene change." />
+  <KV term="Export modes" desc="Each cut as its own file, or every cut joined into one, without re-encoding where possible." />
 </KVGroup>
 
 ### Crop and export, staying out of the way
 
-The crop tool is drag-and-drop guides with corner handles, an aspect-ratio lock with presets (or the source's own native ratio), and a toggle between one shared crop for every cut versus an independent crop per cut. There's also a Zoom mode alongside Crop: instead of just cutting the frame down, it crops into a region and scales that back up to the source's size, with guardrails so it can't be silently combined with lossless Keyframe trimming. Zooming into the preview itself is cursor-anchored, so scrolling in on a specific detail keeps that point under your mouse instead of recentering the view on you.
+The crop tool is drag-and-drop guides with corner handles, an aspect-ratio lock with presets (or the source's own native ratio), and a toggle between one shared crop for every cut versus an independent crop per cut.
 
-Export leans on the same instinct as the trimming: don't re-encode unless the export choice actually requires it. Picking a specific format (or a specific audio codec) always re-encodes, since that's a deliberate conversion, but the default paths stream-copy wherever the container and codec already line up, including audio-only exports, which pick a container to match the source's audio codec instead of assuming everything is AAC.
+There's also a Zoom mode alongside Crop: instead of just cutting the frame down, it crops into a region and scales that back up to the source's size, with guardrails so it can't be silently combined with lossless Keyframe trimming.
+
+Zooming into the preview itself is cursor-anchored, so scrolling in on a specific detail keeps that point under your mouse instead of recentering the view on you.
+
+Export leans on the same instinct as the trimming: don't re-encode unless the export choice actually requires it. Picking a specific format always re-encodes, since that's a deliberate conversion. The default paths copy the original streams wherever they can, including audio-only exports, which keep the source's own audio format instead of converting everything to one.
+
+Small feedback details got the same scrutiny. I tried a progress bar during export, but showing and hiding it made the sidebar jump, and a fixed one took up space for nothing. I settled on a small spinner in the status line, and swapped raw FFmpeg error dumps for a short message with a Details button.
 
 <KVGroup>
   <KV term="Video" desc="Original (stream-copies where possible), MP4 (H.264/H.265), WebM (VP9), MKV, or AV1." />
-  <KV term="Animated" desc="GIF or WebP export with frame rate, palette, dithering, and gifsicle optimization controls." />
+  <KV term="Animated" desc="GIF or WebP export, with controls for frame rate, colours and file size." />
   <KV term="Audio-only" desc="Original (matches the source codec's own container losslessly), M4A, MP3, Opus, FLAC, or WAV." />
 </KVGroup>
 
@@ -47,6 +59,10 @@ Export leans on the same instinct as the trimming: don't re-encode unless the ex
 
 It's my daily tool for anything that would otherwise mean opening a full editor for a thirty-second job. Still actively growing in small increments, mostly driven by hitting a rough edge myself and fixing it the same day, rather than any fixed roadmap.
 
-It outgrew being a single script a while back, but I kept bolting features onto it anyway. Adding Zoom mode was the tipping point: it needed to interact with crop, scale, and the lossless-trim guardrails all at once, and doing that cleanly in one file wasn't realistic anymore. That pushed a proper split into a `clipcutlib` package (mixins, ffmpeg helpers, widgets, app bootstrap), which made the Zoom mode work possible in the first place.
+It outgrew being a single script a while back, but I kept bolting features onto it anyway. Adding Zoom mode was the tipping point: it needed to interact with crop, scale, and the lossless-trim guardrails all at once, and doing that cleanly in one file wasn't realistic anymore.
 
-The UI needed the same rethink. Lossless Keyframe trim used to just be a checkbox sitting next to everything else, which meant it was on you to remember it couldn't coexist with crop, zoom, or scale. It's now a proper guardrailed mode instead: pick it and the UI locks out the operations that would break it, rather than letting you find out the hard way on export. Small as that sounds, it's a sign of what ClipCut's actually become: less a quick trim script, more a real (if focused) editing app.
+That pushed a proper split into separate modules for the window, the FFmpeg helpers and the widgets, which made the Zoom mode work possible in the first place.
+
+The UI needed the same rethink. Lossless Keyframe trim used to just be a checkbox sitting next to everything else, which meant it was on you to remember it couldn't coexist with crop, zoom, or scale.
+
+It's now a proper guardrailed mode instead: pick it and the UI locks out the operations that would break it, rather than letting you find out the hard way on export. Small as that sounds, it's a sign of what ClipCut's actually become: less a quick trim script, more a real (if focused) editing app.

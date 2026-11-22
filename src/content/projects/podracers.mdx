@@ -1,0 +1,102 @@
+---
+title: "Podracers in BeamNG"
+description: "Real hovering podracers for BeamNG.drive: no wheels and no car underneath, just two soft-body engines and a cockpit held together by a force field and cables, flown by one shared hover controller at up to 965 km/h."
+tags: ["Game Design", "Interaction Design", "Physics", "Lua", "Python", "Game Modding", "Blender"]
+category: "personal"
+order: 7
+visible: true
+images: []
+cover: "../../assets/images/podracers-cover.jpg"
+---
+
+import InlineVideo from '../../components/InlineVideo.astro';
+import KV from '../../components/KV.astro';
+import KVGroup from '../../components/KVGroup.astro';
+import podPoster from '../../assets/images/podracers-poster.jpg';
+import podCockpitPoster from '../../assets/images/podracers-cockpit-poster.jpg';
+import podShowcasePoster from '../../assets/images/podracers-showcase-poster.jpg';
+
+<InlineVideo src="/videos/podracers.mp4" poster={podPoster} alt="Racing a podracer through a desert canyon in BeamNG.drive from the chase camera, the two engines linked by a crackling energy binder" />
+
+Every podracer mod I'd seen for BeamNG.drive was the same trick: a car with a podracer body slapped on top, driving on invisible wheels. It looks right for a second, then it corners like a hatchback. I wanted the real thing. No wheels at all: two huge engines and a small cockpit, flying in formation and pulling each other along the way they do in the film.
+
+It's a fan project, built over about three days of evenings and one long night. I didn't buy a good model straight away. I started with a proof of concept on an existing community model, because if the physics couldn't work, a nicer model wouldn't save it, and if they did work I could swap the model later and keep everything else.
+
+<KVGroup>
+  <KV term="Goal" desc="A podracer that actually hovers and flies, not a car in disguise." />
+  <KV term="Constraint" desc="BeamNG is built to simulate cars as squashy, bendable bodies. A pod has to live inside that." />
+</KVGroup>
+
+### Three bodies, one feel
+
+I wanted the three parts to feel like they were floating in a tube: kept in the shape they need to be, but held by something like gravity or magnetism, never rigid. That feeling drove the design more than any engineering did.
+
+My first try had the cockpit drifting loosely into places it shouldn't. I stiffened the links, and that swung too far: with solid beams between them, the engines felt "glued together". So I replaced the beams with a force field, firm about the shape but still letting the parts move.
+
+<KVGroup>
+  <KV term="Energy binder" desc="A soft force field keeps the engines side by side and pointing the same way, but lets them squeeze together through tight gaps like they do in the film." />
+  <KV term="Cockpit tether" desc="Pinning the cockpit behind the engines made it jackknife in turns. Now it follows the path the engines actually flew, like a train carriage." />
+  <KV term="Breakup" desc="Snap both cables and everything lets go. My first version made crashes messy, with parts half attached and spinning, so I changed it to a clean release where everything falls as dead weight." />
+</KVGroup>
+
+<InlineVideo src="/videos/podracers-showcase.mp4" poster={podShowcasePoster} alt="Orbiting the Anakin pod in flight: the cockpit towed on cables behind two engines linked by pink lightning, then close-ups of the engines and the spinning air-brake blades" />
+
+### Hovering on a magnet
+
+I wanted landings to feel like a magnet repelling you: hard to hit the ground, and a strong push back up when you get close. The pod senses the ground under each engine and pushes away from it, and it reads the slope, so on a bank it pushes off the surface instead of straight up. I added that after banking onto a slope sent the pod climbing "up up up" until it crashed.
+
+I'd done all my early testing on flat ground, which turned out to be a blind spot. On a rough desert map the engines splayed apart and went "a bit crazy". So I had both engines agree on one shared ground height and skim over bumps instead of following every one.
+
+Getting the cushion right took a few rounds. One version pushed so hard it lifted off well before a ramp, and another changed how the pod felt even sitting still, so I reverted it and came back later. In the air I dropped the float entirely, because an early version felt like jumping on the moon. Now the pitch stick decides: push forward to dive, pull back to glide.
+
+### Steering you can predict
+
+The pods go far faster than any car, up to about 965 km/h, but speed wasn't the problem I kept coming back to. It was trust. As I put it at the time, "I can't easily predict when to stop turning and I always end up hitting things". If you can't predict a turn, you can't race or dodge anything.
+
+My first instinct was more tuning. The real fix came from reading the logs: BeamNG's car steering assists were quietly softening my stick input, and the swinging cockpit was adding steering of its own. Bypassing the assists "improved things so much".
+
+From there I made turns let go faster than they build, so the pod straightens the moment you release the stick. Sharper turning brought a jerky, catch-up feel, which took a few more passes to smooth into a clean arc. I studied the Episode I Racer game for how the pods twist through corners, and copied its shoulder-button tilt for tighter turns.
+
+Very high speed exposed one last layer. Corners started to wobble, and the cockpit sagged so low under the engines that they blocked my view. I liked the amount of roll, so I kept it and only fixed the sag and the snap back out of a turn.
+
+<InlineVideo src="/videos/podracers-cockpit.mp4" poster={podCockpitPoster} alt="The cockpit view at dusk on a salt flat: the lit instrument dash, and the two engines ahead joined by the energy binder" />
+
+### Damage as a game mechanic
+
+I didn't want realistic denting. It looked ugly on a pod, and in the film the pods are always fine after a crash, so I'd rather pieces fly off whole. Hard hits knock parts off, and a damaged engine smokes, then burns, and loses power. I tried a blue flame too, wasn't sure about it, and took it out.
+
+Repair was the interesting design problem. I wanted one damaged engine to mean a much slower pod, and balancing the engines to win most of that back, but not all of it.
+
+My first idea was a button per engine to divert power. Then I remembered the film, where one engine is drained to save the other, and realised a single button would do. Hold X and the healthier engine gives some of its health to the weaker one until they match. Balancing a mismatched pair wins back most of the lost speed, but if both are in the red, your racer is properly damaged.
+
+A small on-screen panel shows each engine's health, the power level and airspeed, so I didn't need a separate speed readout cluttering the screen.
+
+### Three pods
+
+Once the proof of concept felt right, I bought a much better Anakin model and duplicated the mod, so the old one stayed as a working fallback. All three pods share the same flying code and handling, with room for each to differ where it needs to. A handling fix found on one pod carries over to the others, and each installs as its own mod so they can race side by side.
+
+<KVGroup>
+  <KV term="Proof of concept" desc="Built on an existing community model. Every decorative piece can be knocked off, and the fins are hinged." />
+  <KV term="Anakin" desc="Air brakes and vanes that open when you brake or turn, spinning fans, a lit dash, and exhausts that open and close with the throttle. The vanes first flapped like paper, so I rebuilt them all from the one that felt solid." />
+  <KV term="Sebulba" desc="Engines that break into solid chunks like a real engine, and an X button that cuts the power coupler like the film, so the engines splay apart, plough in nose first and shatter." />
+</KVGroup>
+
+### How it's built
+
+The very first spawn was an exploding jumble of parts ("at least something happened!"). Parts that are too small and too stiff blow up in BeamNG, so now every build gets checked for that before it reaches the game.
+
+After a night of fixes stacked on fixes, I asked how messy the code had got and had it cleaned up. To make that safe, I set up a way to run the pod's flying code outside the game and compare it with the previous version, so a cleanup or handling change can't quietly change how it feels.
+
+The process mattered as much as the code. At one point I had lots of small tuning changes stacked up that I couldn't actually feel in game, and one had changed the banking when I'd meant the engines blocking my view. So I undid them and set a rule: one change I can see at a time, and if my feedback is ambiguous, ask before touching the physics.
+
+### Where it's at
+
+All three pods fly, race, break and repair, with a minimap and the status panel. What's missing is somewhere to race. A pod near 1,000 km/h needs a huge track, so I tried shrinking the proof of concept to half size, then a fifth so two could race side by side. The physics fought back with jitter and parts falling off at spawn, so I rolled it all back.
+
+Scaling a real circuit up six times into a desert didn't work either, so I've started building a track of my own.
+
+The pods also led straight into my [JBeam Editor](/personal/jbeam-editor/): here I built each pod's structure from code, and the editor is the general, visual version of that idea.
+
+It isn't released. The Anakin model is a paid model, and although its artist was happy for me to use it and even release the mod, I'd rather not publish someone else's model inside a mod. The engine sounds are placeholder jet loops from another mod.
+
+This is a non-commercial fan project. Podracers and Star Wars belong to Lucasfilm. The Anakin pod model is by phiwatn on CGTrader. The Sebulba pod is based on "Sebulba podracer star wars" by Vlad on Sketchfab (CC BY 4.0).

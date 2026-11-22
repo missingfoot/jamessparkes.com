@@ -3,7 +3,7 @@ title: "BeamTrainer"
 description: "A GTA5-style trainer menu for BeamNG.drive: a full keyboard/mouse-driven in-game window that mirrors the game's gameplay radial menu, adds a curated set of sandbox tools, and layers on a vehicle spawner, teleport slots, and favorites."
 tags: ["Lua", "Game Modding", "Tooling", "UI Design", "Reverse Engineering"]
 category: "personal"
-order: 2
+order: 16
 visible: true
 images: []
 cover: "../../assets/images/beamtrainer-poster.jpg"
@@ -28,21 +28,23 @@ The interesting constraint on this project wasn't the UI, it was BeamNG's moddin
 A "GE" (game engine) side owns the world, the UI, and vehicle spawning. A "vehicle" side runs once per car and is the only place physics state actually lives.
 
 <KVGroup>
-  <KV term="GE side" desc="Owns the entire imgui window: navigation, rendering, vehicle spawning/swapping, teleport slots, and a live mirror of the game's own quickAccess radial tree." />
-  <KV term="Vehicle side" desc="A clean-room set of physics sandbox tools (power, grip, god mode, infinite fuel/N2O, mass, brakes, freeze thermals, burst-proof tires) that can only run inside the vehicle VM." />
+  <KV term="Game side" desc="Owns the whole menu window: navigation, vehicle spawning, teleport slots, and the live mirror of the game's own radial menu." />
+  <KV term="Vehicle side" desc="The physics sandbox tools, like extra power, grip, god mode and infinite fuel, written from scratch. They can only run inside each car." />
 </KVGroup>
 
-The two sides talk over a small JSON protocol: the GE side sends `{cmd = "set", key = "power", value = 2.5}`-style commands into the vehicle VM via `queueLuaCommand`, and the vehicle pushes its full state back out on every change (and on load or reset) so the UI never drifts from what's actually active.
+So the menu can't just flip a setting. It has to send a message into the car ("set power to 2.5x") and wait to hear back. I made the car report its full state after every change, and on load or reset, so the menu always shows what's really active rather than what it last asked for.
 
 Vehicle swaps and resets re-apply the desired state automatically, so active tools survive a crash or a respawn instead of silently dropping.
 
 ### Mirroring the gameplay radial menu
 
-The single hardest part turned out to be the Game Menu tab: a live, browsable copy of BeamNG's entire gameplay radial tree, generated from the same `core_quickAccess` data the built-in menu uses.
+The single hardest part turned out to be the Game Menu tab: a live, browsable copy of BeamNG's entire gameplay radial menu, built from the same data the built-in menu uses.
+
+Building it from the game's own data, rather than a hand-picked copy, means anything that's in the radial menu is here too, so switching over doesn't cost you anything.
 
 Recreating that as a flat, keyboard-navigable list meant walking a tree that was designed to be drawn as icons and dials, handling checkbox/color entries with real ON/OFF state, and proxying vehicle-scoped submenus through the current vehicle exactly like the radial itself does.
 
-Getting there took a real chain of small, specific bugs: a VFS-index race where tabs could load before the game's file index was ready, translation keys leaking into menu titles instead of resolved text, a request loop that could crash mid-render on the vehicle item list, and a search-box quirk where `im.ArrayChar` buffers turned out not to be index-assignable and needed `ffi.copy` instead.
+Getting there took a real chain of small, specific bugs: tabs loading before the game had finished indexing its files, raw translation keys showing up as menu titles, a crash partway through drawing the vehicle list, and a search box that needed a different way of writing text into it than the obvious one.
 
 Each one got fixed, tested in-game, and folded back in before moving on to the next tab.
 

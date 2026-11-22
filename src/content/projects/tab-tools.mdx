@@ -3,7 +3,7 @@ title: "Tab Tools"
 description: "A Chrome extension for efficiently managing large numbers of open tabs, built to fill the gap left by Chrome's default tab management with grouping, session saving, batch actions, and keyboard shortcuts."
 tags: ["UI Design", "UX Design", "Chrome Extensions", "Web Development", "Project Management", "CSS", "HTML", "Tailwind"]
 category: "personal"
-order: 4
+order: 17
 visible: true
 images: []
 cover: "../../assets/images/tab-tools-poster.jpg"
@@ -20,7 +20,7 @@ import tabToolsPoster from '../../assets/images/tab-tools-poster.jpg';
 ## Overview
 
 <KVGroup>
-  <KV term="Goal" desc="Efficiently manage a large number of tabs in Chrome." />
+  <KV term="Goal" desc="Stay on top of dozens of open tabs in Chrome without losing anything." />
   <KV term="Inspiration" desc="Other browsers offer advanced tab management, but Chrome's default system felt lacking." />
 </KVGroup>
 
@@ -32,7 +32,7 @@ This project is one of a series of personal projects where I lean on AI-assisted
   <KV term="Identify the problem" desc="Started with a real-world issue: Chrome's default tab management couldn't keep up with dozens of open tabs." />
   <KV term="Draft requirements" desc="Defined features and success criteria, using AI to generate early concepts and prototypes." />
   <KV term="Design & prototype" desc="Hand-coded the UI for the popup and options screens to keep the extension lightweight and fast." />
-  <KV term="Develop the MVP" desc="Started with basic functions and scaffolded the project so new features could be added incrementally." />
+  <KV term="Develop the MVP" desc="Started with the two things I needed most, and set the project up so new features could be added one at a time." />
   <KV term="Test & iterate" desc="Used it as my own daily driver and gathered feedback from friends and family to refine functionality and UX." />
   <KV term="Document & reflect" desc="Kept a readme and roadmap so I could pick the project back up between AI sessions without losing context." />
 </KVGroup>
@@ -40,16 +40,19 @@ This project is one of a series of personal projects where I lean on AI-assisted
 ## Development highlights
 
 <KVGroup>
-  <KV term="Incremental feature growth" desc="Started with basic functions (downloading a list of open tab URLs and bulk opening of pasted URLs) and expanded to more complex actions like tab grouping, duplicate closures, saving and restoring sessions, import/export capabilities, page URL extraction and batch-opening, along with keyboard shortcuts." />
+  <KV term="Incremental feature growth" desc="It started as two simple jobs: save a list of my open tabs, and reopen a pasted list. Grouping, closing duplicates, saved sessions and keyboard shortcuts came later, each added once I'd felt the need for it." />
+  <KV term="Settings to turn things off" desc="As the feature list grew, I added a settings page to switch off the tools you don't use, so the popup only shows what you need." />
+  <KV term="Firefox, too" desc="I later restructured the project to build for both Chrome and Firefox from one codebase, with the same features on each." />
+  <KV term="Surviving huge sessions" desc="Restoring a big saved session could crash the browser by loading every tab at once. Now restored tabs only load when you click on them." />
 </KVGroup>
 
 ## Result & impact
 
 <KVGroup>
   <KV term="Greater efficiency" desc="My workflow and browser usage is less stressful and more efficient now, and multiple people have expressed interest in using it themselves." />
-  <KV term="Ongoing evolution" desc="New ideas and incremental updates keep Tab Tools relevant and invaluable to my daily routine." />
+  <KV term="Ongoing evolution" desc="I've kept coming back to it for nearly two years, mostly when something gets in my way, which keeps it part of my daily routine." />
 </KVGroup>
 
 ## Conclusion
 
-Building Tab Tools gave me a 360-degree view of product creation, from defining the problem through to shipping and gathering real user feedback. It reinforced how much AI-assisted development rewards clear documentation and requirements, much like good teamwork, and it's a workflow I've since carried back into professional projects.
+Building Tab Tools gave me a view of the whole of product creation, from defining the problem through to shipping and gathering real user feedback. It reinforced how much AI-assisted development rewards clear documentation and requirements, much like good teamwork, and it's a workflow I've since carried back into professional projects.

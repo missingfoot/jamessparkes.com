@@ -3,7 +3,7 @@ title: "Travel Mode"
 description: "A Linux-first, open-source alternative to TripMode: a root daemon, CLI, and GTK4/libadwaita desktop app that show which applications are using the network and let you block any of them, live, down to the packet."
 tags: ["Rust", "Linux", "Networking", "GTK4", "Systems Programming", "CLI", "Open Source"]
 category: "personal"
-order: 5
+order: 15
 visible: true
 images: []
 cover: "../../assets/images/travel-mode.png"
@@ -28,23 +28,25 @@ Metered tethering and data caps are the everyday trigger: knowing that Steam or 
 
 ## Architecture
 
-Travel Mode is a Rust workspace split into a root daemon, a CLI, and a desktop GUI, deliberately kept as three thin clients around one source of truth.
+Travel Mode is written in Rust and split into three parts: a background service that runs as root, a command-line tool, and a desktop app. Only the service touches the network. The other two just ask it questions and send it requests, so there's one source of truth and nothing to fall out of sync.
 
 <KVGroup>
-  <KV term="travelmoded (root)" desc="Owns everything: interface/route detection, a conntrack poller for live flow byte counts, a procfs process scanner, socket-to-process attribution, the rule store, and the firewall." />
-  <KV term="travelmode (CLI)" desc="Talks to the daemon over a Unix socket with length-prefixed JSON. status, ps, connections, top, block, allow, watch, --json for scripting." />
-  <KV term="travelmode-gui" desc="A stateless GTK4/libadwaita client (relm4) with a tray icon. Subscribes to the daemon's event stream and renders it; carries no networking logic of its own." />
+  <KV term="The service" desc="Owns everything: which network you're on, how much each connection is moving, which app owns it, the rules, and the firewall." />
+  <KV term="The CLI" desc="Status, live usage, and block or allow, with JSON output for scripting." />
+  <KV term="The desktop app" desc="A GNOME-style app with a tray icon. It shows what the service reports and has no networking logic of its own." />
 </KVGroup>
 
-Enforcement runs through the daemon's own `inet travelmode` nftables table: new outbound connections get queued to userspace via NFQUEUE, the daemon attributes the packet to a process, and drops it if that executable has an active Block rule. Everything is designed to fail open: if filtering can't be set up (no root, missing kernel support), traffic just flows and the daemon reports `filtering_active = false` rather than breaking the network.
+Blocking happens in the Linux firewall. Each new outbound connection is held for a moment while the service works out which app it came from, then dropped if that app is blocked.
+
+Everything is designed to fail open: if filtering can't be set up, traffic just flows and the app says filtering is off. A tool that sits between you and the internet has to earn trust, and the worst outcome is it silently breaking your connection while you're tethered somewhere.
 
 ## Development highlights
 
 <KVGroup>
-  <KV term="Kill-on-block" desc="Blocking an app doesn't just stop new connections, it kills what's already open: TCP sockets are torn down with `ss -K`, and matching conntrack entries are deleted so any in-flight packets re-enter as NEW and hit the block instead of coasting through on an old connection." />
-  <KV term="Best-effort attribution" desc="Flows get mapped to a process by matching the socket inode against every process's open file descriptors in /proc. Anything that can't be attributed shows as unknown and stays fail-open rather than risk blocking the wrong thing." />
-  <KV term="Optimistic GUI state" desc="Toggling a switch in the GUI records the request locally and doesn't let the daemon's 1-second status tick overwrite it until the confirming event actually arrives, otherwise a slow round-trip visibly yanks the switch back mid-click." />
-  <KV term="Chasing a rendering bug" desc="Stray fragments of other pages' text were showing up at repaint edges. Traced it back to a damage-tracking bug in GTK's GPU renderer on this hardware/compositor combination, not application code, and worked around it by forcing full-redraw." />
+  <KV term="Kill-on-block" desc="The first version only stopped new connections, so a download already running kept going after you blocked it. Now blocking also cuts the app's open connections, which is what people actually expect the switch to mean." />
+  <KV term="Best-effort attribution" desc="Traffic is matched to an app by looking at which process owns each connection. Anything that can't be matched shows as unknown and is left alone, rather than risk blocking the wrong thing." />
+  <KV term="Switches that stay put" desc="A slow reply from the service could flick a toggle back mid-click. The app now holds your choice until the service confirms it." />
+  <KV term="Chasing a rendering bug" desc="Stray bits of text from other pages kept appearing on screen. I traced it to a bug in the graphics toolkit's renderer on my hardware, not my code, and worked around it." />
 </KVGroup>
 
 ## Result & impact
@@ -54,4 +56,4 @@ Enforcement runs through the daemon's own `inet travelmode` nftables table: new 
   <KV term="What's next" desc="Usage history and per-app data limits, then automatic profile switching so home Wi-Fi and a phone hotspot can carry different rule sets without touching anything by hand." />
 </KVGroup>
 
-The bigger draw was the systems side rather than the UI: designing something that sits directly on nftables and NFQUEUE, has to reason correctly about kernel state (conntrack entries, socket lifetimes, fail-open behaviour under every failure mode), and still stays boring and predictable enough to trust running as root on a machine I use every day.
+The bigger draw was the systems side rather than the UI: designing something that sits directly in the Linux firewall, has to reason correctly about connections the kernel is tracking and what happens under every failure, and still stays boring and predictable enough to trust running as root on a machine I use every day.

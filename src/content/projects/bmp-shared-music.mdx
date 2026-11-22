@@ -1,0 +1,120 @@
+---
+title: "Shared Music"
+description: "A BeamNG.drive multiplayer mod that clips a phone to the car's air vent: anyone in the car can pick the next song, and everyone hears it in sync, coming from the car itself."
+tags: ["Interaction Design", "UX Design", "UI Design", "Game Modding", "Lua", "JavaScript", "Web Audio", "Multiplayer"]
+category: "personal"
+order: 4
+visible: true
+images: []
+cover: "../../assets/images/bmp-shared-music-cover.png"
+---
+
+import { Image } from 'astro:assets';
+import InlineVideo from '../../components/InlineVideo.astro';
+import KV from '../../components/KV.astro';
+import KVGroup from '../../components/KVGroup.astro';
+import bmpPoster from '../../assets/images/bmp-shared-music-poster.jpg';
+import bmpStates from '../../assets/images/bmp-shared-music-01.png';
+import bmpInCar from '../../assets/images/bmp-shared-music-02.jpg';
+import bmpCars from '../../assets/images/bmp-shared-music-03.jpg';
+import bmpIngamePoster from '../../assets/images/bmp-shared-music-ingame-poster.jpg';
+
+<div class="project-sound-video">
+  <video controls playsinline preload="metadata" poster={bmpIngamePoster.src} aria-label="In-game footage: the phone on the car's air vent playing a song from the shared list, then driving along the highway with the music coming from the car">
+    <source src="/videos/bmp-shared-music-ingame.mp4" type="video/mp4" />
+  </video>
+</div>
+
+<InlineVideo src="/videos/bmp-shared-music.mp4" poster={bmpPoster} alt="The phone's music page: tapping a song, the sync indicator going from syncing to in sync, scrolling, and pausing" class="video-capped" />
+
+When my partner and I drive around a BeamMP server (BeamNG.drive's multiplayer mod) in the same car, one driving and one riding along, the obvious thing missing is music. She's the music one, so the brief I set myself was simple: she should be able to pick the songs.
+
+Not a playlist each of us runs separately in another window, but the car stereo: one song, the same moment for both of us, coming from the car, and whoever's in the passenger seat gets to pick what's next.
+
+The starting point was an existing single-player mod, Roadwave. I liked two things about it: the music is placed in 3D at the car and gets muffled when you step out and shut the doors, and it has an in-car music screen.
+
+What didn't work was that it's single-player only, and its screen is an overlay that floats in space and jiggles instead of being part of the dashboard. It's drawn on top of the game and chases the car's position, so it's always a moment behind. Its licence also forbids sharing modified versions, so this had to be my own code from scratch, borrowing ideas and nothing else.
+
+### 3D audio: the speakers are in the car
+
+The biggest part of making it feel real was the sound. I wanted it to sound like the car stereo, not a soundtrack, so the music doesn't play over the game. It plays from the car, and what you hear depends on where you are and how shut the car is. Watch the clip at the top with the sound on: the camera starts on the phone, sits in the cabin, then cuts outside the car as it drives off.
+
+<KVGroup>
+  <KV term="Inside the cabin" desc="Full and clear from any seat, like a real car stereo. 'Inside' means the camera is in the car and under its roof, so an orbit camera hovering low beside the car doesn't count." />
+  <KV term="Outside, doors shut" desc="Muffled and quieter, as if you're hearing it through the bodywork." />
+  <KV term="Outside, doors open" desc="Open a door (or tear one off in a crash) and the music brightens almost straight away, back to full and clear." />
+  <KV term="Walking away" desc="The music is placed at the car in 3D and fades with distance. It only pans left and right once the car opens up." />
+</KVGroup>
+
+How shut the car is gets measured, not guessed. A handful of rays are cast outwards from the driver's head against the car's live physics shape, several times a second. An open door lets several of them through at once, and that decides how muffled the music is.
+
+I chose the physics shape over a simple "doors open" flag because in BeamNG cars get crushed and lose doors all the time, and the sound should follow what you can see. The audio itself plays inside the phone's web page, with the game telling it where the car is relative to the camera.
+
+None of those rules were in the first version. They came from driving around and noticing where it sounded wrong:
+
+<KVGroup>
+  <KV term="Driver's seat" desc="Duller from the driver's view than zoomed in, and head bob muffled it. My note: it should be clear anywhere in the car, since the speakers are in the car." />
+  <KV term="Orbit camera" desc="Circling a shut car, the sound kept changing and was far too clear: one ray slipped through a gap, and the panning swung with the camera. A low camera over the bonnet also counted as inside, hence the roof check." />
+  <KV term="Stuck half-open" desc="After closing a door it never went fully muffled again: one odd reading from the swaying head had set the 'shut' reference too high. Hence the head's rest position." />
+</KVGroup>
+
+### A phone on the vent
+
+Spotify was the first wish, since that's where my partner's playlists live, and the first thing dropped: it can't be streamed into the game or shared between players without both having Premium plus a desktop helper running.
+
+So I pivoted to plain music files. A shared, synced folder made the hard part (both machines playing the same thing) trivial instead. It also suited us: she's on Windows and I'm on Linux, and dragging a song into a folder works the same on both.
+
+My first idea was to point the game at our shared network drive. It can only read files inside its own folders, though, so the music lives there and we keep that folder in sync between our machines.
+
+For the interface, I went with something everyone already understands: a phone in a vent clip. It's the most familiar "who controls the music" object in a real car, it sits between the two front seats, and it makes the UI a physical thing fixed to the dash, moving and flexing with it, instead of a menu floating in front of the camera.
+
+I didn't know until I went looking that the game already ships a dash-mounted GPS whose screen is a web page. Most of the vanilla cars have a slot for it, so the phone takes that slot (the licence plate slot on the rest) and is fitted in the parts menu. Losing the GPS while the phone is fitted seemed a fair trade.
+
+Press **K** and the camera zooms onto the phone; click a song and it plays for everyone in the car.
+
+Of three directions for the screen (big now-playing view, list first, huge driving tiles) I picked the list: big controls would be too finicky, you just want to click a song and scroll. Then I cut playlist tabs too: one flat list of the files was all we needed. Artist and track order come from the files' own tags, so nobody renames anything.
+
+<Image src={bmpStates} alt="Three states of the phone screen: a song playing and in sync, a newly picked song syncing, and a song waiting for its file to arrive" loading="lazy" />
+
+The spec I wrote listed failure states alongside the goals, and two of them shaped the screen directly:
+
+<KVGroup>
+  <KV term="Too fiddly to use" desc="Big rows, one flat list grouped by artist (no playlists, no tabs), and one oversized play/pause button with previous and next either side." />
+  <KV term="Silently out of sync" desc="The bottom bar always says where you stand: in sync, syncing…, or waiting for file when a song someone picked hasn't reached your machine yet. It starts by itself, at the right position, once the file arrives." />
+</KVGroup>
+
+The black, matte screen is a lesson from testing in the game. At night the early builds looked washed out. The mod wasn't causing it: every in-car screen gets a grey haze from reflections and night exposure.
+
+A pure black page helped, but then the carbon-fibre dash showed up as stripes reflected in the phone's glass. A fully rough screen material (no reflections) fixed both and made it readable at a glance.
+
+<Image src={bmpInCar} alt="An early build of the phone clipped to a car's centre vent, its screen washed out by reflections" loading="lazy" />
+
+You can't take your hands off the wheel to zoom in on a phone while driving, so every control also has a shortcut on the keyboard and on the controller. I put them behind a button the game already uses as a modifier, so they don't clash with driving. Previous restarts the song if it's a few seconds in, like a real player.
+
+Volume is the one thing that's deliberately not shared: each person sets their own.
+
+### Clicking a phone inside a 3D scene
+
+I wanted clicking the phone to feel like tapping a real screen. The obstacle was that the game has no mouse input for screens drawn onto objects in the world.
+
+So I built it by hand: the mod works out where your mouse points in 3D, finds the spot it hits on the phone's screen, and clicks whatever is at that spot on the page. Scrolling the list works the same way.
+
+### Sync and placement
+
+Playback state belongs to the car rather than to a player (which song, when it started, playing or paused), and a small server plugin relays changes to everyone. If someone's audio drifts noticeably it jumps back into place, and someone who joins late simply picks up at the right spot.
+
+<Image src={bmpCars} alt="A grid of twelve different car interiors, each with the phone placed automatically on the dashboard" loading="lazy" />
+
+The phone needs a spot in every car. I got one car right first, the ETK 800, before touching the rest, using a placement tool that works with movement keys only. I didn't want to type numbers; I wanted to line it up by eye until the driver could see it well. Nudge the clip into the vent, switch to the ball joint to angle the phone, save. My keyboard has no number pad, so the keys moved to letters after the first try.
+
+A bake script turns the saved positions into car parts. My first baked ETK 800 didn't match what I'd lined up: the game combines rotations in a different order from what its own code comment says. So I measured what it actually does and matched that.
+
+There are 39 vanilla vehicles, though, and I wanted the rest "90% there" so I'd only be making small fixes.
+
+Vents can't be detected, because no car models them as a separate part. So for all but the two I placed by hand, a script copies my ETK 800: it looks from each car's driver seat in the same direction, finds the dash and puts the clip at the same depth, mirrored for right-hand-drive cars. Each guess is marked as automatic until someone checks it in the tool.
+
+### Where it's at
+
+It works and is tested in single player on two maps: the phone, the zoom and clicks, the controls, the library and the cabin sound. The multiplayer sync is built and loads on the real BeamMP server, but hasn't had its first two-person test yet; there's a checklist ready for that session. Most cars are still on their automatic placement and need a quick look and a save each.
+
+The phone and vent clip model is "Phone" by kiu on Sketchfab (CC BY 4.0).
