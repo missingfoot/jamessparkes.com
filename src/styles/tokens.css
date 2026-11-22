@@ -1,7 +1,7 @@
 /* styles/tokens.css */
 :root {
-    --bg:          #F5F5F0;
-    --bg-nav:      #EBEBE5;
+    --bg:          #FDFDF9;
+    --bg-nav:      #F4F4EE;
     --border:      #D0D0C8;
     --text:        #1A1A18;
     --text-dim:    #888880;
@@ -9,6 +9,8 @@
     --active-text: #F5F5F0;
     --accent:      #C85A00;
     --accent-key:  #6B6B62;
+    /* Faint paper grain, like the noise layer in Microsoft's Acrylic material */
+    --paper:       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 [data-theme="dark"] {
@@ -21,4 +23,5 @@
     --active-text: #0F0F0E;
     --accent:      #E07530;
     --accent-key:  #9A9A90;
+    --paper:       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.09 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }

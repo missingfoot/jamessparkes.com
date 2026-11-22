@@ -1,8 +1,9 @@
 ---
 title: "Grand Theft Medway"
 description: "A walkable, drivable 3D recreation of a real street near where I live and the neighbourhood around it, built in Godot 4 from open map data and a house-by-house photo survey, with real sun positions and changing weather."
-tags: ["Interaction Design", "3D", "Procedural Generation", "Godot", "C++", "GDScript", "three.js", "Open Data", "Game Design"]
+tags: ["Interaction design", "3D", "Procedural generation", "Godot", "C++", "GDScript", "Three.js", "Open data", "Game design"]
 category: "personal"
+kind: "Game"
 order: 0
 visible: true
 images: []
@@ -36,7 +37,7 @@ That made it a design problem more than a modelling one. A generic terrace looks
 
 I wanted to be able to leave my own street and keep going, down the walks I actually do from home. My first build, in three.js in the browser, couldn't get there.
 
-The counter said 65 fps, but driving it felt sluggish, closer to 30. When I asked for a proper look at what the scene cost, the answer was that the browser was choking on thousands of draw calls.
+The counter said 65 fps, but driving it felt sluggish, closer to 30. When I profiled what the scene actually cost, it turned out the browser was choking on thousands of draw calls.
 
 three.js could have stretched further, but fixing that meant writing streaming and level of detail myself. Godot had all of that built in, so I moved while it was still cheap, less than a day in, and used the port to rethink plots and house types.
 
@@ -146,7 +147,7 @@ Playtesting turned up smaller things too. Clipping a wall at speed brought the c
 
 <InlineVideo src="/videos/street-map-destruction.mp4" poster={destructionPoster} alt="Driving along the pavement through bins, boxes and rubbish put out for collection, which scatter and tumble away from the car" />
 
-Knocking things over was one of the first things I asked for, a couple of hours into the first build. A GTA street is fun because things react when you mount the kerb. The catch is that a street has hundreds of poles, bins and post boxes, and simulating them all would cost far too much.
+Knocking things over was one of the first things I added, a couple of hours into the first build. A GTA street is fun because things react when you mount the kerb. The catch is that a street has hundreds of poles, bins and post boxes, and simulating them all would cost far too much.
 
 So they sit there as cheap copies until something hits one hard enough. Only then does that one become a real physics object, with the size and weight of the real thing.
 

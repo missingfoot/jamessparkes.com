@@ -1,8 +1,9 @@
 ---
 title: "The Collective"
 description: "During my time at The Collective I was the sole product designer during rapid growth at the company as they expanded. I was responsible for driving digital transformation across internal tools and resident-facing products. Designed an app with strong resident adoption. Designed and migrated teams to a new internal platform that improved operational efficiency by 40%. Delivered web and mobile experiences to streamline onboarding, digitised workflows, and built a unified design system to support rapid scaling with 2x users each year."
-tags: ["UI Design", "UX Design", "Branding", "Testing", "Design System", "QA", "Interviews"]
+tags: ["UI design", "UX design", "Branding", "Testing", "Design system", "QA", "Interviews"]
 order: 2
+years: "2017 – 2020"
 visible: true
 images:
   - src: "../../assets/images/collective-01.jpg"
@@ -34,6 +35,11 @@ import { Image } from 'astro:assets';
 import revisitedMoveIn from '../../assets/images/collective-revisited-01.jpg';
 import revisitedDocuments from '../../assets/images/collective-revisited-02.jpg';
 import revisitedRoom from '../../assets/images/collective-revisited-03.jpg';
+import InlineVideo from '../../components/InlineVideo.astro';
+import websitePoster from '../../assets/images/collective-website-poster.jpg';
+import portalPoster from '../../assets/images/collective-portal-poster.jpg';
+
+<InlineVideo src="/videos/collective-website.mp4" poster={websitePoster} alt="Scrolling The Collective's redesigned website: the co-living and working sections, locations, a building page with its photo gallery and room types, a room page, and the start of the booking flow" class="ui-window" />
 
 ### Tasks and responsibilities
 
@@ -107,13 +113,15 @@ I joined The Collective in 2017 during a period of rapid growth and was tasked w
   <KV term="Solution" desc="Designed and implemented Acquire and added features to Colab, integrating advanced data modeling, real-time reporting, and automation to improve efficiency and decision-making. Worked closely with stakeholders across departments to understand their workflows and pain points, ensuring the solutions we built streamlined their processes and reduced administrative overhead." />
 </KVGroup>
 
-### Revisited: the self-service residents actually asked for
+### Self-service: what residents actually asked for
 
-In town halls, focus groups and day-to-day conversations with the front desk, the same requests kept coming up, and they were rarely the social features on the roadmap. Residents wanted to sort out the admin of living somewhere without queuing at reception. The front desk team spent hours every week writing proof of address letters, re-sending receipts, chasing guarantors and answering "when do I get my deposit back?". The company's priorities at the time were social posting, dating and networking features, so most of this never got built.
+In town halls, focus groups and day-to-day conversations with the front desk, the same requests kept coming up. Residents wanted to sort out the admin of living somewhere without queuing at reception.
 
-Years later I rebuilt The Collective's member account to show what that self-service layer could have been: built around the community features rather than instead of them, with every page replacing a task someone used to do by hand.
+The front desk team spent hours every week writing proof of address letters, re-sending receipts, chasing guarantors and answering "when do I get my deposit back?". So I designed a member account where every page replaces a task someone used to do by hand, built around the community features rather than instead of them.
 
-<Image src={revisitedMoveIn} alt="Rebuilt member account screens: getting ready to move in, booking an arrival time, and uploading documents to renew" loading="lazy" />
+<InlineVideo src="/videos/collective-portal.mp4" poster={portalPoster} alt="The member account: renewing a membership and choosing a new length of stay, uploading documents, Wi-Fi and building details, inviting friends, raising a support request and setting communication preferences" class="ui-window" />
+
+<Image src={revisitedMoveIn} alt="Member account screens: getting ready to move in, booking an arrival time, and uploading documents to renew" loading="lazy" />
 
 <KVHeading>For residents</KVHeading>
 
@@ -126,7 +134,7 @@ Years later I rebuilt The Collective's member account to show what that self-ser
   <KV term="Support" desc="Raise and follow maintenance, housekeeping and general requests as conversations with the team, alongside a public help centre." />
 </KVGroup>
 
-<Image src={revisitedDocuments} alt="Rebuilt member account screens: signed agreements, letters and receipts, a proof of address letter, and deposit tracking" loading="lazy" />
+<Image src={revisitedDocuments} alt="Member account screens: signed agreements, letters and receipts, a proof of address letter, and deposit tracking" loading="lazy" />
 
 <KVHeading>Taking work off the front desk</KVHeading>
 
@@ -138,7 +146,7 @@ Years later I rebuilt The Collective's member account to show what that self-ser
   <KV term="Good to know" desc="Postal address, Wi-Fi and house info (guests, quiet hours, repairs, parking) in one place, answering the questions the front desk got every day." />
 </KVGroup>
 
-<Image src={revisitedRoom} alt="Rebuilt member account screens: the move-in condition report, guarantor and data controls, and Good to know" loading="lazy" />
+<Image src={revisitedRoom} alt="Member account screens: the move-in condition report, guarantor and data controls, and Good to know" loading="lazy" />
 
 ### Visual design and branding
 

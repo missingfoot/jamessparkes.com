@@ -32,8 +32,9 @@ const isActive = (href: string) => (currentPath === (href.replace(/\/$/, '') || 
   <div class="nav-group">
     <div class="nav-group-header">Personal</div>
     {personalProjects.map((project) => (
-      <a class={`nav-item${isActive(`/personal/${project.id}/`)}`} href={`/personal/${project.id}/`}>
-        {project.data.title}
+      <a class={`nav-item nav-item-kind${isActive(`/personal/${project.id}/`)}`} href={`/personal/${project.id}/`}>
+        <span class="nav-item-title">{project.data.title}</span>
+        {project.data.kind && <span class={`kind-tag kind-${project.data.kind.toLowerCase()}`}>{project.data.kind}</span>}
       </a>
     ))}
   </div>

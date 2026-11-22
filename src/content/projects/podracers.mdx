@@ -1,8 +1,9 @@
 ---
 title: "Podracers in BeamNG"
 description: "Real hovering podracers for BeamNG.drive: no wheels and no car underneath, just two soft-body engines and a cockpit held together by a force field and cables, flown by one shared hover controller at up to 965 km/h."
-tags: ["Game Design", "Interaction Design", "Physics", "Lua", "Python", "Game Modding", "Blender"]
+tags: ["Game design", "Interaction design", "Physics", "Lua", "Python", "Game modding", "Blender"]
 category: "personal"
+kind: "Mod"
 order: 7
 visible: true
 images: []
@@ -15,6 +16,7 @@ import KVGroup from '../../components/KVGroup.astro';
 import podPoster from '../../assets/images/podracers-poster.jpg';
 import podCockpitPoster from '../../assets/images/podracers-cockpit-poster.jpg';
 import podShowcasePoster from '../../assets/images/podracers-showcase-poster.jpg';
+import podBreakupPoster from '../../assets/images/podracers-breakup-poster.jpg';
 
 <InlineVideo src="/videos/podracers.mp4" poster={podPoster} alt="Racing a podracer through a desert canyon in BeamNG.drive from the chase camera, the two engines linked by a crackling energy binder" />
 
@@ -63,7 +65,13 @@ Very high speed exposed one last layer. Corners started to wobble, and the cockp
 
 ### Damage as a game mechanic
 
-I didn't want realistic denting. It looked ugly on a pod, and in the film the pods are always fine after a crash, so I'd rather pieces fly off whole. Hard hits knock parts off, and a damaged engine smokes, then burns, and loses power. I tried a blue flame too, wasn't sure about it, and took it out.
+The Anakin pod doesn't dent much, and that's deliberate. The model doesn't really allow for it: the engines are basically long tubes, so crumpling them just looks wrong. The pods in the film don't really break apart either.
+
+My head canon is that in a bad crash the engines detach and the cockpit drops to the ground gracefully, protecting the pilot. So instead of denting, hard hits knock parts off whole, and a damaged engine smokes, then burns, and loses power. I tried a blue flame too, wasn't sure about it, and took it out.
+
+The Sebulba pod is the one that properly takes damage. Its engines are a different shape, so they can be smashed apart, and it has the detach mechanism built in.
+
+<InlineVideo src="/videos/podracers-breakup.mp4" poster={podBreakupPoster} alt="The Sebulba pod flying over a salt flat, then the power coupler is cut: the engines splay apart, plough into the ground and shatter while the cockpit skids on alone" />
 
 Repair was the interesting design problem. I wanted one damaged engine to mean a much slower pod, and balancing the engines to win most of that back, but not all of it.
 
@@ -85,7 +93,7 @@ Once the proof of concept felt right, I bought a much better Anakin model and du
 
 The very first spawn was an exploding jumble of parts ("at least something happened!"). Parts that are too small and too stiff blow up in BeamNG, so now every build gets checked for that before it reaches the game.
 
-After a night of fixes stacked on fixes, I asked how messy the code had got and had it cleaned up. To make that safe, I set up a way to run the pod's flying code outside the game and compare it with the previous version, so a cleanup or handling change can't quietly change how it feels.
+After a night of fixes stacked on fixes, I checked how messy the code had got and cleaned it up. To make that safe, I set up a way to run the pod's flying code outside the game and compare it with the previous version, so a cleanup or handling change can't quietly change how it feels.
 
 The process mattered as much as the code. At one point I had lots of small tuning changes stacked up that I couldn't actually feel in game, and one had changed the banking when I'd meant the engines blocking my view. So I undid them and set a rule: one change I can see at a time, and if my feedback is ambiguous, ask before touching the physics.
 

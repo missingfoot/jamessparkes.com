@@ -1,8 +1,9 @@
 ---
 title: "Airship Simulator"
 description: "Groundwork for a game about living aboard an airship: a fragile, fully simulated zeppelin you fly from its own control car over real Alpine terrain, built to answer one question before any gameplay: does it feel right?"
-tags: ["Game Design", "Interaction Design", "Physics", "Simulation", "Godot", "C++", "Procedural Terrain"]
+tags: ["Game design", "Interaction design", "Physics", "Simulation", "Godot", "C++", "Procedural terrain"]
 category: "personal"
+kind: "Game"
 order: 2
 visible: true
 images: []
@@ -37,7 +38,7 @@ Nothing here is scored. The test flight runs from the east end of Lake Geneva up
 
 I picked a real route on purpose. BeamNG's real-world maps and live weather were the reference I had in mind from my first message: a world to explore rather than levels to beat.
 
-I scoped it as a proof of concept and asked to be stopped after each milestone so I could test it myself. Most of what follows changed because of something I noticed in those playtests.
+I scoped it as a proof of concept and stopped after each milestone to test it myself. Most of what follows changed because of something I noticed in those playtests.
 
 ### Designing by what would make it fail
 
@@ -97,7 +98,7 @@ The skin took three tries. One continuous cloth clipped through the frame. Puffi
 
 <InlineVideo src="/videos/airship-concept-crash.mp4" poster={airshipCrashPoster} alt="An airship over the valley takes a hit, tips nose-down, falls into the forest and crumples, sped up 4x" />
 
-When wrecks started folding instead of shredding, I asked what decides which. Now a joint bent too far folds like a hinge in a gentle landing and tears in a hard one, depending on how fast the whole ship hits.
+When wrecks started folding instead of shredding, I dug into what decides which. Now a joint bent too far folds like a hinge in a gentle landing and tears in a hard one, depending on how fast the whole ship hits.
 
 ### Building the gondola, Poly Bridge style
 

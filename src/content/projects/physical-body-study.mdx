@@ -1,8 +1,9 @@
 ---
 title: "Physical Body Study"
 description: "An R&D sandbox in Godot asking what it feels like to be a fully physical body in first person: muscle-driven ragdolls, a skin built for close-up, and eyes that actually look at you. Not a working game, but a lot learned about how a simulated body should feel to control."
-tags: ["Interaction Design", "Game Design", "Physics", "Character Animation", "Godot", "Jolt", "Shaders", "R&D"]
+tags: ["Interaction design", "Game design", "Physics", "Character animation", "Godot", "Jolt", "Shaders", "R&D"]
 category: "personal"
+kind: "Game"
 order: 1
 visible: true
 images: []
@@ -38,7 +39,7 @@ I wanted physics that felt as solid as Half-Life's, so I picked Godot with the J
 
 That layered idea came from Lincoln Margison's video on improving ragdolls, and it's what stops a falling body flopping like a sack. My first version was "jelly like, wibbly wobbling", so I moved the muscles onto the physics engine's own joint springs, which can be calmed down far more.
 
-Then realistic joint ranges made them rigid. So I asked for something "very subtle": slightly tighter limbs and a firmer neck. The neck kept looking odd every time I tested, so it got the most attention.
+Then realistic joint ranges made them rigid. So I went for something very subtle: slightly tighter limbs and a firmer neck. The neck kept looking odd every time I tested, so it got the most attention.
 
 The controller that survived is an assisted "puppet": a hidden balance force holds the body up and steers it. It only helps while the feet are on the ground, though. That was my compromise: fake the boring part, standing upright, so that the moments players watch (jumping, falling off a ledge, being blasted) can be real physics.
 
@@ -117,7 +118,7 @@ I kept every body one light beige tone on purpose. I tried a range of skin tones
 
 <InlineVideo src="/videos/physical-body-study-eyes.mp4" poster={eyesPoster} alt="A character's eyes and head following the camera as it moves around her face" />
 
-I wanted the bodies to feel aware of you, so they watch whoever is looking at them. I asked for the same order people use without thinking: eyes first, then head, then body.
+I wanted the bodies to feel aware of you, so they watch whoever is looking at them. I went with the same order people use without thinking: eyes first, then head, then body.
 
 Small glances are just the eyes. Look further away and the head turns too, and once you're well off to the side, the whole body turns to face you. Each eye aims on its own, so they cross slightly on close things, and when a body is knocked out the eyes go slack.
 

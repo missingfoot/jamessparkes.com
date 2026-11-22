@@ -2,6 +2,8 @@
 // src/components/ProjectLayout.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
+import { tagTip } from '../data/tag-glossary';
+import { getCollection } from 'astro:content';
 
 export interface Props {
   title: string;
@@ -11,11 +13,24 @@ export interface Props {
   path: string;
 }
 const { title, description, tags, images, path } = Astro.props;
+
+// Previous / next follow the sidebar order: work first, then personal.
+const all = (await getCollection('projects', ({ data }) => data.visible)).sort((a, b) => a.data.order - b.data.order);
+const sequence = [...all.filter((p) => p.data.category === 'work'), ...all.filter((p) => p.data.category === 'personal')]
+  .map((p) => ({ title: p.data.title, href: `/${p.data.category}/${p.id}/` }));
+const here = sequence.findIndex((p) => p.href === `${path}/`);
+const prev = here > 0 ? sequence[here - 1] : undefined;
+const next = here >= 0 && here < sequence.length - 1 ? sequence[here + 1] : undefined;
 ---
 <BaseLayout title={`${title} — James Sparkes`} description={description} path={path}>
   <div class="project-view">
     <h1 class="project-title">{title}</h1>
-    <div class="project-tags">{tags.map((t) => <span>{t}</span>)}</div>
+    <div class="project-tags">{tags.map((t) => {
+      const tip = tagTip(t);
+      return tip
+        ? <span class="tag-chip has-tip" tabindex="0" data-tip={tip} aria-label={`${t}: ${tip}`}>{t}</span>
+        : <span class="tag-chip">{t}</span>;
+    })}</div>
     <p class="project-description">{description}</p>
   </div>
 
@@ -33,7 +48,36 @@ const { title, description, tags, images, path } = Astro.props;
     <div class="project-case-study">
       <slot />
     </div>
+
+    {(prev || next) && (
+      <nav class="project-pager" aria-label="More projects">
+        {prev ? (
+          <a class="pager-link pager-prev" href={prev.href} rel="prev">
+            <span class="pager-label">&larr; Previous</span>
+            <span class="pager-title">{prev.title}</span>
+          </a>
+        ) : <span />}
+        {next && (
+          <a class="pager-link pager-next" href={next.href} rel="next">
+            <span class="pager-label">Next &rarr;</span>
+            <span class="pager-title">{next.title}</span>
+          </a>
+        )}
+      </nav>
+    )}
   </div>
 
   <script slot="scripts" src="/js/lightbox.js" defer></script>
 </BaseLayout>
+
+<script>
+  // Keep tag tooltips on screen: chips near the right edge open their tooltip leftwards.
+  const place = (chip: Element) => {
+    chip.classList.remove('tip-left');
+    if (chip.getBoundingClientRect().left + 250 > window.innerWidth - 8) chip.classList.add('tip-left');
+  };
+  document.querySelectorAll('.tag-chip.has-tip').forEach((chip) => {
+    chip.addEventListener('mouseenter', () => place(chip));
+    chip.addEventListener('focus', () => place(chip));
+  });
+</script>

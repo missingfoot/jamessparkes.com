@@ -77,13 +77,14 @@ const timelineGroups = [
             return (
               <li class="timeline-item">
                 <a class="timeline-link" href={`/${project.data.category}/${project.id}/`}>
-                  <div class="timeline-thumb">
-                    {cover && <Image src={cover} alt="" width={400} widths={[400, 800, 1200]} sizes="(max-width: 640px) 100vw, 200px" loading="lazy" />}
-                  </div>
-                  <div class="timeline-text">
+                  <div class="timeline-head">
+                    {project.data.years && <div class="timeline-years">{project.data.years}</div>}
                     <h3 class="timeline-title">{project.data.title}</h3>
-                    <div class="timeline-tags">{project.data.tags.slice(0, 3).join(' · ')}</div>
                   </div>
+                  <div class="timeline-thumb">
+                    {cover && <Image src={cover} alt="" width={1200} widths={[600, 900, 1200, 1600]} sizes="(max-width: 640px) 100vw, 700px" loading="lazy" />}
+                  </div>
+                  <div class="timeline-tags">{project.data.kind && <span class={`kind-tag kind-${project.data.kind.toLowerCase()}`}>{project.data.kind}</span>}{project.data.tags.slice(0, 3).map((t) => <span class="tag-chip">{t}</span>)}</div>
                 </a>
               </li>
             );

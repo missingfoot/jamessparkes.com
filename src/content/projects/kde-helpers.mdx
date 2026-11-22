@@ -1,8 +1,9 @@
 ---
 title: "Desktop Helpers"
 description: "A set of small single-purpose KDE Plasma utilities I built for my own desktop: a one-click updater for the distro ISOs on a Ventoy USB stick, a tray app for checking my Tailscale devices, and a hotkey that switches my monitor's input."
-tags: ["UX Design", "Python", "PyQt6", "Qt", "Desktop Apps", "Linux", "KDE Plasma", "Tooling"]
+tags: ["UX design", "Python", "PyQt6", "Qt", "Desktop apps", "Linux", "KDE Plasma", "Tooling"]
 category: "personal"
+kind: "Tool"
 order: 8
 visible: true
 images: []
@@ -27,7 +28,7 @@ I gave them all the same plain shape on purpose: one small app or script, an ins
 
 I keep a Ventoy USB stick full of Linux distro ISOs for trying distros or reinstalling a PC. Weeks or months pass between uses, so the ISOs go stale, and some (CachyOS in particular) can fail to install when they're too old.
 
-The Tailscale app below already worked well for me, so I asked for the same pattern rather than inventing a new one: a list, an Update button on anything that's out of date, and an **Update all**. In my words at the time: "put it in my main PC, click update, done, put it in the target PC and pick from all the latest ISOs without worrying."
+The Tailscale app below already worked well for me, so I reused the same pattern rather than inventing a new one: a list, an Update button on anything that's out of date, and an **Update all**. In my words at the time: "put it in my main PC, click update, done, put it in the target PC and pick from all the latest ISOs without worrying."
 
 <KVGroup>
   <KV term="One window" desc="Each distro shows what's on the stick next to the latest release, with an Update button or a progress bar right on its row, so there's nothing to hunt for." />
@@ -55,7 +56,7 @@ That rule decided one distro. Omarchy doesn't publish the kind of fingerprint th
   <KV term="Versionless files" desc="Bazzite's filename has no version, so it's compared by checksum instead. That's slow to work out on a USB stick, so it's done once and remembered on the stick until the file changes." />
 </KVGroup>
 
-It started with the other 10 distros already on my stick. When I asked for suggestions to fill the gaps, I added five more (Fedora KDE Plasma, EndeavourOS, elementary OS, Void and NixOS), which made 15. I asked whether Debian netinst was the right edition and kept it rather than switching to a live image, since I never boot Debian live anyway. Once the list was set I stopped there: it was already a good collection, and more distros would only mean more sites that can break.
+It started with the other 10 distros already on my stick. Looking for distros to fill the gaps, I added five more (Fedora KDE Plasma, EndeavourOS, elementary OS, Void and NixOS), which made 15. I weighed up whether Debian netinst was the right edition and kept it rather than switching to a live image, since I never boot Debian live anyway. Once the list was set I stopped there: it was already a good collection, and more distros would only mean more sites that can break.
 
 Each lookup is tested against saved copies of the real sites, and a check command runs every lookup live. Since these sites will change, I wanted the eventual fix to be small and obvious rather than a debugging session.
 
