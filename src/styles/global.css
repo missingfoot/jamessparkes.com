@@ -297,6 +297,12 @@ body {
     line-height: 1.55;
 }
 
+@media (max-width: 640px) {
+    .about-avatar { width: 80px; height: 80px; margin-bottom: 0; }
+    .about-bio { margin-top: 1.5rem; }
+    .about-intro { font-size: 15px; }
+}
+
 /* The full bio restates the intro, so swap rather than stack them. */
 .about-bio:has(.about-more[open]) .about-intro {
     display: none;
@@ -421,7 +427,8 @@ body {
     transition: background 0.15s, border-color 0.15s;
 }
 
-.timeline-item:has(.timeline-years)::before {
+.timeline-item:has(.timeline-years)::before,
+.timeline-item:has(.timeline-kind)::before {
     top: 2.1rem;
 }
 
@@ -470,6 +477,11 @@ body {
     color: var(--text-dim);
     letter-spacing: 0.04em;
     margin-bottom: 0.2rem;
+}
+
+.timeline-kind {
+    display: flex;
+    margin-bottom: 0.35rem;
 }
 
 .timeline-tags {
@@ -578,7 +590,9 @@ body {
     line-height: 1.7;
 }
 
-.cv-points li strong { font-weight: 600; }
+.cv-points li strong { font-weight: inherit; color: var(--text); }
+/* Emphasis by contrast, not weight: the rest of a highlighted point is lighter */
+.cv-points li:has(strong) { color: color-mix(in srgb, var(--text) 62%, var(--bg)); }
 
 .cv-points li::before {
     content: "—";
