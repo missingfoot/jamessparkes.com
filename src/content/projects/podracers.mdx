@@ -33,7 +33,7 @@ It's a fan project, built over about three days of evenings and one long night. 
 
 I wanted the three parts to feel like they were floating in a tube: kept in the shape they need to be, but held by something like gravity or magnetism, never rigid. That feeling drove the design more than any engineering did.
 
-My first try had the cockpit drifting loosely into places it shouldn't. I stiffened the links, and that swung too far: with solid beams between them, the engines felt "glued together". So I replaced the beams with a force field, firm about the shape but still letting the parts move.
+My first try had the cockpit drifting loosely into places it shouldn't. I stiffened the links, and that swung too far: with solid beams between them, the engines felt glued together. So I replaced the beams with a force field, firm about the shape but still letting the parts move.
 
 <KVGroup>
   <KV term="Energy binder" desc="A soft force field keeps the engines side by side and pointing the same way, but lets them squeeze together through tight gaps like they do in the film." />
@@ -45,17 +45,17 @@ My first try had the cockpit drifting loosely into places it shouldn't. I stiffe
 
 ### Hovering on a magnet
 
-I wanted landings to feel like a magnet repelling you: hard to hit the ground, and a strong push back up when you get close. The pod senses the ground under each engine and pushes away from it, and it reads the slope, so on a bank it pushes off the surface instead of straight up. I added that after banking onto a slope sent the pod climbing "up up up" until it crashed.
+I wanted landings to feel like a magnet repelling you: hard to hit the ground, and a strong push back up when you get close. The pod senses the ground under each engine and pushes away from it, and it reads the slope, so on a bank it pushes off the surface instead of straight up. I added that after banking onto a slope sent the pod climbing higher and higher until it crashed.
 
-I'd done all my early testing on flat ground, which turned out to be a blind spot. On a rough desert map the engines splayed apart and went "a bit crazy". So I had both engines agree on one shared ground height and skim over bumps instead of following every one.
+I'd done all my early testing on flat ground, which turned out to be a blind spot. On a rough desert map the engines splayed apart and went a bit crazy. So I had both engines agree on one shared ground height and skim over bumps instead of following every one.
 
 Getting the cushion right took a few rounds. One version pushed so hard it lifted off well before a ramp, and another changed how the pod felt even sitting still, so I reverted it and came back later. In the air I dropped the float entirely, because an early version felt like jumping on the moon. Now the pitch stick decides: push forward to dive, pull back to glide.
 
 ### Steering you can predict
 
-The pods go far faster than any car, up to about 965 km/h, but speed wasn't the problem I kept coming back to. It was trust. As I put it at the time, "I can't easily predict when to stop turning and I always end up hitting things". If you can't predict a turn, you can't race or dodge anything.
+The pods go far faster than any car, up to about 965 km/h, but speed wasn't the problem I kept coming back to. It was trust. I couldn't predict when to stop turning, so I kept hitting things. If you can't predict a turn, you can't race or dodge anything.
 
-My first instinct was more tuning. The real fix came from reading the logs: BeamNG's car steering assists were quietly softening my stick input, and the swinging cockpit was adding steering of its own. Bypassing the assists "improved things so much".
+My first instinct was more tuning. The real fix came from reading the logs: BeamNG's car steering assists were quietly softening my stick input, and the swinging cockpit was adding steering of its own. Bypassing the assists made a huge difference.
 
 From there I made turns let go faster than they build, so the pod straightens the moment you release the stick. Sharper turning brought a jerky, catch-up feel, which took a few more passes to smooth into a clean arc. I studied the Episode I Racer game for how the pods twist through corners, and copied its shoulder-button tilt for tighter turns.
 
@@ -91,7 +91,7 @@ Once the proof of concept felt right, I bought a much better Anakin model and du
 
 ### How it's built
 
-The very first spawn was an exploding jumble of parts ("at least something happened!"). Parts that are too small and too stiff blow up in BeamNG, so now every build gets checked for that before it reaches the game.
+The very first spawn was an exploding jumble of parts, though at least something happened. Parts that are too small and too stiff blow up in BeamNG, so now every build gets checked for that before it reaches the game.
 
 After a night of fixes stacked on fixes, I checked how messy the code had got and cleaned it up. To make that safe, I set up a way to run the pod's flying code outside the game and compare it with the previous version, so a cleanup or handling change can't quietly change how it feels.
 

@@ -32,7 +32,7 @@ import airshipWalkPoster from '../../assets/images/airship-concept-walk-poster.j
 
 The long-term idea is a physics game built around one question: what would the world be like if we all had to live in airships? Your ship is your home as well as your vehicle, and you travel a real landscape with no cities in it, working with the wind and weather rather than a scripted challenge.
 
-This project is only the groundwork. The gameplay loop comes later, "when I feel like the concept of the end goal is sound", as I put it at the start. Before that, I wanted to know one thing: does it feel right to live aboard and fly a fragile, physically simulated airship through real terrain?
+This project is only the groundwork. The gameplay loop comes later, once I feel the concept of the end goal is sound. Before that, I wanted to know one thing: does it feel right to live aboard and fly a fragile, physically simulated airship through real terrain?
 
 Nothing here is scored. The test flight runs from the east end of Lake Geneva up the Rhône valley towards Zermatt, and it can end in arrival or in a crash.
 
@@ -57,7 +57,7 @@ Before building anything, I wrote down the ways the test could technically work 
 
 I wanted flying to feel like being aboard, not steering a model from outside. So the game starts with you standing in the Leviathan's control car, a gondola with windows all round under the hull, and you walk up and take the helm in person.
 
-From there you have throttle, rudder and elevators, engines you can run at different speeds or swing astern, trim for lift and pitch, and a height hold. The first time I reached the helm my message was simply "I came to the helm, what do I do". So the help text now sits right in the readout, and learning the controls never means leaving the ship.
+From there you have throttle, rudder and elevators, engines you can run at different speeds or swing astern, trim for lift and pitch, and a height hold. The first time I reached the helm I had no idea what to do. So the help text now sits right in the readout, and learning the controls never means leaving the ship.
 
 None of the controls are faked. The tail fins and engine cars are part of the frame, so they can bend, jam and break off. Air pushes on the fins and engines lose push as the ship speeds up, so steering feels like working with air rather than turning a car.
 
@@ -67,7 +67,7 @@ The first engine mounts were a heavy steel frame that added weight the ship didn
 
 My first long flight shook itself apart a few kilometres out. That wasn't the flight physics but the numbers losing precision far from the origin, so the world now quietly shifts back under the ship as it travels.
 
-Getting around the ship is first person too, because living aboard means walking on a structure that's moving and can break under you. Half-Life style ladders climb up through hatches from the control car, and a walkway runs through a tube along the middle of the ship. The first time I walked it, my note back was that it was "so cool to play on".
+Getting around the ship is first person too, because living aboard means walking on a structure that's moving and can break under you. Half-Life style ladders climb up through hatches from the control car, and a walkway runs through a tube along the middle of the ship. The first time I walked it, it was one of the most fun parts to play.
 
 <InlineVideo src="/videos/airship-concept-walk.mp4" poster={airshipWalkPoster} alt="Climbing a ladder up into the hull, walking across a deck inside the ship, then along the long walkway through the truss tube at the ship's centre" />
 
@@ -94,7 +94,7 @@ Each part of the ship fails in its own way, so damage reads as something you can
   <KV term="Gas" desc="A single shot on a healthy ship stays in one cell, so it's survivable. In a wreck, a failing cell takes its neighbours with it a moment later." />
 </KVGroup>
 
-The skin took three tries. One continuous cloth clipped through the frame. Puffing it out fixed that, but it looked "like it has a big bag over it". Flat panels looked taut but lost the cloth, so now they sleep as panels and wake into cloth when something hits them.
+The skin took three tries. One continuous cloth clipped through the frame. Puffing it out fixed that, but it looked like a big bag thrown over the frame. Flat panels looked taut but lost the cloth, so now they sleep as panels and wake into cloth when something hits them.
 
 <InlineVideo src="/videos/airship-concept-crash.mp4" poster={airshipCrashPoster} alt="An airship over the valley takes a hit, tips nose-down, falls into the forest and crumples, sped up 4x" />
 
@@ -102,7 +102,7 @@ When wrecks started folding instead of shredding, I dug into what decides which.
 
 ### Building the gondola, Poly Bridge style
 
-I wanted the gondola to be something you make yourself and worry about. My first one was rigid blocks and felt "too blocky, like Minecraft almost", so I pivoted and wrote a brief for a gondola built from timber beams and plank walls, in the spirit of Poly Bridge.
+I wanted the gondola to be something you make yourself and worry about. My first one was rigid blocks and felt too blocky, almost like Minecraft, so I pivoted and wrote a brief for a gondola built from timber beams and plank walls, in the spirit of Poly Bridge.
 
 It has to hold up under its own weight and whatever you load into it. A small, light gondola can get away with a weak design, but a bigger one needs proper bracing or it sags and comes apart in the air. The structure and its failures are built and tested on preset gondolas, small and large, braced and unbraced, but the build mode itself isn't built yet.
 
@@ -112,9 +112,9 @@ I designed the failures to be readable rather than sudden. Beams never break. Wh
 
 Planks are the weak part: they pop off their nails one at a time or snap across the grain under a heavy hit, so a wall breaks into long slats rather than chunks.
 
-Testing changed a lot of this. The frame felt "too jelly like", and I noticed the outer beams sagged while the walls didn't, when walls should be stiffening the frame. Part of it was the simulation not settling each step, and running it more often cut a braced frame's sag to a sixth. Planks broke "in squares like being cut", so they now splinter at the hit.
+Testing changed a lot of this. The frame felt too wobbly, and I noticed the outer beams sagged while the walls didn't, when walls should be stiffening the frame. Part of it was the simulation not settling each step, and running it more often cut a braced frame's sag to a sixth. Planks broke in neat squares, as if they'd been cut, so they now splinter at the hit.
 
-A dropped gondola first shattered into every piece, then crumbled for ten seconds with bits still breaking. I wanted it to "just crumple and settle way faster", and now it crumples from the point of impact and settles in about two.
+A dropped gondola first shattered into every piece, then crumbled for ten seconds with bits still breaking. I wanted it to crumple and settle much faster, and now it crumples from the point of impact and settles in about two.
 
 <Image src={airshipStress} alt="Close-up of a gondola corner in the stress view, beams and planks shaded from green through yellow to red" loading="lazy" />
 
@@ -126,7 +126,7 @@ Failures cascade the way they would in a real frame. Lose one brace and its load
 
 ### The world and the cost of it
 
-I wanted a sprawling landscape of forests, lakes and mountains, as cheaply as possible. The terrain comes from real height and land-cover maps, and I halved real distances early on so the trip would be "manageable and not boring". Rougher real land carries on far past the detailed map so the horizon isn't empty, and the forests are drawn on the fly rather than stored tree by tree.
+I wanted a sprawling landscape of forests, lakes and mountains, as cheaply as possible. The terrain comes from real height and land-cover maps, and I halved real distances early on so the trip would stay manageable without getting boring. Rougher real land carries on far past the detailed map so the horizon isn't empty, and the forests are drawn on the fly rather than stored tree by tree.
 
 <Image src={airshipFrameSandbox} alt="The Leviathan seen through its skin over a forested valley: frame, bracing wires, green gas cells and the tail fins" loading="lazy" />
 
@@ -143,6 +143,6 @@ This all came together over three days, with a test suite of a few hundred check
 - Big ships slowly sink when left alone, and sink faster since the engines added weight, from a lift and weight drift I haven't found yet.
 - Real weather is designed but not built. Wind is still a simple test wind.
 
-After a long run on crash physics I wrote the implosion problem down for later and moved to flight, because I was "tired of crash physics for a bit" and flying was the part still untested.
+After a long run on crash physics I wrote the implosion problem down for later and moved to flight, because I'd had enough of crash physics for a while and flying was the part still untested.
 
 The next real test is the one the whole project exists for: flying the route in real weather and judging whether it feels like living aboard something fragile.

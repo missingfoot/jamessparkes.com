@@ -67,13 +67,13 @@ The auto-generator is where most of the work went, and it took several attempts 
 
 My idea came from shrink-wrap plastic: a simple, slightly rounded sheet that falls onto the model and pulls tight around it. To get there, I had simple test shapes built in Blender, getting more complex each time, so the method could be tried and improved on each one in turn.
 
-It wasn't a straight line. At one point the wrap suddenly looked "waaaay worse" than earlier screenshots. It was building the cage out of chunky blocks, so it floated well off the model, with long beams crossing empty air between parts.
+It wasn't a straight line. At one point the wrap suddenly looked far worse than earlier screenshots. It was building the cage out of chunky blocks, so it floated well off the model, with long beams crossing empty air between parts.
 
-In the game, those are invisible struts holding together things that shouldn't be. The blocks needed to be far smaller, "like pixels".
+In the game, those are invisible struts holding together things that shouldn't be. The blocks needed to be far smaller, closer to pixels.
 
 <Image src={jbeamTighter} alt="Side view of a much tighter wrap, with nodes sitting on the speeder bike's surface" loading="lazy" />
 
-Tiny blocks everywhere made it slow, so I suggested filling the inside with big blocks first and only using smaller ones where they meet the surface. The shell that comes out is then smoothed and simplified until every point sits on the model's surface. When I saw it, I said "this is the best so far", though the biggest jump actually came from fixing a bug along the way.
+Tiny blocks everywhere made it slow, so I tried filling the inside with big blocks first and only using smaller ones where they meet the surface. The shell that comes out is then smoothed and simplified until every point sits on the model's surface. It was the best result so far, though the biggest jump actually came from fixing a bug along the way.
 
 Mirroring caused the next problem: parts that only exist on one side were being copied to the other. Wrapping each side separately made the structure lopsided, which was worse. So I went back to a fully mirrored wrap, then made it remove any copies with nothing underneath.
 
@@ -93,13 +93,13 @@ The new weights looked better, but now the thin parts crumpled like paper. I loo
 
 I wanted to see a weak structure straight away, without loading the game. So there's a built-in physics preview that drops the structure on the ground or holds it in the air, with the model's skin following along. It's simpler than BeamNG's own physics, and that was a trade-off I was happy with: quick checks here, rigorous testing in the game.
 
-I added the hold test because the drop test was hiding something, and it showed up straight away: the model hung "like paper". The front boom is a very flat ladder with heavy vanes on the end, so it folded down, and the footrests hung off a narrow neck.
+I added the hold test because the drop test was hiding something, and it showed up straight away: the model hung limp, like paper. The front boom is a very flat ladder with heavy vanes on the end, so it folded down, and the footrests hung off a narrow neck.
 
 <Image src={jbeamSag} alt="Each part wrapped separately and not yet joined: the body held up while the other parts drop away, with its skin smeared down like curtains" loading="lazy" />
 
 Wrapping each part separately caused two more problems at once. The parts weren't joined, so everything but the body fell away, and the skin clung to the wrong parts and smeared down like curtains. Touching parts are now joined automatically, and each part's skin only follows its own structure.
 
-Joined up, the prongs, handlebars and footrests were still "jelly and flappy". So I added "Stiffen floppy parts", which tests rather than guesses: it holds the structure up, finds what droops, braces it to the steadiest points, and keeps each change only if it helps.
+Joined up, the prongs, handlebars and footrests were still wobbly and floppy. So I added "Stiffen floppy parts", which tests rather than guesses: it holds the structure up, finds what droops, braces it to the steadiest points, and keeps each change only if it helps.
 
 The braces stay inside the model so they can't stick out. On the speeder it took the sag from 140 cm down to 10 cm.
 

@@ -28,7 +28,7 @@ I kept reaching for the same handful of FFmpeg and ImageMagick commands to conve
 
 ## From one rejected batch to three groups
 
-The first version treated a drop as a single all-or-nothing batch: mix an image in with a video, or include one file with an unrecognized extension, and the whole thing got rejected with an error. That's the kind of friction that makes a "just drop it in" tool stop feeling effortless.
+The first version treated a drop as a single all-or-nothing batch: mix an image in with a video, or include one file with an unrecognized extension, and the whole thing got rejected with an error. That's the kind of friction that makes a drop-it-in tool stop feeling effortless.
 
 The redesign splits a mixed drop into up to three independent sections, one each for video, image, and audio, every section with its own file table and target-format dropdown. Files with unsupported extensions are quietly dropped from the batch and reported as "N other files ignored" instead of blocking everything else.
 

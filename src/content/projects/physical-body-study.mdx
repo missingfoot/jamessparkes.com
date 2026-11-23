@@ -37,7 +37,7 @@ I'll be upfront: as a game, this didn't work out. What came out of it is a body 
 
 I wanted physics that felt as solid as Half-Life's, so I picked Godot with the Jolt physics engine and started with a sandbox of tests (walking, falling, low gravity) rather than a game. Each body is a ragdoll of 16 parts, and every joint gets three things: soft limits so limbs slow down before they bend too far, a gentle pull towards a relaxed pose, and muscles that actively drive it.
 
-That layered idea came from Lincoln Margison's video on improving ragdolls, and it's what stops a falling body flopping like a sack. My first version was "jelly like, wibbly wobbling", so I moved the muscles onto the physics engine's own joint springs, which can be calmed down far more.
+That layered idea came from Lincoln Margison's video on improving ragdolls, and it's what stops a falling body flopping like a sack. My first version was jelly-like and wobbly, so I moved the muscles onto the physics engine's own joint springs, which can be calmed down far more.
 
 Then realistic joint ranges made them rigid. So I went for something very subtle: slightly tighter limbs and a firmer neck. The neck kept looking odd every time I tested, so it got the most attention.
 
@@ -62,15 +62,15 @@ I want interacting with the world to work like a VR game rather than a "press E 
 
 <InlineVideo src="/videos/physical-body-study-falls.mp4" poster={fallsPoster} alt="A body stumbling, falling to the floor and getting back up" />
 
-One finding stuck with me. At full muscle strength, a conscious fall looked "sooo rigid like plastic mannequins". Dropping the muscles to about a third of their strength is what made it read as a person: it reaches out, lands on its hands and knees, and its arms give way.
+One finding stuck with me. At full muscle strength, a conscious fall looked far too stiff, like a plastic mannequin. Dropping the muscles to about a third of their strength is what made it read as a person: it reaches out, lands on its hands and knees, and its arms give way.
 
-The other lesson was about how I work. On day one I tuned the muscles into something worse ("I think I ruined this, we had a good core at the start") and had no history to go back to.
+The other lesson was about how I work. On day one I tuned the muscles into something worse than the good core I'd started with, and had no history to go back to.
 
 The ragdolls had been fine and only needed improving, but each fix made them a little stiffer. I rebuilt from an earlier snapshot, and from then on every change got its own commit, so ideas were cheap to try and cheap to throw away.
 
 <Image src={bodyXray} alt="X-ray view of a standing body: see-through skin with the skeleton's bones and collision shapes inside" loading="lazy" />
 
-The part that failed was the ambitious one. The assisted bodies still looked "puppeted by strings attached from above", and that was what I noticed most in every test. So I went after a body that balances and walks on its own muscles with no hidden help at all, like the Euphoria system behind GTA IV's characters.
+The part that failed was the ambitious one. The assisted bodies still looked like puppets hanging on strings from above, and that was what I noticed most in every test. So I went after a body that balances and walks on its own muscles with no hidden help at all, like the Euphoria system behind GTA IV's characters.
 
 This time I went carefully, one stage at a time, with automated tests for each so I'd know straight away if something slipped back. It got surprisingly far: it can stand on its own indefinitely, take a firm shove or a short drop, and march on the spot.
 
@@ -95,7 +95,7 @@ The most useful thing I learned was why. Whenever the body's goals were worked o
 
 The overlay shows exactly where it breaks. Pushed from the front, the magenta marker shoots out behind its heels, and the body steps backwards again and again trying to get a foot under it, but never catches up.
 
-So I called it myself: "this will keep going too much... the results are just not good enough."
+So I called it myself: it would keep going round in circles, and the results just weren't good enough.
 
 Coming back later, I could see it was a tangent that had pulled the whole project off course. No player would notice a body walking on real muscles, but they would notice the fake parts looking fake. So I removed it, kept a backup and a write-up of what I'd found, and went back to making the assisted puppet convincing.
 
@@ -103,7 +103,7 @@ Coming back later, I could see it was a tangent that had pulled the whole projec
 
 A first-person body puts the skin right in front of you, so it had to hold up close. I also wanted to swap characters easily, so the sandbox reads any humanoid model's skeleton and builds the ragdoll to fit it. That paid off later, when I dropped in a second test body without hand-tuning anything.
 
-My first look inside the skin showed the usual capsules and boxes ("big Lego blocks"), which didn't match the body you could actually see. So the skin is now cut into one piece per body part, and each piece is shrink-wrapped into a simple shape just inside it. What you see is what collides.
+My first look inside the skin showed the usual capsules and boxes, like big Lego blocks, which didn't match the body you could actually see. So the skin is now cut into one piece per body part, and each piece is shrink-wrapped into a simple shape just inside it. What you see is what collides.
 
 I kept every body one light beige tone on purpose. I tried a range of skin tones, but I didn't want them looking too realistic yet, and a plain tone shows shape and shading clearly.
 
@@ -130,7 +130,7 @@ Placing the eyeballs in the sockets was the same problem I'd hit placing a hand-
 
 It's a sandbox, not a game. The assisted puppet stands, walks, falls, gets knocked out and gets up, but its feet lag on tight turns and getting up is still a lift rather than a real roll and push.
 
-The biggest remaining tell is weight. The hidden help lifts the body directly, so the feet carry nothing: bodies glide on "hover shoes", and a thrown box spins one round "like a boomerang". My last experiment pushes that help through the planted feet instead, which cut the sliding and spinning a lot, but made the walk slower and jerkier, so I haven't kept it yet.
+The biggest remaining tell is weight. The hidden help lifts the body directly, so the feet carry nothing: bodies glide as if on hover shoes, and a thrown box spins round like a boomerang. My last experiment pushes that help through the planted feet instead, which cut the sliding and spinning a lot, but made the walk slower and jerkier, so I haven't kept it yet.
 
 Development is on hold for now, and the honest reason is that I hit the limit of what I know. The answer isn't more pure physics. A body that walks entirely on its own muscles would take years to get right, which is far too much for what this concept needs.
 
