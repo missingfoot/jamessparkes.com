@@ -1,5 +1,5 @@
 ---
-title: "Private: Interface Research"
+title: "Interface Research"
 date: 2012-02-20
 order: 58
 categories: ["Graphic Design","Layout","Photo Manipulation"]

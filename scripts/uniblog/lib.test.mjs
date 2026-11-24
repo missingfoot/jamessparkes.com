@@ -123,3 +123,8 @@ test('toMarkdown keeps bold intact when a line break sits inside it', () => {
   const md = toMarkdown('<p><strong>Question?<br>\n</strong>Answer</p>', ctx);
   assert.equal(md.trim(), '**Question?**  \nAnswer');
 });
+
+test('parsePosts strips the WordPress "Private:" title prefix', () => {
+  const html = post(1, 'status-private category-type', 'http://jamessparkes.com/2012/02/20/interface-research/', 'Private: Interface Research', '');
+  assert.equal(parsePosts(html)[0].title, 'Interface Research');
+});

@@ -43,7 +43,7 @@ export function parsePosts(html) {
         .map((t) => t.replace(/-/g, ' '));
       return {
         id: $el.attr('id'),
-        title: link.text().trim(),
+        title: link.text().trim().replace(/^Private: /, ''),
         date: `${m[1]}-${m[2]}-${m[3]}`,
         slug: m[4],
         categories: categorySlugs.map((c) => CATEGORY_NAMES[c]),
