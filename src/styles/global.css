@@ -1407,7 +1407,8 @@ body {
 
 .blog-side .project-title { font-size: 26px; }
 
-.blog-posts > .blog-post:first-of-type {
+.blog-posts > .blog-post:first-of-type,
+.blog-posts > .blog-post.is-first {
     margin-top: 0;
     padding-top: 0;
     border-top: 0;

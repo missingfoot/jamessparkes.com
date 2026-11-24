@@ -95,6 +95,8 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
     for (const p of posts) {
       const ok = matches(p, state.q, state.cat);
       p.el.hidden = !ok;
+      // The first visible post drops its top rule so it never doubles up with the line above
+      p.el.classList.toggle('is-first', ok && shown === 0);
       if (ok) shown++;
     }
     chips.forEach((c) => c.setAttribute('aria-pressed', String((c.dataset.cat || null) === state.cat)));
