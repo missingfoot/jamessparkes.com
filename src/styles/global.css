@@ -1413,9 +1413,20 @@ body {
     grid-row: 1;
     position: sticky;
     top: 3rem;
+    /* Full screen height so the back-to-top button can sit at the bottom */
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 6rem);
     max-height: calc(100vh - 6rem);
+}
+
+/* Only the header and filters scroll (e.g. with "View more" open); the button keeps its own space */
+.blog-side-scroll {
+    flex: 1;
+    min-height: 0;
     overflow-y: auto;
     scrollbar-width: none;
+    padding-bottom: 1rem;
 }
 
 .blog-side .project-title { font-size: 26px; }
@@ -1435,9 +1446,13 @@ body {
     .blog-side {
         grid-column: 1;
         position: static;
+        height: auto;
         max-height: none;
-        overflow: visible;
         margin-bottom: 3rem;
+    }
+    .blog-side-scroll {
+        overflow: visible;
+        padding-bottom: 0;
     }
     .blog-posts { grid-row: 2; }
 }
@@ -1574,26 +1589,27 @@ body {
     color: var(--text-dim);
 }
 
-/* Back to top (blog): at the bottom of the sticky side column; a floating button when the column isn't sticky */
+/* Back to top (blog): a round button pinned to the bottom of the sticky side column;
+   it floats bottom-right when the column isn't sticky */
 .blog-top {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 1.5rem;
-    font-size: 12px;
-    color: var(--text-dim);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 5px 9px;
+    align-self: flex-start;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    color: var(--active-text);
+    background: var(--active-bg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.2s, visibility 0.2s;
 }
 
-.blog-top svg { width: 14px; height: 14px; }
-
-.blog-top:hover { color: var(--text); border-color: var(--text-dim); }
-
+.blog-top span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.blog-top svg { width: 20px; height: 20px; }
+.blog-top:hover { opacity: 0.85; }
 .blog-top.is-visible { opacity: 1; visibility: visible; }
 
 @media (max-width: 1100px) {
@@ -1602,20 +1618,7 @@ body {
         right: 1.5rem;
         bottom: 1.5rem;
         z-index: 15;
-        justify-content: center;
-        width: 44px;
-        height: 44px;
-        margin: 0;
-        padding: 0;
-        border: 0;
-        border-radius: 50%;
-        color: var(--active-text);
-        background: var(--active-bg);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
     }
-    .blog-top span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
-    .blog-top svg { width: 20px; height: 20px; }
-    .blog-top:hover { color: var(--active-text); opacity: 0.85; }
 }
 
 @media (max-width: 767px) {

@@ -39,6 +39,7 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
   <div class="blog-view" data-cats={filterSlugs.join(' ')}>
     {showDeadLinks && <script type="application/json" id="blog-dead-links" set:html={JSON.stringify(deadLinkReport.dead)} />}
     <aside class="blog-side">
+      <div class="blog-side-scroll">
       <header class="blog-header">
         <h1 class="project-title">Uni Blog</h1>
         <p class="blog-meta">{range} · {posts.length} posts</p>
@@ -63,6 +64,7 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
           </div>
         </details>
         <p class="blog-status" aria-live="polite"></p>
+      </div>
       </div>
 
       <button type="button" class="blog-top" aria-label="Back to top">
