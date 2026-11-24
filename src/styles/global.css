@@ -1583,6 +1583,27 @@ body {
 
 .blog-results-title { font-size: 22px; }
 
+.blog-results-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.blog-results-clear {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+}
+
+.blog-results-clear svg { width: 16px; height: 16px; }
+.blog-results-clear:hover { color: var(--text); border-color: var(--text-dim); }
+
 .blog-results-count {
     margin-top: 0.25rem;
     font-size: 12px;

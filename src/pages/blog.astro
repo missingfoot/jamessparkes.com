@@ -75,7 +75,12 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
 
     <div class="blog-posts">
       <header class="blog-results" hidden>
-        <h2 class="blog-results-title"></h2>
+        <div class="blog-results-head">
+          <h2 class="blog-results-title"></h2>
+          <button type="button" class="blog-results-clear" aria-label="Clear filter" title="Clear filter">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+          </button>
+        </div>
         <p class="blog-results-count"></p>
       </header>
       <p class="blog-empty" hidden>No posts match.</p>
@@ -208,6 +213,9 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
       update({ ...state, cat: c.dataset.cat || null });
     })
   );
+  // The X next to the heading clears the category or tag (a search stays)
+  results.querySelector('.blog-results-clear')!.addEventListener('click', () => update({ ...state, cat: null }));
+
   // A tag under a post filters by it; clicking the selected tag again goes back to all posts
   postTags.forEach((t) =>
     t.addEventListener('click', () => {
