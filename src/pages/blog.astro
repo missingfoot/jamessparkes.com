@@ -13,6 +13,17 @@ const counts = new Map<string, number>();
 for (const p of posts) for (const c of p.data.categories) counts.set(c, (counts.get(c) ?? 0) + 1);
 const categories = [...counts].sort((a, b) => b[1] - a[1]).map(([name, count]) => ({ name, slug: slugify(name), count }));
 
+// Tags filter the same way as categories; the prefix keeps e.g. the "type" tag apart from the Type category
+const tagSlug = (t: string) => `tag-${slugify(t)}`;
+const tagCounts = new Map<string, number>();
+for (const p of posts) for (const t of p.data.tags) tagCounts.set(t, (tagCounts.get(t) ?? 0) + 1);
+// "View more" lists tags on two or more posts; every tag is still clickable under its posts
+const moreTags = [...tagCounts]
+  .filter(([, count]) => count > 1)
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+  .map(([name, count]) => ({ name, slug: tagSlug(name), count }));
+const filterSlugs = [...categories.map((c) => c.slug), ...[...tagCounts.keys()].map(tagSlug)];
+
 const years = posts.map((p) => p.data.date.getUTCFullYear());
 const range = `${Math.min(...years)}–${Math.max(...years)}`;
 
@@ -25,7 +36,7 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
   description="My university design blog from 2011–2013: graphic design, photo manipulation, 3D and typography coursework, research and inspiration."
   path="/blog/"
 >
-  <div class="blog-view" data-cats={categories.map((c) => c.slug).join(' ')}>
+  <div class="blog-view" data-cats={filterSlugs.join(' ')}>
     {showDeadLinks && <script type="application/json" id="blog-dead-links" set:html={JSON.stringify(deadLinkReport.dead)} />}
     <aside class="blog-side">
       <header class="blog-header">
@@ -43,6 +54,14 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
             <button type="button" class="blog-cat" data-cat={c.slug} data-name={c.name} aria-pressed="false">{c.name} <span class="timeline-tab-count">{c.count}</span></button>
           ))}
         </div>
+        <details class="blog-more-tags">
+          <summary><span class="blog-more-open">View more</span><span class="blog-more-close">View less</span></summary>
+          <div class="blog-cats" role="group" aria-label="Filter by tag">
+            {moreTags.map((t) => (
+              <button type="button" class="blog-cat" data-cat={t.slug} data-name={t.name} aria-pressed="false">{t.name} <span class="timeline-tab-count">{t.count}</span></button>
+            ))}
+          </div>
+        </details>
         <p class="blog-status" aria-live="polite"></p>
       </div>
 
@@ -59,7 +78,7 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
       </header>
       <p class="blog-empty" hidden>No posts match.</p>
       {rendered.map(({ post, Content }) => (
-        <article class="blog-post" id={post.id} data-cats={post.data.categories.map(slugify).join(' ')}>
+        <article class="blog-post" id={post.id} data-cats={[...post.data.categories.map(slugify), ...post.data.tags.map(tagSlug)].join(' ')}>
           <div class="blog-post-meta">
             <time datetime={post.data.date.toISOString().slice(0, 10)}>{dateFmt.format(post.data.date)}</time>
             {post.data.categories.map((c, i) => (
@@ -70,7 +89,11 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
           <div class="blog-body">
             <Content />
           </div>
-          {post.data.tags.length > 0 && <div class="blog-tags">{post.data.tags.map((t) => <span class="tag-chip">{t}</span>)}</div>}
+          {post.data.tags.length > 0 && (
+            <div class="blog-tags">
+              {post.data.tags.map((t) => <button type="button" class="tag-chip blog-tag" data-cat={tagSlug(t)} data-name={t}>{t}</button>)}
+            </div>
+          )}
         </article>
       ))}
     </div>
@@ -89,7 +112,12 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
   const results = view.querySelector<HTMLElement>('.blog-results')!;
   const resultsTitle = results.querySelector<HTMLElement>('.blog-results-title')!;
   const resultsCount = results.querySelector<HTMLElement>('.blog-results-count')!;
-  const catLabels = [...view.querySelectorAll<HTMLElement>('.blog-post-cat')];
+  // Category names in each post's date line and the tags under it, marked when selected
+  const catLabels = [...view.querySelectorAll<HTMLElement>('.blog-post-cat, .blog-tag')];
+  const postTags = [...view.querySelectorAll<HTMLButtonElement>('.blog-tag')];
+  const moreTags = view.querySelector<HTMLDetailsElement>('.blog-more-tags')!;
+  const nameOf = (slug: string | null) =>
+    slug ? view.querySelector<HTMLElement>(`[data-cat="${CSS.escape(slug)}"][data-name]`)?.dataset.name : undefined;
   const knownCats = (view.dataset.cats ?? '').split(' ').filter(Boolean);
   const posts = [...view.querySelectorAll<HTMLElement>('.blog-post')].map((el) => ({
     el,
@@ -114,13 +142,14 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
     // With a category selected, the heading above the posts carries the count instead
     status.textContent = state.q && !state.cat ? `${shown} of ${posts.length} posts` : '';
     // Name the selected category above the posts and mark it inside each post
-    const chip = chips.find((c) => c.dataset.cat === state.cat);
-    results.hidden = !chip;
-    if (chip) {
-      resultsTitle.textContent = chip.dataset.name ?? '';
+    const name = nameOf(state.cat);
+    results.hidden = !name;
+    if (name) {
+      resultsTitle.textContent = name;
       resultsCount.textContent = `${shown} ${shown === 1 ? 'post' : 'posts'}${state.q ? ` matching “${state.q}”` : ''}`;
     }
     for (const el of catLabels) el.classList.toggle('is-active', el.dataset.cat === state.cat);
+    for (const t of postTags) t.setAttribute('aria-pressed', String(t.dataset.cat === state.cat));
     highlight();
     history.replaceState(history.state, '', `${location.pathname}${writeState(state)}${location.hash}`);
   }
@@ -152,8 +181,8 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
 
   // Change the filter without losing your place: the post at the top of the screen stays
   // exactly where it was if it's still in the results; otherwise start from the first result
-  function update(next: typeof state) {
-    const anchor = posts.find((p) => !p.el.hidden && p.el.getBoundingClientRect().bottom > 0)?.el;
+  function update(next: typeof state, keep?: HTMLElement) {
+    const anchor = keep ?? posts.find((p) => !p.el.hidden && p.el.getBoundingClientRect().bottom > 0)?.el;
     const before = anchor?.getBoundingClientRect().top ?? 0;
     state = next;
     apply();
@@ -177,6 +206,14 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
       update({ ...state, cat: c.dataset.cat || null });
     })
   );
+  // A tag under a post filters by it; clicking the selected tag again goes back to all posts
+  postTags.forEach((t) =>
+    t.addEventListener('click', () => {
+      update({ ...state, cat: state.cat === t.dataset.cat ? null : t.dataset.cat! }, t.closest<HTMLElement>('.blog-post')!);
+    })
+  );
+  // Open "View more" when the page loads with one of its tags selected
+  if (moreTags.querySelector(`[data-cat="${CSS.escape(state.cat ?? '')}"]`)) moreTags.open = true;
 
   // Back to top: shows once you're well into the posts
   const topButton = view.querySelector<HTMLButtonElement>('.blog-top')!;

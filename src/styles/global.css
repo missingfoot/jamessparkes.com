@@ -1444,6 +1444,35 @@ body {
 
 .blog-meta,
 .blog-post-meta,
+/* "View more": the more specific tags, under the categories */
+.blog-more-tags { margin-top: 0.75rem; }
+
+.blog-more-tags summary {
+    display: inline-block;
+    cursor: pointer;
+    list-style: none;
+    font-size: 12px;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
+}
+
+.blog-more-tags summary::-webkit-details-marker { display: none; }
+.blog-more-tags summary:hover { color: var(--text); border-bottom-color: var(--text); }
+.blog-more-close,
+.blog-more-tags[open] .blog-more-open { display: none; }
+.blog-more-tags[open] .blog-more-close { display: inline; }
+.blog-more-tags .blog-cats { margin-top: 0.75rem; }
+
+/* Tags under each post filter the list */
+.blog-tag { cursor: pointer; font: inherit; font-size: 12px; }
+.blog-tag:hover { border-color: color-mix(in srgb, var(--text) 40%, transparent); }
+
+.blog-tag.is-active {
+    color: var(--active-text);
+    background: var(--active-bg);
+    border-color: var(--active-bg);
+}
+
 .blog-status {
     font-size: 12px;
     color: var(--text-dim);
