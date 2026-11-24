@@ -1,6 +1,6 @@
 ---
 title: "Desktop Helpers"
-description: "A set of small single-purpose KDE Plasma utilities I built for my own desktop: a one-click updater for the distro ISOs on a Ventoy USB stick, a tray app for checking my Tailscale devices, and a hotkey that switches my monitor's input."
+description: "A set of small single-purpose KDE Plasma utilities I built for my own desktop: a one-click updater for the distro ISOs on a Ventoy USB stick and a tray app for checking my Tailscale devices."
 tags: ["UX design", "Python", "PyQt6", "Qt", "Desktop apps", "Linux", "KDE Plasma", "Tooling"]
 category: "personal"
 kind: "Tool"
@@ -74,16 +74,8 @@ That button wasn't in the first version. A couple of weeks later I got logged ou
 
 Since it's meant to run all day, it checks Tailscale every few seconds but only redraws the list while the window is open, so it costs almost nothing in the background. Launching it again just shows the existing window, and it starts hidden in the tray at login. (The devices in the screenshot are sample data.)
 
-## Monitor input switch
-
-The smallest of the lot: my ASUS monitor has more than one PC plugged into it. I wanted one key that means "show me this PC", wherever I'm sitting. Each PC installs the switcher for the input it's plugged into, bound to the same shortcut, so pressing it brings the screen to whichever PC I'm at.
-
-A hotkey only feels right if it's instant. The standard command-line tool for this takes a couple of seconds per call, so the script talks to the monitor directly instead, which is close to immediate.
-
-The monitor often drops commands, so the script reads the input back and resends until it really has switched, and shows a notification if it gives up. Without that, a missed press would just look like nothing happened, and I'd never know whether to press again.
-
 ## Where it's at
 
-All three are finished, small, and do their one job. Each came together in a day or less, and the Ventoy updater was the only one that got a proper design doc first, because a tool that writes to a USB stick has to be careful.
+Both are finished, small, and do their one job. Each came together in a day or less. Only the Ventoy updater got a proper design doc first, because a tool that writes to a USB stick has to be careful.
 
 For me they show the same thing at a smaller scale than my bigger projects: a clear problem, the fewest controls that solve it, and careful thought about what happens when things go wrong.

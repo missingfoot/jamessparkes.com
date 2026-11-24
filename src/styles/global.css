@@ -1051,6 +1051,50 @@ body {
     }
 }
 
+/* A second sliding gallery inside a case study: breaks out of the text column
+   to the full width of the content area, like the gallery at the top of the page. */
+.content:has(.project-images-inline) {
+    container-type: inline-size;
+}
+
+.project-case-study .project-images-inline {
+    width: 100cqw;
+    margin: 2rem 0 2rem calc(50% - 50cqw);
+}
+
+.project-case-study .project-images-inline .project-thumb {
+    height: 440px;
+}
+
+.project-case-study .project-images-inline img {
+    width: auto;
+    height: 100%;
+    margin: 0;
+    border-radius: 0;
+}
+
+/* Plan drawings on white: blend them into the page so the white takes on the background.
+   Light mode multiplies (white disappears, lines stay dark); dark mode inverts the drawing
+   and screens it, so the lines turn light and the black ground disappears. */
+.project-images-inline.plan-drawings .project-thumb {
+    background: none;
+}
+
+.project-images-inline.plan-drawings img {
+    mix-blend-mode: multiply;
+}
+
+[data-theme="dark"] .project-images-inline.plan-drawings img {
+    filter: invert(1);
+    mix-blend-mode: screen;
+}
+
+@media (max-width: 640px) {
+    .project-case-study .project-images-inline .project-thumb {
+        height: 240px;
+    }
+}
+
 .project-case-study p + ul,
 .project-case-study p + .kv-group {
     margin-top: 1rem;

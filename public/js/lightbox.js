@@ -1,7 +1,7 @@
 // js/lightbox.js
 document.addEventListener('DOMContentLoaded', function () {
-    var gallery = document.querySelector('.project-images');
-    if (gallery) {
+    // Every .project-images strip (the one at the top, plus any further down a case study) drags to scroll.
+    Array.prototype.forEach.call(document.querySelectorAll('.project-images'), function (gallery) {
         var isDown = false;
         var moved = false;
         var startX = 0;
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 e.preventDefault();
             }
         }, true);
-    }
+    });
 
     // Fullscreen viewer for inline hero videos — reuses the .lightbox overlay,
     // works even on pages that have no image gallery.
@@ -104,13 +104,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     })();
 
-    var thumbs = document.querySelectorAll('.project-thumb');
-    if (!thumbs.length) return;
+    var galleries = document.querySelectorAll('.project-images');
+    if (!galleries.length) return;
 
-    var images = Array.prototype.map.call(thumbs, function (thumb) {
-        var img = thumb.querySelector('img');
-        return { src: img.src, alt: img.alt };
-    });
+    // Each gallery gets its own set in the viewer, so arrows only step through that strip.
+    var images = [];
 
     var iconLeft = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left-icon lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>';
     var iconRight = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
@@ -139,7 +137,8 @@ document.addEventListener('DOMContentLoaded', function () {
         counter.textContent = (current + 1) + ' / ' + images.length;
     }
 
-    function open(index) {
+    function open(set, index) {
+        images = set;
         show(index);
         overlay.classList.add('open');
         document.body.style.overflow = 'hidden';
@@ -150,8 +149,15 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.style.overflow = '';
     }
 
-    thumbs.forEach(function (thumb, i) {
-        thumb.addEventListener('click', function () { open(i); });
+    Array.prototype.forEach.call(galleries, function (gallery) {
+        var thumbs = gallery.querySelectorAll('.project-thumb');
+        var set = Array.prototype.map.call(thumbs, function (thumb) {
+            var img = thumb.querySelector('img');
+            return { src: img.currentSrc || img.src, alt: img.alt };
+        });
+        Array.prototype.forEach.call(thumbs, function (thumb, i) {
+            thumb.addEventListener('click', function () { open(set, i); });
+        });
     });
 
     overlay.querySelector('[data-lb-prev]').addEventListener('click', function (e) {

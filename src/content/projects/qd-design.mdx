@@ -23,6 +23,21 @@ images:
 import KV from '../../components/KV.astro';
 import KVGroup from '../../components/KVGroup.astro';
 import KVHeading from '../../components/KVHeading.astro';
+import InlineVideo from '../../components/InlineVideo.astro';
+import knockdownPoster from '../../assets/images/qd-knockdown-cabinet-poster.jpg';
+import { Image } from 'astro:assets';
+import planFourDoor from '../../assets/images/qd-plan-four-door.jpg';
+import planTrunkTop from '../../assets/images/qd-plan-trunk-top.jpg';
+import planDenimCabinet from '../../assets/images/qd-plan-denim-cabinet.jpg';
+import planBathroomCabinet from '../../assets/images/qd-plan-bathroom-cabinet.jpg';
+import planChest from '../../assets/images/qd-plan-chest.jpg';
+import planConsole from '../../assets/images/qd-plan-console-4-drawer.jpg';
+import planConsoleWidths from '../../assets/images/qd-plan-console-widths.jpg';
+import planSideTable from '../../assets/images/qd-plan-side-table.jpg';
+import planCoffeeTable from '../../assets/images/qd-plan-coffee-table.jpg';
+import planGlassCoffeeTable from '../../assets/images/qd-plan-glass-coffee-table.jpg';
+import planSideboard from '../../assets/images/qd-plan-sideboard.jpg';
+import planLadder from '../../assets/images/qd-plan-ladder.jpg';
 
 ## Overview
 
@@ -97,3 +112,74 @@ This is the plugin stack I settled on to cover the gaps left by the old bespoke 
 The hardest part wasn't moving the products across technically; it was deciding what from the old bespoke system was actually worth preserving, like trade pricing and category structure, versus what was only there because it had to be hand-built from scratch, like the entire admin panel.
 
 For a small retail client, the win wasn't building something more custom than the original ASP site; it was replacing bespoke, single-developer infrastructure with an open, well-supported platform that could do more, more safely, for less ongoing cost. Introducing a cart and checkout wasn't just a technical feature addition; it was the first time the client's website could generate revenue directly, rather than existing purely as a digital brochure. And by moving to WooCommerce, the client picked up a platform that could keep growing through plugins and themes, rather than needing another full rebuild the next time the business's needs changed.
+
+## Furniture design
+
+Alongside the website, I designed furniture for QD. Between 2012 and 2013 I drew plans for pieces in the company's own collections and for customers' bespoke orders, all made by QD's factory in China. I modelled each piece in SketchUp, rendered it in its finished colours, and laid out dimensioned plan sheets the factory could build from.
+
+<div class="project-images project-images-inline plan-drawings">
+  <div class="project-thumb"><Image src={planFourDoor} alt="Plan of a four-door wardrobe with doors open, showing shelves on one side and a hanging rail on the other" loading="lazy" /></div>
+  <div class="project-thumb"><Image src={planTrunkTop} alt="Dimensioned 3D plan of a 2.45 m trunk-top cabinet with an open top section and an inner shelf unit" loading="lazy" /></div>
+  <div class="project-thumb"><Image src={planDenimCabinet} alt="Dimensioned 3D plan of a medium cabinet with doors open" loading="lazy" /></div>
+  <div class="project-thumb"><Image src={planBathroomCabinet} alt="Dimensioned 3D plan of the tall bathroom cabinet with one door open" loading="lazy" /></div>
+  <div class="project-thumb"><Image src={planChest} alt="Dimensioned 3D plan of the bespoke tall chest of drawers" loading="lazy" /></div>
+  <div class="project-thumb"><Image src={planConsole} alt="Front and side plan of the Funkiental four-drawer console table" loading="lazy" /></div>
+  <div class="project-thumb"><Image src={planConsoleWidths} alt="Front views of the Funkiental console tables in their three widths" loading="lazy" /></div>
+  <div class="project-thumb"><Image src={planSideTable} alt="Dimensioned 3D plan of the Funkiental side, lamp and bedside table" loading="lazy" /></div>
+  <div class="project-thumb"><Image src={planCoffeeTable} alt="Dimensioned 3D plan of the Funkiental coffee table" loading="lazy" /></div>
+  <div class="project-thumb"><Image src={planGlassCoffeeTable} alt="Dimensioned 3D plan of the Yin Yang glass-topped coffee table" loading="lazy" /></div>
+  <div class="project-thumb"><Image src={planSideboard} alt="Front, side and plan views of a sideboard for Morton & Morton" loading="lazy" /></div>
+  <div class="project-thumb"><Image src={planLadder} alt="Front and side plan of the QD Design ladder" loading="lazy" /></div>
+</div>
+
+### What I designed
+
+<KVGroup>
+  <KV term="Funkiental collection" desc="QD's brightly coloured range, with hand-painted patterns on and inside the doors. I designed the pieces that grew it beyond cabinets: a coffee table, a side, lamp and bedside table, a ladder, and console tables in three widths with two, three or four drawers." />
+  <KV term="Yin Yang collection" desc="QD's reclaimed elm range. I drew TV cabinets in two lengths, glass-topped coffee tables in two sizes, and a ladder." />
+  <KV term="Bespoke orders" desc="Customers often wanted a piece in a size, layout or colour that wasn't in the range. I drew those one-offs: a four-door wardrobe with a choice of shelf and hanging-rail layouts, a 2.45 m trunk-top cabinet, a tall chest of drawers, and cabinets in custom colours." />
+  <KV term="Trade customers" desc="Plans for trade buyers' own pieces too, such as a sideboard, chests of drawers and a cube for Morton & Morton." />
+</KVGroup>
+
+### How I worked with the factory
+
+<KVGroup>
+  <KV term="Built on the factory's own specs" desc="The original cabinets in the range were specced by the factory itself, and I used their detailed spec sheets as the reference for my designs, so new pieces matched the rest of the range in construction and proportion. My plans could be simpler than theirs: the factory already knew its own construction details, so each sheet gave the dimensions and layout it needed rather than every joint." />
+  <KV term="Designed around the patterns" desc="Many pieces carried painted patterns, so I designed the panels and proportions with the patterns in mind and placed them where they would sit best on each piece, inside and out." />
+  <KV term="Spec sheets that answer the questions" desc="Bespoke pieces went out with a spec sheet listing the size, colours and patterns, hardware and any extras, so the factory had everything it needed to price and build it without a round of questions." />
+  <KV term="A naming convention" desc="I named every design to a consistent convention covering its collection, type, size and finish, so any piece could be coded, looked up and referenced the same way by us and the factory." />
+  <KV term="Renders before anything was made" desc="Because each model was rendered in its real colours, patterns and hardware, a piece could be seen and signed off before the factory started building it." />
+  <KV term="Photo QA" desc="The main part of the job came later. When a piece was nearly finished, the factory sent photos, and I checked them against the design and flagged anything that needed putting right before it was completed." />
+</KVGroup>
+
+## Project: a cabinet that comes apart for tight stairs
+
+<InlineVideo src="/videos/qd-knockdown-cabinet.mp4" poster={knockdownPoster} alt="A tall turquoise Chinese wedding cabinet separating into its top, doors, shelves, carcass and drawer base, then going back together into one solid piece" class="video-capped" />
+
+### Problem
+
+QD's cabinets were built in the factory as solid, fully assembled pieces, which is a big part of why they feel like real furniture. That was a problem for customers whose homes couldn't take a tall assembled cabinet: flats up very small, awkward staircases where the piece physically wouldn't make the turns. Those customers were asking for a version that could be broken down for the trip up the stairs, but none of the designs allowed for it.
+
+### Goals
+
+<KVGroup>
+  <KV term="Breaks down to fit" desc="Split the cabinet into sections small enough to carry up narrow, awkward stairs where the assembled piece couldn't go." />
+  <KV term="Solid once rebuilt" desc="Once reassembled it had to be as strong and rigid as the standard cabinet, not wobbly the way flat-pack furniture is." />
+  <KV term="Seamless finish" desc="Back together, it should look like one solid cabinet again, with no visible sign it had ever come apart." />
+  <KV term="Buildable by the factory" desc="The design had to fit the way the factory in China already built these pieces, not need a new production process." />
+</KVGroup>
+
+### Approach & decisions
+
+<KVGroup>
+  <KV term="Designed in SketchUp" desc="Modelled the knockdown version in SketchUp, drawn to the factory's own standards so they could build straight from the drawings." />
+  <KV term="Sections, not flat-pack panels" desc="Rather than breaking it down into loose flat boards, the cabinet separates into a few rigid sections: the top, the doors, the shelves, the main carcass and the drawer base. Each one keeps its own strength, and there are far fewer joints to go wobbly." />
+  <KV term="Assembled by the company, not the customer" desc="The rebuild was done in the customer's flat by QD's own delivery team, so the joints could be made properly tight instead of designed around what a customer could manage with an Allen key." />
+</KVGroup>
+
+### Outcome & impact
+
+<KVGroup>
+  <KV term="Adopted by the factory" desc="The factory used the design for a whole range of pieces whenever a customer asked for the breakable version." />
+  <KV term="Sales that would have been lost" desc="Customers who couldn't have got a standard cabinet into their home could now buy one, and end up with the same solid, seamless piece as everyone else." />
+</KVGroup>
