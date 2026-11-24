@@ -1,6 +1,7 @@
 ---
 title: "D&AD Brief Final Submission & Evaluation"
 date: 2013-04-28
+order: 5
 categories: ["Design Practice"]
 tags: []
 originalUrl: "http://jamessparkes.com/2013/04/28/dad-brief-final-submission-evaluation/"

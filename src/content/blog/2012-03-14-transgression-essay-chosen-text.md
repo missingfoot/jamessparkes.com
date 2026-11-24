@@ -1,6 +1,7 @@
 ---
 title: "Transgression Essay Chosen Text"
 date: 2012-03-14
+order: 48
 categories: ["Creative Contexts"]
 tags: ["chosen text","downfall","essay","meme","parody"]
 originalUrl: "http://jamessparkes.com/2012/03/14/transgression-essay-chosen-text/"

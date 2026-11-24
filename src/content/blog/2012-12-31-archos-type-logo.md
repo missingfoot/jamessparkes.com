@@ -1,6 +1,7 @@
 ---
 title: "Archos Type Logo"
 date: 2012-12-31
+order: 15
 categories: ["Major Practical Project"]
 tags: ["concepts","fonts","logos","typefaces"]
 originalUrl: "http://jamessparkes.com/2012/12/31/archos-type-logo/"

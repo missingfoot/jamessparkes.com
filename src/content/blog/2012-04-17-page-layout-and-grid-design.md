@@ -1,6 +1,7 @@
 ---
 title: "Page Layout and Grid Design"
 date: 2012-04-17
+order: 45
 categories: ["Graphic Design","Layout"]
 tags: ["columns","grids","layout","magazine","margins","pages"]
 originalUrl: "http://jamessparkes.com/2012/04/17/page-layout-and-grid-design/"

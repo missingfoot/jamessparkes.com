@@ -1,6 +1,7 @@
 ---
 title: "Grouping, Layer Masks and Adjustment Layers"
 date: 2011-11-13
+order: 98
 categories: ["Photo Manipulation"]
 tags: ["adjustment layers","brush","groups","layer masks","manipulation","non destructive","pen tool","photo","work flow"]
 originalUrl: "http://jamessparkes.com/2011/11/13/grouping-layer-masks-and-adjustment-layers/"

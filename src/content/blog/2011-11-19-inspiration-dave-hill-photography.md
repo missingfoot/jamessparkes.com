@@ -1,6 +1,7 @@
 ---
 title: "Inspiration: Dave Hill Photography"
 date: 2011-11-19
+order: 93
 categories: ["Inspiration","Photo Manipulation"]
 tags: ["cool","dave hill","detail","exploded","layers","photography","photomanipulation","video"]
 originalUrl: "http://jamessparkes.com/2011/11/19/inspiration-dave-hill-photography/"

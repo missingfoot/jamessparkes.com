@@ -1,6 +1,7 @@
 ---
 title: "Composition Experimentation"
 date: 2011-11-13
+order: 96
 categories: ["Inspiration","Photo Manipulation"]
 tags: ["art","composition","concept","dark","influence","matte paintings","photographs","posters","stock"]
 originalUrl: "http://jamessparkes.com/2011/11/13/composition-experimentation/"

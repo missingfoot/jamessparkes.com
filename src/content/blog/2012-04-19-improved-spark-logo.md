@@ -1,6 +1,7 @@
 ---
 title: "Improved Spark Logo"
 date: 2012-04-19
+order: 44
 categories: ["Graphic Design","Layout"]
 tags: ["code","concept","content","logo"]
 originalUrl: "http://jamessparkes.com/2012/04/19/improved-spark-logo/"

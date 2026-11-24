@@ -1,6 +1,7 @@
 ---
 title: "Building the Scene"
 date: 2012-04-25
+order: 37
 categories: ["Photo Manipulation"]
 tags: ["background removal","stock","trees"]
 originalUrl: "http://jamessparkes.com/2012/04/25/building-the-scene/"

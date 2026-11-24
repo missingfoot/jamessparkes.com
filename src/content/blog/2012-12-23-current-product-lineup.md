@@ -1,6 +1,7 @@
 ---
 title: "Current Product Lineup"
 date: 2012-12-23
+order: 19
 categories: ["Major Practical Project"]
 tags: ["products"]
 originalUrl: "http://jamessparkes.com/2012/12/23/current-product-lineup/"

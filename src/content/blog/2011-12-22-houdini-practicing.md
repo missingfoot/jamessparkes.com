@@ -1,6 +1,7 @@
 ---
 title: "Houdini Practicing"
 date: 2011-12-22
+order: 78
 categories: ["3D Graphics"]
 tags: ["exercise","houdini","network","penguins","photoshop","pop","practice","render","shop","sop"]
 originalUrl: "http://jamessparkes.com/2011/12/22/houdini-practicing/"

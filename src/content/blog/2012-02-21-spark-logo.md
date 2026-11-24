@@ -1,6 +1,7 @@
 ---
 title: "Spark Logo"
 date: 2012-02-21
+order: 57
 categories: ["Graphic Design","Layout"]
 tags: ["deconstruction","dictionary","logos","magazines","thesaurus","typeface"]
 originalUrl: "http://jamessparkes.com/2012/02/21/spark-logo/"

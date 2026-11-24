@@ -1,6 +1,7 @@
 ---
 title: "Background Removal Task"
 date: 2011-11-15
+order: 94
 categories: ["Inspiration","Photo Manipulation"]
 tags: ["black and white","colour","desert","eagle","experimentation","final piece","manipulation","photo","photos","progress","smart objects","stock","task","techniques"]
 originalUrl: "http://jamessparkes.com/2011/11/15/background-removal-task/"

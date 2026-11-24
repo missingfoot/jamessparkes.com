@@ -1,6 +1,7 @@
 ---
 title: "Spark Magazine Redesign Brief"
 date: 2012-05-02
+order: 32
 categories: ["Layout"]
 tags: ["brief","magazine","redesign","spark"]
 originalUrl: "http://jamessparkes.com/2012/05/02/spark-magazine-redesign-brief/"

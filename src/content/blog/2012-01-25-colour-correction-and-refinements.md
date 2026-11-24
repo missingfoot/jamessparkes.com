@@ -1,6 +1,7 @@
 ---
 title: "Colour Correction and Refinements"
 date: 2012-01-25
+order: 68
 categories: ["Photo Manipulation"]
 tags: ["advice","colour","correction","grading","lighting","photomanipulation","refinements"]
 originalUrl: "http://jamessparkes.com/2012/01/25/colour-correction-and-refinements/"

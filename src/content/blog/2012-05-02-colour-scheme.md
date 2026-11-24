@@ -1,6 +1,7 @@
 ---
 title: "Colour Scheme"
 date: 2012-05-02
+order: 30
 categories: ["Inspiration","Photo Manipulation"]
 tags: ["album","cover","gradient","photo"]
 originalUrl: "http://jamessparkes.com/2012/05/02/colour-scheme/"

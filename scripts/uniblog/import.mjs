@@ -45,13 +45,14 @@ const imageFor = (imgSrc) => {
   return `../../assets/blog/${copied.get(from)}`;
 };
 
-for (const p of posts) {
+for (const [order, p] of posts.entries()) {
   const body = toMarkdown(p.bodyHtml, { imageFor, postSlugByUrl });
   videos += (body.match(/class="video-embed"/g) || []).length;
   const fm = [
     '---',
     `title: ${JSON.stringify(p.title)}`,
     `date: ${p.date}`,
+    `order: ${order}`,
     `categories: ${JSON.stringify(p.categories)}`,
     `tags: ${JSON.stringify(p.tags)}`,
     `originalUrl: ${JSON.stringify(p.originalUrl)}`,

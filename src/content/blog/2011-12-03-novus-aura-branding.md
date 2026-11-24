@@ -1,6 +1,7 @@
 ---
 title: "Novus Aura Branding"
 date: 2011-12-03
+order: 81
 categories: ["Professional Practice"]
 tags: ["branding","collective","logo","team","values"]
 originalUrl: "http://jamessparkes.com/2011/12/03/novus-aura-branding/"

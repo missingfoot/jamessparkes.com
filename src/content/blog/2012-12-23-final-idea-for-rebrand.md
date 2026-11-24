@@ -1,6 +1,7 @@
 ---
 title: "Final Idea for Rebrand"
 date: 2012-12-23
+order: 20
 categories: ["Major Practical Project"]
 tags: ["final idea"]
 originalUrl: "http://jamessparkes.com/2012/12/23/final-idea-for-rebrand/"

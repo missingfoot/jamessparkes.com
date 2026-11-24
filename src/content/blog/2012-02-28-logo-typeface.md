@@ -1,6 +1,7 @@
 ---
 title: "Typeface Research"
 date: 2012-02-28
+order: 55
 categories: ["Graphic Design","Layout"]
 tags: ["body","fonts","headline"]
 originalUrl: "http://jamessparkes.com/2012/02/28/logo-typeface/"

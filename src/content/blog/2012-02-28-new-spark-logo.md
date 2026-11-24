@@ -1,6 +1,7 @@
 ---
 title: "New Spark Logo"
 date: 2012-02-28
+order: 52
 categories: ["Graphic Design","Layout"]
 tags: ["circle","experiment","logo","spark"]
 originalUrl: "http://jamessparkes.com/2012/02/28/new-spark-logo/"

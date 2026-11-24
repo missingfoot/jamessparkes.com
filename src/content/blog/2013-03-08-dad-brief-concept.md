@@ -1,6 +1,7 @@
 ---
 title: "D&AD Brief Concept"
 date: 2013-03-08
+order: 12
 categories: ["Design Practice"]
 tags: []
 originalUrl: "http://jamessparkes.com/2013/03/08/dad-brief-concept/"

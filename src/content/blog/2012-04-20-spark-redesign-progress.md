@@ -1,6 +1,7 @@
 ---
 title: "Spark Redesign Progress"
 date: 2012-04-20
+order: 43
 categories: ["Graphic Design","Layout"]
 tags: ["folders","progress","redesign"]
 originalUrl: "http://jamessparkes.com/2012/04/20/spark-redesign-progress/"

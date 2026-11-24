@@ -1,6 +1,7 @@
 ---
 title: "Blueprint Modelling"
 date: 2011-11-22
+order: 88
 categories: ["Professional Practice"]
 tags: ["blueprint modelling","collective","plan"]
 originalUrl: "http://jamessparkes.com/2011/11/22/blueprint-modelling/"

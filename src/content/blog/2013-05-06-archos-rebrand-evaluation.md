@@ -1,6 +1,7 @@
 ---
 title: "Archos Rebrand Evaluation"
 date: 2013-05-06
+order: 2
 categories: ["Major Practical Project"]
 tags: []
 originalUrl: "http://jamessparkes.com/2013/05/06/archos-rebrand-evaluation/"

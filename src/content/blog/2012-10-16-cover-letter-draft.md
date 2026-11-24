@@ -1,6 +1,7 @@
 ---
 title: "Cover Letter Draft"
 date: 2012-10-16
+order: 25
 categories: ["Design Practice"]
 tags: ["cover letter","cv","draft","resume"]
 originalUrl: "http://jamessparkes.com/2012/10/16/cover-letter-draft/"

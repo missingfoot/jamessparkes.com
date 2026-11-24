@@ -1,6 +1,7 @@
 ---
 title: "Mountaineering"
 date: 2012-01-09
+order: 75
 categories: ["3D Graphics"]
 tags: ["crappy","houdini","mountain","mountain range","mountains","process","render","texture"]
 originalUrl: "http://jamessparkes.com/2012/01/09/mountaineering/"

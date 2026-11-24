@@ -92,6 +92,17 @@ const isOldUpload = (href) =>
 export function toMarkdown(bodyHtml, ctx) {
   const $ = load(bodyHtml, null, false);
 
+  // `<strong>Q?<br></strong>A` would become `**Q?  \n**A`, which isn't valid bold
+  $('strong, b, em, i').each((_, el) => {
+    const $el = $(el);
+    while ($el.contents().length) {
+      const last = $el.contents().last();
+      if (last[0].type === 'text' && !last.text().trim()) last.remove();
+      else if (last.is('br')) $el.after(last);
+      else break;
+    }
+  });
+
   $('iframe, object').each((_, el) => {
     const $el = $(el);
     const src =

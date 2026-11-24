@@ -1,6 +1,7 @@
 ---
 title: "Further Research"
 date: 2012-05-01
+order: 33
 categories: ["3D Graphics"]
 tags: ["ideas","research"]
 originalUrl: "http://jamessparkes.com/2012/05/01/further-research/"

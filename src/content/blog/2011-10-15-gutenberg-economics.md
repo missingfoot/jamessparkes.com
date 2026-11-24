@@ -1,6 +1,7 @@
 ---
 title: "Gutenberg Economics"
 date: 2011-10-15
+order: 104
 categories: ["Creative Contexts"]
 tags: ["economics","gutenberg","lecture","notes","presentation","transcript"]
 originalUrl: "http://jamessparkes.com/2011/10/15/gutenberg-economics/"

@@ -1,6 +1,7 @@
 ---
 title: "D&AD Brief Research"
 date: 2013-02-01
+order: 14
 categories: ["Design Practice"]
 tags: []
 originalUrl: "http://jamessparkes.com/2013/02/01/dad-brief-research/"

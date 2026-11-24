@@ -1,6 +1,7 @@
 ---
 title: "Inspiration: 3D and Matte Painting Landscapes"
 date: 2011-11-19
+order: 91
 categories: ["3D Graphics","Inspiration","Photo Manipulation"]
 tags: ["digital art","digital painting","dylan cole","landscape","lord of the rings","matte paintings","photomanipulation"]
 originalUrl: "http://jamessparkes.com/2011/11/19/inspiration-3d-and-matte-painting-landscapes/"

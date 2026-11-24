@@ -1,6 +1,7 @@
 ---
 title: "Spark Magazine Research"
 date: 2012-02-08
+order: 60
 categories: ["Graphic Design","Layout"]
 tags: ["colour palette","design","ios","magazines","research","typography"]
 originalUrl: "http://jamessparkes.com/2012/02/08/spark-magazine-research/"

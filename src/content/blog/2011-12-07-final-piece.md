@@ -1,6 +1,7 @@
 ---
 title: "Nuclear Power Argument: Final Piece"
 date: 2011-12-07
+order: 79
 categories: ["Graphic Design","Type"]
 tags: ["6","final piece","nuclear power","preview","quote","six","squares","typography","wall"]
 originalUrl: "http://jamessparkes.com/2011/12/07/final-piece/"

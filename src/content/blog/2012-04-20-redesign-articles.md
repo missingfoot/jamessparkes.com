@@ -1,6 +1,7 @@
 ---
 title: "Redesign Articles"
 date: 2012-04-20
+order: 42
 categories: ["Graphic Design","Layout"]
 tags: ["articles","high resolution","photography","websites"]
 originalUrl: "http://jamessparkes.com/2012/04/20/redesign-articles/"

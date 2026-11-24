@@ -1,6 +1,7 @@
 ---
 title: "Elevator Pitch"
 date: 2012-10-06
+order: 26
 categories: ["Design Practice"]
 tags: ["cv","elevator pitch","self promotion"]
 originalUrl: "http://jamessparkes.com/2012/10/06/elevator-pitch/"

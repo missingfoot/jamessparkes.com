@@ -27,6 +27,8 @@ const blog = defineCollection({
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
+    // Position on the original blog page, to keep same-day posts in their old order
+    order: z.number(),
     categories: z.array(z.string()),
     tags: z.array(z.string()).default([]),
     originalUrl: z.string().url(),

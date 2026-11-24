@@ -1,6 +1,7 @@
 ---
 title: "SWOT Analysis"
 date: 2013-05-06
+order: 1
 categories: ["Contemporary Graphic Design"]
 tags: []
 originalUrl: "http://jamessparkes.com/2013/05/06/swot-analysis/"

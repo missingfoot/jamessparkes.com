@@ -1,6 +1,7 @@
 ---
 title: "Problems with Houdini"
 date: 2012-05-02
+order: 31
 categories: ["3D Graphics"]
 tags: ["technical problems"]
 originalUrl: "http://jamessparkes.com/2012/05/02/problems-with-houdini/"

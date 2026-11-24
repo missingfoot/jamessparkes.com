@@ -1,6 +1,7 @@
 ---
 title: "Brand Values and Guidelines"
 date: 2013-04-13
+order: 10
 categories: ["Major Practical Project"]
 tags: []
 originalUrl: "http://jamessparkes.com/2013/04/13/brand-values-and-guidelines/"

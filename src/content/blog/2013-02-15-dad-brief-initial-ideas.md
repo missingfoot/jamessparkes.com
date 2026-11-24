@@ -1,6 +1,7 @@
 ---
 title: "D&AD Brief Initial Ideas"
 date: 2013-02-15
+order: 13
 categories: ["Design Practice"]
 tags: []
 originalUrl: "http://jamessparkes.com/2013/02/15/dad-brief-initial-ideas/"

@@ -1,6 +1,7 @@
 ---
 title: "Mikael Eidenberg"
 date: 2012-03-05
+order: 49
 categories: ["3D Graphics","Inspiration"]
 tags: ["idea","lego","mikael eidenberg","realistic"]
 originalUrl: "http://jamessparkes.com/2012/03/05/mikael-eidenberg/"

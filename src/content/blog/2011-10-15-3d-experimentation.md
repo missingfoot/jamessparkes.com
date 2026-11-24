@@ -1,6 +1,7 @@
 ---
 title: "3D Experimentation"
 date: 2011-10-15
+order: 103
 categories: ["3D Graphics"]
 tags: ["bowl","experiment","houdini","jet","light","lighting","plane","render","water"]
 originalUrl: "http://jamessparkes.com/2011/10/15/3d-experimentation/"

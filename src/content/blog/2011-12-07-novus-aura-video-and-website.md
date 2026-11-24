@@ -1,6 +1,7 @@
 ---
 title: "Novus Aura Video and Website"
 date: 2011-12-07
+order: 80
 categories: ["Professional Practice"]
 tags: ["animation","branding","collective","communicate","values","video","website"]
 originalUrl: "http://jamessparkes.com/2011/12/07/novus-aura-video-and-website/"

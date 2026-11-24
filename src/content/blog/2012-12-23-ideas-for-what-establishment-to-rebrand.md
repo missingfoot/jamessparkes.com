@@ -1,6 +1,7 @@
 ---
 title: "Ideas for what Establishment to Rebrand"
 date: 2012-12-23
+order: 22
 categories: ["Major Practical Project"]
 tags: ["ideas","initial","rebrand"]
 originalUrl: "http://jamessparkes.com/2012/12/23/ideas-for-what-establishment-to-rebrand/"

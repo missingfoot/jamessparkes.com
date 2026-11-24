@@ -1,6 +1,7 @@
 ---
 title: "Death of Gutenberg Economics"
 date: 2011-11-08
+order: 99
 categories: ["Creative Contexts"]
 tags: ["economics","gutenberg","internet","notes","presentation","transcript"]
 originalUrl: "http://jamessparkes.com/2011/11/08/death-of-gutenberg-economics/"

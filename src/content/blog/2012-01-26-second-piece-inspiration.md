@@ -1,6 +1,7 @@
 ---
 title: "Second Piece Inspiration"
 date: 2012-01-26
+order: 67
 categories: ["Inspiration","Photo Manipulation"]
 tags: ["photomanipulation","second piece"]
 originalUrl: "http://jamessparkes.com/2012/01/26/second-piece-inspiration/"

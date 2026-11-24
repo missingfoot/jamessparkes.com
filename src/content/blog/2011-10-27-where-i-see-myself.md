@@ -1,6 +1,7 @@
 ---
 title: "Where I See Myself"
 date: 2011-10-27
+order: 100
 categories: ["Professional Practice"]
 tags: ["career","environment","envision"]
 originalUrl: "http://jamessparkes.com/2011/10/27/where-i-see-myself/"

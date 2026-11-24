@@ -1,6 +1,7 @@
 ---
 title: "Private: Interface Research"
 date: 2012-02-20
+order: 58
 categories: ["Graphic Design","Layout","Photo Manipulation"]
 tags: ["apple","interface","ios","mac os x","metro","microsoft","mobile"]
 originalUrl: "http://jamessparkes.com/2012/02/20/interface-research/"

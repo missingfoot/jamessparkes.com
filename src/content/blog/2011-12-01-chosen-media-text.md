@@ -1,6 +1,7 @@
 ---
 title: "Amazon Kindle: The Book Lives On"
 date: 2011-12-01
+order: 83
 categories: ["Creative Contexts"]
 tags: ["advert","amazon","chosen","essay","kindle","media","rhetoric","text"]
 originalUrl: "http://jamessparkes.com/2011/12/01/chosen-media-text/"

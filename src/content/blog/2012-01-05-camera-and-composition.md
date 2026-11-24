@@ -1,6 +1,7 @@
 ---
 title: "Camera and Composition"
 date: 2012-01-05
+order: 76
 categories: ["3D Graphics"]
 tags: ["14mm","camera","composition","experimentation","lens","positioning","scene"]
 originalUrl: "http://jamessparkes.com/2012/01/05/camera-and-composition/"

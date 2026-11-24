@@ -1,6 +1,7 @@
 ---
 title: "Inspiration: Logos and Branding"
 date: 2011-12-02
+order: 82
 categories: ["Graphic Design","Inspiration","Professional Practice"]
 tags: ["branding","collective","design","graphic design","logos","values"]
 originalUrl: "http://jamessparkes.com/2011/12/02/inspiration-logos-and-branding/"

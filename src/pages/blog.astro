@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
-import { slugify } from '../lib/blog-filter';
+import { slugify, byNewest } from '../lib/blog-filter';
 
-const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const posts = (await getCollection('blog')).sort((a, b) => byNewest(a.data, b.data));
 
 const counts = new Map<string, number>();
 for (const p of posts) for (const c of p.data.categories) counts.set(c, (counts.get(c) ?? 0) + 1);

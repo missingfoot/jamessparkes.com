@@ -1,6 +1,7 @@
 ---
 title: "Random Logo Design"
 date: 2012-02-03
+order: 65
 categories: ["Graphic Design","Layout"]
 tags: ["44","logo","practice","random"]
 originalUrl: "http://jamessparkes.com/2012/02/03/random-logo-design/"

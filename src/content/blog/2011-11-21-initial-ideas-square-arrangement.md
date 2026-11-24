@@ -1,6 +1,7 @@
 ---
 title: "Initial Ideas: Square Arrangement"
 date: 2011-11-21
+order: 89
 categories: ["Graphic Design","Type"]
 tags: ["concept","graphic design","ideas","nuclear","square"]
 originalUrl: "http://jamessparkes.com/2011/11/21/initial-ideas-square-arrangement/"

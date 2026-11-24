@@ -1,6 +1,7 @@
 ---
 title: "City Ruin Inspiration"
 date: 2012-04-23
+order: 40
 categories: ["Inspiration","Photo Manipulation"]
 tags: ["art","city","composition","ruins"]
 originalUrl: "http://jamessparkes.com/2012/04/23/city-ruin-inspiration/"

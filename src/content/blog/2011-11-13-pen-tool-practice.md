@@ -1,6 +1,7 @@
 ---
 title: "Pen Tool Practice"
 date: 2011-11-13
+order: 97
 categories: ["Photo Manipulation"]
 tags: ["background removal","burn","complex","dodge","hair","halo","lighting","pen tool","practice","refine edge","shapes"]
 originalUrl: "http://jamessparkes.com/2011/11/13/pen-tool-practice/"

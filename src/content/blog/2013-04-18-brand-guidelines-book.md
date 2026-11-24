@@ -1,6 +1,7 @@
 ---
 title: "Brand Guidelines Book"
 date: 2013-04-18
+order: 8
 categories: ["Major Practical Project"]
 tags: []
 originalUrl: "http://jamessparkes.com/2013/04/18/brand-guidelines-book/"

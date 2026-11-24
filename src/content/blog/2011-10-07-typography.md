@@ -1,6 +1,7 @@
 ---
 title: "Typography"
 date: 2011-10-07
+order: 108
 categories: ["Graphic Design","Type"]
 tags: ["kerning","leading","sans","serif","terminology","type","typeface","typography"]
 originalUrl: "http://jamessparkes.com/2011/10/07/typography/"

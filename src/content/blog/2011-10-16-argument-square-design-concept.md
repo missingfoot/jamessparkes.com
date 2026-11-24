@@ -1,6 +1,7 @@
 ---
 title: "Argument Square Design Concept"
 date: 2011-10-16
+order: 102
 categories: ["Graphic Design","Type"]
 tags: ["argument","concept","design","for","graphic design","nuclear","radiation","square","trefoil symbol"]
 originalUrl: "http://jamessparkes.com/2011/10/16/argument-square-design-concept/"

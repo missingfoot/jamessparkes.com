@@ -1,6 +1,7 @@
 ---
 title: "Spark Magazine Content Analysis"
 date: 2012-04-12
+order: 46
 categories: ["Graphic Design","Layout"]
 tags: ["content","copy","fonts","layout","leading","magazine","margins","typeface","white space"]
 originalUrl: "http://jamessparkes.com/2012/04/12/spark-magazine-content-analysis/"

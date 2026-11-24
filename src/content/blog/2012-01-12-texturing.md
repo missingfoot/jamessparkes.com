@@ -1,6 +1,7 @@
 ---
 title: "Texturing"
 date: 2012-01-12
+order: 74
 categories: ["3D Graphics"]
 tags: ["earth","film","gas giant","jupiter","material","planet","texturing","uv"]
 originalUrl: "http://jamessparkes.com/2012/01/12/texturing/"

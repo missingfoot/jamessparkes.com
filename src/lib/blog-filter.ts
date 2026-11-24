@@ -12,7 +12,12 @@ export function slugify(s: string): string {
 }
 
 export function normalize(s: string): string {
-  return s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
+  return s
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .replace(/[‘’ʼ]/g, "'")
+    .replace(/[“”]/g, '"')
+    .toLowerCase();
 }
 
 /** `post.text` must already be normalized. */
@@ -36,4 +41,9 @@ export function writeState(state: FilterState): string {
   if (state.cat) params.set('cat', state.cat);
   const s = params.toString();
   return s ? `?${s}` : '';
+}
+
+/** Newest first; posts from the same day keep the old blog's order (`order` ascending). */
+export function byNewest(a: { date: Date; order: number }, b: { date: Date; order: number }): number {
+  return b.date.valueOf() - a.date.valueOf() || a.order - b.order;
 }

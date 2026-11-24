@@ -1,6 +1,7 @@
 ---
 title: "Curriculum Vitae Design Research"
 date: 2012-10-06
+order: 27
 categories: ["Design Practice"]
 tags: ["cover letter","curriculum vitae","cv","design","graphic design","printing","research","resume","self promotion"]
 originalUrl: "http://jamessparkes.com/2012/10/06/curriculum-vitae-design-research/"

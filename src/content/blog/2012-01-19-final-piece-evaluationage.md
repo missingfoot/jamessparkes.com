@@ -1,6 +1,7 @@
 ---
 title: "Final Piece & Evaluationationation"
 date: 2012-01-19
+order: 72
 categories: ["3D Graphics"]
 tags: ["evaluation","final piece","finished","pie chart","scene"]
 originalUrl: "http://jamessparkes.com/2012/01/19/final-piece-evaluationage/"

@@ -1,6 +1,7 @@
 ---
 title: "Other Magazines"
 date: 2012-02-28
+order: 56
 categories: ["Graphic Design","Layout"]
 tags: ["circles","logos","magazines","research","typefaces"]
 originalUrl: "http://jamessparkes.com/2012/02/28/other-magazines/"

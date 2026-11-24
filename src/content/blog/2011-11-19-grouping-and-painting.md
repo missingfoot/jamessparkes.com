@@ -1,6 +1,7 @@
 ---
 title: "Grouping and Painting"
 date: 2011-11-19
+order: 92
 categories: ["3D Graphics"]
 tags: ["colour","groups","lake","mountain","paint","sop","terrain","water"]
 originalUrl: "http://jamessparkes.com/2011/11/19/grouping-and-painting/"

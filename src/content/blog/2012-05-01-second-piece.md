@@ -1,6 +1,7 @@
 ---
 title: "Second Piece"
 date: 2012-05-01
+order: 34
 categories: ["Inspiration","Photo Manipulation"]
 tags: ["second piece","style","technique"]
 originalUrl: "http://jamessparkes.com/2012/05/01/second-piece/"

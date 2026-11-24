@@ -1,6 +1,7 @@
 ---
 title: "Kirby Ferguson – Everything is a Remix"
 date: 2012-02-17
+order: 59
 categories: ["Creative Contexts"]
 tags: ["essay","pipa","remix","transgression","videos"]
 originalUrl: "http://jamessparkes.com/2012/02/17/kirby-ferguson-everything-is-a-remix/"

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { slugify, normalize, matches, readState, writeState } from './blog-filter.ts';
+import { slugify, normalize, matches, readState, writeState, byNewest } from './blog-filter.ts';
 
 const post = { text: normalize('Typeface Research fonts Graphic Design'), categorySlugs: ['graphic-design'] };
 
@@ -33,4 +33,19 @@ test('writeState omits empty keys and round-trips', () => {
   assert.equal(writeState({ q: '', cat: null }), '');
   const state = { q: 'a b', cat: 'type' };
   assert.deepEqual(readState(writeState(state), ['type']), state);
+});
+
+test('normalize treats curly and straight quotes the same', () => {
+  assert.equal(normalize('Apple’s “Think”'), normalize("Apple's \"Think\""));
+});
+
+test('byNewest sorts by date, then by original order within a day', () => {
+  const d = (s: string) => new Date(s);
+  const posts = [
+    { date: d('2013-05-06'), order: 1, id: 'swot' },
+    { date: d('2012-01-01'), order: 5, id: 'old' },
+    { date: d('2013-05-06'), order: 0, id: 'archos' },
+    { date: d('2013-05-08'), order: 2, id: 'summary' },
+  ];
+  assert.deepEqual([...posts].sort(byNewest).map((p) => p.id), ['summary', 'archos', 'swot', 'old']);
 });

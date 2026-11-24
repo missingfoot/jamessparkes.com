@@ -1,6 +1,7 @@
 ---
 title: "Chosen Magazine"
 date: 2012-02-04
+order: 64
 categories: ["Graphic Design","Layout"]
 tags: ["magazine","redesign","spark"]
 originalUrl: "http://jamessparkes.com/2012/02/04/chosen-magazine/"

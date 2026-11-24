@@ -1,6 +1,7 @@
 ---
 title: "Advertising Campaign"
 date: 2013-04-25
+order: 6
 categories: ["Major Practical Project"]
 tags: []
 originalUrl: "http://jamessparkes.com/2013/04/25/advertising-campaign/"

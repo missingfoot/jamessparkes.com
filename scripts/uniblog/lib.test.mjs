@@ -118,3 +118,8 @@ test('parsePosts strips WordPress duplicate-slug suffixes from tags', () => {
   const html = post(1, 'category-type tag-photomanipulation-2 tag-photomanipulation tag-layout-2', 'http://jamessparkes.com/2012/01/01/x/', 'X', '');
   assert.deepEqual(parsePosts(html)[0].tags, ['photomanipulation', 'layout']);
 });
+
+test('toMarkdown keeps bold intact when a line break sits inside it', () => {
+  const md = toMarkdown('<p><strong>Question?<br>\n</strong>Answer</p>', ctx);
+  assert.equal(md.trim(), '**Question?**  \nAnswer');
+});

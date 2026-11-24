@@ -1,6 +1,7 @@
 ---
 title: "Inspiration: Motion Graphics"
 date: 2011-11-24
+order: 87
 categories: ["Inspiration","Professional Practice"]
 tags: ["design","logo","motion graphics","video"]
 originalUrl: "http://jamessparkes.com/2011/11/24/inspiration-motion-graphics/"

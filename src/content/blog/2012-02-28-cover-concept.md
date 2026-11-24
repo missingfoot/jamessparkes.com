@@ -1,6 +1,7 @@
 ---
 title: "Cover Concept"
 date: 2012-02-28
+order: 51
 categories: ["Graphic Design","Layout"]
 tags: ["concept","cover","photo","spark"]
 originalUrl: "http://jamessparkes.com/2012/02/28/cover-concept/"

@@ -1,6 +1,7 @@
 ---
 title: "Lighting and Experimenting"
 date: 2011-11-20
+order: 90
 categories: ["3D Graphics"]
 tags: ["air ship","atmosphere","experiment","lighting","render","space ship"]
 originalUrl: "http://jamessparkes.com/2011/11/20/lighting-and-experimenting/"

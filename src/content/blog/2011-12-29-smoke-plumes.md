@@ -1,6 +1,7 @@
 ---
 title: "Smoke Plumes"
 date: 2011-12-29
+order: 77
 categories: ["Inspiration","Photo Manipulation"]
 tags: ["brush","experimentation","photomanipulation","plumes","practice","smoke"]
 originalUrl: "http://jamessparkes.com/2011/12/29/smoke-plumes/"

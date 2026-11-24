@@ -1,6 +1,7 @@
 ---
 title: "Initial Ideas"
 date: 2012-04-30
+order: 35
 categories: ["3D Graphics"]
 tags: ["ideas","initial"]
 originalUrl: "http://jamessparkes.com/2012/04/30/initial-ideas/"

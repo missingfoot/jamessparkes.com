@@ -1,6 +1,7 @@
 ---
 title: "The Mines of Moria"
 date: 2011-10-19
+order: 101
 categories: ["3D Graphics"]
 tags: ["copy","lighting","lord of the rings","mines","modelling","moria","render","sop"]
 originalUrl: "http://jamessparkes.com/2011/10/19/the-mines-of-moria/"

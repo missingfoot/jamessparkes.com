@@ -1,6 +1,7 @@
 ---
 title: "Nuclear Power: Research"
 date: 2011-10-11
+order: 106
 categories: ["Graphic Design","Type"]
 tags: ["argument","benefits","graphic design","nuclear","positive","power","research","square"]
 originalUrl: "http://jamessparkes.com/2011/10/11/nuclear-power-an-argument-of-the-positives/"

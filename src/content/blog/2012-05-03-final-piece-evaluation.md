@@ -1,6 +1,7 @@
 ---
 title: "Final Piece & Evaluation"
 date: 2012-05-03
+order: 28
 categories: ["3D Graphics"]
 tags: ["evaluation","final"]
 originalUrl: "http://jamessparkes.com/2012/05/03/final-piece-evaluation/"
