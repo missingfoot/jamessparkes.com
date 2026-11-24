@@ -1,0 +1,146 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { slugify } from '../lib/blog-filter';
+
+const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const counts = new Map<string, number>();
+for (const p of posts) for (const c of p.data.categories) counts.set(c, (counts.get(c) ?? 0) + 1);
+const categories = [...counts].sort((a, b) => b[1] - a[1]).map(([name, count]) => ({ name, slug: slugify(name), count }));
+
+const years = posts.map((p) => p.data.date.getUTCFullYear());
+const range = `${Math.min(...years)}–${Math.max(...years)}`;
+
+const dateFmt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (await render(post)).Content })));
+---
+<BaseLayout
+  title="Uni Blog — James Sparkes"
+  description="My university design blog from 2011–2013: graphic design, photo manipulation, 3D and typography coursework, research and inspiration."
+  path="/blog/"
+>
+  <div class="blog-view" data-cats={categories.map((c) => c.slug).join(' ')}>
+    <header class="blog-header">
+      <h1 class="project-title">Uni Blog</h1>
+      <p class="blog-meta">{range} · {posts.length} posts</p>
+      <p class="blog-intro">The blog I kept during my design degree: coursework, research and the things inspiring me at the time, kept as I wrote it.</p>
+    </header>
+
+    <div class="blog-controls" hidden>
+      <label class="visually-hidden" for="blog-search">Search posts</label>
+      <input id="blog-search" class="blog-search" type="search" placeholder="Search posts…" autocomplete="off" />
+      <div class="blog-cats" role="group" aria-label="Filter by category">
+        <button type="button" class="blog-cat" data-cat="" aria-pressed="true">All <span class="timeline-tab-count">{posts.length}</span></button>
+        {categories.map((c) => (
+          <button type="button" class="blog-cat" data-cat={c.slug} aria-pressed="false">{c.name} <span class="timeline-tab-count">{c.count}</span></button>
+        ))}
+      </div>
+      <p class="blog-status" aria-live="polite"></p>
+    </div>
+
+    <p class="blog-empty" hidden>No posts match.</p>
+
+    <div class="blog-posts">
+      {rendered.map(({ post, Content }) => (
+        <article class="blog-post" id={post.id} data-cats={post.data.categories.map(slugify).join(' ')}>
+          <div class="blog-post-meta">
+            <time datetime={post.data.date.toISOString().slice(0, 10)}>{dateFmt.format(post.data.date)}</time>
+            {post.data.categories.length > 0 && <span> · {post.data.categories.join(', ')}</span>}
+          </div>
+          <h2 class="blog-post-title"><a href={`#${post.id}`}>{post.data.title}</a></h2>
+          <div class="blog-body">
+            <Content />
+          </div>
+          {post.data.tags.length > 0 && <div class="blog-tags">{post.data.tags.map((t) => <span class="tag-chip">{t}</span>)}</div>}
+        </article>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { matches, normalize, readState, writeState } from '../lib/blog-filter';
+
+  const view = document.querySelector<HTMLElement>('.blog-view')!;
+  const controls = view.querySelector<HTMLElement>('.blog-controls')!;
+  const input = view.querySelector<HTMLInputElement>('#blog-search')!;
+  const chips = [...view.querySelectorAll<HTMLButtonElement>('.blog-cat')];
+  const empty = view.querySelector<HTMLElement>('.blog-empty')!;
+  const status = view.querySelector<HTMLElement>('.blog-status')!;
+  const knownCats = (view.dataset.cats ?? '').split(' ').filter(Boolean);
+  const posts = [...view.querySelectorAll<HTMLElement>('.blog-post')].map((el) => ({
+    el,
+    // Title, date, categories, body and tags are all in the post's own text
+    text: normalize(el.textContent ?? '').replace(/\s+/g, ' '),
+    categorySlugs: (el.dataset.cats ?? '').split(' ').filter(Boolean),
+  }));
+
+  let state = readState(location.search, knownCats);
+
+  function apply() {
+    let shown = 0;
+    for (const p of posts) {
+      const ok = matches(p, state.q, state.cat);
+      p.el.hidden = !ok;
+      if (ok) shown++;
+    }
+    chips.forEach((c) => c.setAttribute('aria-pressed', String((c.dataset.cat || null) === state.cat)));
+    empty.hidden = shown > 0;
+    status.textContent = state.q || state.cat ? `${shown} of ${posts.length} posts` : '';
+    history.replaceState(history.state, '', `${location.pathname}${writeState(state)}${location.hash}`);
+  }
+
+  controls.hidden = false;
+  input.value = state.q;
+  apply();
+
+  let timer: ReturnType<typeof setTimeout>;
+  input.addEventListener('input', () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      state = { ...state, q: input.value.trim() };
+      apply();
+    }, 120);
+  });
+  chips.forEach((c) =>
+    c.addEventListener('click', () => {
+      state = { ...state, cat: c.dataset.cat || null };
+      apply();
+    })
+  );
+
+  // Videos: a link until clicked, then the real player. YouTube thumbnails load near the viewport.
+  const embeds = [...view.querySelectorAll<HTMLAnchorElement>('a.video-embed')];
+  const thumbs = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        const a = e.target as HTMLAnchorElement;
+        a.style.backgroundImage = `url(https://i.ytimg.com/vi/${a.dataset.id}/hqdefault.jpg)`;
+        thumbs.unobserve(a);
+      }
+    },
+    { rootMargin: '600px' }
+  );
+  for (const a of embeds) {
+    a.setAttribute('aria-label', `Play video (${a.dataset.provider === 'youtube' ? 'YouTube' : 'Vimeo'})`);
+    a.dataset.label = a.dataset.provider === 'youtube' ? 'YouTube' : 'Vimeo';
+    if (a.dataset.provider === 'youtube') thumbs.observe(a);
+    a.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      const id = a.dataset.id;
+      const frame = document.createElement('iframe');
+      frame.className = 'video-embed-frame';
+      frame.src =
+        a.dataset.provider === 'youtube'
+          ? `https://www.youtube-nocookie.com/embed/${id}?autoplay=1`
+          : `https://player.vimeo.com/video/${id}?autoplay=1`;
+      frame.allow = 'autoplay; fullscreen; picture-in-picture';
+      frame.allowFullscreen = true;
+      frame.title = 'Video';
+      a.replaceWith(frame);
+    });
+  }
+</script>
