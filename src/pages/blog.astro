@@ -145,10 +145,16 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
     CSS.highlights.set('blog-search', new Highlight(...ranges));
   }
 
-  // After filtering from further down, start the results from the top (side column is sticky)
-  const toTop = () => {
-    if (view.getBoundingClientRect().top < 0) view.scrollIntoView({ behavior: 'smooth' });
-  };
+  // Change the filter without losing your place: the post at the top of the screen stays
+  // exactly where it was if it's still in the results; otherwise start from the first result
+  function update(next: typeof state) {
+    const anchor = posts.find((p) => !p.el.hidden && p.el.getBoundingClientRect().bottom > 0)?.el;
+    const before = anchor?.getBoundingClientRect().top ?? 0;
+    state = next;
+    apply();
+    if (anchor && !anchor.hidden) window.scrollBy(0, anchor.getBoundingClientRect().top - before);
+    else if (view.getBoundingClientRect().top < 0) view.scrollIntoView();
+  }
 
   controls.hidden = false;
   input.value = state.q;
@@ -158,16 +164,12 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
   input.addEventListener('input', () => {
     clearTimeout(timer);
     timer = setTimeout(() => {
-      state = { ...state, q: input.value.trim() };
-      apply();
-      toTop();
+      update({ ...state, q: input.value.trim() });
     }, 120);
   });
   chips.forEach((c) =>
     c.addEventListener('click', () => {
-      state = { ...state, cat: c.dataset.cat || null };
-      apply();
-      toTop();
+      update({ ...state, cat: c.dataset.cat || null });
     })
   );
 
