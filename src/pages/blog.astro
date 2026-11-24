@@ -46,7 +46,11 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
         <p class="blog-intro">The blog I kept during my design degree: coursework, research and the things inspiring me at the time, kept as I wrote it.</p>
       </header>
 
-      <div class="blog-controls" hidden>
+      <div class="blog-controls" id="blog-controls" hidden>
+        <div class="blog-sheet-head">
+          <span>Filter</span>
+          <button type="button" class="blog-sheet-done">Done</button>
+        </div>
         <label class="visually-hidden" for="blog-search">Search posts</label>
         <input id="blog-search" class="blog-search" type="search" placeholder="Search posts…" autocomplete="off" />
         <div class="blog-cats" role="group" aria-label="Filter by category">
@@ -105,6 +109,11 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
       ))}
     </div>
   </div>
+
+  <button slot="floating" type="button" class="mobile-download-cv blog-filter-toggle" aria-controls="blog-controls" aria-expanded="false" hidden>
+    Filter
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg>
+  </button>
 </BaseLayout>
 
 <script>
@@ -213,6 +222,28 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
       update({ ...state, cat: c.dataset.cat || null });
     })
   );
+  // Phones: the floating Filter button opens search & filters as a sheet from the bottom
+  const sheetToggle = document.querySelector<HTMLButtonElement>('.blog-filter-toggle')!;
+  const setSheet = (open: boolean) => {
+    view.classList.toggle('filters-open', open);
+    sheetToggle.setAttribute('aria-expanded', String(open));
+    if (!open && document.activeElement instanceof HTMLElement && controls.contains(document.activeElement)) {
+      document.activeElement.blur();
+    }
+  };
+  sheetToggle.hidden = false;
+  sheetToggle.addEventListener('click', () => setSheet(true));
+  view.querySelector('.blog-sheet-done')!.addEventListener('click', () => setSheet(false));
+  // Tapping the dimmed page behind the sheet closes it
+  view.addEventListener('click', (e) => {
+    if (view.classList.contains('filters-open') && !controls.contains(e.target as Node)) setSheet(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setSheet(false);
+  });
+  // Picking a category or tag closes the sheet so the results show
+  chips.forEach((c) => c.addEventListener('click', () => setSheet(false)));
+
   // The X next to the heading clears the category or tag (a search stays)
   results.querySelector('.blog-results-clear')!.addEventListener('click', () => update({ ...state, cat: null }));
 

@@ -54,7 +54,10 @@ const ogImageURL = new URL('/images/og-image.jpg', Astro.site);
         </main>
     </div>
 
-    <a class="mobile-download-cv" href="/james-sparkes-cv.pdf" target="_blank" rel="noopener">Download CV <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></a>
+    {/* A page can swap the floating phone button for its own (the blog uses it for search & filter) */}
+    {Astro.slots.has('floating')
+      ? <slot name="floating" />
+      : <a class="mobile-download-cv" href="/james-sparkes-cv.pdf" target="_blank" rel="noopener">Download CV <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></a>}
 
     <script src="/js/theme.js" defer></script>
     <slot name="scripts" />
