@@ -75,15 +75,21 @@ export function videoFromEmbed(src) {
   if (!src) return null;
   const yt = src.match(/youtube(?:-nocookie)?\.com\/(?:v|embed)\/([\w-]{11})/);
   if (yt) return { provider: 'youtube', id: yt[1] };
+  const vimeo = src.match(/player\.vimeo\.com\/video\/(\d+)(?:\?(?:.*&)?h=([0-9a-f]+))?/);
+  if (vimeo) return vimeo[2] ? { provider: 'vimeo', id: vimeo[1], hash: vimeo[2] } : { provider: 'vimeo', id: vimeo[1] };
+  if (/^https?:/.test(src)) return null;
   const file = src.split('/').pop().replace(/\.html?$/, '').split('?')[0];
   if (/^\d{6,}$/.test(file)) return { provider: 'vimeo', id: file };
   if (/James Sparkes_files/.test(src) && /^[\w-]{11}$/.test(file)) return { provider: 'youtube', id: file };
   return null;
 }
 
-export function videoPlaceholder({ provider, id }) {
-  const href = provider === 'youtube' ? `https://www.youtube.com/watch?v=${id}` : `https://vimeo.com/${id}`;
-  return `<a class="video-embed" data-provider="${provider}" data-id="${id}" href="${href}">Play video</a>`;
+export function videoPlaceholder({ provider, id, hash }) {
+  // Unlisted Vimeo videos only play with their privacy hash
+  const href =
+    provider === 'youtube' ? `https://www.youtube.com/watch?v=${id}` : `https://vimeo.com/${id}${hash ? `/${hash}` : ''}`;
+  const hashAttr = hash ? ` data-hash="${hash}"` : '';
+  return `<a class="video-embed" data-provider="${provider}" data-id="${id}"${hashAttr} href="${href}">Play video</a>`;
 }
 
 const isOldUpload = (href) =>
@@ -119,10 +125,10 @@ export function toMarkdown(bodyHtml, ctx) {
       $a.replaceWith($a.children());
       return;
     }
-    const slug = ctx.postSlugByUrl.get(href.replace(/#.*$/, ''));
+    const slug = ctx.postSlugByUrl.get(href) ?? ctx.postSlugByUrl.get(href.replace(/#.*$/, ''));
     if (slug) $a.attr('href', `#${slug}`);
-    // Anything else on the old domain (PDFs, uploads, demo sites) is gone
-    else if (/^https?:\/\/(?:www\.)?jamessparkes\.com\//.test(href)) $a.replaceWith($a.contents());
+    // Anything else on the old domain and its image/file servers (PDFs, uploads, demo sites) is gone
+    else if (/^https?:\/\/(?:(?:www|static|files)\.)?jamessparkes\.com\//.test(href)) $a.replaceWith($a.contents());
   });
 
   const td = new TurndownService({ headingStyle: 'atx', codeBlockStyle: 'fenced', emDelimiter: '*' });

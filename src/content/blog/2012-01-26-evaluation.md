@@ -8,7 +8,7 @@ originalUrl: "http://jamessparkes.com/2012/01/26/evaluation/"
 ---
 **First Piece**
 
-[![Final Piece One](../../assets/blog/final-piece-one.jpg)](http://fav.me/d4nock3)
+[![Final Piece One](../../assets/blog/final-piece-one.jpg)](https://www.behance.net/gallery/3427673/Apocalypse)
 
 After a few hours of carrying out final refinements and adding in details and applying all the lighting to make my piece look dynamic I have finally decided to stop. I could have easily carried on even longer adding elements and changing things however I thought it was time to stop otherwise I wouldn’t have had time to do the other piece.
 

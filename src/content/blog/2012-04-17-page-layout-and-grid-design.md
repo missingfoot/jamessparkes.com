@@ -12,11 +12,11 @@ The shape of the A4 felt claustrophobic and quickly elements became squashed tog
 
 One of the first things I did was add margins and a 3mm bleed. I tried to think of how the magazine would be viewed in reality and accounted for the inside margin being in the fold of the magazine so that was given a 20mm margin, as was the bottom since it needed to accommodate the page number and information, then again at the top as this was going to contain the category of the sections for the magazine’s content. Finally a slightly smaller margin for the outside edges of 15mm, this would be enough for people to hold but also offset the larger margin at the bottom and top, while also retaining a similar size when the magazine is folded on the inner edge.
 
-[![Margins And Grids](../../assets/blog/margins-and-grids.png)](http://static.jamessparkes.com/page_layout_and_grid_design/large/margins_and_grids.png)
+![Margins And Grids](../../assets/blog/margins-and-grids.png)
 
 I struggled for some time with how I was going to create a grid for my pages. I went through some trial and error, filling the pages with some place filler content such as images and body copy to see what felt comfortable. However after some tests I found that a 12 by 12 grid with a 6mm gutter was the best configuration. The number twelve is easily devisable which will give me a very flexible layout as it can accommodate 6, 4, 3, 2 and 1 column layout.
 
-[![Multiple Columns](../../assets/blog/multiple-columns.png)](http://static.jamessparkes.com/page_layout_and_grid_design/large/multiple_columns.png)
+![Multiple Columns](../../assets/blog/multiple-columns.png)
 
 This is much more than what I could get out of setting up the columns manually, by having a grid, not only do I have vertical guides, but I also have the page divided horizontally as well which will help with images and small bodies of text. One of the downfalls of the current Spark magazine design is that the pages feel very dull as there is little variation in image placement. With this dynamic grid I can place elements in an array of places on the page while also keeping a consistent grid keeping things neat without making the reader feel uneasy with the placement of imagery and text.
 

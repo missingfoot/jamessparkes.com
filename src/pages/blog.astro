@@ -2,8 +2,15 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 import { slugify, byNewest } from '../lib/blog-filter';
+import deadLinkReport from '../data/blog-dead-links.json';
 
 const posts = (await getCollection('blog')).sort((a, b) => byNewest(a.data, b.data));
+
+// Dev server only: a "Needs fixing" filter for posts with dead links (npm run blog:check-links)
+const showFixing = import.meta.env.DEV;
+const dead: Record<string, string> = showFixing ? deadLinkReport.dead : {};
+const deadIn = (body = '') => Object.keys(dead).filter((url) => body.includes(url));
+const fixingCount = posts.filter((p) => deadIn(p.body).length > 0).length;
 
 const counts = new Map<string, number>();
 for (const p of posts) for (const c of p.data.categories) counts.set(c, (counts.get(c) ?? 0) + 1);
@@ -21,7 +28,8 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
   description="My university design blog from 2011–2013: graphic design, photo manipulation, 3D and typography coursework, research and inspiration."
   path="/blog/"
 >
-  <div class="blog-view" data-cats={categories.map((c) => c.slug).join(' ')}>
+  <div class="blog-view" data-cats={[...categories.map((c) => c.slug), ...(showFixing ? ['needs-fixing'] : [])].join(' ')}>
+    {showFixing && <script type="application/json" id="blog-dead-links" set:html={JSON.stringify(dead)} />}
     <aside class="blog-side">
       <header class="blog-header">
         <h1 class="project-title">Uni Blog</h1>
@@ -34,6 +42,9 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
         <input id="blog-search" class="blog-search" type="search" placeholder="Search posts…" autocomplete="off" />
         <div class="blog-cats" role="group" aria-label="Filter by category">
           <button type="button" class="blog-cat" data-cat="" aria-pressed="true">All <span class="timeline-tab-count">{posts.length}</span></button>
+          {showFixing && fixingCount > 0 && (
+            <button type="button" class="blog-cat blog-cat-fixing" data-cat="needs-fixing" data-name="Needs fixing" aria-pressed="false">Needs fixing <span class="timeline-tab-count">{fixingCount}</span></button>
+          )}
           {categories.map((c) => (
             <button type="button" class="blog-cat" data-cat={c.slug} data-name={c.name} aria-pressed="false">{c.name} <span class="timeline-tab-count">{c.count}</span></button>
           ))}
@@ -49,12 +60,13 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
       </header>
       <p class="blog-empty" hidden>No posts match.</p>
       {rendered.map(({ post, Content }) => (
-        <article class="blog-post" id={post.id} data-cats={post.data.categories.map(slugify).join(' ')}>
+        <article class="blog-post" id={post.id} data-cats={[...post.data.categories.map(slugify), ...(deadIn(post.body).length ? ['needs-fixing'] : [])].join(' ')}>
           <div class="blog-post-meta">
             <time datetime={post.data.date.toISOString().slice(0, 10)}>{dateFmt.format(post.data.date)}</time>
             {post.data.categories.map((c, i) => (
               <>{i === 0 ? ' · ' : ', '}<span class="blog-post-cat" data-cat={slugify(c)}>{c}</span></>
             ))}
+            {deadIn(post.body).length > 0 && <span class="blog-post-fixing"> · {deadIn(post.body).length} dead {deadIn(post.body).length === 1 ? 'link' : 'links'}</span>}
           </div>
           <h2 class="blog-post-title"><a href={`#${post.id}`}>{post.data.title}</a></h2>
           <div class="blog-body">
@@ -166,6 +178,19 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
     })
   );
 
+  // Dev server only: mark dead links (from npm run blog:check-links) with the reason on hover
+  const deadData = document.getElementById('blog-dead-links');
+  if (deadData) {
+    const deadLinks: Record<string, string> = JSON.parse(deadData.textContent || '{}');
+    for (const a of view.querySelectorAll<HTMLAnchorElement>('.blog-body a[href^="http"]')) {
+      const reason = deadLinks[a.getAttribute('href') ?? ''];
+      if (reason) {
+        a.classList.add('is-dead');
+        a.title = `Dead link: ${reason}`;
+      }
+    }
+  }
+
   // Videos: a link until clicked, then the real player. YouTube thumbnails load near the viewport.
   const embeds = [...view.querySelectorAll<HTMLAnchorElement>('a.video-embed')];
   const thumbs = new IntersectionObserver(
@@ -191,7 +216,7 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
       frame.src =
         a.dataset.provider === 'youtube'
           ? `https://www.youtube-nocookie.com/embed/${id}?autoplay=1`
-          : `https://player.vimeo.com/video/${id}?autoplay=1`;
+          : `https://player.vimeo.com/video/${id}?${a.dataset.hash ? `h=${a.dataset.hash}&` : ''}autoplay=1`;
       frame.allow = 'autoplay; fullscreen; picture-in-picture';
       frame.allowFullscreen = true;
       frame.title = 'Video';

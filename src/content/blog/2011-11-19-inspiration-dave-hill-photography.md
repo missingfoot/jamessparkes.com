@@ -18,4 +18,4 @@ You can see this in [Dave Hill’s work](http://www.davehillphoto.com/), the com
 
 And below is a video showing an exploded view at a few of the layers that make up the images. It is very insightful to see what goes into making pieces of work like this and how complex they details can get, especially when you have [full artistic control over the photography](http://vimeo.com/5082148) and content of the scene.
 
-<a class="video-embed" data-provider="vimeo" data-id="26297793" href="https://vimeo.com/26297793">Play video</a>
+<a class="video-embed" data-provider="youtube" data-id="kALDKs0DmbI" href="https://www.youtube.com/watch?v=kALDKs0DmbI">Play video</a>

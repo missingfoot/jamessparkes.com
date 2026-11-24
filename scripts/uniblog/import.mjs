@@ -22,7 +22,8 @@ mkdirSync(assetDir, { recursive: true });
 
 const posts = parsePosts(readFileSync(join(src, 'index.html'), 'utf8'));
 const entryId = (p) => `${p.date}-${p.slug}`;
-const postSlugByUrl = new Map(posts.map((p) => [p.originalUrl, entryId(p)]));
+// Links between posts appear as permalinks (original save) or `#post-NNN` (edited copy)
+const postSlugByUrl = new Map(posts.flatMap((p) => [[p.originalUrl, entryId(p)], [`#${p.id}`, entryId(p)]]));
 
 const taken = new Set();
 const copied = new Map(); // source path -> output name

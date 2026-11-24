@@ -128,3 +128,36 @@ test('parsePosts strips the WordPress "Private:" title prefix', () => {
   const html = post(1, 'status-private category-type', 'http://jamessparkes.com/2012/02/20/interface-research/', 'Private: Interface Research', '');
   assert.equal(parsePosts(html)[0].title, 'Interface Research');
 });
+
+test('videoFromEmbed reads player URLs, keeping the Vimeo privacy hash', () => {
+  assert.deepEqual(videoFromEmbed('https://www.youtube.com/embed/ZZ5LpwO-An4'), { provider: 'youtube', id: 'ZZ5LpwO-An4' });
+  assert.deepEqual(
+    videoFromEmbed('https://player.vimeo.com/video/38591304?h=56cdadad70&color=136485&title=0'),
+    { provider: 'vimeo', id: '38591304', hash: '56cdadad70' }
+  );
+  assert.deepEqual(videoFromEmbed('https://player.vimeo.com/video/8635978'), { provider: 'vimeo', id: '8635978' });
+  assert.equal(videoFromEmbed('https://player.vimeo.com/api/player.js'), null);
+});
+
+test('videoPlaceholder links unlisted Vimeo videos with their hash', () => {
+  assert.equal(
+    videoPlaceholder({ provider: 'vimeo', id: '38591304', hash: '56cdadad70' }),
+    '<a class="video-embed" data-provider="vimeo" data-id="38591304" data-hash="56cdadad70" href="https://vimeo.com/38591304/56cdadad70">Play video</a>'
+  );
+});
+
+test('toMarkdown unlinks the old static and files subdomains too', () => {
+  const md = toMarkdown(
+    '<p><a href="http://static.jamessparkes.com/x/large/a.jpg"><img src="./James Sparkes_files/A.jpg" alt="A"></a> <a href="http://files.jamessparkes.com/b.pdf">PDF</a></p>',
+    ctx
+  );
+  assert.equal(md.trim(), '![A](../../assets/blog/a.jpg) PDF');
+});
+
+test('toMarkdown rewrites #post-NNN anchors from the edited copy', () => {
+  const md = toMarkdown('<p><a href="#post-345">earlier</a></p>', {
+    ...ctx,
+    postSlugByUrl: new Map([['#post-345', '2011-11-19-inspiration']]),
+  });
+  assert.equal(md.trim(), '[earlier](#2011-11-19-inspiration)');
+});

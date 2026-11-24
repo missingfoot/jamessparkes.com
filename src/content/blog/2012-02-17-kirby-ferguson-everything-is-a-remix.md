@@ -10,12 +10,18 @@ While looking for some ideas of what to write about for my essay on Transgressio
 
 Here is the first and last video which sum up what the series is about. Watching them has given me a few very good ideas of what to look for in a subject for my essay. He looks at how people will take existing materials put them together to create new content and how this is seen differently depending how big you are, for instance as an individual person you justify your actions of using copyrighted material, however media corporations will feel threatened by this even though the content they produce themselves is essentially the same, remixes of existing content.
 
-<a class="video-embed" data-provider="vimeo" data-id="19447662" href="https://vimeo.com/19447662">Play video</a>
+<a class="video-embed" data-provider="youtube" data-id="NmwwjikTHxw" href="https://www.youtube.com/watch?v=NmwwjikTHxw">Play video</a>
 
-<a class="video-embed" data-provider="vimeo" data-id="36881035" href="https://vimeo.com/36881035">Play video</a>
+ 
+
+<a class="video-embed" data-provider="youtube" data-id="Z-HuenDPZw0" href="https://www.youtube.com/watch?v=Z-HuenDPZw0">Play video</a>
+
+ 
+
+<a class="video-embed" data-provider="youtube" data-id="wq5D43qAsVg" href="https://www.youtube.com/watch?v=wq5D43qAsVg">Play video</a>
 
 He has also made an interesting video on the PIPA legislation which explains how it all works in a way which is very understandable.
 
-<a class="video-embed" data-provider="vimeo" data-id="31147134" href="https://vimeo.com/31147134">Play video</a>
+<a class="video-embed" data-provider="youtube" data-id="yDX8Lyl16Qs" href="https://www.youtube.com/watch?v=yDX8Lyl16Qs">Play video</a>
 
-[Everything is a Remix - Kirby Ferguson](http://www.everythingisaremix.info/)
+ [Everything is a Remix - Kirby Ferguson](http://www.everythingisaremix.info/)

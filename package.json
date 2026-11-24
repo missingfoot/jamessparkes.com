@@ -10,7 +10,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "test": "node --test"
+    "test": "node --test",
+    "blog:check-links": "node scripts/uniblog/check-links.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.5",

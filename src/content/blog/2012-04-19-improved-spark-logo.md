@@ -16,6 +16,6 @@ Another one of the points Mary made was that the spacing between the letters nee
 
 I decided to take the // and apply it to the beginning of certain elements such as the logo but also for the beginnings of important parts of copy or something that should be taken notice of. I also used the concept of the { to begin the magazine, so there is a very large one on the first page showing it is the beginning of the magazine and also there would be a closing } at the end of the magazine to show the content has finished.
 
-[![Open Curly Bracket](../../assets/blog/open-curly-bracket.jpg)](http://static.jamessparkes.com/improved_spark_logo/large/open_curly_bracket.jpg)
+![Open Curly Bracket](../../assets/blog/open-curly-bracket.jpg)
 
 I feel that these design elements have successfully added a subtle but unique approach to making the magazine feel techy, as opposed to a straight forward ‘stylish magazine’, I will explore some more design concepts further to see what else I can do to improve the overall design of the content for the magazine.

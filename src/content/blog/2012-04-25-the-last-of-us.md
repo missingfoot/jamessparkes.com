@@ -10,17 +10,17 @@ Another source of influence I came across was the concept art for the game The L
 
 This concept would be rather challenging as I would need to find a lot of elements at a specific perspective depending on the original base image I would use. There would also be a lot of potential for having some fun with the water line and what I could place in the water, etc. I feel that could be an interesting direction to take my piece.
 
-[![The Last of Us 1](../../assets/blog/the-last-of-us-1.jpg)](http://static.jamessparkes.com/the_last_of_us/large/the_last_of_us_1.jpg)
+![The Last of Us 1](../../assets/blog/the-last-of-us-1.jpg)
 
-[![The Last of Us 2](../../assets/blog/the-last-of-us-2.jpg)](http://static.jamessparkes.com/the_last_of_us/large/the_last_of_us_2.jpg)
+![The Last of Us 2](../../assets/blog/the-last-of-us-2.jpg)
 
-[![The Last of Us 3](../../assets/blog/the-last-of-us-3.jpg)](http://static.jamessparkes.com/the_last_of_us/large/the_last_of_us_3.jpg)
+![The Last of Us 3](../../assets/blog/the-last-of-us-3.jpg)
 
-[![The Last of Us 4](../../assets/blog/the-last-of-us-4.jpg)](http://static.jamessparkes.com/the_last_of_us/large/the_last_of_us_4.jpg)
+![The Last of Us 4](../../assets/blog/the-last-of-us-4.jpg)
 
-[![The Last of Us 5](../../assets/blog/the-last-of-us-5.jpg)](http://static.jamessparkes.com/the_last_of_us/large/the_last_of_us_5.jpg)
+![The Last of Us 5](../../assets/blog/the-last-of-us-5.jpg)
 
-[![The Last of Us 6](../../assets/blog/the-last-of-us-6.jpg)](http://static.jamessparkes.com/the_last_of_us/large/the_last_of_us_6.jpg)
+![The Last of Us 6](../../assets/blog/the-last-of-us-6.jpg)
 
 Another thing I noticed about these is the atmosphere, it’s either very sun-setty or rather bright, a reoccurring theme I’m seeing with these post apocalyptic scenes that I’ve been looking at. I will need to take into careful consideration the atmosphere for my piece as I want it to convey a very bright and hot day and the viewers can almost hear the abundance of birds in the scene.
 

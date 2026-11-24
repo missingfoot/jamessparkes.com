@@ -8,7 +8,7 @@ originalUrl: "http://jamessparkes.com/2011/12/07/novus-aura-video-and-website/"
 ---
 Here is our group’s final piece of brand communications in the form of a short animation created by Rich that would reside on the fake website for the design collective found here. I feel that the overal branding of the hypothetical motion graphics company we initially envisioned at the start of the process comes across effectively, with all the material tying in together, from the logo to the text and wording that was used to the animation.
 
-<a class="video-embed" data-provider="vimeo" data-id="33286891" href="https://vimeo.com/33286891">Play video</a>
+<a class="video-embed" data-provider="vimeo" data-id="33286891" data-hash="ff078a1240" href="https://vimeo.com/33286891/ff078a1240">Play video</a>
 
   
 In order to bring across the intentions of our design collective we decided to make a basic website, with the logo, the collective’s values and a few examples of ‘our work’ that we theoretically could have made if it were a real videography agency.
