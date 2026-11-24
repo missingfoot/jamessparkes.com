@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { classifyLink, extractLinks } from './links.mjs';
+import { classifyLink, extractLinks, isInconclusive, mergeDead } from './links.mjs';
 
 test('classifyLink: 2xx on the same page is fine', () => {
   assert.equal(classifyLink({ status: 200, url: 'http://a.com/x', finalUrl: 'https://a.com/x/' }), null);
@@ -40,4 +40,36 @@ test('extractLinks finds Markdown links and video placeholders, skipping local o
 
 test('classifyLink: client-side fetch limits are not treated as dead', () => {
   assert.equal(classifyLink({ error: 'UND_ERR_HEADERS_OVERFLOW', url: 'http://www.youtube.com/user/x/' }), null);
+});
+
+test('classifyLink: a parked or for-sale domain is dead', () => {
+  const base = { status: 200, url: 'http://www.mikaeleidenberg.se/', finalUrl: 'http://www.mikaeleidenberg.se/' };
+  assert.equal(classifyLink({ ...base, title: 'Parked at Loopia' }), 'Parked domain');
+  assert.equal(classifyLink({ ...base, title: 'example.com is for sale' }), 'Parked domain');
+  assert.equal(classifyLink({ ...base, title: 'Work - Mikael Eidenberg' }), null);
+});
+
+test('classifyLink: dropped connections are retried later, not flagged', () => {
+  for (const error of ['UND_ERR_SOCKET', 'ECONNRESET']) {
+    assert.equal(classifyLink({ error, url: 'http://news.bbc.co.uk/1/hi/8617454.stm' }), null);
+  }
+});
+
+test('isInconclusive: blocks, server errors and dropped connections tell us nothing', () => {
+  for (const status of [401, 403, 406, 429, 500, 503]) assert.equal(isInconclusive({ status }), true);
+  for (const error of ['UND_ERR_HEADERS_OVERFLOW', 'UND_ERR_SOCKET', 'ECONNRESET']) assert.equal(isInconclusive({ error }), true);
+  assert.equal(isInconclusive({ status: 200 }), false);
+  assert.equal(isInconclusive({ status: 404 }), false);
+  assert.equal(isInconclusive({ error: 'ENOTFOUND' }), false);
+});
+
+test('mergeDead keeps a dead link dead until a check clearly succeeds', () => {
+  const previous = { 'http://a/1': 'Not found (404)', 'http://a/2': 'Not found (404)', 'http://gone/': 'Not found (404)' };
+  const results = new Map([
+    ['http://a/1', { unknown: true }],
+    ['http://a/2', { ok: true }],
+    ['http://a/3', { dead: 'Gone (410)' }],
+    ['http://a/4', { unknown: true }],
+  ]);
+  assert.deepEqual(mergeDead(previous, results), { 'http://a/1': 'Not found (404)', 'http://a/3': 'Gone (410)' });
 });
