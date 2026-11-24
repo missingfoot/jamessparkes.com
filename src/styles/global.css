@@ -1381,8 +1381,9 @@ body {
 }
 
 /* ─── View: Uni Blog ─────────────────────────────────────── */
+/* Same width as the old blog's images (mostly 500px) */
 .blog-view {
-    max-width: 700px;
+    max-width: 500px;
     margin: 0 auto;
 }
 
