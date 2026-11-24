@@ -1381,10 +1381,51 @@ body {
 }
 
 /* ─── View: Uni Blog ─────────────────────────────────────── */
-/* Same width as the old blog's images (mostly 500px) */
+/* Posts on the left at the old blog's image width (500px), filters in a sticky column on the right */
 .blog-view {
-    max-width: 500px;
-    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 500px) 260px;
+    gap: 4rem;
+    justify-content: center;
+    align-items: start;
+}
+
+/* `overflow-x: hidden` on .content would make it the sticky container; clip keeps the window as scroller */
+.content:has(> .blog-view) { overflow-x: clip; }
+
+.blog-posts { grid-column: 1; grid-row: 1; }
+
+.blog-side {
+    grid-column: 2;
+    grid-row: 1;
+    position: sticky;
+    top: 3rem;
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.blog-side .project-title { font-size: 26px; }
+
+.blog-posts > .blog-post:first-of-type {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+}
+
+@media (max-width: 1100px) {
+    .blog-view {
+        grid-template-columns: minmax(0, 500px);
+        gap: 0;
+    }
+    .blog-side {
+        grid-column: 1;
+        position: static;
+        max-height: none;
+        overflow: visible;
+        margin-bottom: 3rem;
+    }
+    .blog-posts { grid-row: 2; }
 }
 
 .blog-meta,
@@ -1400,7 +1441,7 @@ body {
 }
 
 .blog-controls {
-    margin-top: 2.5rem;
+    margin-top: 2rem;
 }
 
 .blog-controls[hidden] { display: none; }
@@ -1455,7 +1496,6 @@ body {
 }
 
 .blog-empty {
-    margin-top: 3rem;
     color: var(--text-dim);
 }
 

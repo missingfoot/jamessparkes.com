@@ -22,27 +22,28 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
   path="/blog/"
 >
   <div class="blog-view" data-cats={categories.map((c) => c.slug).join(' ')}>
-    <header class="blog-header">
-      <h1 class="project-title">Uni Blog</h1>
-      <p class="blog-meta">{range} · {posts.length} posts</p>
-      <p class="blog-intro">The blog I kept during my design degree: coursework, research and the things inspiring me at the time, kept as I wrote it.</p>
-    </header>
+    <aside class="blog-side">
+      <header class="blog-header">
+        <h1 class="project-title">Uni Blog</h1>
+        <p class="blog-meta">{range} · {posts.length} posts</p>
+        <p class="blog-intro">The blog I kept during my design degree: coursework, research and the things inspiring me at the time, kept as I wrote it.</p>
+      </header>
 
-    <div class="blog-controls" hidden>
-      <label class="visually-hidden" for="blog-search">Search posts</label>
-      <input id="blog-search" class="blog-search" type="search" placeholder="Search posts…" autocomplete="off" />
-      <div class="blog-cats" role="group" aria-label="Filter by category">
-        <button type="button" class="blog-cat" data-cat="" aria-pressed="true">All <span class="timeline-tab-count">{posts.length}</span></button>
-        {categories.map((c) => (
-          <button type="button" class="blog-cat" data-cat={c.slug} aria-pressed="false">{c.name} <span class="timeline-tab-count">{c.count}</span></button>
-        ))}
+      <div class="blog-controls" hidden>
+        <label class="visually-hidden" for="blog-search">Search posts</label>
+        <input id="blog-search" class="blog-search" type="search" placeholder="Search posts…" autocomplete="off" />
+        <div class="blog-cats" role="group" aria-label="Filter by category">
+          <button type="button" class="blog-cat" data-cat="" aria-pressed="true">All <span class="timeline-tab-count">{posts.length}</span></button>
+          {categories.map((c) => (
+            <button type="button" class="blog-cat" data-cat={c.slug} aria-pressed="false">{c.name} <span class="timeline-tab-count">{c.count}</span></button>
+          ))}
+        </div>
+        <p class="blog-status" aria-live="polite"></p>
       </div>
-      <p class="blog-status" aria-live="polite"></p>
-    </div>
-
-    <p class="blog-empty" hidden>No posts match.</p>
+    </aside>
 
     <div class="blog-posts">
+      <p class="blog-empty" hidden>No posts match.</p>
       {rendered.map(({ post, Content }) => (
         <article class="blog-post" id={post.id} data-cats={post.data.categories.map(slugify).join(' ')}>
           <div class="blog-post-meta">
@@ -92,6 +93,11 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
     history.replaceState(history.state, '', `${location.pathname}${writeState(state)}${location.hash}`);
   }
 
+  // After filtering from further down, start the results from the top (side column is sticky)
+  const toTop = () => {
+    if (view.getBoundingClientRect().top < 0) view.scrollIntoView({ behavior: 'smooth' });
+  };
+
   controls.hidden = false;
   input.value = state.q;
   apply();
@@ -102,12 +108,14 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
     timer = setTimeout(() => {
       state = { ...state, q: input.value.trim() };
       apply();
+      toTop();
     }, 120);
   });
   chips.forEach((c) =>
     c.addEventListener('click', () => {
       state = { ...state, cat: c.dataset.cat || null };
       apply();
+      toTop();
     })
   );
 
