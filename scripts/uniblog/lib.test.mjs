@@ -105,3 +105,16 @@ test('toMarkdown rewrites links to other posts as anchors', () => {
   const md = toMarkdown('<p>See <a href="http://jamessparkes.com/2013/05/06/archos-research/">this</a>.</p>', ctx);
   assert.equal(md.trim(), 'See [this](#archos-research).');
 });
+
+test('toMarkdown unlinks dead links to the old site but keeps the text', () => {
+  const md = toMarkdown(
+    '<p>A <a href="http://jamessparkes.com/novusaura/">website</a> and <a href="http://jamessparkes.com/files/fry.pdf"><img src="./James Sparkes_files/Fry.png" alt="Fry"></a></p>',
+    ctx
+  );
+  assert.equal(md.trim(), 'A website and ![Fry](../../assets/blog/fry.png)');
+});
+
+test('parsePosts strips WordPress duplicate-slug suffixes from tags', () => {
+  const html = post(1, 'category-type tag-photomanipulation-2 tag-photomanipulation tag-layout-2', 'http://jamessparkes.com/2012/01/01/x/', 'X', '');
+  assert.deepEqual(parsePosts(html)[0].tags, ['photomanipulation', 'layout']);
+});

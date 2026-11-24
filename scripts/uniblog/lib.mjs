@@ -38,8 +38,8 @@ export function parsePosts(html) {
         .filter((c) => c in CATEGORY_NAMES);
       const tags = classes
         .filter((c) => c.startsWith('tag-'))
-        .map((c) => c.slice('tag-'.length))
-        .filter((t) => !DROPPED_TAGS.has(t))
+        .map((c) => c.slice('tag-'.length).replace(/-\d+$/, ''))
+        .filter((t, i, all) => !DROPPED_TAGS.has(t) && all.indexOf(t) === i)
         .map((t) => t.replace(/-/g, ' '));
       return {
         id: $el.attr('id'),
@@ -110,6 +110,8 @@ export function toMarkdown(bodyHtml, ctx) {
     }
     const slug = ctx.postSlugByUrl.get(href.replace(/#.*$/, ''));
     if (slug) $a.attr('href', `#${slug}`);
+    // Anything else on the old domain (PDFs, uploads, demo sites) is gone
+    else if (/^https?:\/\/(?:www\.)?jamessparkes\.com\//.test(href)) $a.replaceWith($a.contents());
   });
 
   const td = new TurndownService({ headingStyle: 'atx', codeBlockStyle: 'fenced', emDelimiter: '*' });
