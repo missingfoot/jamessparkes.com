@@ -31,8 +31,7 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
 
       <div class="blog-controls" hidden>
         <label class="visually-hidden" for="blog-search">Search posts</label>
-        <input id="blog-search" class="blog-search" type="search" placeholder="Search posts…" autocomplete="off" aria-describedby="blog-search-hint" />
-          <p class="blog-search-hint" id="blog-search-hint">Use + for separate words, e.g. <code>typeface+logo</code></p>
+        <input id="blog-search" class="blog-search" type="search" placeholder="Search posts…" autocomplete="off" />
         <div class="blog-cats" role="group" aria-label="Filter by category">
           <button type="button" class="blog-cat" data-cat="" aria-pressed="true">All <span class="timeline-tab-count">{posts.length}</span></button>
           {categories.map((c) => (
