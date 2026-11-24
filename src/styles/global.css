@@ -1532,6 +1532,40 @@ body {
     color: var(--text-dim);
 }
 
+/* Back to top (blog) */
+.blog-top {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 15;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    color: var(--active-text);
+    background: var(--active-bg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+}
+
+.blog-top svg { width: 20px; height: 20px; }
+
+.blog-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+}
+
+.blog-top:hover { opacity: 0.85; }
+
+@media (max-width: 767px) {
+    .blog-top { right: 1rem; bottom: 1.25rem; }
+}
+
 /* Dev server only: dead links (npm run blog:check-links) */
 .blog-body a.is-dead {
     color: #e5484d;

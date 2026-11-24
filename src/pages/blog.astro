@@ -47,6 +47,10 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
       </div>
     </aside>
 
+    <button type="button" class="blog-top" aria-label="Back to top" title="Back to top">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></svg>
+    </button>
+
     <div class="blog-posts">
       <header class="blog-results" hidden>
         <h2 class="blog-results-title"></h2>
@@ -172,6 +176,16 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
       update({ ...state, cat: c.dataset.cat || null });
     })
   );
+
+  // Back to top: shows once you're well into the posts
+  const topButton = view.querySelector<HTMLButtonElement>('.blog-top')!;
+  const syncTopButton = () => topButton.classList.toggle('is-visible', window.scrollY > 800);
+  window.addEventListener('scroll', syncTopButton, { passive: true });
+  syncTopButton();
+  topButton.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    input.focus({ preventScroll: true });
+  });
 
   // Dev server only: mark dead links (from npm run blog:check-links) with the reason on hover
   const deadData = document.getElementById('blog-dead-links');
