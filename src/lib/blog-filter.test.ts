@@ -13,9 +13,17 @@ test('normalize lowercases and strips accents', () => {
   assert.equal(normalize('Café'), 'cafe');
 });
 
-test('matches needs every search term, ignoring case', () => {
-  assert.equal(matches(post, 'TYPEFACE font', null), true);
-  assert.equal(matches(post, 'typeface lego', null), false);
+test('matches treats spaces as an exact phrase, ignoring case', () => {
+  assert.equal(matches(post, 'TYPEFACE research', null), true);
+  assert.equal(matches(post, 'typeface  RESEARCH ', null), true);
+  assert.equal(matches(post, 'research typeface', null), false);
+});
+
+test('matches treats + as separate terms that must all appear', () => {
+  assert.equal(matches(post, 'design+typeface', null), true);
+  assert.equal(matches(post, 'typeface+lego', null), false);
+  assert.equal(matches(post, 'graphic design + fonts', null), true);
+  assert.equal(matches(post, '+', null), true);
   assert.equal(matches(post, '  ', null), true);
 });
 
@@ -53,10 +61,12 @@ test('byNewest sorts by date, then by original order within a day', () => {
 test('findRanges finds every search term, ignoring case and quote style', () => {
   assert.deepEqual(findRanges('Lego bricks and more LEGO', 'lego'), [[0, 4], [21, 25]]);
   assert.deepEqual(findRanges('I don’t know', "don't"), [[2, 7]]);
-  assert.deepEqual(findRanges('Typeface research', 'research type'), [[0, 4], [9, 17]]);
+  assert.deepEqual(findRanges('Typeface research', 'research+type'), [[0, 4], [9, 17]]);
+  assert.deepEqual(findRanges('the last of us, last of all', 'last of us'), [[4, 14]]);
+  assert.deepEqual(findRanges('out of the last  of us', 'last of us'), [[11, 22]]);
   assert.deepEqual(findRanges('anything', '  '), []);
 });
 
 test('findRanges merges overlapping matches', () => {
-  assert.deepEqual(findRanges('typeface', 'type typeface'), [[0, 8]]);
+  assert.deepEqual(findRanges('typeface', 'type+typeface'), [[0, 8]]);
 });

@@ -20,13 +20,21 @@ export function normalize(s: string): string {
     .toLowerCase();
 }
 
-/** `post.text` must already be normalized. */
+/**
+ * Search syntax: words separated by spaces are one exact phrase ("last of us");
+ * `+` separates terms that must all appear somewhere ("typeface+logo").
+ */
+export function searchTerms(q: string): string[] {
+  return q
+    .split('+')
+    .map((t) => t.trim().replace(/\s+/g, ' '))
+    .filter(Boolean);
+}
+
+/** `post.text` must already be normalized, with whitespace collapsed. */
 export function matches(post: { text: string; categorySlugs: string[] }, q: string, cat: string | null): boolean {
   if (cat && !post.categorySlugs.includes(cat)) return false;
-  return normalize(q)
-    .split(/\s+/)
-    .filter(Boolean)
-    .every((term) => post.text.includes(term));
+  return searchTerms(normalize(q)).every((term) => post.text.includes(term));
 }
 
 export function readState(search: string, knownCats: string[]): FilterState {
@@ -53,12 +61,17 @@ const fold = (s: string) => s.toLowerCase().replace(/[‘’ʼ]/g, "'").replace(
 
 /** [start, end) ranges in `text` where any search term occurs, sorted and merged. */
 export function findRanges(text: string, q: string): [number, number][] {
-  const terms = fold(q).split(/\s+/).filter(Boolean);
+  const terms = searchTerms(fold(q));
   if (!terms.length) return [];
   const hay = fold(text);
   const found: [number, number][] = [];
   for (const term of terms) {
-    for (let i = hay.indexOf(term); i !== -1; i = hay.indexOf(term, i + 1)) found.push([i, i + term.length]);
+    // A phrase matches across any run of whitespace in the text
+    const pattern = term
+      .split(' ')
+      .map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+      .join('\\s+');
+    for (const m of hay.matchAll(new RegExp(pattern, 'g'))) found.push([m.index, m.index + m[0].length]);
   }
   found.sort((a, b) => a[0] - b[0]);
   const merged: [number, number][] = [];
