@@ -640,6 +640,19 @@ body {
     color: var(--text-dim);
 }
 
+/* Quiet link to the uni blog (the blog isn't in the main nav) */
+.cv-edu-link {
+    display: inline-block;
+    margin-top: 0.4rem;
+    font-size: 12px;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
+}
+
+.cv-edu-link:hover { color: var(--text); border-bottom-color: var(--text); }
+
+@media print { .cv-edu-link { display: none; } }
+
 @media print {
     .nav-desktop, .nav-mobile { display: none !important; }
     .content { padding: 10mm 16mm !important; }
