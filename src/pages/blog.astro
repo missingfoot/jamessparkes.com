@@ -35,7 +35,7 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
         <div class="blog-cats" role="group" aria-label="Filter by category">
           <button type="button" class="blog-cat" data-cat="" aria-pressed="true">All <span class="timeline-tab-count">{posts.length}</span></button>
           {categories.map((c) => (
-            <button type="button" class="blog-cat" data-cat={c.slug} aria-pressed="false">{c.name} <span class="timeline-tab-count">{c.count}</span></button>
+            <button type="button" class="blog-cat" data-cat={c.slug} data-name={c.name} aria-pressed="false">{c.name} <span class="timeline-tab-count">{c.count}</span></button>
           ))}
         </div>
         <p class="blog-status" aria-live="polite"></p>
@@ -43,12 +43,18 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
     </aside>
 
     <div class="blog-posts">
+      <header class="blog-results" hidden>
+        <h2 class="blog-results-title"></h2>
+        <p class="blog-results-count"></p>
+      </header>
       <p class="blog-empty" hidden>No posts match.</p>
       {rendered.map(({ post, Content }) => (
         <article class="blog-post" id={post.id} data-cats={post.data.categories.map(slugify).join(' ')}>
           <div class="blog-post-meta">
             <time datetime={post.data.date.toISOString().slice(0, 10)}>{dateFmt.format(post.data.date)}</time>
-            {post.data.categories.length > 0 && <span> · {post.data.categories.join(', ')}</span>}
+            {post.data.categories.map((c, i) => (
+              <>{i === 0 ? ' · ' : ', '}<span class="blog-post-cat" data-cat={slugify(c)}>{c}</span></>
+            ))}
           </div>
           <h2 class="blog-post-title"><a href={`#${post.id}`}>{post.data.title}</a></h2>
           <div class="blog-body">
@@ -70,6 +76,10 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
   const chips = [...view.querySelectorAll<HTMLButtonElement>('.blog-cat')];
   const empty = view.querySelector<HTMLElement>('.blog-empty')!;
   const status = view.querySelector<HTMLElement>('.blog-status')!;
+  const results = view.querySelector<HTMLElement>('.blog-results')!;
+  const resultsTitle = results.querySelector<HTMLElement>('.blog-results-title')!;
+  const resultsCount = results.querySelector<HTMLElement>('.blog-results-count')!;
+  const catLabels = [...view.querySelectorAll<HTMLElement>('.blog-post-cat')];
   const knownCats = (view.dataset.cats ?? '').split(' ').filter(Boolean);
   const posts = [...view.querySelectorAll<HTMLElement>('.blog-post')].map((el) => ({
     el,
@@ -89,7 +99,16 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
     }
     chips.forEach((c) => c.setAttribute('aria-pressed', String((c.dataset.cat || null) === state.cat)));
     empty.hidden = shown > 0;
-    status.textContent = state.q || state.cat ? `${shown} of ${posts.length} posts` : '';
+    // With a category selected, the heading above the posts carries the count instead
+    status.textContent = state.q && !state.cat ? `${shown} of ${posts.length} posts` : '';
+    // Name the selected category above the posts and mark it inside each post
+    const chip = chips.find((c) => c.dataset.cat === state.cat);
+    results.hidden = !chip;
+    if (chip) {
+      resultsTitle.textContent = chip.dataset.name ?? '';
+      resultsCount.textContent = `${shown} ${shown === 1 ? 'post' : 'posts'}${state.q ? ` matching “${state.q}”` : ''}`;
+    }
+    for (const el of catLabels) el.classList.toggle('is-active', el.dataset.cat === state.cat);
     history.replaceState(history.state, '', `${location.pathname}${writeState(state)}${location.hash}`);
   }
 
