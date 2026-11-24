@@ -1532,11 +1532,7 @@ body {
     color: var(--text-dim);
 }
 
-/* Dev server only: "Needs fixing" filter and dead links (npm run blog:check-links) */
-.blog-cat-fixing { color: #e5484d; border-color: color-mix(in srgb, #e5484d 50%, transparent); }
-.blog-cat-fixing[aria-pressed="true"] { color: #fff; background: #e5484d; border-color: #e5484d; }
-.blog-post-fixing { color: #e5484d; }
-
+/* Dev server only: dead links (npm run blog:check-links) */
 .blog-body a.is-dead {
     color: #e5484d;
     border-bottom: 1px dashed #e5484d;
