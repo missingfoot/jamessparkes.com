@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { slugify, normalize, matches, readState, writeState, byNewest } from './blog-filter.ts';
+import { slugify, normalize, matches, readState, writeState, byNewest, findRanges } from './blog-filter.ts';
 
 const post = { text: normalize('Typeface Research fonts Graphic Design'), categorySlugs: ['graphic-design'] };
 
@@ -48,4 +48,15 @@ test('byNewest sorts by date, then by original order within a day', () => {
     { date: d('2013-05-08'), order: 2, id: 'summary' },
   ];
   assert.deepEqual([...posts].sort(byNewest).map((p) => p.id), ['summary', 'archos', 'swot', 'old']);
+});
+
+test('findRanges finds every search term, ignoring case and quote style', () => {
+  assert.deepEqual(findRanges('Lego bricks and more LEGO', 'lego'), [[0, 4], [21, 25]]);
+  assert.deepEqual(findRanges('I don’t know', "don't"), [[2, 7]]);
+  assert.deepEqual(findRanges('Typeface research', 'research type'), [[0, 4], [9, 17]]);
+  assert.deepEqual(findRanges('anything', '  '), []);
+});
+
+test('findRanges merges overlapping matches', () => {
+  assert.deepEqual(findRanges('typeface', 'type typeface'), [[0, 8]]);
 });

@@ -68,7 +68,7 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
 </BaseLayout>
 
 <script>
-  import { matches, normalize, readState, writeState } from '../lib/blog-filter';
+  import { matches, normalize, readState, writeState, findRanges } from '../lib/blog-filter';
 
   const view = document.querySelector<HTMLElement>('.blog-view')!;
   const controls = view.querySelector<HTMLElement>('.blog-controls')!;
@@ -111,7 +111,33 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
       resultsCount.textContent = `${shown} ${shown === 1 ? 'post' : 'posts'}${state.q ? ` matching “${state.q}”` : ''}`;
     }
     for (const el of catLabels) el.classList.toggle('is-active', el.dataset.cat === state.cat);
+    highlight();
     history.replaceState(history.state, '', `${location.pathname}${writeState(state)}${location.hash}`);
+  }
+
+  // Mark search matches in the visible posts' titles, bodies and tags (CSS Custom Highlight API;
+  // browsers without it simply show no marks)
+  const canHighlight = typeof Highlight !== 'undefined' && 'highlights' in CSS;
+  function highlight() {
+    if (!canHighlight) return;
+    CSS.highlights.delete('blog-search');
+    if (!state.q) return;
+    const ranges: Range[] = [];
+    for (const p of posts) {
+      if (p.el.hidden) continue;
+      for (const root of p.el.querySelectorAll('.blog-post-title, .blog-body, .blog-tags')) {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+        for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+          for (const [start, end] of findRanges(node.nodeValue ?? '', state.q)) {
+            const r = new Range();
+            r.setStart(node, start);
+            r.setEnd(node, end);
+            ranges.push(r);
+          }
+        }
+      }
+    }
+    CSS.highlights.set('blog-search', new Highlight(...ranges));
   }
 
   // After filtering from further down, start the results from the top (side column is sticky)

@@ -1517,6 +1517,12 @@ body {
     color: var(--text-dim);
 }
 
+/* Search matches inside posts (see highlight() in blog.astro) */
+::highlight(blog-search) {
+    color: var(--active-text);
+    background-color: var(--accent);
+}
+
 .blog-post-cat.is-active {
     color: var(--active-text);
     background: var(--active-bg);
