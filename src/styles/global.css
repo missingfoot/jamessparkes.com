@@ -1653,6 +1653,10 @@ body {
 @media (max-width: 767px) {
     .blog-filter-toggle:not([hidden]) { display: flex; }
 
+    /* Search and filters live only in the sheet on phones, not at the top of the page */
+    .blog-view:not(.filters-open) .blog-controls { display: none; }
+    .blog-side { margin-bottom: 2rem; }
+
     .blog-view.filters-open::before {
         content: "";
         position: fixed;
