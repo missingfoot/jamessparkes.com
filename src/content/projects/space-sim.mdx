@@ -23,6 +23,14 @@ import shipBridge from '../../assets/images/capital-ship-bridge.jpg';
 import canopyBlender from '../../assets/images/capital-ship-canopy-blender.jpg';
 import defencesPoster from '../../assets/images/capital-ship-defences-poster.jpg';
 import cockpitSun from '../../assets/images/capital-ship-cockpit-sun.jpg';
+import inspoElite from '../../assets/images/space-sim-inspo-elite.jpg';
+import inspoStarCitizen from '../../assets/images/space-sim-inspo-star-citizen.jpg';
+import inspoSpaceEngineers from '../../assets/images/space-sim-inspo-space-engineers.jpg';
+import inspoDescent1 from '../../assets/images/space-sim-inspo-descent-1.jpg';
+import inspoDescent2 from '../../assets/images/space-sim-inspo-descent-2.jpg';
+import starfuryModel from '../../assets/images/space-sim-inspo-starfury-model.jpg';
+import starfuryShow from '../../assets/images/space-sim-inspo-starfury-show.jpg';
+import cockpitPanPoster from '../../assets/images/space-sim-cockpit-poster.jpg';
 
 <InlineVideo src="/videos/capital-ship.mp4" poster={shipPoster} alt="From a fighter cockpit in orbit, closing on a long capital ship and opening fire, the forward hull shredding into plates and shards" />
 
@@ -36,7 +44,34 @@ It's built in Godot with Jolt physics, with the heaviest work in C++. Like my ot
 
 Elite Dangerous and Star Citizen are big inspirations, but I find both overwhelming and confusing. All I really want to do is fly a ship around and destroy other ships, so this is that part on its own.
 
-The modular ships and the destruction come from Space Engineers 1 and 2, where ships are built from blocks and come apart block by block. The flying ended up a bit like Descent (1995). I love its simplicity, and I want the cockpit's controls and readouts to be just as simple.
+<figure class="project-figure">
+  <Image src={inspoElite} alt="Elite Dangerous: a dogfight in an asteroid field seen from the cockpit, with orange holographic readouts around the canopy" loading="lazy" />
+  <figcaption>Elite Dangerous: a dogfight in an asteroid field.</figcaption>
+</figure>
+
+<figure class="project-figure">
+  <Image src={inspoStarCitizen} alt="Star Citizen: a cockpit over a planet in a debris field, with dense blue HUD panels listing weapons, power and heat" loading="lazy" />
+  <figcaption>Star Citizen: the cockpit HUD lists every weapon's damage, power and heat.</figcaption>
+</figure>
+
+The modular ships and the destruction come from Space Engineers 1 and 2, where ships are built from blocks and come apart block by block.
+
+<figure class="project-figure">
+  <Image src={inspoSpaceEngineers} alt="Space Engineers: a red and white block-built ship burning, with chunks of its hull blown away" loading="lazy" />
+  <figcaption>Space Engineers: a block-built ship burning, with chunks of its hull blown away.</figcaption>
+</figure>
+
+The flying ended up a bit like Descent (1995). I love its simplicity, and I want the cockpit's controls and readouts to be just as simple.
+
+<figure class="project-figure">
+  <Image src={inspoDescent2} alt="Descent (1995): the cockpit facing an enemy robot, with a simple dashboard showing the weapon, missiles, shields and energy" loading="lazy" />
+  <figcaption>Descent (1995): one gun, one missile type and two numbers on the dashboard.</figcaption>
+</figure>
+
+<figure class="project-figure">
+  <Image src={inspoDescent1} alt="Descent (1995): flying down a mine tunnel, with the same plain dashboard of laser, homing missiles and two numbers" loading="lazy" />
+  <figcaption>Descent (1995): the same simple cockpit, flying through a mine.</figcaption>
+</figure>
 
 ### What would make it fail
 
@@ -94,7 +129,23 @@ The reactor blast used to make the frame rate tank, especially with debris from 
 
 The fighter started as just a camera that launched the missile. Then it grew guns, a canopy, and a cockpit you can feel.
 
-The canopy went through a lot. A round glass bubble, then faceted panes with far too many struts, then a pod style around an upright pilot, with a Babylon 5 Starfury cockpit as reference. The glass has faint smudges and dirt that only show when the light catches them.
+The cockpit is inspired by the Starfury from Babylon 5: the pilot stands upright in a pod, looking out through big panes between a heavy frame.
+
+<figure class="project-figure">
+  <Image src={starfuryModel} alt="A Starfury model seen head-on: four engine arms in an X around a central cockpit pod, the upright pilot visible behind angled panes in a heavy frame" loading="lazy" />
+  <figcaption>A Starfury model by gambody3d (Instagram): the pilot stands upright in the pod at the centre, behind a heavy frame around the glass.</figcaption>
+</figure>
+
+<figure class="project-figure">
+  <Image src={starfuryShow} class="h-capped" alt="Starfuries flying in Babylon 5, the pilot visible in the cockpit pod at the centre of the X-shaped fighter" loading="lazy" />
+  <figcaption>Starfuries in Babylon 5.</figcaption>
+</figure>
+
+And mine, from the pilot's seat:
+
+<InlineVideo src="/videos/space-sim-cockpit.mp4" poster={cockpitPanPoster} alt="Looking around from inside the fighter's cockpit: the octagonal canopy frame, a railgun either side, the planet below and the capital ship drifting past, with the sun catching smudges on the glass" />
+
+Getting there took a while. A round glass bubble, then faceted panes with far too many struts, then the upright pod. The glass has faint smudges and dirt that only show when the light catches them.
 
 Then I modelled the frame in Blender instead of building it from code: welded square beams with grooves where the glass sits. Automatic rivet placement never looked right, so I placed them by hand and exported the result.
 

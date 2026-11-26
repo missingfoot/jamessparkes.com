@@ -1166,6 +1166,21 @@ body {
     margin: 1rem 0;
 }
 
+/* A single image with a caption under it, in the text column. */
+.project-figure {
+    margin: 2rem 0;
+}
+
+.project-case-study .project-figure img {
+    margin: 0;
+}
+
+.project-figure figcaption {
+    padding-top: 0.5rem;
+    font-size: 12px;
+    color: var(--text-dim);
+}
+
 .project-case-study img.h-capped {
     width: auto;
     max-width: 100%;
