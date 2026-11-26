@@ -1,0 +1,137 @@
+---
+title: "Space Sim Game"
+description: "A space combat prototype where a capital ship is built from thousands of real parts and joints, so you take it apart physically: from a fighter cockpit, with railguns and a guided missile, while its point defences fight back."
+tags: ["Game design", "Physics", "Destruction", "Simulation", "Godot", "C++", "Blender", "Procedural generation"]
+category: "personal"
+kind: "Game"
+order: -1
+visible: true
+images: []
+cover: "../../assets/images/capital-ship-cover.jpg"
+---
+
+import { Image } from 'astro:assets';
+import InlineVideo from '../../components/InlineVideo.astro';
+import KV from '../../components/KV.astro';
+import KVGroup from '../../components/KVGroup.astro';
+import shipPoster from '../../assets/images/capital-ship-poster.jpg';
+import interiorPoster from '../../assets/images/capital-ship-interior-poster.jpg';
+import reactorPoster from '../../assets/images/capital-ship-reactor-poster.jpg';
+import debrisPoster from '../../assets/images/capital-ship-debris-poster.jpg';
+import shipSide from '../../assets/images/capital-ship-side.jpg';
+import shipBridge from '../../assets/images/capital-ship-bridge.jpg';
+import canopyBlender from '../../assets/images/capital-ship-canopy-blender.jpg';
+import defencesPoster from '../../assets/images/capital-ship-defences-poster.jpg';
+import cockpitSun from '../../assets/images/capital-ship-cockpit-sun.jpg';
+
+<InlineVideo src="/videos/capital-ship.mp4" poster={shipPoster} alt="From a fighter cockpit in orbit, closing on a long capital ship and opening fire, the forward hull shredding into plates and shards" />
+
+The question behind this one: what if a capital ship in a space game really came apart, plate by plate and beam by beam, instead of playing a canned explosion?
+
+It started as a game about guiding a single missile through a capital ship's layered defences. The ship was meant to be the target, but making it break properly turned into the heart of the project, and the game grew around it. You now fly a small fighter from its cockpit, chew into the ship with railguns, launch the missile at its reactor, and dodge the point defences that wake up once you open fire.
+
+It's built in Godot with Jolt physics, with the heaviest work in C++. Like my other prototypes, it's scoped in phases, and I stopped to fly it myself after each one. Most of what follows changed because of something I noticed in those playtests.
+
+### What would make it fail
+
+Before building anything, I wrote down the ways it could technically work and still fail. I find this more useful than a feature list, because it tells me what to protect when trade-offs come up:
+
+<KVGroup>
+  <KV term="No canned destruction" desc="Nothing breaks because an animation says so. Parts break because the energy that reached them was more than their joints could take." />
+  <KV term="Readable damage" desc="You should be able to see where you hit, what it did, and what's now hanging by a thread." />
+  <KV term="Debris that behaves like space" desc="No air and no friction, so wreckage keeps flying outward instead of hanging around the ship like snow." />
+  <KV term="Fast enough to play" desc="A reactor going up with thousands of pieces in flight can't drop the game to a slideshow." />
+</KVGroup>
+
+### Built from parts and joints
+
+<Image src={shipSide} alt="Side view of the capital ship over a planet: a long forward hull with a bridge on top, a straight four-strut spine, and a rear section with a reactor sphere and cross arms ending in pods" loading="lazy" />
+
+The ship isn't a model. It's generated from a handful of settings as about 11,600 real parts joined by about 76,000 joints: armour outside, a frame of ribs and stringers, hull plates fitted edge to edge, then decks, bulkheads, corridors and rooms inside. The forward hull and the reactor section are joined only by a four-strut spine, so cut those and the ship splits in two.
+
+All of it is one physics body made of thousands of small shapes, drawn in a couple of dozen batches, until something breaks. Then the solver works out which parts are still connected to the reactor core, and anything cut off becomes its own body with its own momentum.
+
+<InlineVideo src="/videos/capital-ship-interior.mp4" poster={interiorPoster} alt="Flying the fighter through a wrecked section of hull, past torn plates and exposed decks" />
+
+Because it's real structure, it's also a place. You can walk aboard on foot, with gravity only on the decks, so step out of a breach and you're weightless.
+
+Getting the hull to read as solid took a few passes. The first plates were rectangles, which left wedge-shaped gaps wherever the hull tapered, so every plate is now cut to the exact outline of its patch. Rivets are drawn by the plate shader rather than modelled, so they cost nothing. I tried textured metal and it just looked noisy, so the hull went back to plain material properties.
+
+Later I took the windows and box greebles off entirely, because they looked bad, and kept the antennas and dishes. I also replaced a giant block of a bridge with a proper one: a low deckhouse with a raked window across the front, and inside, a console row, a raised command platform and the captain's chair.
+
+<Image src={shipBridge} alt="Inside the bridge: consoles with glowing screens along the walls and window, a raised command platform, roof beams and ceiling light strips" loading="lazy" />
+
+### How it breaks
+
+A hit is treated like a bunker buster: the round's kinetic energy punches through armour, then the warhead goes off inside. The blast damages everything within reach by distance, so plates fracture into shards, beams kink or snap, and joints give way. A blast near the reactor or a fuel tank sets off a secondary explosion, which can start a chain.
+
+The fuel tanks were single solid cylinders that shrank away when they blew. Now each one is a ringed tube of eight sections, each holding its own fuel, so a hit breaches one section, which can rupture the next.
+
+<InlineVideo src="/videos/capital-ship-reactor.mp4" poster={reactorPoster} alt="The reactor detonating mid-ship: a blinding flash, the rear section bursting apart and a cloud of debris spreading outward" />
+
+The reactor is the big one. I first slowed time down for it, then found I liked it better at full speed, so slow motion became a toggle that's off by default. It now has a flash with a long fading afterglow, and the reactor shell shrinks away instead of floating around as an intact ball.
+
+In early tests the debris hung around the ship in a clump. That felt wrong for space, and it also cost the most performance. Every piece now gets a push from the share of blast energy that reached it, so wreckage flies outward and keeps going. Big chunks stuck drifting inside the hull fade out, so they don't block your view of the ship.
+
+### Keeping thousands of pieces cheap
+
+<InlineVideo src="/videos/capital-ship-debris.mp4" poster={debrisPoster} alt="Drifting through the debris field after the reactor blast, thousands of plates and shards tumbling past the cockpit, the railgun coils glowing red hot" />
+
+The reactor blast used to make the frame rate tank, especially with debris from earlier hits still around. A few lessons did most of the work:
+
+- **Batch the ship's edits.** The physics engine rebuilds a body's whole shape whenever it changes, so I batch every edit into one rebuild per frame. I also switch broken parts off instead of removing them, which was hundreds of times cheaper.
+- **Drop debris out of the physics engine.** Once a piece is clearly flying away and won't hit anything, it leaves the physics engine and C++ moves it along a straight line. It only gets a real body back if it drifts near your fighter, so it can still bounce off your canopy.
+- **Share meshes and cull small pieces.** Identical pieces share meshes, which cut draw calls from about 9,500 to about 2,450. Tiny pieces stop drawing once they're too small to see.
+- **Move hot paths to C++.** Blast damage, the push maths and the mass calculations moved into C++. I profiled first, because most of the slow "script" turned out to be calls into the engine.
+
+### From the cockpit
+
+The fighter started as just a camera that launched the missile. Then it grew guns, a canopy, and a cockpit you can feel.
+
+The canopy went through a lot. A round glass bubble, then faceted panes with far too many struts, then a pod style around an upright pilot, with a Babylon 5 Starfury cockpit as reference. The glass has faint smudges and dirt that only show when the light catches them.
+
+Then I modelled the frame in Blender instead of building it from code: welded square beams with grooves where the glass sits. Automatic rivet placement never looked right, so I placed them by hand and exported the result.
+
+<Image src={canopyBlender} alt="Placing rivets by hand in Blender: a welded corner of the canopy frame's square beams with domed rivets around the joint, and a long list of individual rivet objects in the outliner" loading="lazy" />
+
+The guns are railgun turrets from a model I found, turned on their side so you look into the rails, with each round riding down the gallery before it leaves the muzzle. The coils glow red-hot as you fire and cool slowly. Overdo it and the guns shut down, with a warning alarm on the way up and an error buzz if you pull the trigger while they're locked.
+
+<Image src={cockpitSun} alt="The cockpit facing the sun over the planet's horizon: the canopy's square frame, the sun's starburst and lens flare, and the railguns either side with their coils glowing orange-hot" loading="lazy" />
+
+Flying changed the most. It began with a mouse aim cursor the nose chased, then got snappier, but it still felt like a lot of work. I reworked it to fly like Minecraft's creative mode: mouse look around a fixed up, keys relative to where you're looking, and a short glide when you let go. It's still force-driven physics, so debris knocks you about and you recover.
+
+That led to two physics fixes. The fighter was light enough that debris hits threw it around, so it got real mass and now shoulders small pieces aside. Ramming the ship made you stick to it. The collision sweep that stops fast objects tunnelling through thin plates was also throwing away the bounce, so impacts on the ship now rebound at half your approach speed.
+
+### Things I tried and pulled back
+
+- **Sharper shadows:** made the whole scene shimmer as the camera moved, so I reverted them.
+- **A dedicated cockpit sun for crisp gun shadows:** helped, but still showed odd stripes. The guns just don't cast shadows on themselves now, because the workaround wasn't worth it.
+- **Retexturing the railguns** with the same metals as the canopy: didn't fit, so they went back to their original look.
+
+The lens look did stay: a little bloom, slight colour fringing at the edges of the screen and a faint vignette. I also fixed the sun flare, which used to switch off whenever a speck of debris crossed in front of it.
+
+### The ship fights back
+
+<InlineVideo src="/videos/capital-ship-defences.mp4" poster={defencesPoster} alt="From the cockpit, trading fire with the capital ship: its orange tracers streak past the canopy until the fighter's hull gives out and it tumbles away" />
+
+The latest phase is point defence. The ship carries 76 small turrets on its hull, and each one is a breakable part like everything else. They stay quiet until you attack.
+
+Once you do, only the few turrets closest to you with a clear line of fire shoot, in bursts. They lead your movement, and they go for your missile first. My first version had every turret firing at once, and it was far too much. Shoot off a section of hull and its turrets go dead with it, since their power and fire-control lines are cut.
+
+Bullets are drawn as thin tracers and checked against you with simple maths, not physics, so hundreds can be in the air at once. Your fighter has a hull that wears down with each hit, and the missile can be shot down. Now that it fights back, there's real skill in taking it apart.
+
+### Where it's at
+
+This came together over two days. It flies, it breaks, you can walk aboard, and it shoots back, but it isn't a game yet, and the open problems are written down plainly:
+
+- The turrets don't turn yet. They fire from fixed barrels.
+- Bullets only check against you and your missile, so debris can't shield you.
+- I never found the root cause of a grainy flicker in the guns' self-shadowing. I removed the shadow instead.
+
+Next, I want to turn the sandbox into a game:
+
+- **Gameplay loops.** Give you reasons to go after a ship in the first place, like loot to strip from the wreck, and something to spend it on.
+- **Multiplayer.** A second player crews the capital ship and fights back, protecting it from you. They might take the helm of a big railgun turret on the hull, so the defences stop being only automatic.
+- **The next defences.** Flak and interceptor missiles, then a proper combat HUD and an end-of-run result.
+
+Before any of that, there's the test the original idea was about: whether threading a missile through a ship that's shooting back, and watching it come apart where you hit it, is as satisfying as it looks.
