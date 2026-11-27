@@ -90,10 +90,11 @@ const timelineGroups = [
                     {project.data.kind && <div class="timeline-kind"><span class={`kind-tag kind-${project.data.kind.toLowerCase()}`}>{project.data.kind}</span></div>}
                     <h3 class="timeline-title">{project.data.title}</h3>
                   </div>
+                  {project.data.summary && <p class="timeline-summary">{project.data.summary}</p>}
                   <div class="timeline-thumb">
                     {cover && <Image src={cover} alt="" width={1200} widths={[600, 900, 1200, 1600]} sizes="(max-width: 640px) 100vw, 700px" loading="lazy" />}
                   </div>
-                  <div class="timeline-tags">{project.data.tags.slice(0, 3).map((t) => <span class="tag-chip">{t}</span>)}</div>
+                  <div class="timeline-tags">{project.data.tags.map((t) => <span class="tag-chip">{t}</span>)}</div>
                 </a>
               </li>
             );

@@ -8,6 +8,8 @@ const projects = defineCollection({
     z.object({
       title: z.string(),
       description: z.string(),
+      // About page cards: one line on what I did (work) or the gist (personal).
+      summary: z.string().optional(),
       tags: z.array(z.string()),
       category: z.enum(['work', 'personal']).default('work'),
       // Personal projects only: a small label in the sidebar and homepage listing.

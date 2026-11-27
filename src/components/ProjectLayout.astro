@@ -20,9 +20,16 @@ const sequence = [...all.filter((p) => p.data.category === 'work'), ...all.filte
   .map((p) => ({ title: p.data.title, href: `/${p.data.category}/${p.id}/` }));
 const here = sequence.findIndex((p) => p.href === `${path}/`);
 const prev = here > 0 ? sequence[here - 1] : undefined;
+const backHref = path.startsWith('/personal') ? '/#personal' : '/#work';
 const next = here >= 0 && here < sequence.length - 1 ? sequence[here + 1] : undefined;
 ---
 <BaseLayout title={`${title} — James Sparkes`} description={description} path={path}>
+  <div class="back-rail">
+    <a class="back-button" href={backHref} aria-label="Back to projects" data-back>
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+    </a>
+  </div>
+
   <div class="project-view">
     <h1 class="project-title">{title}</h1>
     <div class="project-tags">{tags.map((t) => {
@@ -67,10 +74,39 @@ const next = here >= 0 && here < sequence.length - 1 ? sequence[here + 1] : unde
     )}
   </div>
 
+  <div class="top-rail">
+    <button type="button" class="back-button to-top" aria-label="Back to top" data-to-top>
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+    </button>
+  </div>
+
   <script slot="scripts" src="/js/lightbox.js" defer></script>
 </BaseLayout>
 
 <script>
+  // Back: return to wherever you came from on this site (keeps the About page's scroll and tab),
+  // otherwise fall through to the link, which opens the right tab.
+  document.querySelector<HTMLAnchorElement>('[data-back]')?.addEventListener('click', (e) => {
+    try {
+      if (document.referrer && new URL(document.referrer).origin === location.origin && history.length > 1) {
+        e.preventDefault();
+        history.back();
+      }
+    } catch {}
+  });
+
+  // Back to top: shows once you've scrolled a screen's worth.
+  const toTop = document.querySelector<HTMLButtonElement>('[data-to-top]');
+  if (toTop) {
+    const sync = () => toTop.classList.toggle('is-visible', window.scrollY > window.innerHeight * 0.75);
+    sync();
+    window.addEventListener('scroll', sync, { passive: true });
+    toTop.addEventListener('click', () => {
+      const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' });
+    });
+  }
+
   // Keep tag tooltips on screen: chips near the right edge open their tooltip leftwards.
   const place = (chip: Element) => {
     chip.classList.remove('tip-left');

@@ -1,13 +1,14 @@
 ---
 title: "Travel Mode"
 description: "A Linux-first, open-source alternative to TripMode: a root daemon, CLI, and GTK4/libadwaita desktop app that show which applications are using the network and let you block any of them, live, down to the packet."
+summary: "See which apps are using your network and block any of them live, showing full-stack systems work from a root daemon through to a native GTK4 desktop UI."
 tags: ["Rust", "Linux", "Networking", "GTK4", "Systems programming", "CLI", "Open source"]
 category: "personal"
 kind: "Tool"
 order: 15
 visible: true
 images: []
-cover: "../../assets/images/travel-mode.png"
+cover: "../../assets/images/travel-mode-cover.jpg"
 ---
 
 import { Image } from 'astro:assets';
@@ -18,7 +19,7 @@ import travelModeCover from '../../assets/images/travel-mode.png';
 
 Metered tethering and data caps are the everyday trigger: knowing that Steam or a backup client is quietly saturating a hotspot, and being able to shut it off without killing the app or firewalling the whole machine.
 
-<Image src={travelModeCover} alt="Travel Mode's dashboard, showing network info, live traffic, and active/blocked app counts" loading="lazy" class="h-capped" />
+<Image src={travelModeCover} alt="Travel Mode's dashboard, showing network info, live traffic, and active/blocked app counts" loading="lazy" class="h-capped ui-window" />
 
 ## Overview
 
