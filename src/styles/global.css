@@ -86,6 +86,12 @@ body {
     margin-top: auto;
 }
 
+a.nav-identity {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
 .nav-name {
     font-size: 16px;
     font-weight: 500;
@@ -695,10 +701,8 @@ body {
     z-index: 5;
 }
 
-.back-button {
-    position: sticky;
-    top: 1.5rem;
-    margin-top: 3px;
+.round-button {
+    flex-shrink: 0;
     width: 32px;
     height: 32px;
     display: flex;
@@ -710,12 +714,34 @@ body {
     color: #161614;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 4px 14px rgba(0, 0, 0, 0.1);
     text-decoration: none;
-    transition: box-shadow 0.15s, transform 0.15s;
+    cursor: pointer;
+    transition: opacity 0.2s, visibility 0.2s, box-shadow 0.15s, transform 0.15s;
+}
+
+.round-button:hover,
+.round-button:focus-visible {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 22px rgba(0, 0, 0, 0.16);
+}
+
+/* Phones: dark, and the same height as the floating Download CV pill (its padding plus one 13px line) */
+@media (max-width: 767px) {
+    .round-button {
+        width: calc(1.7rem + 13px * 1.8);
+        height: calc(1.7rem + 13px * 1.8);
+        background: var(--active-bg);
+        color: var(--active-text);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    }
+}
+
+.back-button {
+    position: sticky;
+    top: 1.5rem;
+    margin-top: 3px;
 }
 
 .back-button:hover,
 .back-button:focus-visible {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 22px rgba(0, 0, 0, 0.16);
     transform: translateX(-2px);
 }
 
@@ -739,13 +765,10 @@ body {
 }
 
 .to-top {
-    top: auto;
+    position: sticky;
     bottom: 1.5rem;
-    margin-top: 0;
-    cursor: pointer;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.2s, visibility 0.2s, box-shadow 0.15s, transform 0.15s;
 }
 
 .to-top.is-visible {
@@ -772,8 +795,23 @@ body {
     .top-rail { display: none; }
 }
 
+/* Phones: back and back-to-top flank the floating Download CV button */
 @media (max-width: 767px) {
-    .back-rail { padding: 0 1rem; }
+    .back-rail,
+    .top-rail {
+        position: fixed;
+        top: auto;
+        bottom: 1.25rem;
+        width: auto;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        z-index: 15;
+    }
+    .back-rail { left: 1rem; right: auto; }
+    .top-rail { display: flex; left: auto; right: 1rem; }
+    .back-button,
+    .to-top { position: static; margin-top: 0; }
 }
 
 .project-tags {
@@ -1779,23 +1817,10 @@ body {
    it floats bottom-right when the column isn't sticky */
 .blog-top {
     align-self: flex-start;
-    display: grid;
-    place-items: center;
-    flex-shrink: 0;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    color: var(--active-text);
-    background: var(--active-bg);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.2s, visibility 0.2s;
 }
 
-.blog-top span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
-.blog-top svg { width: 20px; height: 20px; }
-.blog-top:hover { opacity: 0.85; }
 .blog-top.is-visible { opacity: 1; visibility: visible; }
 
 @media (max-width: 1100px) {

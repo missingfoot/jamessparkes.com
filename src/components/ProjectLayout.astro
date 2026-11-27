@@ -25,7 +25,7 @@ const next = here >= 0 && here < sequence.length - 1 ? sequence[here + 1] : unde
 ---
 <BaseLayout title={`${title} — James Sparkes`} description={description} path={path}>
   <div class="back-rail">
-    <a class="back-button" href={backHref} aria-label="Back to projects" data-back>
+    <a class="round-button back-button" href={backHref} aria-label="Back to projects" data-back>
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
     </a>
   </div>
@@ -75,7 +75,7 @@ const next = here >= 0 && here < sequence.length - 1 ? sequence[here + 1] : unde
   </div>
 
   <div class="top-rail">
-    <button type="button" class="back-button to-top" aria-label="Back to top" data-to-top>
+    <button type="button" class="round-button to-top" aria-label="Back to top" data-to-top>
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
     </button>
   </div>
