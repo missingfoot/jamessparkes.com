@@ -38,15 +38,14 @@ cover: "../../assets/images/wawa-reporting-01.jpg"
 import { Image } from 'astro:assets';
 import KV from '../../components/KV.astro';
 import KVGroup from '../../components/KVGroup.astro';
-import InlineVideo from '../../components/InlineVideo.astro';
-import calLinkedPoster from '../../assets/images/wawa-cal-linked-poster.jpg';
-import calPanningPoster from '../../assets/images/wawa-cal-panning-poster.jpg';
-import calSideBarPoster from '../../assets/images/wawa-cal-side-bar-poster.jpg';
-import reportingPoster from '../../assets/images/wawa-reporting-poster.jpg';
-import wawaAiPoster from '../../assets/images/wawa-ai-poster.jpg';
-import onboardingPoster from '../../assets/images/wawa-onboarding-poster.jpg';
+import onboardingSetup from '../../assets/images/wawa-onboarding-setup.jpg';
+import onboardingImport from '../../assets/images/wawa-onboarding-import.jpg';
+import aiBooking from '../../assets/images/wawa-ai-booking.jpg';
+import reportingIssue from '../../assets/images/wawa-reporting-issue.jpg';
+import reportingSubmit from '../../assets/images/wawa-reporting-submit.jpg';
+import schedulerLinked from '../../assets/images/wawa-scheduler-linked.jpg';
 import reportingQueues from '../../assets/images/wawa-reporting-02.jpg';
-import healthSurvey from '../../assets/images/wawa-health-02.jpg';
+import healthSurvey from '../../assets/images/wawa-health-survey.jpg';
 import patientDonors from '../../assets/images/wawa-platform-02.jpg';
 import inboxTasks from '../../assets/images/wawa-platform-03.jpg';
 import referralsCrm from '../../assets/images/wawa-platform-04.jpg';
@@ -85,7 +84,15 @@ Designed and built a two-sided onboarding platform to bring new fertility clinic
   <KV term="Training didn't scale" desc="Larger clinics were still relying on multi-day, in-person training to get set up at all, which doesn't scale past a handful of rollouts a year." />
 </KVGroup>
 
-<InlineVideo src="/videos/wawa-onboarding.mp4" poster={onboardingPoster} alt="Walking through the guided clinic onboarding flow" />
+<figure class="project-figure">
+  <Image src={onboardingSetup} alt="The guided clinic setup: a checklist of sections down the side and the Organisation basics step, with name, country, currency and time zone, and a request-approval link" loading="lazy" />
+  <figcaption>Clinic setup as a guided checklist. Each section is filled in by the clinic and signed off by an approver, instead of days of in-person training.</figcaption>
+</figure>
+
+<figure class="project-figure">
+  <Image src={onboardingImport} alt="Three bulk import steps: CSV columns matched to email, roles and teams; unrecognised team names to map or remove; and a duplicate email to keep or merge" loading="lazy" />
+  <figcaption>Bulk import for large clinics: columns are matched automatically, unrecognised values get mapped, and duplicates are caught before anyone is invited.</figcaption>
+</figure>
 
 ### Contributions
 
@@ -116,7 +123,10 @@ Redesigned several core clinical workflows used daily by clinic staff: stimulati
   <KV term="Related task list rework" desc="Separately reworked the day-to-day clinical task list (used to sign off consents and complete clinical steps) around an email-inbox-style model: auto-advance to the next item, keyboard shortcuts, and default filters like &quot;overdue&quot; and &quot;today&quot;, since this was a workflow clinicians touched dozens of times a day, not a once-a-month feature." />
 </KVGroup>
 
-<Image src={inboxTasks} alt="The clinical inbox showing a patient's laboratory and imaging results, and the inbox-style task list for signing consents with the document alongside" loading="lazy" />
+<figure class="project-figure">
+  <Image src={inboxTasks} alt="The clinical inbox showing a patient's laboratory and imaging results, and the inbox-style task list for signing consents with the document alongside" loading="lazy" />
+  <figcaption>The task list works like an email inbox: open an item, act on it, and it moves on to the next, with filters like overdue and today.</figcaption>
+</figure>
 
 ### Donor flow
 
@@ -126,7 +136,10 @@ Redesigned several core clinical workflows used daily by clinic staff: stimulati
   <KV term="Consolidated dashboard" desc="A donor dashboard surfaces family limits, storage, and any holds or restrictions in one place rather than scattered across separate screens." />
 </KVGroup>
 
-<Image src={patientDonors} alt="A patient's overview page with encounters, referrals and notes, and the donors table in cryo storage with family limits shown as filled dots" loading="lazy" />
+<figure class="project-figure">
+  <Image src={patientDonors} alt="A patient's overview page with encounters, referrals and notes, and the donors table in cryo storage with family limits shown as filled dots" loading="lazy" />
+  <figcaption>Donors get their own section in cryo storage: a filterable table with family limits shown at a glance, next to the patient overview it links from.</figcaption>
+</figure>
 
 ### Lab sheets
 
@@ -167,7 +180,10 @@ Designed a CRM for managing how patients enter a clinic's care, from formal refe
 - Designed the review flow around AI-assisted document extraction: staff upload a referral document, the system extracts patient details automatically, and staff verify and correct the extracted fields rather than transcribing them from scratch.
 - Designed a dedicated expiring-referrals view so time-sensitive referrals surface proactively instead of requiring staff to filter for them manually.
 
-<Image src={referralsCrm} alt="The referrals intake queue listing patients by source, urgency and status, and referral analytics with pipeline, contact and conversion metrics" loading="lazy" />
+<figure class="project-figure">
+  <Image src={referralsCrm} alt="The referrals intake queue listing patients by source, urgency and status, and referral analytics with pipeline, contact and conversion metrics" loading="lazy" />
+  <figcaption>Every way a patient arrives lands in one intake queue, with analytics on how referrals convert into appointments.</figcaption>
+</figure>
 
 ## Project: Conversational AI booking and scheduling
 
@@ -179,7 +195,10 @@ For appointment booking, staff can type a request like booking a patient for an 
 
 For scheduling, a known pain point for clinic staff, I applied the same approach: users can describe a new schedule in plain language (staff member, room, start date, frequency, pauses) and the AI interprets it and creates the schedule entry directly, removing the need to manually configure it through a traditional form-based interface.
 
-<InlineVideo src="/videos/wawa-ai.mp4" poster={wawaAiPoster} alt="Booking an appointment and building a staff schedule using natural language with wawa's AI assistant" class="video-capped" />
+<figure class="project-figure">
+  <Image src={aiBooking} alt="The wawa assistant: a misspelled request is matched to the right patient for confirmation, then the booked appointment is shown with type, host, location, date and time" loading="lazy" />
+  <figcaption>Booking by typing. A misspelled name is matched to the right patient for confirmation, then the assistant walks through location, date, time and mode before booking it.</figcaption>
+</figure>
 
 ## Project: Patient health information capture
 
@@ -187,7 +206,10 @@ For scheduling, a known pain point for clinic staff, I applied the same approach
 
 A large undertaking to fix where the product's health data actually came from and how usable it was once captured: consolidating every clinic's separate intake survey into one customisable master survey, moving primary data collection from clinician to patient, and making sure everything captured was structured enough for the rest of the platform to actually use.
 
-<Image src={healthSurvey} alt="The patient health survey on phones: the list of sections Dr. James has requested, a question about cycle length, and the Birth control history section intro" loading="lazy" />
+<figure class="project-figure">
+  <Image src={healthSurvey} alt="The patient health survey on phones: the list of sections Dr. James has requested, and a question about how often periods occur with one answer chosen" loading="lazy" />
+  <figcaption>Patients fill in their own health history before their appointment: themed sections, one question at a time, every answer structured.</figcaption>
+</figure>
 
 ### Consolidating clinic surveys into one platform-wide intake
 
@@ -249,9 +271,20 @@ This work also closed a concrete gap elsewhere in the product: several patient-r
   <KV term="Canonical data, per-jurisdiction mapping" desc="Each data field is stored once in a canonical form and mapped to whatever format a given regulator expects only at submission time, so the same underlying record can satisfy multiple regulators' differing field formats without duplicating data entry per jurisdiction." />
 </KVGroup>
 
-<InlineVideo src="/videos/wawa-reporting.mp4" poster={reportingPoster} alt="The regulatory reporting dashboard showing patient submission status across ready, needs attention, overdue, and submitted states" />
+<figure class="project-figure">
+  <Image src={reportingIssue} alt="An overdue Early Outcome report with one issue left: the test date is out of range, highlighted in the record and corrected in place with a link to the source" loading="lazy" />
+  <figcaption>Verification, not forms: the data already exists, so a report only asks staff to fix what is wrong, in place, with a link back to the source record.</figcaption>
+</figure>
 
-<Image src={reportingQueues} alt="The needs-attention queue of reports with issue counts and days left, and reporting analytics with error rates, a report trend and form type breakdown" loading="lazy" />
+<figure class="project-figure">
+  <Image src={reportingSubmit} alt="Submitting 43 fixed reports to PRISM at once, listing each patient, form type and who checked it" loading="lazy" />
+  <figcaption>Once checked, reports go to the regulator in one batch, with a record of who signed off each one.</figcaption>
+</figure>
+
+<figure class="project-figure">
+  <Image src={reportingQueues} alt="The needs-attention queue of reports with issue counts and days left, and reporting analytics with error rates, a report trend and form type breakdown" loading="lazy" />
+  <figcaption>A queue of what needs attention, with days left before each deadline, and analytics on the most common errors.</figcaption>
+</figure>
 
 ### Contributions
 
@@ -277,11 +310,10 @@ Led discovery for a second-generation scheduling system, working directly with c
   <KV term="No linked, multi-resource bookings" desc="A clinic walked through a &quot;treatment scan&quot; appointment type that needs to book two different resources with a staggered offset: fifteen minutes on a sonographer's diary, followed automatically by fifteen minutes on the phlebotomy list right after, booked as one unit. The existing scheduler had no concept of a single appointment type driving multiple linked, offset resource bookings." />
 </KVGroup>
 
-<InlineVideo src="/videos/wawa-cal-linked.mp4" poster={calLinkedPoster} alt="Booking a treatment scan appointment that links two staggered, offset resource bookings into one unit" />
-
-<InlineVideo src="/videos/wawa-cal-side-bar.mp4" poster={calSideBarPoster} alt="Navigating the scheduler's sidebar" />
-
-<InlineVideo src="/videos/wawa-cal-panning.mp4" poster={calPanningPoster} alt="Panning across the scheduler calendar" />
+<figure class="project-figure">
+  <Image src={schedulerLinked} alt="The scheduler with a treatment scan booked as two linked appointments, a scan then bloods straight after, beside the new appointment panel with linked people and rooms" loading="lazy" />
+  <figcaption>One treatment scan books two linked slots: the scan on the sonographer's diary, then bloods on the phlebotomy list straight after.</figcaption>
+</figure>
 
 ### Contributions
 
