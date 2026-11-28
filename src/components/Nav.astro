@@ -6,9 +6,9 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
 <!-- Desktop sidebar: always visible ≥768px, no toggle, no JS -->
 <aside class="nav-desktop">
-  <a class="nav-identity" href="/" aria-label="James Sparkes, Product Designer: home">
+  <a class="nav-identity" href="/" aria-label="James Sparkes, Senior Product Designer: home">
     <div class="nav-name">James Sparkes</div>
-    <div class="nav-role">Product Designer</div>
+    <div class="nav-role">Senior Product Designer</div>
   </a>
   <NavLinks currentPath={currentPath} />
   <div class="nav-actions">
@@ -22,9 +22,9 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 <!-- Mobile nav: fixed top bar + full-viewport overlay panel, <768px -->
 <div class="nav-mobile" data-mobile-nav>
   <div class="nav-mobile-bar">
-    <a class="nav-identity" href="/" aria-label="James Sparkes, Product Designer: home">
+    <a class="nav-identity" href="/" aria-label="James Sparkes, Senior Product Designer: home">
       <div class="nav-name">James Sparkes</div>
-      <div class="nav-role">Product Designer</div>
+      <div class="nav-role">Senior Product Designer</div>
     </a>
     <button class="nav-mobile-toggle" data-mobile-nav-toggle aria-expanded="false" aria-controls="nav-mobile-panel">
       Menu

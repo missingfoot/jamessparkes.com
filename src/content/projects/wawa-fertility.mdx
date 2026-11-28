@@ -1,7 +1,7 @@
 ---
 title: "wawa"
-description: "At wawa I work across the full product lifecycle (research, design, and frontend implementation in React/Next.js) for clinical software used by fertility clinics across the UK, US, Canada, and Australia."
-summary: "Designed and shipped production code in the Ruby on Rails, Phlex and Tailwind platform: designed the design system now live across it, added large features like a CRM and government regulator reporting, and rebuilt settings, onboarding and scheduling."
+description: "At wawa I worked across the full product lifecycle, from research and design through to shipping frontend code, for clinical software used by fertility clinics across the UK, US, Canada, and Australia."
+summary: "Prototyped in a React rebuild of the platform, then designed and shipped production code in its Ruby on Rails, Phlex and Tailwind codebase: designed the design system now live across it, added large features like a CRM and government regulator reporting, and rebuilt settings, onboarding and scheduling."
 tags: ["UI design", "UX design", "Frontend development", "Product strategy", "Design systems"]
 order: 0
 years: "2025 – 2026"
@@ -20,17 +20,21 @@ import reportingPoster from '../../assets/images/wawa-reporting-poster.jpg';
 import wawaAiPoster from '../../assets/images/wawa-ai-poster.jpg';
 import onboardingPoster from '../../assets/images/wawa-onboarding-poster.jpg';
 
-At wawa I work across the full product lifecycle (research, design, and frontend implementation in React/Next.js) for clinical software used by fertility clinics across the UK, US, Canada, and Australia. In a flat-hierarchy startup team, my role has spanned everything from patient-facing clinical flows to internal regulatory infrastructure, often taking a feature from first sketch through to shipped code.
-
 ## Overview
 
-wawa builds clinical software for fertility clinics, spanning patient intake, clinical workflows, scheduling, cryo storage and donor management, and the regulatory reporting clinics are legally required to submit. As a senior product designer who also ships frontend code, I've worked on projects ranging from ground-up platform builds to targeted redesigns of clinical paperwork, each shaped by close collaboration with clinic partners and a small, fast-moving internal team.
+wawa builds clinical software for fertility clinics, spanning patient intake, clinical workflows, scheduling, cryo storage and donor management, and the regulatory reporting clinics are legally required to submit. As a product designer who also shipped frontend code in a flat-hierarchy startup team, I worked on everything from patient-facing clinical flows to internal regulatory infrastructure, often taking a feature from first sketch through to shipped code. Projects ranged from ground-up platform builds to targeted redesigns of clinical paperwork, each shaped by close collaboration with clinic partners and a small, fast-moving internal team.
+
+## From Figma to code
+
+I started out designing in Figma, but wawa's product is dense: large tables, lots of interconnected data, and more states than I could keep track of across static frames. So I rebuilt the wawa platform from scratch in React and Next.js and used that as my "Figma". Designs became rich, working prototypes with real interactions instead of limited Figma pages.
+
+Later, as the team grew more confident with AI, the design team, me included, moved to designing directly in the production platform itself (Ruby on Rails, Phlex and Tailwind) using Claude Code. A design became a pull request for engineers to review rather than a file for them to rebuild, which cut developer time on smaller features from one or two days to around an hour.
 
 ## Tasks & responsibilities
 
-Across my time at wawa I have...
+Across my time at wawa I...
 
-- Owned design end-to-end (research, UX, UI, and React/Next.js implementation) rather than handing off to a separate engineering team.
+- Owned design end-to-end (research, UX, UI, and frontend implementation) rather than handing off to a separate engineering team.
 - Ran discovery directly with clinic partners across the UK, Australia, the US, and Canada to ground product decisions in real clinical workflows, not assumptions.
 - Worked across a multi-jurisdiction product, designing for the regulatory and clinical differences between UK, US, Canadian, and Australian fertility clinics.
 - Worked in a flat-hierarchy team where designers carry projects further than a typical handoff model, from research through to shipped frontend code.
@@ -62,7 +66,7 @@ Designed and built a two-sided onboarding platform to bring new fertility clinic
 
 ### Outcome & impact
 
-The onboarding demo of the guided setup work got a strong internal response and was chosen to be shown at the company all-hands as a template for how implementation should work going forward, standardised and repeatable rather than a bespoke, largely manual process per clinic. It's an active initiative rather than a finished, measured result, but it reframed onboarding from something wawa does to a clinic over days of training, toward something a clinic can largely configure themselves.
+The onboarding demo of the guided setup work got a strong internal response and was chosen to be shown at the company all-hands as a template for how implementation should work going forward, standardised and repeatable rather than a bespoke, largely manual process per clinic. It was an active initiative rather than a finished, measured result when I left, but it reframed onboarding from something wawa does to a clinic over days of training, toward something a clinic can largely configure themselves.
 
 ## Project: Clinical flow redesigns
 
@@ -244,11 +248,11 @@ Led discovery for a second-generation scheduling system, working directly with c
 - Scoped an initial "Schedule Templates" concept covering recurring blocked time and per-appointment-type booking windows as the fastest path to closing the most urgent gap.
 - Documented the multi-resource, staggered-offset appointment requirement as a core input to the v2 scheduling model, since it wasn't something the existing single-resource booking model could represent at all.
 
-This project is still in the discovery and early design phase rather than shipped.
+This project was still in the discovery and early design phase when I left, rather than shipped.
 
 ## Reflections & key takeaways
 
 - The regulatory reporting project taught me the most about designing in a legally constrained space: the temptation is always to build the thing the regulator's form literally asks for, but the better answer was almost always to ask what data already exists in the product and design the smallest possible layer on top of it.
 - That instinct, treat a new requirement as a lens over existing data rather than a reason to ask users for more input, showed up again in the lab sheets project, where the obvious first answer (print a form) would have quietly made the underlying duplicate-data-entry problem worse rather than better.
-- Working in a flat-hierarchy startup changed how I think about ownership. There's no separate handoff to engineering here: a feature I design, I frequently also build, which means design decisions have to hold up against real implementation constraints from day one, not get revisited after the fact.
+- Working in a flat-hierarchy startup changed how I think about ownership. There was no separate handoff to engineering: a feature I designed, I frequently also built, which meant design decisions have to hold up against real implementation constraints from day one, not get revisited after the fact.
 - Discovery across UK, US, Canadian, and Australian clinics made clear how much "the same feature" can differ once you take local regulation, terminology, and clinical convention seriously, rather than designing for one market and treating the rest as a localisation afterthought.

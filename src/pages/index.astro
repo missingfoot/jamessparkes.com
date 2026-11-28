@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import { getImage, Image } from 'astro:assets';
 import portraitDark from '../assets/images/james-sparkes-dark.jpg';
 import portraitLight from '../assets/images/james-sparkes-light.jpg';
+import { yearsExperience } from '../data/career';
 
 const portraitDarkImg = await getImage({ src: portraitDark, width: 320, height: 320 });
 const portraitLightImg = await getImage({ src: portraitLight, width: 320, height: 320 });
@@ -20,8 +21,8 @@ const timelineGroups = [
 }));
 ---
 <BaseLayout
-  title="James Sparkes — Product Designer"
-  description="Product Designer with over 10 years of experience in UX/UI design, front-end development, and building digital products. Based in London."
+  title="James Sparkes — Senior Product Designer"
+  description={`Senior product designer with ${yearsExperience} years of experience in UX/UI design, front-end development, and building digital products. Based in London.`}
   path="/"
 >
   <div class="about-view">
@@ -48,7 +49,7 @@ const timelineGroups = [
     <h1 class="visually-hidden">About</h1>
 
     <div class="about-bio">
-      <p class="about-intro">I'm a product designer who owns the whole journey, from talking to users through to shipping production React, designing workflows that get people from A to B so the software fades into their day.</p>
+      <p class="about-intro">I'm a senior product designer who owns the whole journey, from talking to users through to shipping production React, designing workflows that get people from A to B so the software fades into their day.</p>
 
       <details class="about-more">
         <summary><span class="about-more-open">Read more</span><span class="about-more-close">Read less</span></summary>
