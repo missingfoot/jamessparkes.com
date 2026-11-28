@@ -293,6 +293,7 @@ a.nav-identity {
 }
 
 /* Theme toggle (.btn .btn--ghost): offers the theme you'd switch to */
+.nav-theme-toggle { align-self: flex-start; }   /* as wide as its text, not the full column */
 .theme-icon { position: relative; }
 .theme-icon svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .theme-to-light { display: none; }

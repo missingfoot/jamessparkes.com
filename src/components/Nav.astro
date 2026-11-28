@@ -12,7 +12,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
   </a>
   <NavLinks currentPath={currentPath} />
   <div class="nav-actions">
-    <button type="button" class="btn btn--md btn--ghost btn--block nav-theme-toggle" data-theme-toggle>
+    <button type="button" class="btn btn--md btn--ghost nav-theme-toggle" data-theme-toggle>
       {/* Lucide moon / sun; CSS shows the one for the theme you'd switch to */}
       <span class="btn-icon theme-icon" aria-hidden="true">
         <svg class="theme-to-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
@@ -39,7 +39,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
   <div class="nav-mobile-panel" id="nav-mobile-panel" data-mobile-nav-panel>
     <NavLinks currentPath={currentPath} />
     <div class="nav-actions">
-      <button type="button" class="btn btn--md btn--ghost btn--block nav-theme-toggle" data-theme-toggle>
+      <button type="button" class="btn btn--md btn--ghost nav-theme-toggle" data-theme-toggle>
         {/* Lucide moon / sun; CSS shows the one for the theme you'd switch to */}
         <span class="btn-icon theme-icon" aria-hidden="true">
           <svg class="theme-to-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
