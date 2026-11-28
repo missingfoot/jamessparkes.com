@@ -207,7 +207,8 @@ a.nav-identity {
    values; everything else is worked out:
      --btn-icon  icon size, which is also the content height
      --btn-py    space above and below the content
-     --btn-px    text's space from the edge on a straight-sided button
+     --btn-px    text's space from the edge on a straight-sided button (1em, as in the video;
+                 the curve compensation below is added on top, so don't pre-pad it)
    Height is icon + 2 × py and the radius is half of that: the real radius, not 999px,
    so the maths below holds. Each child names the room it needs at the edge:
      - an icon needs py, which makes it concentric with the rounded end
@@ -220,7 +221,7 @@ a.nav-identity {
 .btn {
     --btn-icon: 20px;
     --btn-py: 15px;
-    --btn-px: 22px;
+    --btn-px: 1em;
     --btn-gap: 8px;
     --btn-h: calc(var(--btn-icon) + 2 * var(--btn-py));
     --btn-r: calc(var(--btn-h) / 2);
@@ -253,7 +254,7 @@ a.nav-identity {
 
 /* Sizes */
 .btn--sm { --btn-icon: 20px; --btn-py: 6px; }            /* 32px: round buttons in the desktop margins */
-.btn--md { --btn-icon: 18px; --btn-py: 11px; --btn-px: 16px; }   /* 40px: sidebar buttons */
+.btn--md { --btn-icon: 18px; --btn-py: 11px; }            /* 40px: sidebar buttons */
 .btn--block {                                              /* full width, content centred */
     display: flex;
     width: 100%;
@@ -1479,7 +1480,6 @@ a.nav-identity {
     .nav-mobile-toggle {
         --btn-icon: 22px;
         --btn-py: 8px;
-        --btn-px: 18px;
         --btn-gap: 6px;
         font-size: 14px;
     }
