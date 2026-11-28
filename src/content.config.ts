@@ -7,6 +7,8 @@ const projects = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
+      // Search results and link previews: what the project is, after its name.
+      seoTitle: z.string().optional(),
       description: z.string(),
       // About page cards: one line on what I did (work) or the gist (personal).
       summary: z.string().optional(),

@@ -15,6 +15,9 @@ const { Content } = await render(project);
 ---
 <ProjectLayout
   title={project.data.title}
+  seoTitle={project.data.seoTitle}
+  cover={project.data.cover ?? project.data.images[0]?.src}
+  coverAlt={project.data.cover ? undefined : project.data.images[0]?.alt}
   description={project.data.description}
   tags={project.data.tags}
   images={project.data.images}

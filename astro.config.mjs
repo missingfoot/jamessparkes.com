@@ -1,6 +1,7 @@
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 
 // Browser targets for the CSS minifier (lightningcss). Without explicit targets it
 // collapses prefixed/standard pairs (e.g. -webkit-backdrop-filter + backdrop-filter)
@@ -9,7 +10,7 @@ const cssTargets = { chrome: 87 << 16, firefox: 78 << 16, safari: 14 << 16 };
 
 export default defineConfig({
   site: 'https://www.jamessparkes.com',
-  integrations: [mdx()],
+  integrations: [mdx(), sitemap({ filter: (page) => !page.includes('/404') })],
   // Fetch a page when its link is hovered (or touched) so clicks feel instant
   prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
   vite: {

@@ -9,6 +9,25 @@ import { yearsExperience } from '../data/career';
 const portraitDarkImg = await getImage({ src: portraitDark, width: 320, height: 320 });
 const portraitLightImg = await getImage({ src: portraitLight, width: 320, height: 320 });
 
+// Structured data so search engines know who this site is about
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  mainEntity: {
+    '@type': 'Person',
+    name: 'James Sparkes',
+    jobTitle: 'Senior Product Designer',
+    description: `Senior product designer with ${yearsExperience} years of experience in UX/UI design, front-end development and building digital products.`,
+    url: Astro.site?.href,
+    image: new URL(portraitLightImg.src, Astro.site).href,
+    email: 'mailto:hello@jamessparkes.com',
+    address: { '@type': 'PostalAddress', addressLocality: 'London', addressCountry: 'GB' },
+    alumniOf: { '@type': 'CollegeOrUniversity', name: 'Canterbury Christ Church University' },
+    knowsAbout: ['Product design', 'UX design', 'UI design', 'Design systems', 'User research', 'Interaction design', 'Prototyping', 'Front-end development', 'React', 'Healthtech', 'B2B SaaS'],
+    sameAs: ['https://uk.linkedin.com/in/jamessparkesdesign', 'https://github.com/missingfoot'],
+  },
+};
+
 const projects = (await getCollection('projects', ({ data }) => data.visible)).sort(
   (a, b) => a.data.order - b.data.order
 );
@@ -21,7 +40,9 @@ const timelineGroups = [
 }));
 ---
 <BaseLayout
-  title="James Sparkes — Senior Product Designer"
+  title="James Sparkes — Senior Product Designer, London"
+  ogType="profile"
+  jsonLd={jsonLd}
   description={`Senior product designer with ${yearsExperience} years of experience in UX/UI design, front-end development, and building digital products. Based in London.`}
   path="/"
 >
@@ -46,7 +67,7 @@ const timelineGroups = [
         new MutationObserver(sync).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
       })();
     </script>
-    <h1 class="visually-hidden">About</h1>
+    <h1 class="visually-hidden">James Sparkes, Senior Product Designer in London</h1>
 
     <div class="about-bio">
       <p class="about-intro">I'm a senior product designer who owns the whole journey, from talking to users through to shipping production React, designing workflows that get people from A to B so the software fades into their day.</p>

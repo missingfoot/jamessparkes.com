@@ -1,12 +1,15 @@
 ---
 // src/components/ProjectLayout.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import { tagTip } from '../data/tag-glossary';
 import { getCollection } from 'astro:content';
 
 export interface Props {
   title: string;
+  seoTitle?: string;
+  cover?: ImageMetadata;
+  coverAlt?: string;
   description: string;
   tags: string[];
   images: { src: ImageMetadata; alt: string }[];
@@ -15,7 +18,12 @@ export interface Props {
   years?: string;
   highlights?: { value: string; label: string }[];
 }
-const { title, description, tags, images, path, role, years, highlights = [] } = Astro.props;
+const { title, seoTitle, cover, coverAlt, description, tags, images, path, role, years, highlights = [] } = Astro.props;
+const pageTitle = seoTitle ? `${title}: ${seoTitle} — James Sparkes` : `${title} — James Sparkes`;
+// Link previews (LinkedIn, Slack, iMessage) show the project's own cover, cropped to 1200×630
+const ogImage = cover
+  ? await getImage({ src: cover, width: 1200, height: 630, fit: 'cover', format: 'jpg' })
+  : undefined;
 
 // Previous / next follow the sidebar order: work first, then personal.
 const all = (await getCollection('projects', ({ data }) => data.visible)).sort((a, b) => a.data.order - b.data.order);
@@ -26,7 +34,7 @@ const prev = here > 0 ? sequence[here - 1] : undefined;
 const backHref = path.startsWith('/personal') ? '/#personal' : '/#work';
 const next = here >= 0 && here < sequence.length - 1 ? sequence[here + 1] : undefined;
 ---
-<BaseLayout title={`${title} — James Sparkes`} description={description} path={path}>
+<BaseLayout title={pageTitle} description={description} path={path} ogImage={ogImage && { src: ogImage.src, width: 1200, height: 630, alt: coverAlt ?? (seoTitle ? `${title}: ${seoTitle}` : title) }} ogType="article">
   <div class="back-rail">
     <a class="round-button back-button" href={backHref} aria-label="Back to projects" data-back>
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
