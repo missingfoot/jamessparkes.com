@@ -388,8 +388,8 @@ a.nav-identity {
 
 .about-link-icon {
     flex: none;
-    width: 1.05em;
-    height: 1.05em;
+    width: 1em;
+    height: 1em;
     color: var(--text-dim);
     transition: color 0.15s;
 }
