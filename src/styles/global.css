@@ -1493,6 +1493,7 @@ a.nav-identity {
         border-radius: 999px;
         font-size: 13px;
         font-weight: 500;
+        white-space: nowrap; /* centred with left: 50%, so it only gets half the screen; don't let it wrap */
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
     }
 
@@ -2039,25 +2040,60 @@ a.nav-identity {
     border-radius: 6px;
 }
 
-/* About: availability line under the bio */
+/* About: availability line under the bio, as a pill. The dot sits centred against one or two lines. */
 .about-status {
-    display: flex;
+    --status: #3f9a2e;
+    display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.7rem;
     margin-top: 1.5rem;
+    padding: 0.55rem 1rem 0.55rem 0.7rem;
     font-size: 13px;
-    color: var(--text-dim);
+    line-height: 1.45;
+    color: var(--text);
+    background: color-mix(in srgb, var(--status) 7%, transparent);
+    border: 1px solid color-mix(in srgb, var(--status) 22%, transparent);
+    border-radius: 22px;
 }
+[data-theme="dark"] .about-status { --status: #7fcf6a; }
 .about-status-dot {
     flex: none;
-    width: 7px;
-    height: 7px;
+    position: relative;
+    width: 10px;
+    height: 10px;
+    margin: 0 4px;
     border-radius: 50%;
-    background: #3f9a2e;
-    box-shadow: 0 0 0 3px color-mix(in srgb, #3f9a2e 18%, transparent);
+    background: var(--status);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--status) 22%, transparent);
 }
-[data-theme="dark"] .about-status-dot { background: #7fcf6a; box-shadow: 0 0 0 3px color-mix(in srgb, #7fcf6a 18%, transparent); }
-.about-status + .about-links { margin-top: 1rem; }
+/* A slow, soft pulse so it reads as "live", switched off for reduced motion */
+.about-status-dot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--status);
+    animation: status-pulse 2.4s ease-out infinite;
+}
+@keyframes status-pulse {
+    0%   { transform: scale(1);   opacity: 0.45; }
+    70%  { transform: scale(2.6); opacity: 0; }
+    100% { transform: scale(2.6); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .about-status-dot::after { animation: none; display: none; }
+}
+/* Phones: role on the first line, where on the second, rather than wrapping mid-phrase */
+@media (max-width: 640px) {
+    .about-status { padding: 0.6rem 1.1rem 0.6rem 0.75rem; }
+    .about-status-sep { display: none; }
+    .about-status-where { display: block; }
+}
+/* Small phones (iPhone SE and narrower): a touch smaller so each half still fits on one line */
+@media (max-width: 380px) {
+    .about-status { font-size: 12px; gap: 0.6rem; padding-right: 0.9rem; }
+}
+.about-status + .about-links { margin-top: 1.25rem; }
 
 /* Sidebar: personal projects past the first few, behind "Show more" */
 .nav-more summary { list-style: none; cursor: pointer; color: var(--text-dim); }
