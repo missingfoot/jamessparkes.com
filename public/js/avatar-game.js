@@ -12,7 +12,7 @@
     var avatar = document.querySelector('.about-avatar');
     if (!avatar) return;
 
-    var FADE_SELECTOR = '.about-view .about-bio, .about-view .about-links, .about-view .timeline-group';
+    var FADE_SELECTOR = '.about-view .about-bio, .about-view .about-links, .about-view .timeline-group, .about-view .about-bubble, .about-view .about-online';
     var mode = 'idle'; // 'idle' | 'dvd' | 'game'
     var placeholder = null;
 

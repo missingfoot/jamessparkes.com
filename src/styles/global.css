@@ -2040,57 +2040,83 @@ a.nav-identity {
     border-radius: 6px;
 }
 
-/* About: availability line under the bio, as a pill. The dot sits centred against one or two lines. */
-.about-status {
-    --status: #3f9a2e;
-    display: inline-flex;
+/* About: avatar with an availability message beside it, styled like a chat bubble */
+.about-hero {
+    display: flex;
     align-items: center;
-    gap: 0.7rem;
-    margin-top: 1.5rem;
-    padding: 0.55rem 1rem 0.55rem 0.7rem;
-    font-size: 13px;
-    line-height: 1.45;
-    color: var(--text);
-    background: color-mix(in srgb, var(--status) 7%, transparent);
-    border: 1px solid color-mix(in srgb, var(--status) 22%, transparent);
-    border-radius: 8px;
+    gap: 1.4rem;
+    margin-bottom: 1.5rem;
 }
-[data-theme="dark"] .about-status { --status: #7fcf6a; }
-.about-status-dot {
-    flex: none;
+.about-hero .about-avatar { margin-bottom: 0; }
+.about-avatar-wrap {
     position: relative;
-    width: 10px;
-    height: 10px;
-    margin: 0 4px;
-    border-radius: 50%;
-    background: var(--status);
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--status) 22%, transparent);
+    flex: none;
 }
-/* A slow, soft pulse so it reads as "live", switched off for reduced motion */
-.about-status-dot::after {
+/* "Online" dot on the avatar */
+.about-online {
+    --online: #3f9a2e;
+    position: absolute;
+    right: 9%;
+    bottom: 9%;
+    width: 18%;
+    height: 18%;
+    min-width: 14px;
+    min-height: 14px;
+    border-radius: 50%;
+    background: var(--online);
+    box-shadow: 0 0 0 3px var(--bg);
+}
+[data-theme="dark"] .about-online { --online: #5fd068; }
+
+.about-bubble {
+    --bubble: #d9fdd3;
+    --bubble-text: #111b21;
+    --bubble-meta: #667781;
+    --tick: #53bdeb;
+    position: relative;
+    max-width: 330px;
+    padding: 0.55rem 0.7rem 0.45rem 0.8rem;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--bubble-text);
+    background: var(--bubble);
+    border-radius: 0 10px 10px 10px;
+    filter: drop-shadow(0 1px 0.5px rgba(11, 20, 26, 0.13));
+}
+[data-theme="dark"] .about-bubble {
+    --bubble: #005c4b;
+    --bubble-text: #e9edef;
+    --bubble-meta: rgba(233, 237, 239, 0.6);
+}
+/* The little tail at the top-left, pointing back at the avatar */
+.about-bubble::before {
     content: "";
     position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: var(--status);
-    animation: status-pulse 2.4s ease-out infinite;
+    top: 0;
+    left: -8px;
+    width: 8px;
+    height: 13px;
+    background: var(--bubble);
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
 }
-@keyframes status-pulse {
-    0%   { transform: scale(1);   opacity: 0.45; }
-    70%  { transform: scale(2.6); opacity: 0; }
-    100% { transform: scale(2.6); opacity: 0; }
+/* Time and ticks tucked into the last line, bottom-right */
+.about-bubble-meta {
+    float: right;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    margin: 0.45rem 0 -0.15rem 0.6rem;
+    font-size: 11px;
+    line-height: 1;
+    color: var(--bubble-meta);
 }
-@media (prefers-reduced-motion: reduce) {
-    .about-status-dot::after { animation: none; display: none; }
-}
+.about-bubble-meta svg { color: var(--tick); }
+.about-bubble-time:empty { display: none; }
+
 @media (max-width: 640px) {
-    .about-status { padding: 0.6rem 1rem 0.6rem 0.75rem; }
+    .about-hero { gap: 1.1rem; align-items: center; }
+    .about-bubble { font-size: 13px; }
 }
-/* The narrowest phones: one size down so the sentence still fits on two lines */
-@media (max-width: 359px) {
-    .about-status { font-size: 12px; gap: 0.55rem; padding-right: 0.8rem; }
-}
-.about-status + .about-links { margin-top: 1.25rem; }
 
 /* Sidebar: personal projects past the first few, behind "Show more" */
 .nav-more summary { list-style: none; cursor: pointer; color: var(--text-dim); }

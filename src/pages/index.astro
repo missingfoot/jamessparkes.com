@@ -47,6 +47,8 @@ const timelineGroups = [
   path="/"
 >
   <div class="about-view">
+    <div class="about-hero">
+    <div class="about-avatar-wrap">
     <img
       data-light-src={portraitLightImg.src}
       data-dark-src={portraitDarkImg.src}
@@ -67,6 +69,25 @@ const timelineGroups = [
         new MutationObserver(sync).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
       })();
     </script>
+    <span class="about-online" aria-hidden="true"></span>
+    </div>
+
+    {/* Availability, as a chat bubble coming from the avatar */}
+    <p class="about-bubble">
+      <span class="about-bubble-text">Open to senior product design roles in London, hybrid or remote</span>
+      <span class="about-bubble-meta" aria-hidden="true">
+        <span class="about-bubble-time"></span>
+        <svg viewBox="0 0 16 11" width="16" height="11"><path d="M11.07.65 4.98 7.66 2.4 5.2 1.3 6.35l3.75 3.6L12.2 1.7zM14.9.65 8.8 7.66l-.9-.86-1.07 1.2 2.05 1.96L16 1.7z" fill="currentColor"/></svg>
+      </span>
+    </p>
+    <script is:inline>
+      // Stamp the bubble with the visitor's own time, like a message that's just arrived
+      (function () {
+        var el = document.currentScript.previousElementSibling.querySelector('.about-bubble-time');
+        try { el.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); } catch (e) {}
+      })();
+    </script>
+    </div>
     <h1 class="visually-hidden">James Sparkes, Senior Product Designer in London</h1>
 
     <div class="about-bio">
@@ -83,8 +104,6 @@ const timelineGroups = [
         <p>Outside of client work, I'm into open source and building CLI and GUI programs for Linux, and I enjoy the games industry, learning how games get made, and even building some small games myself as a way to understand systems from first principles, from a game loop to physics to rendering built up from scratch. That same instinct, wanting to see and control every part of a system rather than trust a black box, is what I bring to product design too. I adapt quickly to new tools and make use of AI, but critical thinking, empathy, and real problem-solving stay at the core of the work.</p>
       </details>
     </div>
-
-    <p class="about-status"><span class="about-status-dot" aria-hidden="true"></span><span>Open to senior product design roles in London, hybrid or remote</span></p>
 
     <div class="about-links">
       <a href="/cv/">CV</a>
