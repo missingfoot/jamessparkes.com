@@ -1576,8 +1576,10 @@ a.nav-identity {
         font-size: 26px;
     }
 
+    /* Gallery on phones: tall enough that a square image fills most of the width,
+       with the next one peeking in so it's clear it scrolls */
     .project-thumb {
-        height: 240px;
+        height: min(85vw, 460px);
     }
 
     .cv-columns {
