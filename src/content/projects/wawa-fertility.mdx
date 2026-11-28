@@ -21,10 +21,21 @@ highlights:
   - value: "4 regulators"
     label: "reported to from one data model"
 visible: true
-images: []
-cover: "../../assets/images/wawa-cal-linked-poster.jpg"
+images:
+  - src: "../../assets/images/wawa-reporting-01.jpg"
+    alt: "wawa regulatory reporting: the dashboard counting reports that need attention, need checking and are submitted, and the check-off view for signing a report off for PRISM"
+  - src: "../../assets/images/wawa-health-01.jpg"
+    alt: "wawa patient health survey on phones: the Pregnancy history section intro, and multiple-choice questions about period symptoms and gynaecological conditions"
+  - src: "../../assets/images/wawa-platform-01.jpg"
+    alt: "wawa clinic platform: Dr. James's home dashboard with today's appointments and quick actions, and the week view of the clinic calendar"
+  - src: "../../assets/images/wawa-app-01.jpg"
+    alt: "wawa patient app on phones: the treatment timeline of things to do, a Gonal-F injection with dose and schedule, and a chat with a fertility counsellor"
+  - src: "../../assets/images/wawa-app-02.jpg"
+    alt: "wawa patient app on desktop and phone: the timeline in a browser, the finance screen with the outstanding balance, and signing an embryo freezing consent"
+cover: "../../assets/images/wawa-reporting-01.jpg"
 ---
 
+import { Image } from 'astro:assets';
 import KV from '../../components/KV.astro';
 import KVGroup from '../../components/KVGroup.astro';
 import InlineVideo from '../../components/InlineVideo.astro';
@@ -34,6 +45,11 @@ import calSideBarPoster from '../../assets/images/wawa-cal-side-bar-poster.jpg';
 import reportingPoster from '../../assets/images/wawa-reporting-poster.jpg';
 import wawaAiPoster from '../../assets/images/wawa-ai-poster.jpg';
 import onboardingPoster from '../../assets/images/wawa-onboarding-poster.jpg';
+import reportingQueues from '../../assets/images/wawa-reporting-02.jpg';
+import healthSurvey from '../../assets/images/wawa-health-02.jpg';
+import patientDonors from '../../assets/images/wawa-platform-02.jpg';
+import inboxTasks from '../../assets/images/wawa-platform-03.jpg';
+import referralsCrm from '../../assets/images/wawa-platform-04.jpg';
 
 ## Overview
 
@@ -100,6 +116,8 @@ Redesigned several core clinical workflows used daily by clinic staff: stimulati
   <KV term="Related task list rework" desc="Separately reworked the day-to-day clinical task list (used to sign off consents and complete clinical steps) around an email-inbox-style model: auto-advance to the next item, keyboard shortcuts, and default filters like &quot;overdue&quot; and &quot;today&quot;, since this was a workflow clinicians touched dozens of times a day, not a once-a-month feature." />
 </KVGroup>
 
+<Image src={inboxTasks} alt="The clinical inbox showing a patient's laboratory and imaging results, and the inbox-style task list for signing consents with the document alongside" loading="lazy" />
+
 ### Donor flow
 
 <KVGroup>
@@ -107,6 +125,8 @@ Redesigned several core clinical workflows used daily by clinic staff: stimulati
   <KV term="Redesigned as one section" desc="Built a proper &quot;Donors&quot; section inside cryo storage, with a filterable table for matching donors against criteria clinics actually search on." />
   <KV term="Consolidated dashboard" desc="A donor dashboard surfaces family limits, storage, and any holds or restrictions in one place rather than scattered across separate screens." />
 </KVGroup>
+
+<Image src={patientDonors} alt="A patient's overview page with encounters, referrals and notes, and the donors table in cryo storage with family limits shown as filled dots" loading="lazy" />
 
 ### Lab sheets
 
@@ -147,6 +167,8 @@ Designed a CRM for managing how patients enter a clinic's care, from formal refe
 - Designed the review flow around AI-assisted document extraction: staff upload a referral document, the system extracts patient details automatically, and staff verify and correct the extracted fields rather than transcribing them from scratch.
 - Designed a dedicated expiring-referrals view so time-sensitive referrals surface proactively instead of requiring staff to filter for them manually.
 
+<Image src={referralsCrm} alt="The referrals intake queue listing patients by source, urgency and status, and referral analytics with pipeline, contact and conversion metrics" loading="lazy" />
+
 ## Project: Conversational AI booking and scheduling
 
 ### Overview
@@ -164,6 +186,8 @@ For scheduling, a known pain point for clinic staff, I applied the same approach
 ### Overview
 
 A large undertaking to fix where the product's health data actually came from and how usable it was once captured: consolidating every clinic's separate intake survey into one customisable master survey, moving primary data collection from clinician to patient, and making sure everything captured was structured enough for the rest of the platform to actually use.
+
+<Image src={healthSurvey} alt="The patient health survey on phones: the list of sections Dr. James has requested, a question about cycle length, and the Birth control history section intro" loading="lazy" />
 
 ### Consolidating clinic surveys into one platform-wide intake
 
@@ -226,6 +250,8 @@ This work also closed a concrete gap elsewhere in the product: several patient-r
 </KVGroup>
 
 <InlineVideo src="/videos/wawa-reporting.mp4" poster={reportingPoster} alt="The regulatory reporting dashboard showing patient submission status across ready, needs attention, overdue, and submitted states" />
+
+<Image src={reportingQueues} alt="The needs-attention queue of reports with issue counts and days left, and reporting analytics with error rates, a report trend and form type breakdown" loading="lazy" />
 
 ### Contributions
 
