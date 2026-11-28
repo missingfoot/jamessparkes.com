@@ -2096,13 +2096,14 @@ a.nav-identity {
     --bubble: #005c4b;
     --bubble-text: #e9edef;
 }
-/* The little tail at the top-left, pointing back at the avatar */
+/* The little tail at the top-left, pointing back at the avatar. It's 1px wider than the gap and
+   tucks under the bubble's edge, so no hairline seam shows at fractional zoom levels. */
 .about-bubble::before {
     content: "";
     position: absolute;
     top: 0;
     left: -8px;
-    width: 8px;
+    width: 9px;
     height: 13px;
     background: var(--bubble);
     clip-path: polygon(100% 0, 0 0, 100% 100%);
