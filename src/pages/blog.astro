@@ -72,8 +72,8 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
       </div>
       </div>
 
-      <button type="button" class="round-button blog-top" aria-label="Back to top">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+      <button type="button" class="btn btn--sm btn--float round-button blog-top" aria-label="Back to top">
+        <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
       </button>
     </aside>
 
@@ -110,9 +110,9 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
     </div>
   </div>
 
-  <button slot="floating" type="button" class="mobile-download-cv blog-filter-toggle" aria-controls="blog-controls" aria-expanded="false" hidden>
-    Filter
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg>
+  <button slot="floating" type="button" class="btn btn--solid mobile-download-cv blog-filter-toggle" aria-controls="blog-controls" aria-expanded="false" hidden>
+    <span class="btn-label">Filter</span>
+    <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg>
   </button>
 </BaseLayout>
 

@@ -202,25 +202,84 @@ a.nav-identity {
     color: var(--active-text);
 }
 
-.nav-download {
-    display: flex;
+/* ─── Buttons ─────────────────────────────────────────────────
+   One button for pills, labelled buttons and round icon buttons. Sizes come from three
+   values; everything else is worked out:
+     --btn-icon  icon size, which is also the content height
+     --btn-py    space above and below the content
+     --btn-px    text's space from the edge on a straight-sided button
+   Height is icon + 2 × py and the radius is half of that: the real radius, not 999px,
+   so the maths below holds. Each child names the room it needs at the edge:
+     - an icon needs py, which makes it concentric with the rounded end
+       (same space all round; an icon on its own is a perfect circle)
+     - text needs px plus (1 − π/4) × radius ≈ 0.2146 × r, the space the curve
+       takes from the corners, so it looks as far from the edge as its padding says
+   The first and last child then take their own room, so an icon can sit at either end,
+   or there's no icon, or only an icon, and it still lines up.
+   (After Ariakit's "Claude has been styling your pills wrong".) */
+.btn {
+    --btn-icon: 20px;
+    --btn-py: 15px;
+    --btn-px: 22px;
+    --btn-gap: 8px;
+    --btn-h: calc(var(--btn-icon) + 2 * var(--btn-py));
+    --btn-r: calc(var(--btn-h) / 2);
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-    margin-top: 0.75rem;
-    background: var(--active-bg);
-    color: var(--active-text);
-    padding: 0.65rem 1rem;
-    border-radius: 4px;
+    gap: var(--btn-gap);
+    height: var(--btn-h);
+    padding: 0;
+    border: 0;
+    border-radius: var(--btn-r);
+    font: inherit;
     font-size: 13px;
     font-weight: 500;
-    opacity: 0.9;
+    line-height: var(--btn-icon);
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+}
+.btn > * { flex: none; }
+.btn-icon {
+    --btn-edge: var(--btn-py);
+    width: var(--btn-icon);
+    height: var(--btn-icon);
+}
+.btn-label {
+    --btn-edge: calc(var(--btn-px) + 0.2146 * var(--btn-r));
+}
+.btn > :first-child { margin-inline-start: var(--btn-edge); }
+.btn > :last-child { margin-inline-end: var(--btn-edge); }
+
+/* Sizes */
+.btn--sm { --btn-icon: 20px; --btn-py: 6px; }            /* 32px: round buttons in the desktop margins */
+.btn--block {                                              /* full width, content centred */
+    display: flex;
+    width: 100%;
+    justify-content: center;
 }
 
-.nav-download svg,
-.mobile-download-cv svg {
-    width: 16px;
-    height: 16px;
+/* Looks */
+.btn--solid {
+    background: var(--active-bg);
+    color: var(--active-text);
+}
+.btn--float {
+    background: #fff;
+    color: #161614;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+.btn--float:hover,
+.btn--float:focus-visible {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 22px rgba(0, 0, 0, 0.16);
+}
+
+.nav-download {
+    --btn-icon: 18px;
+    --btn-py: 11px;
+    --btn-r: 4px;
+    margin-top: 0.75rem;
+    opacity: 0.9;
 }
 
 .nav-download:hover {
@@ -723,33 +782,16 @@ a.nav-identity {
     z-index: 5;
 }
 
+/* Round icon buttons (back, back to top): .btn .btn--sm .btn--float, a 32px circle */
 .round-button {
-    flex-shrink: 0;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 0;
-    border-radius: 50%;
-    background: #fff;
-    color: #161614;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 4px 14px rgba(0, 0, 0, 0.1);
-    text-decoration: none;
-    cursor: pointer;
     transition: opacity 0.2s, visibility 0.2s, box-shadow 0.15s, transform 0.15s;
 }
 
-.round-button:hover,
-.round-button:focus-visible {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 22px rgba(0, 0, 0, 0.16);
-}
-
-/* Phones: dark, and the same height as the floating Download CV pill (its padding plus one 13px line) */
+/* Phones: the floating pill's size (50px) and colours, so they sit level beside Download CV */
 @media (max-width: 767px) {
     .round-button {
-        width: calc(1.7rem + 13px * 1.8);
-        height: calc(1.7rem + 13px * 1.8);
+        --btn-icon: 20px;
+        --btn-py: 15px;
         background: var(--active-bg);
         color: var(--active-text);
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
@@ -1427,22 +1469,16 @@ a.nav-identity {
         margin-bottom: 0;
     }
 
+    /* Menu pill: .btn .btn--solid at 38px */
     .nav-mobile-toggle {
-        display: flex;
-        align-items: center;
-        gap: 6px;
+        --btn-icon: 22px;
+        --btn-py: 8px;
+        --btn-px: 18px;
+        --btn-gap: 6px;
         font-size: 14px;
-        font-weight: 500;
-        color: var(--active-text);
-        background: var(--active-bg);
-        padding: 0.5rem 0.85rem 0.5rem 1.4rem;
-        border-radius: 999px;
-        cursor: pointer;
     }
 
     .nav-mobile-toggle-icon {
-        width: 22px;
-        height: 22px;
         transition: transform 0.2s ease;
     }
 
@@ -1486,23 +1522,14 @@ a.nav-identity {
         display: none;
     }
 
+    /* Floating pill (Download CV, or Filter on the blog): looks come from .btn .btn--solid */
     .mobile-download-cv {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.4rem;
         position: fixed;
         bottom: 1.25rem;
         left: 50%;
         transform: translateX(-50%);
         z-index: 15;
-        background: var(--active-bg);
-        color: var(--active-text);
-        padding: 0.85rem 1.75rem;
-        border-radius: 999px;
-        font-size: 13px;
-        font-weight: 500;
-        white-space: nowrap; /* centred with left: 50%, so it only gets half the screen; don't let it wrap */
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
     }
 

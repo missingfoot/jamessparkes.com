@@ -15,7 +15,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     <button class="nav-theme-toggle" data-theme-toggle>
       <span class="theme-label">dark</span>
     </button>
-    <a class="nav-download" href="/james-sparkes-cv.pdf" target="_blank" rel="noopener">Download CV <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></a>
+    <a class="btn btn--solid btn--block nav-download" href="/james-sparkes-cv.pdf" target="_blank" rel="noopener"><span class="btn-label">Download CV</span><svg class="btn-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></a>
   </div>
 </aside>
 
@@ -26,9 +26,9 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
       <div class="nav-name">James Sparkes</div>
       <div class="nav-role">Senior Product Designer</div>
     </a>
-    <button class="nav-mobile-toggle" data-mobile-nav-toggle aria-expanded="false" aria-controls="nav-mobile-panel">
-      Menu
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-mobile-toggle-icon"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+    <button class="btn btn--solid nav-mobile-toggle" data-mobile-nav-toggle aria-expanded="false" aria-controls="nav-mobile-panel">
+      <span class="btn-label">Menu</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon nav-mobile-toggle-icon" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
     </button>
   </div>
   <div class="nav-mobile-panel" id="nav-mobile-panel" data-mobile-nav-panel>
@@ -37,7 +37,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
       <button class="nav-theme-toggle" data-theme-toggle>
         <span class="theme-label">dark</span>
       </button>
-      <a class="nav-download" href="/james-sparkes-cv.pdf" target="_blank" rel="noopener">Download CV <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></a>
+      <a class="btn btn--solid btn--block nav-download" href="/james-sparkes-cv.pdf" target="_blank" rel="noopener"><span class="btn-label">Download CV</span><svg class="btn-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></a>
     </div>
   </div>
 </div>
