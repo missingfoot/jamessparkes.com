@@ -2053,7 +2053,7 @@ a.nav-identity {
     color: var(--text);
     background: color-mix(in srgb, var(--status) 7%, transparent);
     border: 1px solid color-mix(in srgb, var(--status) 22%, transparent);
-    border-radius: 22px;
+    border-radius: 8px;
 }
 [data-theme="dark"] .about-status { --status: #7fcf6a; }
 .about-status-dot {
@@ -2083,15 +2083,12 @@ a.nav-identity {
 @media (prefers-reduced-motion: reduce) {
     .about-status-dot::after { animation: none; display: none; }
 }
-/* Phones: role on the first line, where on the second, rather than wrapping mid-phrase */
 @media (max-width: 640px) {
-    .about-status { padding: 0.6rem 1.1rem 0.6rem 0.75rem; }
-    .about-status-sep { display: none; }
-    .about-status-where { display: block; }
+    .about-status { padding: 0.6rem 1rem 0.6rem 0.75rem; }
 }
-/* Small phones (iPhone SE and narrower): a touch smaller so each half still fits on one line */
-@media (max-width: 380px) {
-    .about-status { font-size: 12px; gap: 0.6rem; padding-right: 0.9rem; }
+/* The narrowest phones: one size down so the sentence still fits on two lines */
+@media (max-width: 359px) {
+    .about-status { font-size: 12px; gap: 0.55rem; padding-right: 0.8rem; }
 }
 .about-status + .about-links { margin-top: 1.25rem; }
 
@@ -2111,13 +2108,9 @@ a.nav-identity {
 }
 .highlights-head {
     display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.25rem 1rem;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 0.4rem;
-    margin-bottom: 0.75rem;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
 }
 .highlights-title {
     font-size: 11px;
@@ -2128,7 +2121,7 @@ a.nav-identity {
     margin: 0;
 }
 .highlights-role {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--text-dim);
 }
 .highlights-grid {
