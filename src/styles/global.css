@@ -2025,3 +2025,97 @@ a.nav-identity {
     border: 0;
     border-radius: 6px;
 }
+
+/* About: availability line under the bio */
+.about-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    font-size: 13px;
+    color: var(--text-dim);
+}
+.about-status-dot {
+    flex: none;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #3f9a2e;
+    box-shadow: 0 0 0 3px color-mix(in srgb, #3f9a2e 18%, transparent);
+}
+[data-theme="dark"] .about-status-dot { background: #7fcf6a; box-shadow: 0 0 0 3px color-mix(in srgb, #7fcf6a 18%, transparent); }
+.about-status + .about-links { margin-top: 1rem; }
+
+/* Sidebar: personal projects past the first few, behind "Show more" */
+.nav-more summary { list-style: none; cursor: pointer; color: var(--text-dim); }
+.nav-more summary::-webkit-details-marker { display: none; }
+.nav-more summary:hover { color: var(--text); }
+.nav-more-close,
+.nav-more[open] .nav-more-open { display: none; }
+.nav-more[open] .nav-more-close { display: inline; }
+.nav-more[open] summary { order: 1; }
+.nav-more[open] { display: flex; flex-direction: column; }
+
+/* Work case studies: headline results at the top */
+.project-highlights {
+    margin: 0 0 2rem;
+}
+.highlights-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.4rem;
+    margin-bottom: 0.75rem;
+}
+.highlights-title {
+    font-size: 11px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin: 0;
+}
+.highlights-role {
+    font-size: 12px;
+    color: var(--text-dim);
+}
+.highlights-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+/* Two or four results sit in pairs rather than leaving one on its own row */
+.highlights-grid[data-count="2"],
+.highlights-grid[data-count="4"] { grid-template-columns: repeat(2, 1fr); }
+.highlight {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0.8rem 0.9rem 0.85rem;
+    border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--text) 3%, transparent);
+}
+.highlight-value {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.15;
+    color: var(--text);
+}
+.highlight-label {
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--text-dim);
+}
+@media (max-width: 640px) {
+    .highlights-grid,
+    .highlights-grid[data-count] { grid-template-columns: 1fr 1fr; }
+    .highlight:last-child:nth-child(odd) { grid-column: span 2; }
+    .highlight-value { font-size: 17px; }
+}

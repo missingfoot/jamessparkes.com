@@ -16,6 +16,10 @@ const projects = defineCollection({
       kind: z.enum(['Game', 'Mod', 'Tool']).optional(),
       // Work projects only: shown above the title on the homepage, e.g. "2022 – 2025".
       years: z.string().optional(),
+      // Work projects only: my job title there, shown above the highlights.
+      role: z.string().optional(),
+      // Work projects only: headline results shown at the top of the case study.
+      highlights: z.array(z.object({ value: z.string(), label: z.string() })).optional(),
       order: z.number(),
       visible: z.boolean().default(true),
       images: z.array(z.object({ src: image(), alt: z.string() })),

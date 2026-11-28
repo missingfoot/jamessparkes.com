@@ -12,6 +12,12 @@ const projects = (await getCollection('projects', ({ data }) => data.visible)).s
 );
 const workProjects = projects.filter((project) => project.data.category === 'work');
 const personalProjects = projects.filter((project) => project.data.category === 'personal');
+// Only the first few personal projects show; the rest sit behind "Show more".
+// The list starts open when you're on one of the hidden projects, so it stays highlighted.
+const PERSONAL_SHOWN = 5;
+const shownPersonal = personalProjects.slice(0, PERSONAL_SHOWN);
+const morePersonal = personalProjects.slice(PERSONAL_SHOWN);
+const onHiddenProject = morePersonal.some((project) => currentPath === `/personal/${project.id}`);
 // hrefs carry a trailing slash (what Netlify serves); currentPath has it stripped
 const isActive = (href: string) => (currentPath === (href.replace(/\/$/, '') || '/') ? ' active' : '');
 ---
@@ -31,11 +37,24 @@ const isActive = (href: string) => (currentPath === (href.replace(/\/$/, '') || 
   </div>
   <div class="nav-group">
     <div class="nav-group-header">Personal</div>
-    {personalProjects.map((project) => (
+    {shownPersonal.map((project) => (
       <a class={`nav-item nav-item-kind${isActive(`/personal/${project.id}/`)}`} href={`/personal/${project.id}/`}>
         <span class="nav-item-title">{project.data.title}</span>
         {project.data.kind && <span class={`kind-tag kind-${project.data.kind.toLowerCase()}`}>{project.data.kind}</span>}
       </a>
     ))}
+    {morePersonal.length > 0 && (
+      <details class="nav-more" open={onHiddenProject}>
+        <summary class="nav-item nav-more-toggle">
+          <span class="nav-more-open">Show {morePersonal.length} more</span><span class="nav-more-close">Show fewer</span>
+        </summary>
+        {morePersonal.map((project) => (
+          <a class={`nav-item nav-item-kind${isActive(`/personal/${project.id}/`)}`} href={`/personal/${project.id}/`}>
+            <span class="nav-item-title">{project.data.title}</span>
+            {project.data.kind && <span class={`kind-tag kind-${project.data.kind.toLowerCase()}`}>{project.data.kind}</span>}
+          </a>
+        ))}
+      </details>
+    )}
   </div>
 </nav>

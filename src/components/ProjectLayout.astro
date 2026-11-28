@@ -11,8 +11,11 @@ export interface Props {
   tags: string[];
   images: { src: ImageMetadata; alt: string }[];
   path: string;
+  role?: string;
+  years?: string;
+  highlights?: { value: string; label: string }[];
 }
-const { title, description, tags, images, path } = Astro.props;
+const { title, description, tags, images, path, role, years, highlights = [] } = Astro.props;
 
 // Previous / next follow the sidebar order: work first, then personal.
 const all = (await getCollection('projects', ({ data }) => data.visible)).sort((a, b) => a.data.order - b.data.order);
@@ -39,6 +42,23 @@ const next = here >= 0 && here < sequence.length - 1 ? sequence[here + 1] : unde
         : <span class="tag-chip">{t}</span>;
     })}</div>
     <p class="project-description">{description}</p>
+
+    {highlights.length > 0 && (
+      <section class="project-highlights" aria-labelledby="highlights-heading">
+        <div class="highlights-head">
+          <h2 id="highlights-heading" class="highlights-title">What I achieved</h2>
+          {(role || years) && <div class="highlights-role">{[role, years].filter(Boolean).join(' · ')}</div>}
+        </div>
+        <ul class="highlights-grid" data-count={highlights.length}>
+          {highlights.map((h) => (
+            <li class="highlight">
+              <span class="highlight-value">{h.value}</span>
+              <span class="highlight-label">{h.label}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
   </div>
 
   {images.length > 0 && (

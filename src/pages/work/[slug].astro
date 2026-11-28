@@ -19,6 +19,9 @@ const { Content } = await render(project);
   tags={project.data.tags}
   images={project.data.images}
   path={`/work/${project.id}`}
+  role={project.data.role}
+  years={project.data.years}
+  highlights={project.data.highlights}
 >
   <Content />
 </ProjectLayout>
