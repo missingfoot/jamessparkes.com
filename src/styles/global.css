@@ -390,12 +390,7 @@ a.nav-identity {
     flex: none;
     width: 1em;
     height: 1em;
-    color: var(--text-dim);
-    transition: color 0.15s;
-}
-
-.about-links a:hover .about-link-icon {
-    color: var(--text);
+    color: inherit;   /* same colour as the link text */
 }
 
 @media (max-width: 640px) {
