@@ -35,6 +35,7 @@ const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (
   title="Uni Blog — James Sparkes"
   description="My university design blog from 2011–2013: graphic design, photo manipulation, 3D and typography coursework, research and inspiration."
   path="/blog/"
+  noindex
 >
   <div class="blog-view" data-cats={filterSlugs.join(' ')}>
     {showDeadLinks && <script type="application/json" id="blog-dead-links" set:html={JSON.stringify(deadLinkReport.dead)} />}

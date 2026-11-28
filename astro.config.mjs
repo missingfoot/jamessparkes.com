@@ -10,7 +10,7 @@ const cssTargets = { chrome: 87 << 16, firefox: 78 << 16, safari: 14 << 16 };
 
 export default defineConfig({
   site: 'https://www.jamessparkes.com',
-  integrations: [mdx(), sitemap({ filter: (page) => !page.includes('/404') })],
+  integrations: [mdx(), sitemap({ filter: (page) => !page.includes('/404') && !page.includes('/blog/') })],
   // Fetch a page when its link is hovered (or touched) so clicks feel instant
   prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
   vite: {

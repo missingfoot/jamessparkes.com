@@ -11,8 +11,10 @@ export interface Props {
   ogImage?: { src: string; width: number; height: number; alt: string };
   ogType?: 'website' | 'article' | 'profile';
   jsonLd?: object;
+  // Keep a page out of search results (the uni blog) while links to it still work
+  noindex?: boolean;
 }
-const { title, description, path, ogImage, ogType = 'website', jsonLd } = Astro.props;
+const { title, description, path, ogImage, ogType = 'website', jsonLd, noindex = false } = Astro.props;
 // Netlify serves pages at www with a trailing slash; match that so the canonical isn't a redirect
 const canonicalURL = new URL(path.endsWith('/') ? path : `${path}/`, Astro.site);
 const ogImageURL = new URL(ogImage?.src ?? '/images/og-image.jpg', Astro.site);
@@ -24,7 +26,7 @@ const ogImageURL = new URL(ogImage?.src ?? '/images/og-image.jpg', Astro.site);
     <link rel="preload" href="/fonts/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/JetBrainsMono-Medium.woff2" as="font" type="font/woff2" crossorigin>
     <script is:inline>(function(){var t=localStorage.getItem("theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);})();</script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -32,6 +34,7 @@ const ogImageURL = new URL(ogImage?.src ?? '/images/og-image.jpg', Astro.site);
     <title>{title}</title>
     <meta name="description" content={description}>
     <meta name="author" content="James Sparkes">
+    {noindex && <meta name="robots" content="noindex, follow">}
 
     <link rel="canonical" href={canonicalURL} />
     <meta property="og:type" content={ogType}>

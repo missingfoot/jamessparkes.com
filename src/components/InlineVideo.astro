@@ -1,7 +1,5 @@
 ---
 // src/components/InlineVideo.astro
-import { Image } from 'astro:assets';
-
 export interface Props {
   src: string;
   poster: ImageMetadata;
@@ -13,7 +11,28 @@ const className = extraClass ? `project-inline-video ${extraClass}` : 'project-i
 const posterSrc = poster.src;
 ---
 <div class={className}>
-  <video autoplay loop muted playsinline preload="auto" poster={posterSrc} aria-label={alt}>
+  {/* No autoplay attribute and preload="none": nothing downloads until the video nears the screen (script below) */}
+  <video data-autoplay loop muted playsinline preload="none" poster={posterSrc} aria-label={alt}>
     <source src={src} type="video/mp4" />
   </video>
 </div>
+
+<script>
+  // Play each video only while it's on (or about to come on) screen, so a page with
+  // several clips doesn't download all of them up front. With reduced motion on,
+  // nothing autoplays and the videos get controls instead.
+  const videos = [...document.querySelectorAll<HTMLVideoElement>('video[data-autoplay]')];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    videos.forEach((v) => { v.controls = true; v.preload = 'metadata'; });
+  } else {
+    const io = new IntersectionObserver((entries) => {
+      for (const { target, isIntersecting } of entries) {
+        const v = target as HTMLVideoElement;
+        if (isIntersecting) v.play().catch(() => {});
+        else if (!v.paused) v.pause();
+      }
+    }, { rootMargin: '300px 0px' });
+    videos.forEach((v) => io.observe(v));
+  }
+</script>

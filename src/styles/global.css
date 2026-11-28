@@ -24,6 +24,19 @@
     padding: 0;
 }
 
+/* Pinch-zoom stays available (accessibility). Instead of blocking it, stop what made zooming
+   feel broken: no sideways scrolling, no double-tap zoom, no iOS zoom when a field gets focus. */
+html, body { overflow-x: clip; }
+html {
+    touch-action: manipulation;      /* pan and pinch-zoom still work; double-tap zoom doesn't */
+    -webkit-text-size-adjust: 100%;  /* don't let iOS bump text sizes when the phone is turned */
+    text-size-adjust: 100%;
+}
+@media (pointer: coarse) {
+    /* iOS zooms into any field under 16px when it's tapped */
+    input, select, textarea { font-size: max(16px, 1em) !important; }
+}
+
 h1 { font-size: 32px; font-weight: 500; line-height: 1.2; }
 h2 { font-size: 22px; font-weight: 500; line-height: 1.3; }
 h3 { font-size: 18px; font-weight: 500; line-height: 1.4; }
