@@ -36,251 +36,87 @@ cover: "../../assets/images/wawa-reporting-01.jpg"
 ---
 
 import { Image } from 'astro:assets';
-import KV from '../../components/KV.astro';
-import KVGroup from '../../components/KVGroup.astro';
-import onboardingSetup from '../../assets/images/wawa-onboarding-setup.jpg';
-import onboardingImport from '../../assets/images/wawa-onboarding-import.jpg';
-import aiBooking from '../../assets/images/wawa-ai-booking.jpg';
+import replicaGrid from '../../assets/images/wawa-replica-grid.jpg';
 import reportingIssue from '../../assets/images/wawa-reporting-issue.jpg';
 import reportingSubmit from '../../assets/images/wawa-reporting-submit.jpg';
-import schedulerLinked from '../../assets/images/wawa-scheduler-linked.jpg';
 import reportingQueues from '../../assets/images/wawa-reporting-02.jpg';
-import healthSurvey from '../../assets/images/wawa-health-survey.jpg';
-import patientDonors from '../../assets/images/wawa-platform-02.jpg';
-import inboxTasks from '../../assets/images/wawa-platform-03.jpg';
+import hfeaReports from '../../assets/images/wawa-hfea-reports.jpg';
+import reportingAdmin from '../../assets/images/wawa-reporting-admin.jpg';
 import referralsCrm from '../../assets/images/wawa-platform-04.jpg';
+import treatmentPlans from '../../assets/images/wawa-treatment-plans.jpg';
+import protocols from '../../assets/images/wawa-protocols.jpg';
+import healthSurvey from '../../assets/images/wawa-health-survey.jpg';
+import surveyBuilder from '../../assets/images/wawa-survey-builder.jpg';
+import surveyAnalytics from '../../assets/images/wawa-survey-analytics.jpg';
+import inboxTasks from '../../assets/images/wawa-platform-03.jpg';
+import patientDonors from '../../assets/images/wawa-platform-02.jpg';
+import cryoThaw from '../../assets/images/wawa-cryo-thaw.jpg';
+import onboardingSetup from '../../assets/images/wawa-onboarding-setup.jpg';
+import onboardingImport from '../../assets/images/wawa-onboarding-import.jpg';
+import appTimeline from '../../assets/images/wawa-app-timeline.jpg';
+import appItems from '../../assets/images/wawa-app-items.jpg';
+import appDesktop from '../../assets/images/wawa-app-desktop.jpg';
+import components from '../../assets/images/wawa-components.jpg';
+import aiBooking from '../../assets/images/wawa-ai-booking.jpg';
+import schedulerLinked from '../../assets/images/wawa-scheduler-linked.jpg';
 
 <p class="project-note">Every screen on this page is from my own React recreation of the wawa platform, the working prototype I designed in. The real work was built in wawa's production platform, which I can't show here.</p>
 
 ## Overview
 
-wawa builds clinical software for fertility clinics, spanning patient intake, clinical workflows, scheduling, cryo storage and donor management, and the regulatory reporting clinics are legally required to submit. As a senior product designer who also shipped frontend code in a flat-hierarchy startup team, I worked on everything from patient-facing clinical flows to internal regulatory infrastructure, often taking a feature from first sketch through to shipped code. Projects ranged from ground-up platform builds to targeted redesigns of clinical paperwork, each shaped by close collaboration with clinic partners and a small, fast-moving internal team.
+wawa makes clinical software for fertility clinics in the UK, US, Canada and Australia: patient intake, treatment, scheduling, cryo storage, billing and the reporting clinics owe their regulators. I was a senior product designer in a small, flat team, working directly with clinic partners and taking features from research through to shipped frontend code.
 
-## From Figma to code
+## How I worked
 
-I started out designing in Figma, but wawa's product is dense: large tables, lots of interconnected data, and more states than I could keep track of across static frames. So I rebuilt the wawa platform from scratch in React and Next.js and used that as my "Figma". Designs became rich, working prototypes with real interactions instead of limited Figma pages.
+### Why
 
-Later, as the team grew more confident with AI, the design team, me included, moved to designing directly in the production platform itself (Ruby on Rails, Phlex and Tailwind) using Claude Code. A design became a pull request for engineers to review rather than a file for them to rebuild, which cut developer time on smaller features from one or two days to around an hour.
+wawa is dense: big tables, lots of linked data and more states than static Figma frames could keep track of.
 
-## Tasks & responsibilities
+### What I did
 
-Across my time at wawa I...
+- Rebuilt almost the whole wawa platform from scratch in React and used it as my design tool, so every design was a working prototype with real interactions and data.
+- As the team grew confident with AI, the design team, me included, moved to designing straight in the production codebase (Ruby on Rails, Phlex and Tailwind) with Claude Code.
+- Built a components page in the prototype that became the groundwork for wawa's design system redesign.
 
-- Owned design end-to-end (research, UX, UI, and frontend implementation) rather than handing off to a separate engineering team.
-- Ran discovery directly with clinic partners across the UK, Australia, the US, and Canada to ground product decisions in real clinical workflows, not assumptions.
-- Worked across a multi-jurisdiction product, designing for the regulatory and clinical differences between UK, US, Canadian, and Australian fertility clinics.
-- Worked in a flat-hierarchy team where designers carry projects further than a typical handoff model, from research through to shipped frontend code.
+### Result
 
-## Project: Two-sided clinic onboarding platform
-
-### Overview
-
-Designed and built a two-sided onboarding platform to bring new fertility clinics onto wawa's software. Onboarding a clinic means walking them through configuring dozens of interdependent settings (products, medical codes, tax rates, price lists) before the platform is usable, and the process had grown ad hoc as the product grew, with no dedicated flow guiding a new clinic through it in the right order.
-
-### Problem
-
-<KVGroup>
-  <KV term="Losing work on missing dependencies" desc="Creating something as simple as a product required a medical code and a tax rate to already exist. If they didn't, the person configuring the clinic had to abandon the form, go create the missing dependency elsewhere, and start again, losing their work each time." />
-  <KV term="Bulk import was hidden" desc="A faster path existed for clinics with large catalogues, but it was admin-only and undocumented, with no template or guidance on the expected file structure, so the clinics who needed it most often didn't know it existed." />
-  <KV term="Settings were disconnected" desc="Related concepts (medications and products, tax rates and price lists) lived in separate, unrelated parts of the settings area." />
-  <KV term="Training didn't scale" desc="Larger clinics were still relying on multi-day, in-person training to get set up at all, which doesn't scale past a handful of rollouts a year." />
-</KVGroup>
+A design became a pull request for engineers to review, not a file to rebuild: smaller features went from one or two days of developer time to about an hour.
 
 <figure class="project-figure">
-  <Image src={onboardingSetup} alt="The guided clinic setup: a checklist of sections down the side and the Organisation basics step, with name, country, currency and time zone, and a request-approval link" loading="lazy" />
-  <figcaption>Clinic setup as a guided checklist. Each section is filled in by the clinic and signed off by an approver, instead of days of in-person training.</figcaption>
+  <Image src={replicaGrid} alt="Nine screens from the React recreation of wawa: home dashboard, calendar, patient overview, treatment plans, donors, a cryo device, referrals, the clinical inbox and protocol settings" loading="lazy" />
+  <figcaption>A few of the screens in my React recreation of the platform, the environment I designed in.</figcaption>
 </figure>
 
-<figure class="project-figure">
-  <Image src={onboardingImport} alt="Three bulk import steps: CSV columns matched to email, roles and teams; unrecognised team names to map or remove; and a duplicate email to keep or merge" loading="lazy" />
-  <figcaption>Bulk import for large clinics: columns are matched automatically, unrecognised values get mapped, and duplicates are caught before anyone is invited.</figcaption>
-</figure>
+## Regulatory reporting
 
-### Contributions
+Reporting to fertility regulators, built on data clinics already record.
 
-- Designed an inline "create new" pattern for dependency fields (medical codes, tax rates) directly inside the form that needs them, so configuring a clinic no longer means losing your place and starting over.
-- Designed contextual nudges toward bulk import for clinics adding items one at a time, plus a downloadable CSV template and a column-mapping step, so bulk import stopped being an admin-only, undocumented feature.
-- Restructured the settings information architecture so related concepts (price lists, medications, tax rates) sit together instead of being split across unrelated tabs.
-- Designed a guided setup flow: a self-serve questionnaire at a dedicated URL, answerable before a clinic even logs in, that adapts based on the clinic's jurisdiction and the integrations they need, replacing a static document-based intake process.
-- Built the frontend in Next.js 15 with InstantDB as the data layer, including setting up the local development environment for the project from scratch.
+### Why
 
-### Outcome & impact
+- Clinics have to report every registration, cycle and outcome to their regulator (HFEA in the UK, ANZARD in Australia, BORN in Canada, SART in the US), each with its own format.
+- Staff re-entered data that already existed, with no view of what was outstanding and no deadline reminders, despite penalties for late or wrong submissions.
+- Many prospective clinics needed reporting before they could sign.
 
-The onboarding demo of the guided setup work got a strong internal response and was chosen to be shown at the company all-hands as a template for how implementation should work going forward, standardised and repeatable rather than a bespoke, largely manual process per clinic. It was an active initiative rather than a finished, measured result when I left, but it reframed onboarding from something wawa does to a clinic over days of training, toward something a clinic can largely configure themselves.
+### What I did
 
-## Project: Clinical flow redesigns
+- Rejected the obvious answer of reporting forms. wawa already holds the data, so reporting became verification: a dashboard of what's ready, what's wrong and what's overdue.
+- Each error is fixed in place with a link back to its source record, then checked off and sent in one batch.
+- One canonical data model, mapped to each regulator only at submission. Regulators without an API get the same workflow with "Export CSV" instead of "Submit".
+- Deadlines and reminders for each form type, plus an activity log of who changed, checked and submitted what.
+- An explorer for the regulator's own reports, with charts for timeliness, rejected records and validation errors.
 
-**Focus areas:** Donor flow · Lab sheets · Stim sheets · Clinical task management
+### Result
 
-### Overview
-
-Redesigned several core clinical workflows used daily by clinic staff: stimulation medication tracking during a treatment cycle, donor and cryo storage management, and the paper lab sheets embryology teams still relied on day to day.
-
-### Stim sheets and clinical tasks
-
-<KVGroup>
-  <KV term="The problem" desc="Extending a single medication on the tracking sheet took seven or more clicks (open edit, scroll, change the date, save, wait for the page to refresh and re-scroll to where you were). A patient on five medications meant repeating that five times, several times a day, across many patients at once." />
-  <KV term="A useful benchmark" desc="A clinician showed a competitor product that solved the same problem with a double-click on the target date, useful as a benchmark, not a template to copy outright." />
-  <KV term="Redesigned interaction" desc="Reworked medication extension around direct manipulation instead of a multi-step edit flow." />
-  <KV term="Related task list rework" desc="Separately reworked the day-to-day clinical task list (used to sign off consents and complete clinical steps) around an email-inbox-style model: auto-advance to the next item, keyboard shortcuts, and default filters like &quot;overdue&quot; and &quot;today&quot;, since this was a workflow clinicians touched dozens of times a day, not a once-a-month feature." />
-</KVGroup>
-
-<figure class="project-figure">
-  <Image src={inboxTasks} alt="The clinical inbox showing a patient's laboratory and imaging results, and the inbox-style task list for signing consents with the document alongside" loading="lazy" />
-  <figcaption>The task list works like an email inbox: open an item, act on it, and it moves on to the next, with filters like overdue and today.</figcaption>
-</figure>
-
-### Donor flow
-
-<KVGroup>
-  <KV term="The problem" desc="The donor management flow had accumulated as a series of individual fixes to specific client-reported issues rather than being designed as one coherent workflow. It showed: a donor reservation system that felt bolted on, and inventory visibility that existed but was buried in the wrong part of the product entirely." />
-  <KV term="Redesigned as one section" desc="Built a proper &quot;Donors&quot; section inside cryo storage, with a filterable table for matching donors against criteria clinics actually search on." />
-  <KV term="Consolidated dashboard" desc="A donor dashboard surfaces family limits, storage, and any holds or restrictions in one place rather than scattered across separate screens." />
-</KVGroup>
-
-<figure class="project-figure">
-  <Image src={patientDonors} alt="A patient's overview page with encounters, referrals and notes, and the donors table in cryo storage with family limits shown as filled dots" loading="lazy" />
-  <figcaption>Donors get their own section in cryo storage: a filterable table with family limits shown at a glance, next to the patient overview it links from.</figcaption>
-</figure>
-
-### Lab sheets
-
-<KVGroup>
-  <KV term="The context" desc="Embryology labs run on printed lab sheets, physically carried between the bench, the incubator, and storage." />
-  <KV term="First framing" desc="Auto-generate a pre-filled PDF from a patient's active cycle so staff could print it, fill it in by hand, and scan it back in." />
-  <KV term="The problem with that plan" desc="Filling in a printed sheet by hand and then re-entering that same data digitally is exactly the kind of duplicate data entry clinics are already drowning in." />
-  <KV term="The pivot" desc="Shifted the design to treat the lab sheet as a live view of data that already exists in wawa rather than a form to fill out, with a QR code as the bridge back to the physical world: scan the code on a sample or tray, and the corresponding digital sheet opens directly, already populated." />
-</KVGroup>
-
-### Contributions
-
-- Redesigned the medication extension interaction on stim sheets from a multi-step edit flow to direct manipulation, and audited and fixed a set of related chart-rendering and task-list bugs raised directly by clinicians.
-- Reworked a clinical task list into an inbox-style model with auto-advance, keyboard shortcuts, and smart default filters, aimed at reducing the sheer number of clicks in a workflow clinicians repeat constantly throughout the day.
-- Redesigned the donor and cryo storage flow around a dedicated, filterable donor section with a consolidated status dashboard, replacing a workflow that had grown as a series of disconnected patches.
-- Reframed lab sheet digitisation from a print-and-scan pattern to a live, QR-code-linked digital view, avoiding a new source of duplicate data entry for embryology staff.
-
-## Project: Referrals & patient intake CRM
-
-### Overview
-
-Designed a CRM for managing how patients enter a clinic's care, from formal referral documents through to online booking links and marketing sign-ups, with AI-assisted extraction to auto-populate patient records from uploaded referral documents rather than requiring manual transcription.
-
-### Problem
-
-<KVGroup>
-  <KV term="&quot;Referrals&quot; was too narrow" desc="Patients arrive via referral letters, but also web booking forms, direct sign-ups, and marketing channels, and all of them needed the same intake workflow." />
-  <KV term="Leads mixed into patients" desc="Patients created from these different sources were mixed into the main patient table with no way to tell them apart." />
-  <KV term="No duplicate detection" desc="There was no way to catch a duplicate patient being entered twice." />
-  <KV term="No expiry visibility" desc="Referrals with a natural expiry window had no dedicated view surfacing which ones were about to lapse, so staff had to know to go looking for them." />
-</KVGroup>
-
-### Contributions
-
-- Reframed "Referrals" as a broader intake workflow view spanning every source a patient can enter through, rather than a separate store just for referral documents.
-- Defined an explicit patient lifecycle (from unprocessed through to booked and in treatment) so intake stays a working queue instead of quietly accumulating stale records.
-- Designed a duplicate-patient detection flow that surfaces a match by name or email at the point of entry, before a second record gets created.
-- Designed the review flow around AI-assisted document extraction: staff upload a referral document, the system extracts patient details automatically, and staff verify and correct the extracted fields rather than transcribing them from scratch.
-- Designed a dedicated expiring-referrals view so time-sensitive referrals surface proactively instead of requiring staff to filter for them manually.
-
-<figure class="project-figure">
-  <Image src={referralsCrm} alt="The referrals intake queue listing patients by source, urgency and status, and referral analytics with pipeline, contact and conversion metrics" loading="lazy" />
-  <figcaption>Every way a patient arrives lands in one intake queue, with analytics on how referrals convert into appointments.</figcaption>
-</figure>
-
-## Project: Conversational AI booking and scheduling
-
-### Overview
-
-For wawa's clinic platform, I designed an AI feature that moves beyond static documentation into task execution. Rather than just answering questions, it lets clinic staff book appointments and build schedules using natural language, understanding intent even from loosely phrased or misspelled input.
-
-For appointment booking, staff can type a request like booking a patient for an extended consultation, and the AI parses the details, cross-references the patient record, and surfaces a confirmation step (such as verifying date of birth) to catch mishears or near-matches on names. It then walks through location, available days, time slots, and appointment type, before logging the booking directly to the calendar.
-
-For scheduling, a known pain point for clinic staff, I applied the same approach: users can describe a new schedule in plain language (staff member, room, start date, frequency, pauses) and the AI interprets it and creates the schedule entry directly, removing the need to manually configure it through a traditional form-based interface.
-
-<figure class="project-figure">
-  <Image src={aiBooking} alt="The wawa assistant: a misspelled request is matched to the right patient for confirmation, then the booked appointment is shown with type, host, location, date and time" loading="lazy" />
-  <figcaption>Booking by typing. A misspelled name is matched to the right patient for confirmation, then the assistant walks through location, date, time and mode before booking it.</figcaption>
-</figure>
-
-## Project: Patient health information capture
-
-### Overview
-
-A large undertaking to fix where the product's health data actually came from and how usable it was once captured: consolidating every clinic's separate intake survey into one customisable master survey, moving primary data collection from clinician to patient, and making sure everything captured was structured enough for the rest of the platform to actually use.
-
-<figure class="project-figure">
-  <Image src={healthSurvey} alt="The patient health survey on phones: the list of sections Dr. James has requested, and a question about how often periods occur with one answer chosen" loading="lazy" />
-  <figcaption>Patients fill in their own health history before their appointment: themed sections, one question at a time, every answer structured.</figcaption>
-</figure>
-
-### Consolidating clinic surveys into one platform-wide intake
-
-<KVGroup>
-  <KV term="The problem" desc="Every clinic on the platform had accumulated its own intake survey over time, each asking a different mix of largely the same underlying clinical questions in different wording, with no shared source of truth." />
-  <KV term="Audit and consolidate" desc="Went through every clinic's existing survey, extracted every unique question being asked anywhere, and merged them into one master survey covering the full superset." />
-  <KV term="Customisable per clinic" desc="Each clinic only shows the questions relevant to its own workflow, instead of every clinic separately reinventing, or losing, questions over time." />
-  <KV term="Structured and quantifiable only" desc="Every field is a dropdown, checkbox, or discrete input, never free text, so answers can be validated, searched, and fed into the rest of the platform rather than just sitting in one patient's file." />
-</KVGroup>
-
-### Shifting who captures the data
-
-<KVGroup>
-  <KV term="The problem" desc="Health history was largely gathered by a clinician or doctor asking questions during an appointment and writing down the answers, spending consultation time on data entry rather than care." />
-  <KV term="Patient becomes the primary source" desc="Redesigned the flow so the patient's own answers, submitted through the app before or between appointments, become the primary source of that data." />
-  <KV term="Clinician role shifts to review" desc="The clinician's job moves from collecting the data to reviewing what the patient already provided and accepting it." />
-  <KV term="Making that shift possible" desc="Redesigned the questionnaire itself into a guided, mobile-first experience broken into seven themed sections (cycle history, contraception history, partner history, medical background, lifestyle, family history, and goals), with a visible progress indicator, conditional questions, and softer section framing (&quot;Your Cycle Story&quot; rather than &quot;Menstrual History&quot;), without losing any of the clinical precision the data needs." />
-  <KV term="Clinician-facing review view" desc="The same answers render into a categorised, scannable table using clinical labels (&quot;Pain during sex&quot;) rather than the original patient-facing question wording, so reviewing a completed intake means reading a chart, not a transcript." />
-</KVGroup>
-
-### Flow sheet view and shared data
-
-<KVGroup>
-  <KV term="Data shared platform-wide" desc="Because every answer is captured as structured data rather than free text, a single data point (a survey answer, a lab value, a vital) is shared platform-wide instead of staying trapped in the form it was originally collected on." />
-  <KV term="Flow sheet view" desc="Clinicians can see how any individual data point has changed across visits rather than only its current value." />
-  <KV term="Notes on any data point" desc="Any specific data point in that history can have a note attached to it directly." />
-  <KV term="Obstetric history, UK vs US" desc="A related, more specialised structured-capture problem: the UK typically records Gravida and Para as two numbers, while US practice (per ACOG) uses the fuller GTPAL notation. Built a single recording interface that toggles between the two, auto-calculates derived values, and validates against clinically impossible entries (more living children than recorded deliveries, for example), always showing a plain-language summary alongside the shorthand." />
-</KVGroup>
-
-### Outcome & impact
-
-This work also closed a concrete gap elsewhere in the product: several patient-record fields the UK's HFEA reporting integration required were frequently missing entirely, because there had never been a structured, upfront point to capture them. Feeding those fields into the consolidated survey meant they were captured naturally as part of a patient's own intake rather than chased down later by staff, and materially reduced the missing-data gaps that were previously showing up as reporting errors.
-
-### Contributions
-
-- Audited existing intake surveys across the clinic base and consolidated every unique question into one master, per-clinic-customisable survey, with every field structured and quantifiable rather than free text.
-- Shifted the primary source of patient health data from clinician-collected to patient-self-reported via the app, redesigning the questionnaire itself into a guided, mobile-first, sectioned experience a patient would complete unsupervised.
-- Designed a clinician-facing review-and-accept flow, and a results view translating patient-facing question wording into clean clinical labels for fast scanning.
-- Designed a flow sheet view showing how any shared data point changes across visits, with the ability to attach notes to individual data points.
-- Designed a dual-standard obstetric history recorder supporting both UK (Gravida/Para) and US (GTPAL) conventions, with auto-calculation and validation against clinically impossible entries.
-- Closed gaps in commonly-missing HFEA regulatory fields by capturing them at the point of patient intake instead of after the fact.
-
-## Project: Multi-jurisdiction regulatory reporting framework
-
-### Problem
-
-<KVGroup>
-  <KV term="Four regulators, four formats" desc="Fertility clinics must report clinical data to different regulatory bodies depending on jurisdiction (HFEA/PRISM in the UK, ANZARD in Australia/NZ, SART in the US, and BORN), each with its own data requirements, formats, and submission mechanism." />
-  <KV term="Fully disconnected task" desc="Reporting was bolted onto the end of clinical work: staff re-entered data that often already existed elsewhere in the clinic's systems." />
-  <KV term="No outstanding-submission visibility" desc="No way to see which patients still had outstanding submissions short of running a manual report and checking each record by hand, and no reminders for approaching deadlines despite real regulatory consequences for missing them." />
-  <KV term="Real error rates" desc="Clinics estimated meaningful error rates under this manual process, which lines up with public regulatory data: the UK's HFEA board has reported clinics submitting through third-party integrations average a 6 to 8 percent error rate, against under 1 percent for clinics submitting directly." />
-</KVGroup>
-
-### Approach
-
-<KVGroup>
-  <KV term="Rejected the obvious approach" desc="Reached with the product lead early on: don't build dedicated &quot;reporting forms&quot; for staff to fill in, since that just relocates the same manual data entry problem into a new screen." />
-  <KV term="Verification, not forms" desc="wawa already captures the underlying clinical data (registrations, cycles, procedures, outcomes) as a byproduct of normal clinical workflow, so the reporting feature became a dashboard over that existing data showing what's ready, what's missing, and what's invalid, with submission reduced to a single action once a record is complete." />
-  <KV term="Canonical data, per-jurisdiction mapping" desc="Each data field is stored once in a canonical form and mapped to whatever format a given regulator expects only at submission time, so the same underlying record can satisfy multiple regulators' differing field formats without duplicating data entry per jurisdiction." />
-</KVGroup>
+The UK integration with HFEA's PRISM system went live, followed by Canada and Australia through CSV. Clinics singled out never having to log into the regulator's portal, and the Canadian regulator was keen enough on the design to look into it for themselves.
 
 <figure class="project-figure">
   <Image src={reportingIssue} alt="An overdue Early Outcome report with one issue left: the test date is out of range, highlighted in the record and corrected in place with a link to the source" loading="lazy" />
-  <figcaption>Verification, not forms: the data already exists, so a report only asks staff to fix what is wrong, in place, with a link back to the source record.</figcaption>
+  <figcaption>Verification, not forms: a report only asks staff to fix what is wrong, in place, with a link back to the source record.</figcaption>
 </figure>
 
 <figure class="project-figure">
   <Image src={reportingSubmit} alt="Submitting 43 fixed reports to PRISM at once, listing each patient, form type and who checked it" loading="lazy" />
-  <figcaption>Once checked, reports go to the regulator in one batch, with a record of who signed off each one.</figcaption>
+  <figcaption>Checked reports go to the regulator in one batch, with a record of who signed off each one.</figcaption>
 </figure>
 
 <figure class="project-figure">
@@ -288,46 +124,234 @@ This work also closed a concrete gap elsewhere in the product: several patient-r
   <figcaption>A queue of what needs attention, with days left before each deadline, and analytics on the most common errors.</figcaption>
 </figure>
 
-### Contributions
+<figure class="project-figure">
+  <Image src={hfeaReports} alt="Two of the regulator reports: timeliness of data submission with the share made on time, and rejected records with rejection reasons as a chart" loading="lazy" />
+  <figcaption>The regulator's own reports, turned into charts a quality manager can sense-check.</figcaption>
+</figure>
 
-- Designed the reporting dashboard: a single view of every patient's reporting status (ready, needs attention, overdue, submitted) replacing a fully manual, per-patient checking process.
-- Designed the canonical-data-plus-per-jurisdiction-mapping model underpinning the framework, so one underlying record can generate a compliant submission for multiple regulatory bodies instead of maintaining separate data entry per jurisdiction.
-- Designed a flow for importing a patient's pre-existing registration from a prior clinic (regulators generally allow only one registration per patient), surfacing that history read-only rather than blocking or duplicating it.
-- The UK's HFEA/PRISM integration was the first full implementation of this framework, built and validated directly with clinic partners; ANZARD, SART, and BORN share the same underlying data model, submitting via CSV export rather than a live API.
+<figure class="project-figure">
+  <Image src={reportingAdmin} alt="Deadline and reminder settings for each form type, and the activity log grouped by patient" loading="lazy" />
+  <figcaption>Deadlines and reminders for each form type, and an audit trail of every change.</figcaption>
+</figure>
 
-### Outcome & impact
+## Referrals and patient intake
 
-In review with clinic partners, the shift from "fill in a form" to "confirm what's already correct" was the single most positively received change: clinics specifically called out not having to log into the regulator's own portal at all as a meaningful win on its own, before any of the deeper validation or bulk-submission tooling even shipped.
+One intake queue for every way a patient arrives, with AI reading the referral letters.
 
-## Project: Scheduler v2
+### Why
 
-### Overview
+- Patients arrive by referral letter, web form, direct sign-up and marketing, and each new lead was mixed in with existing patients.
+- Typing up a single referral took 20 to 40 minutes.
+- Duplicates slipped through and referrals expired without anyone noticing.
 
-Led discovery for a second-generation scheduling system, working directly with clinic partners to understand where the existing scheduler fell short of real clinical booking needs.
+### What I did
 
-### Problem
+- Reframed referrals as one intake queue across every source, with a clear lifecycle from unprocessed to booked.
+- AI extracts patient details from uploaded referral documents; staff check and correct them instead of typing.
+- Duplicate detection at the point of entry, and a view of referrals about to expire.
 
-<KVGroup>
-  <KV term="No recurring unavailability" desc="The scheduler had no way to express recurring unavailability (lunch breaks, non-bookable hours) or restrict which appointment types could be booked in which windows, which for at least one clinic was serious enough to threaten their go-live timeline." />
-  <KV term="No linked, multi-resource bookings" desc="A clinic walked through a &quot;treatment scan&quot; appointment type that needs to book two different resources with a staggered offset: fifteen minutes on a sonographer's diary, followed automatically by fifteen minutes on the phlebotomy list right after, booked as one unit. The existing scheduler had no concept of a single appointment type driving multiple linked, offset resource bookings." />
-</KVGroup>
+### Result
+
+Handling a referral went from 20–40 minutes to a few minutes; one clinic went from four referral staff to one. The extraction worked well enough that wawa planned to roll it out across all patient intake and into other parts of the platform.
+
+<figure class="project-figure">
+  <Image src={referralsCrm} alt="The referrals intake queue listing patients by source, urgency and status, and referral analytics with pipeline, contact and conversion metrics" loading="lazy" />
+  <figcaption>Every way a patient arrives lands in one queue, with analytics on how referrals turn into appointments.</figcaption>
+</figure>
+
+## Treatment planning
+
+wawa's first treatment planning system, from template to the patient's choice.
+
+### Why
+
+Three large clinics were waiting on treatment planning before they would sign, and billing and stim sheets depended on it.
+
+### What I did
+
+- Plans built from protocol templates (medication, tests, consents and options), with clear signs when a plan drifts from its template and a one-click reset.
+- A lifecycle from suggested to sent, accepted, active and completed, with the next action always obvious.
+- Settings for treatment types, protocols and templates. I explored three layouts for the same data before settling on one.
+- A patient-side view to compare plans side by side on a phone and accept one.
+
+### Result
+
+The clinic side shipped and helped sign all three clinics. Standard templates cover 99% of cases and adapt easily for the rest, and it simplified billing and stim sheets. Clinics were asking for the patient side to make planning self-serve, and it was planned for a later phase.
+
+<figure class="project-figure">
+  <Image src={treatmentPlans} alt="A patient's treatment plans with a suggested standard IVF plan and its medication and tests, beside the patient's phone view comparing plans" loading="lazy" />
+  <figcaption>Clinicians build plans from templates; patients compare them side by side and choose (the patient side was planned for a later phase).</figcaption>
+</figure>
+
+<figure class="project-figure">
+  <Image src={protocols} alt="Treatment protocol settings in two layouts: a list with template chips per category, and a Finder-style column view of types and protocols" loading="lazy" />
+  <figcaption>Two of the three layouts I explored for treatment types, protocols and their templates.</figcaption>
+</figure>
+
+## Patient health information
+
+One health survey for every clinic, filled in by patients, checked by clinicians.
+
+### Why
+
+- Every clinic had its own intake survey asking the same questions in different words.
+- Doctors spent appointment time asking questions and writing down answers.
+- Required regulator fields were often missing because nothing captured them up front.
+
+### What I did
+
+- Merged every clinic's questions into one master survey that each clinic tailors, with structured answers only so the data can be reused anywhere.
+- Moved collection to the patient: themed sections, one question at a time, gentler wording, and a mode that walks through only what's left.
+- Answers only enter the record after a clinician reviews them, and each entry shows whether it came from the patient or the clinician.
+- A builder for conditional questions, clinical labels and long lists like medications, and analytics on how long surveys take and where patients stall.
+
+### Result
+
+Rolled out to all clinics in the app and on the web, together with the team building the platform's data collection. Clinicians review instead of transcribe, and the missing regulator fields are now captured during intake.
+
+<figure class="project-figure">
+  <Image src={healthSurvey} alt="The patient health survey on phones: the list of sections Dr. James has requested, and a question about how often periods occur with one answer chosen" loading="lazy" />
+  <figcaption>Patients fill in their own health history before their appointment, one question at a time.</figcaption>
+</figure>
+
+<figure class="project-figure">
+  <Image src={surveyBuilder} alt="The survey section editor: a list of sections, the settings for Your cycle, and a live preview of its intro screen" loading="lazy" />
+  <figcaption>The survey builder, with a live preview of what the patient will see.</figcaption>
+</figure>
+
+<figure class="project-figure">
+  <Image src={surveyAnalytics} alt="Survey analytics: median time to submit and approve, a funnel from sent to approved, and concepts for reminder effectiveness and where patients stall" loading="lazy" />
+  <figcaption>How long surveys take from sent to approved. The lower panels were concepts for the next version.</figcaption>
+</figure>
+
+## Clinical workflows
+
+Smaller redesigns of the tools staff use all day.
+
+### What I did
+
+- **Stim sheets:** extending a medication took seven or more clicks and a page reload. I made it one direct action.
+- **Task inbox:** clinical tasks work like an email inbox: auto-advance to the next item, keyboard shortcuts, and overdue and today filters. It became a page type reused across the platform.
+- **Donors:** a dedicated donors section in cryo storage, with family limits at a glance, replacing a workflow built up from one-off fixes.
+- **Cryo safety:** two-person witnessing for high-risk actions like thawing, with status for each witness.
+- **Lab sheets:** instead of printing sheets to fill in by hand and type up again, a QR code on the sample opens its live digital sheet.
+
+### Result
+
+All of these shipped. Extending a medication went from 7+ clicks to one, saving doctors' most expensive time.
+
+<figure class="project-figure">
+  <Image src={inboxTasks} alt="The clinical inbox showing a patient's laboratory and imaging results, and the inbox-style task list for signing consents with the document alongside" loading="lazy" />
+  <figcaption>The task inbox: open an item, act on it, and it moves on to the next.</figcaption>
+</figure>
+
+<figure class="project-figure">
+  <Image src={patientDonors} alt="A patient's overview page with encounters, referrals and notes, and the donors table in cryo storage with family limits shown as filled dots" loading="lazy" />
+  <figcaption>Donors get their own section in cryo storage, with family limits at a glance.</figcaption>
+</figure>
+
+<figure class="project-figure">
+  <Image src={cryoThaw} alt="The thaw form for a cryo sample, with reason, cycle, thawed-by and a required two-person witness verification step" loading="lazy" />
+  <figcaption>Thawing needs two witnesses to verify before it can be saved.</figcaption>
+</figure>
+
+## Clinic onboarding
+
+Self-serve setup for new clinics.
+
+### Why
+
+Setting up a clinic meant dozens of interdependent settings, losing your work when a dependency was missing, and days of in-person training that couldn't scale.
+
+### What I did
+
+- A guided checklist of setup sections, each filled in by the clinic and signed off by an approver.
+- Missing dependencies, like a tax rate, can be created inside the form that needs them.
+- Bulk import that matches columns, maps unknown values and catches duplicates before anyone is invited.
+- A two-sided internal tool where the wawa team and the clinic share the same steps, assign them to each other and see who's working on what.
+
+### Result
+
+The guided setup was chosen at the company all-hands as the template for every future implementation, moving setup from days of training towards self-serve.
+
+<figure class="project-figure">
+  <Image src={onboardingSetup} alt="The guided clinic setup: a checklist of sections down the side and the Organisation basics step, with name, country, currency and time zone, and a request-approval link" loading="lazy" />
+  <figcaption>Clinic setup as a guided checklist, each section signed off by an approver.</figcaption>
+</figure>
+
+<figure class="project-figure">
+  <Image src={onboardingImport} alt="Three bulk import steps: CSV columns matched to email, roles and teams; unrecognised team names to map or remove; and a duplicate email to keep or merge" loading="lazy" />
+  <figcaption>Bulk import: columns matched, unknown values mapped and duplicates caught before anyone is invited.</figcaption>
+</figure>
+
+## Patient app redesign
+
+A simpler patient app built around what to do now.
+
+### Why
+
+The existing app had grown into many separate sections. Patients mostly need to know what to do next, and some tasks, like a trigger injection, are time-critical.
+
+### What I did
+
+- A single timeline anchored at "now": what to do today in the middle, upcoming above, history below, and a way back to now when you scroll away.
+- One detail page for every item type: medication logging, consents with several signatories, add-ons to accept or decline, appointments that go straight into your calendar.
+- Overdue items are flagged calmly, not as walls of red. Every text colour meets the strictest (AAA) contrast level.
+- One codebase that works as a phone app and on desktop.
+
+### Result
+
+It was in active development with our React Native developer when I left, heading towards an MVP.
+
+<figure class="project-figure">
+  <Image src={appTimeline} alt="The patient timeline with a survey and a Gonal-F injection to do now and past items below, and a consent to embryo freezing awaiting two signatures" loading="lazy" />
+  <figcaption>The timeline, anchored at what to do now, and a consent that needs both partners' signatures.</figcaption>
+</figure>
+
+<figure class="project-figure">
+  <Image src={appItems} alt="A Gonal-F injection with dose, schedule and a how-to video, and an EmbryoGlue add-on quote to accept or decline" loading="lazy" />
+  <figcaption>Every item type shares one detail layout: medication to log, an add-on to decide on.</figcaption>
+</figure>
+
+<figure class="project-figure">
+  <Image src={appDesktop} alt="The patient app on desktop: a sidebar with Timeline, Finance, Messages and Profile, and the same timeline in the centre" loading="lazy" />
+  <figcaption>The same app on desktop, from one codebase.</figcaption>
+</figure>
+
+## Design system
+
+### What I did
+
+- A components page documenting every part of the prototype's UI kit, with live controls for each component's options.
+- Design Mode, an experiment for editing components and their styles inside the running prototype, Figma-style.
+
+### Result
+
+The components page became the groundwork for the redesign of wawa's design system, which now runs across the platform. Design Mode stayed an experiment.
+
+<figure class="project-figure">
+  <Image src={components} alt="The component documentation page, with a live playground for a button and a toggle" loading="lazy" />
+  <figcaption>The components page, groundwork for the platform design system.</figcaption>
+</figure>
+
+## Earlier-stage work
+
+**AI booking assistant.** Staff book appointments and build schedules by typing, even with typos: it matches the patient, confirms who they mean, then walks through the details. It stayed a prototype; at the time there wasn't buy-in from engineering.
+
+<figure class="project-figure">
+  <Image src={aiBooking} alt="The wawa assistant: a misspelled request is matched to the right patient for confirmation, then the booked appointment is shown with type, host, location, date and time" loading="lazy" />
+  <figcaption>Booking by typing, with a check that it found the right patient.</figcaption>
+</figure>
+
+**Scheduler v2.** Discovery with clinics that found two gaps: recurring unavailability, which threatened one clinic's go-live, and appointments that book two resources one after the other, like a scan followed by bloods. Still in discovery when I left.
 
 <figure class="project-figure">
   <Image src={schedulerLinked} alt="The scheduler with a treatment scan booked as two linked appointments, a scan then bloods straight after, beside the new appointment panel with linked people and rooms" loading="lazy" />
-  <figcaption>One treatment scan books two linked slots: the scan on the sonographer's diary, then bloods on the phlebotomy list straight after.</figcaption>
+  <figcaption>One treatment scan books two linked slots: the scan, then bloods straight after.</figcaption>
 </figure>
 
-### Contributions
+## What I took away
 
-- Ran discovery sessions with clinic partners to surface real scheduling constraints rather than assumed ones, including the recurring-unavailability gap and the multi-resource linked-appointment requirement.
-- Scoped an initial "Schedule Templates" concept covering recurring blocked time and per-appointment-type booking windows as the fastest path to closing the most urgent gap.
-- Documented the multi-resource, staggered-offset appointment requirement as a core input to the v2 scheduling model, since it wasn't something the existing single-resource booking model could represent at all.
-
-This project was still in the discovery and early design phase when I left, rather than shipped.
-
-## Reflections & key takeaways
-
-- The regulatory reporting project taught me the most about designing in a legally constrained space: the temptation is always to build the thing the regulator's form literally asks for, but the better answer was almost always to ask what data already exists in the product and design the smallest possible layer on top of it.
-- That instinct, treat a new requirement as a lens over existing data rather than a reason to ask users for more input, showed up again in the lab sheets project, where the obvious first answer (print a form) would have quietly made the underlying duplicate-data-entry problem worse rather than better.
-- Working in a flat-hierarchy startup changed how I think about ownership. There was no separate handoff to engineering: a feature I designed, I frequently also built, which meant design decisions have to hold up against real implementation constraints from day one, not get revisited after the fact.
-- Discovery across UK, US, Canadian, and Australian clinics made clear how much "the same feature" can differ once you take local regulation, terminology, and clinical convention seriously, rather than designing for one market and treating the rest as a localisation afterthought.
+- In regulated software, the better answer is usually to design a thin layer over data that already exists, not a new form asking for it again.
+- Designing in code meant my designs had to survive real data and real constraints from day one.
+- The same feature can differ a lot between the UK, US, Canada and Australia; designing for that from the start beats treating it as localisation later.
