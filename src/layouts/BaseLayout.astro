@@ -15,6 +15,10 @@ export interface Props {
   noindex?: boolean;
 }
 const { title, description, path, ogImage, ogType = 'website', jsonLd, noindex = false } = Astro.props;
+// Netlify sets CONTEXT during its builds. Anything that isn't the live site (the dev branch,
+// deploy previews) is kept out of search results. Local builds have no CONTEXT and are left alone.
+const isLiveSite = !process.env.CONTEXT || process.env.CONTEXT === 'production';
+const hideFromSearch = noindex || !isLiveSite;
 // Netlify serves pages at www with a trailing slash; match that so the canonical isn't a redirect
 const canonicalURL = new URL(path.endsWith('/') ? path : `${path}/`, Astro.site);
 const ogImageURL = new URL(ogImage?.src ?? '/images/og-image.jpg', Astro.site);
@@ -34,7 +38,7 @@ const ogImageURL = new URL(ogImage?.src ?? '/images/og-image.jpg', Astro.site);
     <title>{title}</title>
     <meta name="description" content={description}>
     <meta name="author" content="James Sparkes">
-    {noindex && <meta name="robots" content="noindex, follow">}
+    {hideFromSearch && <meta name="robots" content="noindex, follow">}
 
     <link rel="canonical" href={canonicalURL} />
     <meta property="og:type" content={ogType}>
