@@ -2071,11 +2071,9 @@ a.nav-identity {
 .about-bubble {
     --bubble: #d9fdd3;
     --bubble-text: #111b21;
-    --bubble-meta: #667781;
-    --tick: #53bdeb;
     position: relative;
     max-width: 330px;
-    padding: 0.55rem 0.7rem 0.45rem 0.8rem;
+    padding: 0.6rem 0.9rem;
     font-size: 14px;
     line-height: 1.45;
     color: var(--bubble-text);
@@ -2086,7 +2084,6 @@ a.nav-identity {
 [data-theme="dark"] .about-bubble {
     --bubble: #005c4b;
     --bubble-text: #e9edef;
-    --bubble-meta: rgba(233, 237, 239, 0.6);
 }
 /* The little tail at the top-left, pointing back at the avatar */
 .about-bubble::before {
@@ -2099,19 +2096,7 @@ a.nav-identity {
     background: var(--bubble);
     clip-path: polygon(100% 0, 0 0, 100% 100%);
 }
-/* Time and ticks tucked into the last line, bottom-right */
-.about-bubble-meta {
-    float: right;
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    margin: 0.45rem 0 -0.15rem 0.6rem;
-    font-size: 11px;
-    line-height: 1;
-    color: var(--bubble-meta);
-}
-.about-bubble-meta svg { color: var(--tick); }
-.about-bubble-time:empty { display: none; }
+
 
 @media (max-width: 640px) {
     .about-hero { gap: 1.1rem; align-items: center; }
