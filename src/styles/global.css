@@ -253,6 +253,7 @@ a.nav-identity {
 
 /* Sizes */
 .btn--sm { --btn-icon: 20px; --btn-py: 6px; }            /* 32px: round buttons in the desktop margins */
+.btn--md { --btn-icon: 18px; --btn-py: 11px; --btn-px: 16px; }   /* 40px: sidebar buttons */
 .btn--block {                                              /* full width, content centred */
     display: flex;
     width: 100%;
@@ -269,32 +270,36 @@ a.nav-identity {
     color: #161614;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 4px 14px rgba(0, 0, 0, 0.1);
 }
+.btn--ghost {
+    background: transparent;
+    color: var(--text);
+    box-shadow: inset 0 0 0 1px var(--border);
+}
+.btn--ghost:hover,
+.btn--ghost:focus-visible {
+    box-shadow: inset 0 0 0 1px var(--text-dim);
+}
 .btn--float:hover,
 .btn--float:focus-visible {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 22px rgba(0, 0, 0, 0.16);
 }
 
 .nav-download {
-    --btn-icon: 18px;
-    --btn-py: 11px;
-    --btn-r: 4px;
-    margin-top: 0.75rem;
-    opacity: 0.9;
+    margin-top: 0.5rem;
 }
 
 .nav-download:hover {
     opacity: 1;
 }
 
-.nav-theme-toggle {
-    font-size: 12px;
-    color: var(--text-dim);
-    text-transform: lowercase;
-}
-
-.nav-theme-toggle:hover {
-    color: var(--text);
-}
+/* Theme toggle (.btn .btn--ghost): offers the theme you'd switch to */
+.theme-icon { position: relative; }
+.theme-icon svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.theme-to-light { display: none; }
+[data-theme="dark"] .theme-to-light { display: block; }
+[data-theme="dark"] .theme-to-dark { display: none; }
+.btn-label .theme-to-light { display: none; }
+[data-theme="dark"] .btn-label .theme-to-light { display: inline; }
 
 /* ─── Content column ─────────────────────────────────────── */
 .content {
@@ -1501,7 +1506,8 @@ a.nav-identity {
         z-index: 9;
         background: var(--bg);
         overflow-y: auto;
-        padding: 0 1rem 1rem;
+        /* bottom room so the last item (the theme toggle) can scroll clear of the floating Download CV pill */
+        padding: 0 1rem calc(1.25rem + 50px + 1.5rem);
     }
 
     .nav-mobile-panel .nav-groups {
@@ -1509,7 +1515,7 @@ a.nav-identity {
     }
 
     .nav-mobile-panel .nav-theme-toggle {
-        padding-top: 1rem;
+        margin-top: 1rem;
     }
 
     .nav-item {
