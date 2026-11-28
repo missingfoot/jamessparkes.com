@@ -369,20 +369,17 @@ a.nav-identity {
     gap: 0.75rem 1.5rem;
 }
 
-/* Icon, then the text with its underline */
+/* Icon and text, with one underline running under both */
 .about-links a {
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
     color: var(--text);
     text-decoration: none;
-}
-
-.about-links a span {
     border-bottom: 1px solid var(--border);
 }
 
-.about-links a:hover span {
+.about-links a:hover {
     border-bottom-color: var(--text);
 }
 
